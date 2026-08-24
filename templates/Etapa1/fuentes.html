@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fuentes de datos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        h3 {
+            color: #444;
+        }
+
+        p {
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .fuente {
+            border-left: 5px solid #007bff;
+            padding-left: 18px;
+            margin: 25px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #007bff;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .dato {
+            margin: 7px 0;
+        }
+
+        .dato strong {
+            color: #555;
+        }
+
+        a {
+            color: #007bff;
+        }
+
+        .back {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>4. Fuentes de datos</h1>
+        <p>
+            Fuentes utilizadas para contextualizar y analizar la accidentalidad vial.
+        </p>
+    </div>
+
+
+    <div class="card">
+
+        <h2>Clasificación de las fuentes</h2>
+
+        <p>
+            Para el proyecto se consideran fuentes de información de diferentes
+            niveles. Las fuentes secundarias constituyen la base principal del
+            análisis cuantitativo, mientras que las fuentes primarias y
+            terciarias permiten complementar el contexto y la interpretación
+            del fenómeno.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🇨🇴 Fuente secundaria 1 — Siniestros viales ANSV</h2>
+
+        <div class="fuente">
+
+            <span class="badge">SECUNDARIA</span>
+
+            <h3>Datos de Siniestros Viales</h3>
+
+            <div class="dato">
+                <strong>Institución:</strong>
+                Agencia Nacional de Seguridad Vial (ANSV)
+            </div>
+
+            <div class="dato">
+                <strong>Fuente:</strong>
+                Servicio geográfico institucional / ArcGIS
+            </div>
+
+            <div class="dato">
+                <strong>Registros:</strong>
+                19.015
+            </div>
+
+            <div class="dato">
+                <strong>Variables:</strong>
+                16 variables originales
+            </div>
+
+            <div class="dato">
+                <strong>Periodo:</strong>
+                01/01/2019 – 14/08/2019
+            </div>
+
+            <div class="dato">
+                <strong>Cobertura:</strong>
+                Colombia
+            </div>
+
+            <div class="dato">
+                <strong>Departamentos:</strong>
+                32
+            </div>
+
+            <div class="dato">
+                <strong>Municipios:</strong>
+                799
+            </div>
+
+            <div class="dato">
+                <strong>Formato obtenido:</strong>
+                JSON mediante API REST y posteriormente CSV
+            </div>
+
+            <div class="dato">
+                <strong>Método de adquisición:</strong>
+                Consulta automatizada mediante API
+            </div>
+
+            <div class="dato">
+                <strong>Archivo local:</strong>
+                <code>data/siniestros_viales.csv</code>
+            </div>
+
+            <p>
+                Esta fuente permite analizar características temporales,
+                geográficas y relacionadas con los siniestros, incluyendo
+                ubicación, clasificación, hipótesis, víctimas y lugar del
+                accidente.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🚗 Fuente secundaria 2 — Vehículos involucrados</h2>
+
+        <div class="fuente">
+
+            <span class="badge">SECUNDARIA</span>
+
+            <h3>
+                Vehículos involucrados en un accidente de tránsito —
+                Ley 2251 de 2022
+            </h3>
+
+            <div class="dato">
+                <strong>Institución:</strong>
+                Datos Abiertos Colombia
+            </div>
+
+            <div class="dato">
+                <strong>Registros descargados:</strong>
+                406.540
+            </div>
+
+            <div class="dato">
+                <strong>Variables:</strong>
+                9
+            </div>
+
+            <div class="dato">
+                <strong>Periodo:</strong>
+                01/01/2022 – 01/02/2026
+            </div>
+
+            <div class="dato">
+                <strong>Cobertura:</strong>
+                Colombia
+            </div>
+
+            <div class="dato">
+                <strong>Departamentos:</strong>
+                31
+            </div>
+
+            <div class="dato">
+                <strong>Municipios:</strong>
+                639
+            </div>
+
+            <div class="dato">
+                <strong>Formato obtenido:</strong>
+                API de Datos Abiertos / CSV
+            </div>
+
+            <div class="dato">
+                <strong>Método de adquisición:</strong>
+                Consulta automatizada y descarga mediante API
+            </div>
+
+            <div class="dato">
+                <strong>Archivo local:</strong>
+                <code>data/vehiculos_accidentes.csv</code>
+            </div>
+
+            <p>
+                Esta fuente complementa el análisis proporcionando
+                características específicas de los vehículos involucrados,
+                tales como marca, modelo, tipo, edad, municipio,
+                departamento y gravedad del accidente.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🌎 Fuentes terciarias</h2>
+
+        <div class="fuente">
+
+            <span class="badge">TERCIARIA</span>
+
+            <h3>Datos Abiertos Colombia</h3>
+
+            <p>
+                El portal Datos Abiertos Colombia funciona como plataforma de
+                distribución y consulta de conjuntos de datos publicados por
+                diferentes entidades públicas. Para este proyecto se utiliza
+                como mecanismo de acceso y consulta de información pública
+                relacionada con movilidad y accidentalidad.
+            </p>
+
+            <div class="dato">
+                <strong>Institución responsable:</strong>
+                Gobierno de Colombia
+            </div>
+
+            <div class="dato">
+                <strong>Tipo:</strong>
+                Portal de distribución de datos
+            </div>
+
+            <div class="dato">
+                <strong>Cobertura:</strong>
+                Nacional
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📝 Fuente primaria propuesta</h2>
+
+        <div class="fuente">
+
+            <span class="badge">PRIMARIA</span>
+
+            <h3>Observación directa / levantamiento propio</h3>
+
+            <p>
+                Como fuente primaria complementaria se plantea la posibilidad
+                de realizar observación directa de condiciones relacionadas
+                con la movilidad y seguridad vial en un contexto regional.
+            </p>
+
+            <p>
+                Esta información no será utilizada para modificar los
+                registros oficiales descargados. En caso de realizarse,
+                funcionará como información contextual adicional y deberá
+                documentarse mediante fecha, ubicación, metodología de
+                observación y variables registradas.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>🔗 Integración de las fuentes</h2>
+
+        <p>
+            Las dos fuentes secundarias principales no presentan coincidencia
+            temporal suficiente para realizar una integración registro a
+            registro. El dataset de siniestros corresponde a 2019, mientras
+            que el dataset de vehículos contiene información desde 2022.
+        </p>
+
+        <p>
+            Por esta razón, las fuentes serán utilizadas como datasets
+            complementarios. Se podrán realizar comparaciones y análisis
+            independientes utilizando dimensiones comunes como departamento,
+            municipio y características de los accidentes, sin afirmar que un
+            registro de una fuente corresponde directamente a un registro de
+            la otra.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>⚠️ Limitaciones de las fuentes</h2>
+
+        <ul>
+            <li>Las fuentes tienen diferentes periodos de cobertura.</li>
+            <li>Los nombres de municipios y departamentos pueden presentar diferencias de formato.</li>
+            <li>Las fuentes poseen diferentes niveles de granularidad.</li>
+            <li>El dataset de vehículos presenta registros duplicados.</li>
+            <li>Existen algunos valores faltantes en marca y edad del vehículo.</li>
+            <li>La cobertura territorial no es idéntica entre ambas fuentes.</li>
+        </ul>
+
+    </div>
+
+
+    <a href="/" class="back">⬅ Volver al menú principal</a>
+
+</div>
+
+</body>
+</html>

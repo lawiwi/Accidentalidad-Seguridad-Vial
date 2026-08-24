@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problema y Contexto</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #444;
+        }
+
+        p {
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .nivel {
+            border-left: 5px solid #007bff;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        .back {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .back:hover {
+            background: #545b62;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>1. Problema y contexto</h1>
+        <p>
+            Análisis de la accidentalidad vial en Colombia mediante técnicas
+            de minería de datos.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Contexto general</h2>
+
+        <p>
+            La accidentalidad vial constituye un problema de interés para la
+            seguridad pública, la movilidad y la salud de la población. Los
+            siniestros de tránsito pueden estar relacionados con múltiples
+            factores, entre ellos el tipo de vehículo involucrado, las
+            características geográficas, el periodo en el que ocurre el
+            accidente, la gravedad del evento y las condiciones particulares
+            registradas por las autoridades de tránsito.
+        </p>
+
+        <p>
+            Debido al volumen de información disponible en fuentes oficiales,
+            las técnicas de minería de datos permiten identificar patrones,
+            relaciones y comportamientos que pueden ser difíciles de observar
+            mediante una revisión manual de los registros.
+        </p>
+
+        <p>
+            Este proyecto busca analizar información relacionada con
+            siniestros viales y vehículos involucrados en accidentes de
+            tránsito en Colombia, utilizando fuentes de datos oficiales y
+            complementarias.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Problema de investigación</h2>
+
+        <p>
+            El problema de investigación se centra en determinar qué
+            características temporales, geográficas y relacionadas con los
+            vehículos están asociadas con una mayor concentración de
+            accidentes de tránsito y con diferentes niveles de gravedad en
+            Colombia.
+        </p>
+
+        <p>
+            La disponibilidad de diferentes fuentes de información permite
+            estudiar el fenómeno desde varias perspectivas. Sin embargo, las
+            fuentes no presentan necesariamente la misma cobertura temporal,
+            geográfica o nivel de granularidad, por lo que es necesario
+            caracterizarlas y analizarlas de manera complementaria.
+        </p>
+    </div>
+
+    <div class="card">
+        <h2>Análisis por niveles</h2>
+
+        <div class="nivel">
+            <h3>🌎 Nivel global</h3>
+
+            <p>
+                A nivel global, la accidentalidad vial representa un problema
+                relacionado con la seguridad vial y la movilidad. El análisis
+                internacional permite contextualizar el fenómeno colombiano
+                frente a la problemática general de los siniestros de
+                tránsito y reconocer la importancia de estudiar sus factores
+                asociados.
+            </p>
+        </div>
+
+        <div class="nivel">
+            <h3>🇨🇴 Nivel nacional — Colombia</h3>
+
+            <p>
+                En Colombia se dispone de registros oficiales de siniestros
+                viales y de vehículos involucrados en accidentes de tránsito.
+                Estos datos permiten estudiar diferencias entre departamentos,
+                municipios, periodos de tiempo, tipos de vehículos y gravedad
+                de los accidentes.
+            </p>
+        </div>
+
+        <div class="nivel">
+            <h3>📍 Nivel regional</h3>
+
+            <p>
+                En el nivel regional se analizarán las diferencias existentes
+                entre departamentos y municipios colombianos. Se prestará
+                especial atención a la distribución territorial de los
+                accidentes y a las características de los vehículos
+                involucrados.
+            </p>
+
+            <p>
+                La información disponible incluye registros de departamentos
+                y municipios, lo que permite realizar comparaciones
+                territoriales y posteriormente identificar posibles zonas con
+                mayor concentración de eventos.
+            </p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Conocimiento esperado</h2>
+
+        <p>
+            Se espera obtener conocimiento sobre los patrones temporales y
+            geográficos de la accidentalidad vial, así como sobre la relación
+            entre los tipos de vehículos involucrados y la gravedad de los
+            accidentes.
+        </p>
+
+        <p>
+            Este conocimiento servirá como base para posteriores procesos de
+            análisis exploratorio, agrupamiento, identificación de patrones,
+            asociación y posibles modelos predictivos.
+        </p>
+    </div>
+
+    <a href="/" class="back">⬅ Volver al menú principal</a>
+
+</div>
+
+</body>
+</html>

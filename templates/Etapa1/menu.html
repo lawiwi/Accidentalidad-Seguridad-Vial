@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Etapa 1 - Minería de Datos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 50px auto;
+        }
+
+        header {
+            background: #007bff;
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .menu {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .menu a {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            transform: translateY(-3px);
+            background: #007bff;
+            color: white;
+        }
+
+        .volver {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        @media(max-width: 600px) {
+            .menu {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>📚 Etapa 1</h1>
+        <p>Formulación y contextualización del problema de investigación</p>
+    </header>
+
+    <div class="menu">
+
+        <a href="/Etapa1/problema">
+            🔎 1. Problema y contexto
+        </a>
+
+        <a href="/Etapa1/preguntas">
+            ❓ 2. Pregunta principal y preguntas secundarias
+        </a>
+
+        <a href="/Etapa1/necesidades">
+            📋 3. Necesidades de información
+        </a>
+
+        <a href="/Etapa1/fuentes">
+            🌐 4. Fuentes de datos
+        </a>
+
+        <a href="/Etapa1/dataset">
+            📊 5. Dataset
+        </a>
+
+        <a href="/Etapa1/diccionario">
+            📖 6. Diccionario de datos
+        </a>
+
+        <a href="/Etapa1/calidad">
+            🔍 7. Calidad inicial de los datos
+        </a>
+
+        <a href="/Etapa1/limitaciones">
+            ⚠️ 8. Limitaciones y consideraciones
+        </a>
+
+    </div>
+
+    <a href="/" class="volver">
+        ← Volver al menú principal
+    </a>
+
+</div>
+
+</body>
+</html>

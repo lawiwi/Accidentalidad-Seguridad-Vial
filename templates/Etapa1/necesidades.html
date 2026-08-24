@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Necesidades de información</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        p {
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 11px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .back {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>3. Necesidades de información</h1>
+        <p>
+            Información requerida para responder las preguntas de investigación.
+        </p>
+    </div>
+
+    <div class="card">
+
+        <h2>Unidad de análisis</h2>
+
+        <p>
+            La unidad de análisis principal corresponde al registro de un
+            accidente de tránsito o al vehículo involucrado en un accidente,
+            dependiendo de la fuente consultada.
+        </p>
+
+        <p>
+            Debido a que las fuentes poseen diferentes estructuras y periodos
+            de cobertura, serán utilizadas como fuentes complementarias y no
+            como una única tabla integrada registro a registro.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Entidades involucradas</h2>
+
+        <ul>
+            <li>Accidente o siniestro vial.</li>
+            <li>Vehículo involucrado.</li>
+            <li>Municipio.</li>
+            <li>Departamento.</li>
+            <li>Autoridad de tránsito.</li>
+            <li>Periodo temporal.</li>
+            <li>Gravedad del accidente.</li>
+        </ul>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Variables requeridas</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Variable / información</th>
+                    <th>Utilidad</th>
+                    <th>Tipo esperado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Fecha del accidente</td>
+                    <td>Analizar evolución y comportamiento temporal.</td>
+                    <td>Temporal</td>
+                </tr>
+
+                <tr>
+                    <td>Departamento</td>
+                    <td>Comparar accidentalidad territorial.</td>
+                    <td>Categórica / geográfica</td>
+                </tr>
+
+                <tr>
+                    <td>Municipio</td>
+                    <td>Realizar análisis regional con mayor granularidad.</td>
+                    <td>Categórica / geográfica</td>
+                </tr>
+
+                <tr>
+                    <td>Tipo de vehículo</td>
+                    <td>Determinar qué vehículos tienen mayor participación.</td>
+                    <td>Categórica</td>
+                </tr>
+
+                <tr>
+                    <td>Marca del vehículo</td>
+                    <td>Analizar distribución por fabricante.</td>
+                    <td>Categórica</td>
+                </tr>
+
+                <tr>
+                    <td>Modelo del vehículo</td>
+                    <td>Analizar antigüedad y comportamiento de los vehículos.</td>
+                    <td>Numérica</td>
+                </tr>
+
+                <tr>
+                    <td>Edad del vehículo</td>
+                    <td>Estudiar posible asociación entre antigüedad y gravedad.</td>
+                    <td>Numérica</td>
+                </tr>
+
+                <tr>
+                    <td>Gravedad del accidente</td>
+                    <td>Diferenciar accidentes con heridos y muertos.</td>
+                    <td>Categórica</td>
+                </tr>
+
+                <tr>
+                    <td>Tipo de siniestro</td>
+                    <td>Identificar patrones relacionados con la naturaleza del evento.</td>
+                    <td>Categórica</td>
+                </tr>
+
+                <tr>
+                    <td>Número de muertos</td>
+                    <td>Medir consecuencias del siniestro.</td>
+                    <td>Numérica</td>
+                </tr>
+
+                <tr>
+                    <td>Número de lesionados</td>
+                    <td>Analizar impacto sobre las personas.</td>
+                    <td>Numérica</td>
+                </tr>
+
+                <tr>
+                    <td>Latitud y longitud</td>
+                    <td>Realizar análisis espacial.</td>
+                    <td>Numérica / geográfica</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Periodo de análisis</h2>
+
+        <p>
+            Las fuentes seleccionadas presentan diferentes periodos de
+            cobertura. El dataset de siniestros viales contiene información
+            correspondiente al periodo comprendido entre enero y agosto de
+            2019, mientras que el dataset de vehículos involucrados contiene
+            registros desde enero de 2022 hasta febrero de 2026.
+        </p>
+
+        <p>
+            Esta diferencia temporal será documentada como una característica
+            de las fuentes. Los datasets serán analizados de forma
+            complementaria y no mediante una unión directa por fecha.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Cobertura geográfica</h2>
+
+        <p>
+            El análisis tendrá cobertura nacional para Colombia, utilizando
+            departamentos y municipios como principales dimensiones
+            territoriales.
+        </p>
+
+        <p>
+            La información disponible permite realizar análisis a escala
+            nacional y regional, identificando diferencias entre territorios.
+        </p>
+
+    </div>
+
+    <a href="/" class="back">⬅ Volver al menú principal</a>
+
+</div>
+
+</body>
+</html>

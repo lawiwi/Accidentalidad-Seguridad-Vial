@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>7. Calidad inicial de los datos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header {
+            background: #007bff;
+            color: white;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2rem;
+        }
+
+        header p {
+            margin: 0;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #007bff;
+            margin-top: 0;
+        }
+
+        .card h3 {
+            color: #333;
+            margin-top: 25px;
+        }
+
+        .info {
+            background: #eef6ff;
+            border-left: 5px solid #007bff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .danger {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 11px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background: #f5f9ff;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .alto {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .medio {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .bajo {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        ul {
+            line-height: 1.7;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                margin: 15px auto;
+                padding: 10px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>🔎 7. Calidad inicial de los datos</h1>
+        <p>
+            Diagnóstico preliminar de integridad, consistencia,
+            duplicidad, valores faltantes y cobertura de las fuentes.
+        </p>
+    </header>
+
+
+    <!-- INTRODUCCIÓN -->
+
+    <div class="card">
+
+        <h2>📌 Objetivo del diagnóstico</h2>
+
+        <p>
+            En esta etapa se realiza una evaluación inicial del estado
+            de los datos antes de aplicar procesos de limpieza,
+            transformación o modelado.
+        </p>
+
+        <div class="info">
+            <strong>Importante:</strong>
+            No se eliminaron registros ni se modificaron los valores
+            originales. El propósito de este diagnóstico es identificar
+            problemas potenciales que deberán ser considerados durante
+            las siguientes etapas del proyecto.
+        </div>
+
+    </div>
+
+
+    <!-- RESUMEN GENERAL -->
+
+    <div class="card">
+
+        <h2>📊 Resumen general</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Indicador</th>
+                    <th>Siniestros Viales</th>
+                    <th>Vehículos Involucrados</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Registros</td>
+                    <td>19.015</td>
+                    <td>406.540</td>
+                </tr>
+
+                <tr>
+                    <td>Variables</td>
+                    <td>16</td>
+                    <td>9</td>
+                </tr>
+
+                <tr>
+                    <td>Valores faltantes</td>
+                    <td>0</td>
+                    <td>64</td>
+                </tr>
+
+                <tr>
+                    <td>Duplicados completos</td>
+                    <td>0</td>
+                    <td>147.575</td>
+                </tr>
+
+                <tr>
+                    <td>Departamentos</td>
+                    <td>32</td>
+                    <td>31</td>
+                </tr>
+
+                <tr>
+                    <td>Municipios</td>
+                    <td>799</td>
+                    <td>638</td>
+                </tr>
+
+                <tr>
+                    <td>Cobertura temporal</td>
+                    <td>2019-01-01 → 2019-08-14</td>
+                    <td>2022-01-01 → 2026-02-01</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- VALORES FALTANTES -->
+
+    <div class="card">
+
+        <h2>❓ Valores faltantes</h2>
+
+        <h3>Dataset de Siniestros Viales</h3>
+
+        <div class="success">
+            <strong>Resultado:</strong>
+            No se identificaron valores faltantes en las 16 variables
+            analizadas.
+        </div>
+
+        <h3>Dataset de Vehículos</h3>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Variable</th>
+                    <th>Valores faltantes</th>
+                    <th>Impacto</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>marca_vehiculo</td>
+                    <td>44</td>
+                    <td>
+                        <span class="badge bajo">Bajo</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>edad_vehiculo</td>
+                    <td>20</td>
+                    <td>
+                        <span class="badge bajo">Bajo</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <p>
+            Los valores faltantes representan una proporción muy pequeña
+            respecto a los 406.540 registros del dataset. Sin embargo,
+            deberán ser considerados cuando se realicen análisis que
+            utilicen específicamente estas variables.
+        </p>
+
+    </div>
+
+
+    <!-- DUPLICADOS -->
+
+    <div class="card">
+
+        <h2>🔁 Registros duplicados</h2>
+
+        <h3>Siniestros Viales</h3>
+
+        <div class="success">
+            <strong>0 duplicados completos.</strong>
+            Tampoco se encontraron identificadores <strong>hechos_id</strong>
+            duplicados.
+        </div>
+
+        <h3>Vehículos involucrados</h3>
+
+        <div class="warning">
+            <strong>147.575 registros duplicados completos.</strong>
+        </div>
+
+        <p>
+            Este resultado representa aproximadamente el
+            <strong>36,3 %</strong> del dataset de vehículos.
+        </p>
+
+        <p>
+            Sin embargo, en esta etapa no se eliminarán automáticamente
+            estos registros, debido a que un mismo conjunto de
+            características puede corresponder a registros legítimos
+            provenientes de diferentes reportes o eventos.
+        </p>
+
+        <p>
+            En una etapa posterior será necesario determinar si los
+            duplicados corresponden a registros realmente repetidos o
+            a observaciones válidas.
+        </p>
+
+    </div>
+
+
+    <!-- INCONSISTENCIAS -->
+
+    <div class="card">
+
+        <h2>⚠️ Inconsistencias y valores sospechosos</h2>
+
+        <h3>Edad del vehículo</h3>
+
+        <div class="danger">
+            <strong>Valor máximo detectado: 1826 años.</strong>
+        </div>
+
+        <p>
+            La variable <strong>edad_vehiculo</strong> presenta valores
+            que no parecen compatibles con la antigüedad real de un
+            vehículo. Esto puede deberse a errores de registro,
+            problemas de formato o inconsistencias en la fuente
+            original.
+        </p>
+
+        <p>
+            Este comportamiento deberá ser investigado antes de utilizar
+            esta variable en modelos estadísticos o algoritmos de minería
+            de datos.
+        </p>
+
+
+        <h3>Modelo del vehículo</h3>
+
+        <div class="warning">
+            <strong>Valor máximo detectado: 2027.</strong>
+        </div>
+
+        <p>
+            El dataset tiene registros hasta febrero de 2026, pero se
+            identificaron vehículos con modelo 2027. Estos registros
+            deberán revisarse para determinar si corresponden a vehículos
+            registrados como modelos futuros o si representan errores
+            en los datos.
+        </p>
+
+    </div>
+
+
+    <!-- CONSISTENCIA GEOGRÁFICA -->
+
+    <div class="card">
+
+        <h2>🗺️ Consistencia geográfica</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Característica</th>
+                    <th>Siniestros</th>
+                    <th>Vehículos</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Departamentos registrados</td>
+                    <td>32</td>
+                    <td>31</td>
+                </tr>
+
+                <tr>
+                    <td>Municipios registrados</td>
+                    <td>799</td>
+                    <td>638</td>
+                </tr>
+
+                <tr>
+                    <td>Departamentos comunes</td>
+                    <td colspan="2">27</td>
+                </tr>
+
+                <tr>
+                    <td>Municipios comunes</td>
+                    <td colspan="2">455</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <p>
+            Se identificaron diferencias en la cobertura territorial
+            entre las dos fuentes. Aunque existen departamentos y
+            municipios comunes, no todos aparecen en ambos datasets.
+        </p>
+
+        <div class="warning">
+            Esta diferencia debe considerarse al realizar comparaciones
+            territoriales para evitar interpretar las diferencias de
+            cobertura como diferencias reales en accidentalidad.
+        </div>
+
+    </div>
+
+
+    <!-- CONSISTENCIA TEMPORAL -->
+
+    <div class="card">
+
+        <h2>📅 Consistencia temporal</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Dataset</th>
+                    <th>Fecha inicial</th>
+                    <th>Fecha final</th>
+                    <th>Años</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Siniestros Viales</td>
+                    <td>01/01/2019</td>
+                    <td>14/08/2019</td>
+                    <td>2019</td>
+                </tr>
+
+                <tr>
+                    <td>Vehículos</td>
+                    <td>01/01/2022</td>
+                    <td>01/02/2026</td>
+                    <td>2022-2026</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <div class="danger">
+            <strong>No existen años comunes entre las dos fuentes.</strong>
+        </div>
+
+        <p>
+            Por esta razón, no es metodológicamente adecuado realizar
+            una unión registro a registro utilizando la fecha del
+            accidente como llave.
+        </p>
+
+        <p>
+            Los datasets serán utilizados como fuentes complementarias,
+            permitiendo estudiar diferentes dimensiones del fenómeno
+            de accidentalidad vial.
+        </p>
+
+    </div>
+
+
+    <!-- INTEGRACIÓN -->
+
+    <div class="card">
+
+        <h2>🔗 Problemas de integración</h2>
+
+        <p>
+            El diagnóstico de integración permitió identificar:
+        </p>
+
+        <ul>
+            <li>27 departamentos presentes en ambas fuentes.</li>
+            <li>455 municipios comunes.</li>
+            <li>0 fechas comunes.</li>
+            <li>0 combinaciones comunes de fecha + departamento.</li>
+            <li>0 combinaciones comunes de fecha + municipio.</li>
+            <li>0 combinaciones comunes de fecha + departamento + municipio.</li>
+        </ul>
+
+        <div class="warning">
+
+            <strong>Decisión metodológica:</strong>
+
+            No se realizará un merge directo entre los datasets.
+
+            Las fuentes serán utilizadas de manera complementaria
+            para analizar diferentes características de la
+            accidentalidad vial en Colombia.
+
+        </div>
+
+    </div>
+
+
+    <!-- SESGOS -->
+
+    <div class="card">
+
+        <h2>⚖️ Posibles sesgos y limitaciones de calidad</h2>
+
+        <ul>
+
+            <li>
+                Diferencias en los periodos de cobertura entre las fuentes.
+            </li>
+
+            <li>
+                Diferencias en la cobertura territorial.
+            </li>
+
+            <li>
+                Posibles diferencias en los mecanismos de reporte.
+            </li>
+
+            <li>
+                Alta concentración de registros en determinados
+                departamentos y municipios.
+            </li>
+
+            <li>
+                Presencia de valores faltantes en algunas variables
+                del dataset de vehículos.
+            </li>
+
+            <li>
+                Presencia de registros duplicados que requieren
+                investigación antes de ser eliminados.
+            </li>
+
+            <li>
+                Valores potencialmente inconsistentes en la edad
+                y modelo de los vehículos.
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- CONCLUSIÓN -->
+
+    <div class="card">
+
+        <h2>🎯 Conclusión del diagnóstico</h2>
+
+        <p>
+            Los datasets presentan información suficiente para continuar
+            con el proyecto de minería de datos y cumplen con los
+            requisitos básicos de cantidad de registros, variables,
+            cobertura geográfica y presencia de información temporal.
+        </p>
+
+        <p>
+            El dataset de siniestros presenta una estructura relativamente
+            completa, sin valores faltantes ni duplicados completos.
+            Por otra parte, el dataset de vehículos posee un volumen
+            considerablemente mayor y permite incorporar características
+            específicas de los vehículos involucrados.
+        </p>
+
+        <p>
+            Los problemas identificados serán documentados y tratados
+            durante las siguientes etapas. En esta fase se conserva la
+            información original para garantizar la trazabilidad de los
+            datos.
+        </p>
+
+        <div class="success">
+            <strong>Estado:</strong>
+            Diagnóstico inicial completado. Los datos están listos para
+            continuar con las siguientes etapas de preparación y análisis.
+        </div>
+
+    </div>
+
+
+    <a href="/etapa1" class="btn">⬅️ Volver a Etapa 1</a>
+
+</div>
+
+</body>
+</html>

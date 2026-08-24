@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>5. Dataset | Sistema de Reportes Viales</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #f4f7fb;
+            color: #333;
+        }
+
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .header p {
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .card h3 {
+            color: #333;
+        }
+
+        .description {
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            background: #f4f7fb;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border-left: 5px solid #007bff;
+        }
+
+        .stat .number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .stat .label {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .column {
+            background: #f8f9fa;
+            padding: 10px 14px;
+            border-radius: 7px;
+            border: 1px solid #e1e5ea;
+            font-family: monospace;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #e7f1ff;
+            color: #0056b3;
+            margin: 3px;
+            font-size: 0.85rem;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+        }
+
+        @media (max-width: 800px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>📊 5. Dataset</h1>
+
+        <p>
+            Etapa 1 — Problema, fuentes y caracterización de datos
+        </p>
+
+    </div>
+
+
+    <div class="container">
+
+        <a href="Etapa1" class="back">
+            ← Volver a Etapa 1
+        </a>
+
+
+        <!-- DESCRIPCIÓN -->
+
+        <div class="card">
+
+            <h2>📁 Dataset principal</h2>
+
+            <p class="description">
+
+                Para el desarrollo del proyecto de minería de datos se seleccionó como
+                conjunto de datos principal el dataset
+                <strong>Vehículos involucrados en un accidente de tránsito</strong>,
+                publicado a través de Datos Abiertos Colombia.
+
+                El conjunto contiene información relacionada con los vehículos
+                involucrados en accidentes de tránsito registrados en Colombia,
+                incluyendo características del vehículo, fecha y ubicación del
+                accidente y gravedad del evento.
+
+            </p>
+
+            <p class="description">
+
+                Este dataset fue seleccionado debido a que presenta una cobertura
+                temporal más amplia que la fuente inicialmente analizada y permite
+                estudiar la relación entre las características de los vehículos,
+                la ubicación y la gravedad de los accidentes.
+
+            </p>
+
+        </div>
+
+
+        <!-- ESTADÍSTICAS -->
+
+        <div class="card">
+
+            <h2>📈 Características generales</h2>
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <div class="number">
+                        {{ "{:,}".format(registros) }}
+                    </div>
+
+                    <div class="label">
+                        Registros
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="number">
+                        {{ variables }}
+                    </div>
+
+                    <div class="label">
+                        Variables
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="number">
+                        {{ faltantes }}
+                    </div>
+
+                    <div class="label">
+                        Valores faltantes
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="number">
+                        {{ "{:,}".format(duplicados) }}
+                    </div>
+
+                    <div class="label">
+                        Registros duplicados
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COBERTURA -->
+
+        <div class="card">
+
+            <h2>📅 Cobertura temporal</h2>
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <div class="number">
+                        {{ fecha_inicio }}
+                    </div>
+
+                    <div class="label">
+                        Fecha inicial
+                    </div>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <div class="number">
+                        {{ fecha_fin }}
+                    </div>
+
+                    <div class="label">
+                        Fecha final
+                    </div>
+
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="success">
+
+                ✅ El dataset presenta información correspondiente al periodo
+                <strong>{{ fecha_inicio }}</strong> a
+                <strong>{{ fecha_fin }}</strong>.
+
+                Esta cobertura permite realizar análisis temporales y comparar
+                el comportamiento de los accidentes entre diferentes años.
+
+            </div>
+
+        </div>
+
+
+        <!-- REQUISITOS -->
+
+        <div class="card">
+
+            <h2>🎓 Cumplimiento de requisitos</h2>
+
+            <p>
+                El dataset cumple los requisitos mínimos establecidos para la
+                construcción del conjunto inicial de datos:
+            </p>
+
+            <div class="success">
+
+                ✅ Más de 10.000 registros<br>
+
+                ✅ Más de 10 variables requeridas mediante integración y
+                caracterización de fuentes<br>
+
+                ✅ Variables numéricas<br>
+
+                ✅ Variables categóricas<br>
+
+                ✅ Variable temporal<br>
+
+                ✅ Variables geográficas<br>
+
+                ✅ Cobertura nacional<br>
+
+                ✅ Información con granularidad a nivel de vehículo y accidente
+
+            </div>
+
+        </div>
+
+
+        <!-- VARIABLES -->
+
+        <div class="card">
+
+            <h2>🔢 Variables disponibles</h2>
+
+            <div class="columns">
+
+                {% for columna in columnas %}
+
+                    <div class="column">
+                        {{ columna }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- TIPOS DE VARIABLES -->
+
+        <div class="card">
+
+            <h2>🧩 Clasificación inicial</h2>
+
+            <h3>Variables numéricas</h3>
+
+            <span class="tag">modelo_vehiculo</span>
+            <span class="tag">edad_vehiculo</span>
+
+            <h3>Variables categóricas</h3>
+
+            <span class="tag">marca_vehiculo</span>
+            <span class="tag">tipo_vehiculo</span>
+            <span class="tag">gravedad_accidente</span>
+            <span class="tag">departamento_accidente</span>
+            <span class="tag">municipio_accidente</span>
+            <span class="tag">autoridad_de_transito</span>
+
+            <h3>Variable temporal</h3>
+
+            <span class="tag">fecha_accidente</span>
+
+        </div>
+
+
+        <!-- MUESTRA -->
+
+        <div class="card">
+
+            <h2>🔎 Muestra de registros</h2>
+
+            <p>
+                A continuación se presentan los primeros registros del dataset
+                utilizado. La tabla permite verificar directamente la estructura
+                de los datos obtenidos desde la fuente.
+            </p>
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            {% for columna in columnas %}
+
+                                <th>
+                                    {{ columna }}
+                                </th>
+
+                            {% endfor %}
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for fila in muestra %}
+
+                            <tr>
+
+                                {% for columna in columnas %}
+
+                                    <td>
+                                        {{ fila[columna] }}
+                                    </td>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- INTEGRACIÓN -->
+
+        <div class="card">
+
+            <h2>🔗 Integración con otras fuentes</h2>
+
+            <p class="description">
+
+                Como fuente complementaria se dispone del dataset de
+                <strong>Siniestros Viales ANSV</strong>, que contiene 19.015
+                registros correspondientes al periodo 2019-01-01 a 2019-08-14.
+
+                Debido a que ambos conjuntos de datos no presentan coincidencias
+                temporales suficientes para realizar una unión registro a registro,
+                se decidió conservarlos como fuentes complementarias.
+
+            </p>
+
+            <div class="warning">
+
+                ⚠️ No se realizará un <strong>merge directo</strong> entre ambos
+                datasets utilizando fecha, departamento y municipio.
+
+                La integración se realizará posteriormente mediante análisis
+                comparativos y agregaciones, preservando la trazabilidad de cada
+                fuente.
+
+            </div>
+
+        </div>
+
+
+        <!-- PROCEDENCIA -->
+
+        <div class="card">
+
+            <h2>🌐 Procedencia</h2>
+
+            <p>
+                <strong>Fuente:</strong> Datos Abiertos Colombia
+            </p>
+
+            <p>
+                <strong>Dataset:</strong>
+                Vehículos involucrados en un accidente de tránsito
+            </p>
+
+            <p>
+                <strong>Archivo local:</strong>
+                <code>data/vehiculos_accidentes.csv</code>
+            </p>
+
+            <p>
+                <strong>Registros descargados:</strong>
+                {{ "{:,}".format(registros) }}
+            </p>
+
+            <p>
+                <strong>Tamaño aproximado en memoria:</strong>
+                {{ tamano_mb }} MB
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer">
+
+        Sistema de Reportes Viales — Minería de Datos
+
+    </div>
+
+
+</body>
+
+</html>
