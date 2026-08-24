@@ -1,92 +1,42 @@
-# 🚨 Sistema de Reporte de Incidentes Viales - Sabana Centro
+⚙️ Instalación
+1. Clonar el repositorio
+git clone URL_DEL_REPOSITORIO
 
-Aplicación web para reportar y visualizar incidentes viales en la región de Sabana Centro (Cundinamarca, Colombia).
+Entrar a la carpeta:
 
-## 📋 Características
+cd Comunicaciondedatos
+2. Crear el entorno virtual
 
-- 🗺️ Mapa interactivo con municipios de Sabana Centro
-- 📍 Geolocalización automática o manual
-- 📝 Formulario de reporte de incidentes
-- 💾 Almacenamiento en Excel (temporal - migrar a BD)
-- 📊 Vista de lista de reportes
+Se recomienda utilizar un entorno virtual para mantener aisladas las dependencias del proyecto.
 
-## 🚀 Despliegue en la Nube (Render.com - GRATIS)
+python -m venv venv
+3. Activar el entorno virtual
+Windows CMD
+venv\Scripts\activate
+Windows PowerShell
+.\venv\Scripts\Activate.ps1
 
-### Opción 1: Render.com (Recomendado - Más Fácil)
+Cuando el entorno esté activo, aparecerá (venv) al inicio de la terminal:
 
-1. **Crear cuenta en [Render.com](https://render.com)** (gratis con GitHub)
+(venv) C:\...\Comunicaciondedatos>
+4. Instalar las dependencias
 
-2. **Preparar repositorio Git:**
-   ```bash
-   git init
-   git add .
-   git commit -m "Primer commit"
-   git remote add origin [URL_DE_TU_REPOSITORIO]
-   git push -u origin main
-   ```
+Con el entorno virtual activado:
 
-3. **En Render.com:**
-   - Click en "New +" → "Web Service"
-   - Conectar tu repositorio de GitHub
-   - Configuración:
-     - **Name:** `reportes-incidentes` (o el que prefieras)
-     - **Environment:** `Python 3`
-     - **Build Command:** `pip install -r requirements.txt`
-     - **Start Command:** `gunicorn app:app`
-   - Click "Create Web Service"
-
-4. **Listo!** Tu app estará en: `https://tu-app.onrender.com`
-
-### Opción 2: Railway.app (Alternativa)
-
-1. Crear cuenta en [Railway.app](https://railway.app)
-2. "New Project" → "Deploy from GitHub repo"
-3. Seleccionar tu repositorio
-4. Railway detecta automáticamente Flask y despliega
-
-## 🗄️ Próximos Pasos: Base de Datos
-
-Después del deploy, migrar de Excel a PostgreSQL:
-- Render incluye PostgreSQL gratuito
-- Modificar `app.py` para usar SQLAlchemy
-- Más estable y escalable
-
-## 📦 Instalación Local
-
-```bash
-# Instalar dependencias
 pip install -r requirements.txt
 
-# Ejecutar aplicación
+Esto instalará automáticamente las librerías necesarias para ejecutar el proyecto.
+
+▶️ Ejecutar la aplicación
+
+Una vez instaladas las dependencias, ejecutar:
+
 python app.py
-```
 
-La app estará en: `http://localhost:5000`
+La aplicación estará disponible normalmente en:
 
-## 📁 Estructura del Proyecto
+http://127.0.0.1:5000
 
-```
-├── app.py                 # Aplicación Flask principal
-├── requirements.txt       # Dependencias Python
-├── Procfile              # Configuración para deploy
-├── templates/            # Plantillas HTML
-│   ├── index.html        # Página principal con mapa
-│   └── lista.html        # Lista de reportes
-├── static/               # Archivos estáticos
-│   ├── sabana_centro.geojson  # Datos geográficos
-│   ├── script.js         # JavaScript del mapa
-│   └── styles.css        # Estilos
-└── data/                 # Datos (no incluir en Git)
-    └── reportes_incidentes.xlsx
-```
+También puede accederse desde otros dispositivos de la misma red utilizando la dirección IP mostrada por Flask, por ejemplo:
 
-## 🔧 Variables de Entorno
-
-- `PORT`: Puerto del servidor (automático en Render/Railway)
-
-## ⚠️ Nota Importante
-
-- El archivo Excel se crea automáticamente si no existe
-- Para producción, migrar a base de datos PostgreSQL
-- El GeoJSON se carga desde `static/sabana_centro.geojson`
-
+http://192.168.20.154:5000
