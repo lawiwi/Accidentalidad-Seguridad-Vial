@@ -104,7 +104,7 @@
         .back {
             display: inline-block;
             text-decoration: none;
-            background: #007bff;
+            background: #6c757d;
             color: white;
             padding: 12px 20px;
             border-radius: 8px;
@@ -113,8 +113,13 @@
         }
 
         .back:hover {
-            background: #0056b3;
-            transform: translateY(-2px);
+            background: #545b62;
+        }
+        
+        .back.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         @media (max-width: 600px) {
@@ -398,9 +403,13 @@
             siempre una copia de los datos originales para garantizar la
             reproducibilidad del proyecto.
         </p>
-    </div>
+    </div>    
 
-    <a href="/etapa1" class="back">⬅️ Volver a Etapa 1</a>
+    <a href="/Etapa1/preguntas" class="back">⬅ Punto anterior</a>
+
+    <a href="/Etapa1" class="back">⬅ Volver al menú principal</a>
+
+    <a class="back disabled" aria-disabled="true">Siguiente punto ➡</a>
 
 </div>
 
