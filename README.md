@@ -18,7 +18,7 @@ Usamos el siguiente comando
 venv\Scripts\activate
 
 Cuando el entorno esté activo, aparecerá (venv) al inicio de la terminal:
-(venv) C:\...\Comunicaciondedatos>
+(venv) C:\...\Accidentalidad-Seguridad-Vial>
 
 5. Instalar las dependencias
 Con el entorno virtual activado:
