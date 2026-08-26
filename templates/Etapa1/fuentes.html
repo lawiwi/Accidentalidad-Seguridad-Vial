@@ -61,6 +61,12 @@
             margin: 25px 0;
         }
 
+        .badges-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .badge {
             display: inline-block;
             padding: 6px 12px;
@@ -69,6 +75,16 @@
             color: white;
             font-size: 0.85rem;
             font-weight: bold;
+        }
+
+        .badge-download {
+            text-decoration: none;
+            background: #28a745;
+            transition: 0.2s;
+        }
+
+        .badge-download:hover {
+            background: #218838;
         }
 
         .dato {
@@ -133,11 +149,22 @@
 
     <div class="card">
 
-        <h2>🇨🇴 Fuente secundaria 1 — Siniestros viales ANSV</h2>
+        <h2>
+        🇨🇴 <a href="https://www.arcgis.com/apps/mapviewer/index.html?url=https://srvansvargweb.ansv.gov.co/server/rest/services/Hosted/Datos_siniestros/FeatureServer&source=sd" 
+                style="color: inherit; text-decoration: none; border-bottom: 1px dotted #0450f6;">
+            Siniestros viales ANSV ↗
+            </a>
+        </h2>
 
         <div class="fuente">
 
-            <span class="badge">SECUNDARIA</span>
+            <div class="badges-container">
+                <span class="badge">SECUNDARIA</span>
+                <span class="badge">01/01/2019 – 14/08/2019</span>
+                <a href="{{ url_for('descargar_siniestros') }}" class="badge badge-download">
+                    ↓ CSV
+                </a>
+            </div>
 
             <h3>Datos de Siniestros Viales</h3>
 
@@ -159,11 +186,6 @@
             <div class="dato">
                 <strong>Variables:</strong>
                 16 variables originales
-            </div>
-
-            <div class="dato">
-                <strong>Periodo:</strong>
-                01/01/2019 – 14/08/2019
             </div>
 
             <div class="dato">
@@ -196,6 +218,7 @@
                 <code>data/siniestros_viales.csv</code>
             </div>
 
+
             <p>
                 Esta fuente permite analizar características temporales,
                 geográficas y relacionadas con los siniestros, incluyendo
@@ -210,11 +233,23 @@
 
     <div class="card">
 
-        <h2>🚗 Fuente secundaria 2 — Vehículos involucrados</h2>
+        <h2>
+         🚗 <a href="https://www.datos.gov.co/Transporte/VEHICULOS-INVOLUCRADOS-EN-UN-ACCIDENTE-DE-TRANSITO/6jmc-vaxk/about_data" 
+                style="color: inherit; text-decoration: none; border-bottom: 1px dotted #0450f6;">
+            Vehículos involucrados ↗
+            </a>
+        </h2>
 
         <div class="fuente">
 
-            <span class="badge">SECUNDARIA</span>
+            <div class="badges-container">
+                <span class="badge">SECUNDARIA</span>
+                <span class="badge">01/01/2022 – 01/02/2026</span>
+
+                <a href="{{ url_for('descargar_vehiculos') }}" class="badge badge-download">
+                    ↓ CSV
+                </a>
+            </div>
 
             <h3>
                 Vehículos involucrados en un accidente de tránsito —
@@ -234,11 +269,6 @@
             <div class="dato">
                 <strong>Variables:</strong>
                 9
-            </div>
-
-            <div class="dato">
-                <strong>Periodo:</strong>
-                01/01/2022 – 01/02/2026
             </div>
 
             <div class="dato">

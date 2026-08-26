@@ -1,9 +1,6 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect,send_from_directory
 from datetime import datetime
 import os
-from flask import session
-
-from flask import Flask, render_template, request, jsonify, session, redirect
 import json
 from dotenv import load_dotenv
 import logging
@@ -305,6 +302,21 @@ def admin_dashboard_view():
 def health_check():
     return jsonify({"status": "healthy"}), 200
 
+@app.route('/descargar-siniestros')
+def descargar_siniestros():
+    return send_from_directory(
+        os.path.join(app.root_path, 'data'),
+        'siniestros_viales.csv',
+        as_attachment=True
+    )
+
+@app.route('/descargar-vehiculos')
+def descargar_vehiculos():
+    return send_from_directory(
+        os.path.join(app.root_path, 'data'),
+        'vehiculos_accidentes.csv',
+        as_attachment=True
+    )
 @app.errorhandler(500)
 def internal_error(e):
     app.logger.exception("Internal server error")
