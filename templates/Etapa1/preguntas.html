@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
+
+        /* =========================
+           ESTILOS GENERALES
+           ========================= */
+
         * {
             box-sizing: border-box;
         }
@@ -20,170 +26,1107 @@
             color: #333;
         }
 
+
+        /* =========================
+           SIDEBAR
+           ========================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        /* Encabezado */
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #111827;
+        }
+
+        .sidebar-header span {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+
+        /* Botón cerrar */
+
+        .sidebar-close {
+            border: none;
+            background: transparent;
+
+            font-size: 1.7rem;
+            color: #6b7280;
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .sidebar-close:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+
+        /* Sección navegación */
+
+        .sidebar-section {
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+        .sidebar-label {
+            display: block;
+
+            padding: 0 10px;
+            margin-bottom: 10px;
+
+            font-size: 0.7rem;
+            font-weight: bold;
+
+            color: #9ca3af;
+
+            letter-spacing: 0.08em;
+        }
+
+
+        /* Elementos del menú */
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: #374151;
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background: #f3f4f6;
+            color: #007bff;
+        }
+
+        .sidebar-item .number {
+            width: 28px;
+
+            font-size: 0.7rem;
+            font-weight: bold;
+
+            color: #9ca3af;
+        }
+
+
+        /* Página actual */
+
+        .sidebar-item.active {
+            background: #e8f2ff;
+            color: #007bff;
+
+            font-weight: 700;
+        }
+
+        .sidebar-item.active .number {
+            color: #007bff;
+        }
+
+
+        /* Footer */
+
+        .sidebar-footer {
+            padding: 15px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .home-link {
+            display: block;
+
+            padding: 10px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .home-link:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+
+        /* =========================
+           BOTÓN ABRIR SIDEBAR
+           ========================= */
+
+        .sidebar-toggle {
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #007bff;
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+            transition: 0.2s;
+        }
+
+        .sidebar-toggle:hover {
+            background: #0069d9;
+        }
+
+
+        /* Sidebar oculto */
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-toggle.visible {
+            display: block;
+        }
+
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+           ========================= */
+
+        .main-content {
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+        body.sidebar-hidden .main-content {
+            margin-left: 0;
+            padding-top: 80px;
+        }
+
+
+        /* =========================
+           BREADCRUMB
+           ========================= */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.9rem;
+
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #007bff;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #9ca3af;
+        }
+
+        .breadcrumb .current {
+            color: #374151;
+
+            font-weight: 500;
+        }
+
+
+        /* =========================
+           CONTENEDOR
+           ========================= */
+
         .container {
             max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
+
+            margin: 0 auto;
+
+            padding: 0;
         }
+
+
+        /* =========================
+           HEADER
+           ========================= */
 
         .header {
             background: #007bff;
+
             color: white;
+
             padding: 30px;
+
             border-radius: 15px;
+
             margin-bottom: 25px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
+
+        .header h1 {
+            margin-top: 0;
+        }
+
+        .header p {
+            margin-bottom: 0;
+        }
+
+
+        /* =========================
+           CARDS
+           ========================= */
 
         .card {
             background: white;
+
             padding: 25px;
+
             margin-bottom: 20px;
+
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         h2 {
             color: #007bff;
         }
 
+        p {
+            line-height: 1.7;
+
+            text-align: justify;
+        }
+
+
+        /* =========================
+           PREGUNTA PRINCIPAL
+           ========================= */
+
         .principal {
             border-left: 6px solid #28a745;
+
             padding: 20px;
+
             background: #f8fff9;
+
             border-radius: 8px;
         }
 
+
+        /* =========================
+           PREGUNTAS SECUNDARIAS
+           ========================= */
+
         .pregunta {
             padding: 18px;
+
             margin: 12px 0;
+
             background: #f8f9fa;
+
             border-radius: 8px;
+
             border-left: 4px solid #007bff;
+
+            line-height: 1.6;
         }
 
         .pregunta strong {
             color: #007bff;
         }
 
-        p {
-            line-height: 1.7;
-            text-align: justify;
-        }
-        
-        .back:hover {
-            background: #545b62;
+
+        /* =========================
+           BOTONES INFERIORES
+           ========================= */
+
+        .navigation-buttons {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
         }
 
         .back {
             display: inline-block;
+
             text-decoration: none;
+
             background: #6c757d;
+
             color: white;
+
             padding: 12px 20px;
+
             border-radius: 8px;
+
             font-weight: bold;
+
             transition: 0.2s;
         }
+
+        .back:hover {
+            background: #545b62;
+
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           OVERLAY
+           ========================= */
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .sidebar.hidden {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            body.sidebar-hidden .main-content {
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(0, 0, 0, 0.35);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            body.sidebar-hidden .main-content {
+                padding-top: 75px;
+            }
+
+            .header {
+                padding: 22px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .breadcrumb {
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .back {
+                text-align: center;
+
+                width: 100%;
+            }
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-    <div class="header">
-        <h1>2. Pregunta principal y preguntas secundarias</h1>
-        <p>Preguntas que orientarán el proceso de minería de datos.</p>
-    </div>
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
 
-    <div class="card">
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
 
-        <h2>Pregunta principal</h2>
 
-        <div class="principal">
-            <p>
-                <strong>
-                    ¿Qué patrones temporales, geográficos y relacionados con
-                    las características de los vehículos están asociados con
-                    una mayor frecuencia y gravedad de los accidentes de
-                    tránsito en Colombia?
-                </strong>
-            </p>
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div>
+
+                <h3>
+                    Etapa 1
+                </h3>
+
+                <span>
+                    Minería de datos
+                </span>
+
+            </div>
+
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
+
         </div>
 
-    </div>
 
-    <div class="card">
+        <div class="sidebar-section">
 
-        <h2>Preguntas secundarias</h2>
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
 
-        <div class="pregunta">
-            <strong>1.</strong>
-            ¿Qué periodos de tiempo presentan una mayor concentración de
-            accidentes de tránsito?
+
+            <!-- 01 -->
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    01
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- 02 -->
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    02
+                </span>
+
+                <span>
+                    Problema
+                </span>
+
+            </a>
+
+
+            <!-- 03 - ACTUAL -->
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item active"
+            >
+
+                <span class="number">
+                    03
+                </span>
+
+                <span>
+                    Preguntas
+                </span>
+
+            </a>
+
+
+            <!-- 04 -->
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    04
+                </span>
+
+                <span>
+                    Necesidades
+                </span>
+
+            </a>
+
+
+            <!-- 05 -->
+
+            <a
+                href="{{ url_for('Etapa1_fuentes') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    05
+                </span>
+
+                <span>
+                    Fuentes
+                </span>
+
+            </a>
+
+
+            <!-- 06 -->
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    06
+                </span>
+
+                <span>
+                    Dataset
+                </span>
+
+            </a>
+
+
+            <!-- 07 -->
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    07
+                </span>
+
+                <span>
+                    Diccionario de datos
+                </span>
+
+            </a>
+
+
+            <!-- 08 -->
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    08
+                </span>
+
+                <span>
+                    Calidad
+                </span>
+
+            </a>
+
+
+            <!-- 09 -->
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    09
+                </span>
+
+                <span>
+                    Limitaciones
+                </span>
+
+            </a>
+
         </div>
 
-        <div class="pregunta">
-            <strong>2.</strong>
-            ¿Qué departamentos y municipios presentan la mayor cantidad de
-            accidentes registrados?
+
+        <!-- Footer -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
         </div>
 
-        <div class="pregunta">
-            <strong>3.</strong>
-            ¿Qué tipos de vehículos aparecen con mayor frecuencia en los
-            accidentes de tránsito?
+    </aside>
+
+
+    <!-- ==================================================
+         OVERLAY PARA DISPOSITIVOS PEQUEÑOS
+         ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMBS
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <span class="current">
+                    Preguntas de investigación
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                    2. Pregunta principal y preguntas secundarias
+                </h1>
+
+                <p>
+                    Preguntas que orientarán el proceso de minería de datos.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PREGUNTA PRINCIPAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Pregunta principal
+                </h2>
+
+                <div class="principal">
+
+                    <p>
+                        <strong>
+                            ¿Qué patrones temporales, geográficos y
+                            relacionados con las características de los
+                            vehículos están asociados con una mayor frecuencia
+                            y gravedad de los accidentes de tránsito en
+                            Colombia?
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PREGUNTAS SECUNDARIAS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Preguntas secundarias
+                </h2>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        1.
+                    </strong>
+
+                    ¿Qué periodos de tiempo presentan una mayor
+                    concentración de accidentes de tránsito?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        2.
+                    </strong>
+
+                    ¿Qué departamentos y municipios presentan la mayor
+                    cantidad de accidentes registrados?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        3.
+                    </strong>
+
+                    ¿Qué tipos de vehículos aparecen con mayor frecuencia
+                    en los accidentes de tránsito?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        4.
+                    </strong>
+
+                    ¿Existe una relación entre el tipo de vehículo y la
+                    gravedad del accidente?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        5.
+                    </strong>
+
+                    ¿Qué marcas y modelos de vehículos presentan mayor
+                    participación dentro de los registros de accidentes?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        6.
+                    </strong>
+
+                    ¿Existen diferencias territoriales en los tipos de
+                    vehículos involucrados y en la gravedad de los accidentes?
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONOCIMIENTO ESPERADO
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Conocimiento esperado
+                </h2>
+
+                <p>
+                    Las preguntas planteadas permitirán orientar la selección
+                    de variables y técnicas de análisis posteriores. Se
+                    buscará identificar concentraciones temporales y
+                    territoriales, patrones asociados a determinados tipos de
+                    vehículos y posibles relaciones entre las características
+                    de los vehículos y la gravedad de los accidentes.
+                </p>
+
+                <p>
+                    Las respuestas deberán sustentarse en evidencia observable
+                    dentro de los datasets seleccionados, evitando establecer
+                    conclusiones causales cuando los datos únicamente permitan
+                    identificar asociaciones o patrones.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN INFERIOR
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+                <a
+                    href="{{ url_for('Etapa1_problema') }}"
+                    class="back"
+                >
+                    ⬅ Punto anterior
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                    🏠 Menú Etapa 1
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1_necesidades') }}"
+                    class="back"
+                >
+                    Siguiente punto ➡
+                </a>
+
+            </div>
+
+
         </div>
 
-        <div class="pregunta">
-            <strong>4.</strong>
-            ¿Existe una relación entre el tipo de vehículo y la gravedad del
-            accidente?
-        </div>
+    </main>
 
-        <div class="pregunta">
-            <strong>5.</strong>
-            ¿Qué marcas y modelos de vehículos presentan mayor participación
-            dentro de los registros de accidentes?
-        </div>
 
-        <div class="pregunta">
-            <strong>6.</strong>
-            ¿Existen diferencias territoriales en los tipos de vehículos
-            involucrados y en la gravedad de los accidentes?
-        </div>
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
 
-    </div>
+    <script>
 
-    <div class="card">
+        const sidebar =
+            document.getElementById("sidebar");
 
-        <h2>Conocimiento esperado</h2>
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
 
-        <p>
-            Las preguntas planteadas permitirán orientar la selección de
-            variables y técnicas de análisis posteriores. Se buscará
-            identificar concentraciones temporales y territoriales, patrones
-            asociados a determinados tipos de vehículos y posibles relaciones
-            entre las características de los vehículos y la gravedad de los
-            accidentes.
-        </p>
+        const sidebarClose =
+            document.getElementById("sidebarClose");
 
-        <p>
-            Las respuestas deberán sustentarse en evidencia observable dentro
-            de los datasets seleccionados, evitando establecer conclusiones
-            causales cuando los datos únicamente permitan identificar
-            asociaciones o patrones.
-        </p>
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
 
-    </div>
 
-    <a href="/Etapa1/problema" class="back">⬅ Punto anterior</a>
+        /* =========================
+           CERRAR SIDEBAR
+           ========================= */
 
-    <a href="/Etapa1" class="back">⬅ Volver al menú principal</a>
+        sidebarClose.addEventListener("click", () => {
 
-    <a href="/Etapa1/necesidades" class="back">Siguiente punto ➡</a>
+            sidebar.classList.add("hidden");
 
-</div>
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* =========================
+           ABRIR SIDEBAR
+           ========================= */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* =========================
+           CERRAR CON OVERLAY
+           ========================= */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+    </script>
 
 </body>
+
 </html>
+```

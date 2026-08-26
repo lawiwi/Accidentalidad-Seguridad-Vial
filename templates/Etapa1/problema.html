@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Problema y Contexto</title>
+
+    <title>Problema y contexto</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
+
+        /* =========================
+           ESTILOS GENERALES
+           ========================= */
+
         * {
             box-sizing: border-box;
         }
@@ -19,35 +26,349 @@
             color: #333;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
+
+        /* =========================
+           SIDEBAR
+           ========================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
         }
+
+
+        /* Encabezado del sidebar */
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #111827;
+        }
+
+        .sidebar-header span {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+
+        /* Botón cerrar */
+
+        .sidebar-close {
+            border: none;
+            background: transparent;
+
+            font-size: 1.7rem;
+            color: #6b7280;
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .sidebar-close:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+
+        /* Sección navegación */
+
+        .sidebar-section {
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+        .sidebar-label {
+            display: block;
+
+            padding: 0 10px;
+            margin-bottom: 10px;
+
+            font-size: 0.7rem;
+            font-weight: bold;
+
+            color: #9ca3af;
+
+            letter-spacing: 0.08em;
+        }
+
+
+        /* Elementos del menú */
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: #374151;
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background: #f3f4f6;
+            color: #007bff;
+        }
+
+        .sidebar-item .number {
+            width: 28px;
+
+            font-size: 0.7rem;
+            font-weight: bold;
+
+            color: #9ca3af;
+        }
+
+
+        /* Página actual */
+
+        .sidebar-item.active {
+            background: #e8f2ff;
+            color: #007bff;
+
+            font-weight: 700;
+        }
+
+        .sidebar-item.active .number {
+            color: #007bff;
+        }
+
+
+        /* Footer */
+
+        .sidebar-footer {
+            padding: 15px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .home-link {
+            display: block;
+
+            padding: 10px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .home-link:hover {
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+
+        /* =========================
+           BOTÓN ABRIR SIDEBAR
+           ========================= */
+
+        .sidebar-toggle {
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: #007bff;
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+            transition: 0.2s;
+        }
+
+        .sidebar-toggle:hover {
+            background: #0069d9;
+        }
+
+
+        /* Sidebar oculto */
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-toggle.visible {
+            display: block;
+        }
+
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+           ========================= */
+
+        .main-content {
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+        body.sidebar-hidden .main-content {
+            margin-left: 0;
+            padding-top: 80px;
+        }
+
+
+        /* =========================
+           BREADCRUMB
+           ========================= */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.9rem;
+
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: #007bff;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #9ca3af;
+        }
+
+        .breadcrumb .current {
+            color: #374151;
+
+            font-weight: 500;
+        }
+
+
+        /* =========================
+           CONTENEDOR
+           ========================= */
+
+        .container {
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
 
         .header {
             background: #007bff;
+
             color: white;
+
             padding: 30px;
+
             border-radius: 15px;
+
             margin-bottom: 25px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .header h1 {
-            margin: 0 0 10px;
+            margin-top: 0;
         }
+
+        .header p {
+            margin-bottom: 0;
+        }
+
+
+        /* =========================
+           CARDS
+           ========================= */
 
         .card {
             background: white;
+
             padding: 25px;
+
             margin-bottom: 20px;
+
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         h2 {
             color: #007bff;
-            margin-top: 0;
         }
 
         h3 {
@@ -56,168 +377,676 @@
 
         p {
             line-height: 1.7;
+
             text-align: justify;
         }
 
+
+        /* =========================
+           NIVELES
+           ========================= */
+
         .nivel {
+            margin: 25px 0;
+
+            padding-left: 18px;
+
             border-left: 5px solid #007bff;
-            padding-left: 15px;
-            margin-bottom: 25px;
+        }
+
+        .nivel h3 {
+            margin-top: 0;
+        }
+
+
+        /* =========================
+           BOTONES INFERIORES
+           ========================= */
+
+        .navigation-buttons {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
         }
 
         .back {
             display: inline-block;
+
             text-decoration: none;
+
             background: #6c757d;
+
             color: white;
+
             padding: 12px 20px;
+
             border-radius: 8px;
+
             font-weight: bold;
+
             transition: 0.2s;
         }
 
         .back:hover {
             background: #545b62;
+
+            text-decoration: none;
         }
-        .back.disabled {
-            pointer-events: none;
-            opacity: 0.5;
-            cursor: not-allowed;
+
+
+        /* =========================
+           OVERLAY
+           ========================= */
+
+        .sidebar-overlay {
+            display: none;
         }
-        
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .sidebar.hidden {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            body.sidebar-hidden .main-content {
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(0, 0, 0, 0.35);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            body.sidebar-hidden .main-content {
+                padding-top: 75px;
+            }
+
+            .header {
+                padding: 22px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .breadcrumb {
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .back {
+                text-align: center;
+
+                width: 100%;
+            }
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="container">
 
-    <div class="header">
-        <h1>1. Problema y contexto</h1>
-        <p>
-            Análisis de la accidentalidad vial en Colombia mediante técnicas
-            de minería de datos.
-        </p>
-    </div>
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
 
-    <div class="card">
-        <h2>Contexto general</h2>
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
 
-        <p>
-            La accidentalidad vial constituye un problema de interés para la
-            seguridad pública, la movilidad y la salud de la población. Los
-            siniestros de tránsito pueden estar relacionados con múltiples
-            factores, entre ellos el tipo de vehículo involucrado, las
-            características geográficas, el periodo en el que ocurre el
-            accidente, la gravedad del evento y las condiciones particulares
-            registradas por las autoridades de tránsito.
-        </p>
 
-        <p>
-            Debido al volumen de información disponible en fuentes oficiales,
-            las técnicas de minería de datos permiten identificar patrones,
-            relaciones y comportamientos que pueden ser difíciles de observar
-            mediante una revisión manual de los registros.
-        </p>
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
 
-        <p>
-            Este proyecto busca analizar información relacionada con
-            siniestros viales y vehículos involucrados en accidentes de
-            tránsito en Colombia, utilizando fuentes de datos oficiales y
-            complementarias.
-        </p>
-    </div>
+    <aside class="sidebar" id="sidebar">
 
-    <div class="card">
-        <h2>Problema de investigación</h2>
+        <div class="sidebar-header">
 
-        <p>
-            El problema de investigación se centra en determinar qué
-            características temporales, geográficas y relacionadas con los
-            vehículos están asociadas con una mayor concentración de
-            accidentes de tránsito y con diferentes niveles de gravedad en
-            Colombia.
-        </p>
+            <div>
+                <h3>Etapa 1</h3>
 
-        <p>
-            La disponibilidad de diferentes fuentes de información permite
-            estudiar el fenómeno desde varias perspectivas. Sin embargo, las
-            fuentes no presentan necesariamente la misma cobertura temporal,
-            geográfica o nivel de granularidad, por lo que es necesario
-            caracterizarlas y analizarlas de manera complementaria.
-        </p>
-    </div>
+                <span>Minería de datos</span>
+            </div>
 
-    <div class="card">
-        <h2>Análisis por niveles</h2>
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
 
-        <div class="nivel">
-            <h3>🌎 Nivel global</h3>
-
-            <p>
-                A nivel global, la accidentalidad vial representa un problema
-                relacionado con la seguridad vial y la movilidad. El análisis
-                internacional permite contextualizar el fenómeno colombiano
-                frente a la problemática general de los siniestros de
-                tránsito y reconocer la importancia de estudiar sus factores
-                asociados.
-            </p>
         </div>
 
-        <div class="nivel">
-            <h3>🇨🇴 Nivel nacional — Colombia</h3>
 
-            <p>
-                En Colombia se dispone de registros oficiales de siniestros
-                viales y de vehículos involucrados en accidentes de tránsito.
-                Estos datos permiten estudiar diferencias entre departamentos,
-                municipios, periodos de tiempo, tipos de vehículos y gravedad
-                de los accidentes.
-            </p>
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
+
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
+                <span class="number">01</span>
+
+                <span>Inicio</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item active"
+            >
+                <span class="number">02</span>
+
+                <span>Problema</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item"
+            >
+                <span class="number">03</span>
+
+                <span>Preguntas</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+                <span class="number">04</span>
+
+                <span>Necesidades</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1_fuentes') }}"
+                class="sidebar-item"
+            >
+                <span class="number">05</span>
+
+                <span>Fuentes</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item"
+            >
+                <span class="number">06</span>
+
+                <span>Dataset</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item"
+            >
+                <span class="number">07</span>
+
+                <span>Diccionario de datos</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item"
+            >
+                <span class="number">08</span>
+
+                <span>Calidad</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item"
+            >
+                <span class="number">09</span>
+
+                <span>Limitaciones</span>
+            </a>
+
         </div>
 
-        <div class="nivel">
-            <h3>📍 Nivel regional</h3>
 
-            <p>
-                En el nivel regional se analizarán las diferencias existentes
-                entre departamentos y municipios colombianos. Se prestará
-                especial atención a la distribución territorial de los
-                accidentes y a las características de los vehículos
-                involucrados.
-            </p>
+        <div class="sidebar-footer">
 
-            <p>
-                La información disponible incluye registros de departamentos
-                y municipios, lo que permite realizar comparaciones
-                territoriales y posteriormente identificar posibles zonas con
-                mayor concentración de eventos.
-            </p>
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
         </div>
-    </div>
 
-    <div class="card">
-        <h2>Conocimiento esperado</h2>
+    </aside>
 
-        <p>
-            Se espera obtener conocimiento sobre los patrones temporales y
-            geográficos de la accidentalidad vial, así como sobre la relación
-            entre los tipos de vehículos involucrados y la gravedad de los
-            accidentes.
-        </p>
 
-        <p>
-            Este conocimiento servirá como base para posteriores procesos de
-            análisis exploratorio, agrupamiento, identificación de patrones,
-            asociación y posibles modelos predictivos.
-        </p>
-    </div>
+    <!-- Fondo para dispositivos pequeños -->
 
-    <a href="/Etapa1" class="back">⬅ Volver al menú principal</a>
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
 
-   <a href="/Etapa1/preguntas" class="back">Siguiente punto ➡</a>
 
-</div>
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMB
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>›</span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>›</span>
+
+                <span class="current">
+                    Problema y contexto
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                    1. Problema y contexto
+                </h1>
+
+                <p>
+                    Análisis de la accidentalidad vial en Colombia
+                    mediante técnicas de minería de datos.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONTEXTO GENERAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Contexto general
+                </h2>
+
+                <p>
+                    La accidentalidad vial constituye un problema de interés
+                    para la seguridad pública, la movilidad y la salud de la
+                    población. Los siniestros de tránsito pueden estar
+                    relacionados con múltiples factores, entre ellos el tipo
+                    de vehículo involucrado, las características geográficas,
+                    el periodo en el que ocurre el accidente, la gravedad del
+                    evento y las condiciones particulares registradas por las
+                    autoridades de tránsito.
+                </p>
+
+                <p>
+                    Debido al volumen de información disponible en fuentes
+                    oficiales, las técnicas de minería de datos permiten
+                    identificar patrones, relaciones y comportamientos que
+                    pueden ser difíciles de observar mediante una revisión
+                    manual de los registros.
+                </p>
+
+                <p>
+                    Este proyecto busca analizar información relacionada con
+                    siniestros viales y vehículos involucrados en accidentes
+                    de tránsito en Colombia, utilizando fuentes de datos
+                    oficiales y complementarias.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PROBLEMA DE INVESTIGACIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Problema de investigación
+                </h2>
+
+                <p>
+                    El problema de investigación se centra en determinar qué
+                    características temporales, geográficas y relacionadas con
+                    los vehículos están asociadas con una mayor concentración
+                    de accidentes de tránsito y con diferentes niveles de
+                    gravedad en Colombia.
+                </p>
+
+                <p>
+                    La disponibilidad de diferentes fuentes de información
+                    permite estudiar el fenómeno desde varias perspectivas.
+                    Sin embargo, las fuentes no presentan necesariamente la
+                    misma cobertura temporal, geográfica o nivel de
+                    granularidad, por lo que es necesario caracterizarlas y
+                    analizarlas de manera complementaria.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 ANÁLISIS POR NIVELES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Análisis por niveles
+                </h2>
+
+
+                <div class="nivel">
+
+                    <h3>
+                        🌎 Nivel global
+                    </h3>
+
+                    <p>
+                        A nivel global, la accidentalidad vial representa un
+                        problema relacionado con la seguridad vial y la
+                        movilidad. El análisis internacional permite
+                        contextualizar el fenómeno colombiano frente a la
+                        problemática general de los siniestros de tránsito y
+                        reconocer la importancia de estudiar sus factores
+                        asociados.
+                    </p>
+
+                </div>
+
+
+                <div class="nivel">
+
+                    <h3>
+                        🇨🇴 Nivel nacional — Colombia
+                    </h3>
+
+                    <p>
+                        En Colombia se dispone de registros oficiales de
+                        siniestros viales y de vehículos involucrados en
+                        accidentes de tránsito. Estos datos permiten estudiar
+                        diferencias entre departamentos, municipios, periodos
+                        de tiempo, tipos de vehículos y gravedad de los
+                        accidentes.
+                    </p>
+
+                </div>
+
+
+                <div class="nivel">
+
+                    <h3>
+                        📍 Nivel regional
+                    </h3>
+
+                    <p>
+                        En el nivel regional se analizarán las diferencias
+                        existentes entre departamentos y municipios
+                        colombianos. Se prestará especial atención a la
+                        distribución territorial de los accidentes y a las
+                        características de los vehículos involucrados.
+                    </p>
+
+                    <p>
+                        La información disponible incluye registros de
+                        departamentos y municipios, lo que permite realizar
+                        comparaciones territoriales y posteriormente
+                        identificar posibles zonas con mayor concentración de
+                        eventos.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONOCIMIENTO ESPERADO
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Conocimiento esperado
+                </h2>
+
+                <p>
+                    Se espera obtener conocimiento sobre los patrones
+                    temporales y geográficos de la accidentalidad vial, así
+                    como sobre la relación entre los tipos de vehículos
+                    involucrados y la gravedad de los accidentes.
+                </p>
+
+                <p>
+                    Este conocimiento servirá como base para posteriores
+                    procesos de análisis exploratorio, agrupamiento,
+                    identificación de patrones, asociación y posibles modelos
+                    predictivos.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                    ⬅ Menú Etapa 1
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1_preguntas') }}"
+                    class="back"
+                >
+                    Siguiente punto ➡
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
+
+    <script>
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+        const sidebarClose =
+            document.getElementById("sidebarClose");
+
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
+
+
+        /* =========================
+           CERRAR SIDEBAR
+           ========================= */
+
+        sidebarClose.addEventListener("click", () => {
+
+            sidebar.classList.add("hidden");
+
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* =========================
+           ABRIR SIDEBAR
+           ========================= */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* =========================
+           CERRAR CON OVERLAY
+           ========================= */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+    </script>
 
 </body>
+
 </html>
+```

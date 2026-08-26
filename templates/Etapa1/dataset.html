@@ -2,15 +2,22 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>5. Dataset | Sistema de Reportes Viales</title>
+    <title>Dataset | Sistema de Reportes Viales</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
+
+        /* ==================================================
+           ESTILOS GENERALES
+           ================================================== */
 
         * {
             box-sizing: border-box;
@@ -18,589 +25,1780 @@
 
         body {
             margin: 0;
-            padding: 0;
             font-family: 'Roboto', sans-serif;
-            background: #f4f7fb;
+            background: #f4f6f9;
             color: #333;
         }
 
-        .header {
-            background: #007bff;
-            color: white;
-            padding: 25px;
-            text-align: center;
+
+        /* ==================================================
+           SIDEBAR
+           ================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: #ffffff;
+
+            border-right: 1px solid #e5e7eb;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
         }
 
-        .header h1 {
+
+        /* ==================================================
+           ENCABEZADO SIDEBAR
+           ================================================== */
+
+        .sidebar-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+
+        .sidebar-header h3 {
+
             margin: 0;
-            font-size: 2rem;
+
+            font-size: 1.25rem;
+
+            color: #111827;
         }
 
-        .header p {
-            margin-top: 8px;
-            opacity: 0.9;
+
+        .sidebar-header span {
+
+            font-size: 0.8rem;
+
+            color: #6b7280;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
 
-        .back {
-            display: inline-block;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-        }
+        /* ==================================================
+           BOTÓN CERRAR SIDEBAR
+           ================================================== */
 
-        .card {
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+        .sidebar-close {
 
-        .card h2 {
-            margin-top: 0;
-            color: #007bff;
-        }
+            border: none;
 
-        .card h3 {
-            color: #333;
-        }
+            background: transparent;
 
-        .description {
-            line-height: 1.7;
-            text-align: justify;
-        }
+            font-size: 1.7rem;
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
+            color: #6b7280;
 
-        .stat {
-            background: #f4f7fb;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            border-left: 5px solid #007bff;
-        }
+            cursor: pointer;
 
-        .stat .number {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #007bff;
-        }
+            width: 35px;
+            height: 35px;
 
-        .stat .label {
-            margin-top: 8px;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .columns {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .column {
-            background: #f8f9fa;
-            padding: 10px 14px;
-            border-radius: 7px;
-            border: 1px solid #e1e5ea;
-            font-family: monospace;
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 900px;
-        }
-
-        th {
-            background: #007bff;
-            color: white;
-            padding: 12px;
-            text-align: left;
-        }
-
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 20px;
-            background: #e7f1ff;
-            color: #0056b3;
-            margin: 3px;
-            font-size: 0.85rem;
-        }
-
-        .warning {
-            background: #fff3cd;
-            border-left: 5px solid #ffc107;
-            padding: 15px;
             border-radius: 8px;
-            line-height: 1.6;
-        }
 
-        .success {
-            background: #d4edda;
-            border-left: 5px solid #28a745;
-            padding: 15px;
-            border-radius: 8px;
-            line-height: 1.6;
-        }
-
-        .footer {
-            text-align: center;
-            color: #777;
-            padding: 30px;
-        }
-        .back {
-            display: inline-block;
-            text-decoration: none;
-            background: #6c757d;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
             transition: 0.2s;
         }
 
-        @media (max-width: 800px) {
 
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
+        .sidebar-close:hover {
+
+            background: #f3f4f6;
+
+            color: #111827;
+        }
+
+
+        /* ==================================================
+           SECCIÓN DE NAVEGACIÓN
+           ================================================== */
+
+        .sidebar-section {
+
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+
+        .sidebar-label {
+
+            display: block;
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            font-size: 0.7rem;
+
+            font-weight: bold;
+
+            color: #9ca3af;
+
+            letter-spacing: 0.08em;
+        }
+
+
+        /* ==================================================
+           ITEMS SIDEBAR
+           ================================================== */
+
+        .sidebar-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .sidebar-item:hover {
+
+            background: #f3f4f6;
+
+            color: #007bff;
+        }
+
+
+        .sidebar-item .number {
+
+            width: 28px;
+
+            font-size: 0.7rem;
+
+            font-weight: bold;
+
+            color: #9ca3af;
+        }
+
+
+        /* ==================================================
+           PÁGINA ACTUAL
+           ================================================== */
+
+        .sidebar-item.active {
+
+            background: #e8f2ff;
+
+            color: #007bff;
+
+            font-weight: 700;
+        }
+
+
+        .sidebar-item.active .number {
+
+            color: #007bff;
+        }
+
+
+        /* ==================================================
+           FOOTER SIDEBAR
+           ================================================== */
+
+        .sidebar-footer {
+
+            padding: 15px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+
+        .home-link {
+
+            display: block;
+
+            padding: 10px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .home-link:hover {
+
+            background: #f3f4f6;
+
+            color: #111827;
+        }
+
+
+        /* ==================================================
+           BOTÓN ABRIR SIDEBAR
+           ================================================== */
+
+        .sidebar-toggle {
+
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #007bff;
+
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+            transition: 0.2s;
+        }
+
+
+        .sidebar-toggle:hover {
+
+            background: #0069d9;
+        }
+
+
+        /* ==================================================
+           SIDEBAR OCULTO
+           ================================================== */
+
+        .sidebar.hidden {
+
+            transform: translateX(-100%);
+        }
+
+
+        .sidebar-toggle.visible {
+
+            display: block;
+        }
+
+
+        /* ==================================================
+           CONTENIDO PRINCIPAL
+           ================================================== */
+
+        .main-content {
+
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+
+        body.sidebar-hidden .main-content {
+
+            margin-left: 0;
+
+            padding-top: 80px;
+        }
+
+
+        /* ==================================================
+           BREADCRUMBS
+           ================================================== */
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.9rem;
+
+            color: #6b7280;
+        }
+
+
+        .breadcrumb a {
+
+            color: #007bff;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+
+        .breadcrumb a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .breadcrumb span {
+
+            color: #9ca3af;
+        }
+
+
+        .breadcrumb .current {
+
+            color: #374151;
+
+            font-weight: 500;
+        }
+
+
+        /* ==================================================
+           CONTENEDOR
+           ================================================== */
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        .header {
+
+            background: #007bff;
+
+            color: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .header h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+            font-size: 2rem;
+        }
+
+
+        .header p {
+
+            margin-bottom: 0;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==================================================
+           CARDS
+           ================================================== */
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .card h2 {
+
+            margin-top: 0;
+
+            color: #007bff;
+        }
+
+
+        .card h3 {
+
+            color: #333;
+
+            margin-top: 20px;
+        }
+
+
+        .description {
+
+            line-height: 1.7;
+
+            text-align: justify;
+        }
+
+
+        /* ==================================================
+           ESTADÍSTICAS
+           ================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+
+        .stat {
+
+            background: #f4f7fb;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-left: 5px solid #007bff;
+        }
+
+
+        .stat .number {
+
+            font-size: 1.8rem;
+
+            font-weight: bold;
+
+            color: #007bff;
+
+            word-break: break-word;
+        }
+
+
+        .stat .label {
+
+            margin-top: 8px;
+
+            font-size: 0.9rem;
+
+            color: #666;
+        }
+
+
+        /* ==================================================
+           COLUMNAS DE VARIABLES
+           ================================================== */
+
+        .columns {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+
+        .column {
+
+            background: #f8f9fa;
+
+            padding: 10px 14px;
+
+            border-radius: 7px;
+
+            border: 1px solid #e1e5ea;
+
+            font-family: monospace;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        /* ==================================================
+           TABLA
+           ================================================== */
+
+        .table-container {
+
+            overflow-x: auto;
+
+            width: 100%;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+
+        th {
+
+            background: #007bff;
+
+            color: white;
+
+            padding: 12px;
+
+            text-align: left;
+
+            white-space: nowrap;
+        }
+
+
+        td {
+
+            padding: 10px;
+
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        tr:nth-child(even) {
+
+            background: #f8f9fa;
+        }
+
+
+        tr:hover {
+
+            background: #eef5ff;
+        }
+
+
+        /* ==================================================
+           ETIQUETAS
+           ================================================== */
+
+        .tag {
+
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            background: #e7f1ff;
+
+            color: #0056b3;
+
+            margin: 3px;
+
+            font-size: 0.85rem;
+        }
+
+
+        /* ==================================================
+           MENSAJES
+           ================================================== */
+
+        .warning {
+
+            background: #fff3cd;
+
+            border-left: 5px solid #ffc107;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+        }
+
+
+        .success {
+
+            background: #d4edda;
+
+            border-left: 5px solid #28a745;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==================================================
+           NAVEGACIÓN INFERIOR
+           ================================================== */
+
+        .navigation-buttons {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #6c757d;
+
+            color: white;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .back:hover {
+
+            background: #545b62;
+
+            text-decoration: none;
+        }
+
+
+        /* ==================================================
+           OVERLAY
+           ================================================== */
+
+        .sidebar-overlay {
+
+            display: none;
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                transform: translateX(-100%);
             }
 
-            .columns {
-                grid-template-columns: 1fr;
+
+            .sidebar.open {
+
+                transform: translateX(0);
+            }
+
+
+            .sidebar-toggle {
+
+                display: block;
+            }
+
+
+            .sidebar.hidden {
+
+                transform: translateX(-100%);
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+
+            .sidebar-overlay {
+
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(0, 0, 0, 0.35);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+
+            .sidebar-overlay.active {
+
+                display: block;
+            }
+
+
+            .stats {
+
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        @media (max-width: 500px) {
+
+        @media (max-width: 600px) {
+
+            .main-content {
+
+                padding: 15px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                padding-top: 75px;
+            }
+
+
+            .header {
+
+                padding: 22px;
+            }
+
+
+            .header h1 {
+
+                font-size: 1.5rem;
+            }
+
+
+            .card {
+
+                padding: 20px;
+            }
+
+
+            .breadcrumb {
+
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
 
             .stats {
+
                 grid-template-columns: 1fr;
             }
 
-            .container {
-                padding: 0 10px;
+
+            .columns {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .navigation-buttons {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .back {
+
+                text-align: center;
+
+                width: 100%;
             }
         }
 
     </style>
+
 </head>
+
 
 <body>
 
-    <div class="header">
 
-        <h1>📊 5. Dataset</h1>
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
 
-        <p>
-            Etapa 1 — Problema, fuentes y caracterización de datos
-        </p>
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
 
-    </div>
+
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <div>
+
+                <h3>
+                    Etapa 1
+                </h3>
+
+                <span>
+                    Minería de datos
+                </span>
+
+            </div>
 
 
-    <div class="container">
-
-
-        <!-- DESCRIPCIÓN -->
-
-        <div class="card">
-
-            <h2>📁 Dataset principal</h2>
-
-            <p class="description">
-
-                Para el desarrollo del proyecto de minería de datos se seleccionó como
-                conjunto de datos principal el dataset
-                <strong>Vehículos involucrados en un accidente de tránsito</strong>,
-                publicado a través de Datos Abiertos Colombia.
-
-                El conjunto contiene información relacionada con los vehículos
-                involucrados en accidentes de tránsito registrados en Colombia,
-                incluyendo características del vehículo, fecha y ubicación del
-                accidente y gravedad del evento.
-
-            </p>
-
-            <p class="description">
-
-                Este dataset fue seleccionado debido a que presenta una cobertura
-                temporal más amplia que la fuente inicialmente analizada y permite
-                estudiar la relación entre las características de los vehículos,
-                la ubicación y la gravedad de los accidentes.
-
-            </p>
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
 
         </div>
 
 
-        <!-- ESTADÍSTICAS -->
+        <div class="sidebar-section">
 
-        <div class="card">
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
 
-            <h2>📈 Características generales</h2>
 
-            <div class="stats">
+            <!-- ==================================================
+                 01 - INICIO
+                 ================================================== -->
 
-                <div class="stat">
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
 
-                    <div class="number">
-                        {{ "{:,}".format(registros) }}
+                <span class="number">
+                    01
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 02 - PROBLEMA
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    02
+                </span>
+
+                <span>
+                    Problema
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 03 - PREGUNTAS
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    03
+                </span>
+
+                <span>
+                    Preguntas
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 04 - NECESIDADES
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    04
+                </span>
+
+                <span>
+                    Necesidades
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 05 - DATASET ACTUAL
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item active"
+            >
+
+                <span class="number">
+                    05
+                </span>
+
+                <span>
+                    Dataset
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 06 - DICCIONARIO
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    06
+                </span>
+
+                <span>
+                    Diccionario de datos
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 07 - CALIDAD
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    07
+                </span>
+
+                <span>
+                    Calidad
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 08 - LIMITACIONES
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    08
+                </span>
+
+                <span>
+                    Limitaciones
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+             FOOTER SIDEBAR
+             ================================================== -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==================================================
+         OVERLAY
+         ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMBS
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <span class="current">
+                    Dataset
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                    📊 5. Dataset
+                </h1>
+
+                <p>
+                    Etapa 1 — Problema, fuentes y caracterización de datos
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 DESCRIPCIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    📁 Dataset principal
+                </h2>
+
+                <p class="description">
+
+                    Para el desarrollo del proyecto de minería de datos se
+                    seleccionó como conjunto de datos principal el dataset
+                    <strong>
+                        Vehículos involucrados en un accidente de tránsito
+                    </strong>,
+                    publicado a través de Datos Abiertos Colombia.
+
+                    El conjunto contiene información relacionada con los
+                    vehículos involucrados en accidentes de tránsito
+                    registrados en Colombia, incluyendo características del
+                    vehículo, fecha y ubicación del accidente y gravedad del
+                    evento.
+
+                </p>
+
+
+                <p class="description">
+
+                    Este dataset fue seleccionado debido a que presenta una
+                    cobertura temporal más amplia que la fuente inicialmente
+                    analizada y permite estudiar la relación entre las
+                    características de los vehículos, la ubicación y la
+                    gravedad de los accidentes.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 ESTADÍSTICAS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    📈 Características generales
+                </h2>
+
+
+                <div class="stats">
+
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ "{:,}".format(registros) }}
+                        </div>
+
+                        <div class="label">
+                            Registros
+                        </div>
+
                     </div>
 
-                    <div class="label">
-                        Registros
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ variables }}
+                        </div>
+
+                        <div class="label">
+                            Variables
+                        </div>
+
                     </div>
 
-                </div>
 
+                    <div class="stat">
 
-                <div class="stat">
+                        <div class="number">
+                            {{ faltantes }}
+                        </div>
 
-                    <div class="number">
-                        {{ variables }}
+                        <div class="label">
+                            Valores faltantes
+                        </div>
+
                     </div>
 
-                    <div class="label">
-                        Variables
-                    </div>
 
-                </div>
+                    <div class="stat">
 
+                        <div class="number">
+                            {{ "{:,}".format(duplicados) }}
+                        </div>
 
-                <div class="stat">
+                        <div class="label">
+                            Registros duplicados
+                        </div>
 
-                    <div class="number">
-                        {{ faltantes }}
-                    </div>
-
-                    <div class="label">
-                        Valores faltantes
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="number">
-                        {{ "{:,}".format(duplicados) }}
-                    </div>
-
-                    <div class="label">
-                        Registros duplicados
                     </div>
 
                 </div>
 
             </div>
 
-        </div>
+
+            <!-- ==================================================
+                 COBERTURA TEMPORAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    📅 Cobertura temporal
+                </h2>
 
 
-        <!-- COBERTURA -->
+                <div class="stats">
 
-        <div class="card">
 
-            <h2>📅 Cobertura temporal</h2>
+                    <div class="stat">
 
-            <div class="stats">
+                        <div class="number">
+                            {{ fecha_inicio }}
+                        </div>
 
-                <div class="stat">
+                        <div class="label">
+                            Fecha inicial
+                        </div>
 
-                    <div class="number">
-                        {{ fecha_inicio }}
                     </div>
 
-                    <div class="label">
-                        Fecha inicial
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ fecha_fin }}
+                        </div>
+
+                        <div class="label">
+                            Fecha final
+                        </div>
+
                     </div>
+
 
                 </div>
 
 
-                <div class="stat">
+                <br>
 
-                    <div class="number">
-                        {{ fecha_fin }}
-                    </div>
 
-                    <div class="label">
-                        Fecha final
-                    </div>
+                <div class="success">
+
+                    ✅ El dataset presenta información correspondiente al
+                    periodo
+                    <strong>{{ fecha_inicio }}</strong>
+                    a
+                    <strong>{{ fecha_fin }}</strong>.
+
+                    Esta cobertura permite realizar análisis temporales y
+                    comparar el comportamiento de los accidentes entre
+                    diferentes años.
 
                 </div>
 
             </div>
 
-            <br>
 
-            <div class="success">
+            <!-- ==================================================
+                 CUMPLIMIENTO DE REQUISITOS
+                 ================================================== -->
 
-                ✅ El dataset presenta información correspondiente al periodo
-                <strong>{{ fecha_inicio }}</strong> a
-                <strong>{{ fecha_fin }}</strong>.
+            <div class="card">
 
-                Esta cobertura permite realizar análisis temporales y comparar
-                el comportamiento de los accidentes entre diferentes años.
-
-            </div>
-
-        </div>
+                <h2>
+                    🎓 Cumplimiento de requisitos
+                </h2>
 
 
-        <!-- REQUISITOS -->
+                <p>
 
-        <div class="card">
+                    El dataset cumple los requisitos mínimos establecidos para
+                    la construcción del conjunto inicial de datos:
 
-            <h2>🎓 Cumplimiento de requisitos</h2>
-
-            <p>
-                El dataset cumple los requisitos mínimos establecidos para la
-                construcción del conjunto inicial de datos:
-            </p>
-
-            <div class="success">
-
-                ✅ Más de 10.000 registros<br>
-
-                ✅ Más de 10 variables requeridas mediante integración y
-                caracterización de fuentes<br>
-
-                ✅ Variables numéricas<br>
-
-                ✅ Variables categóricas<br>
-
-                ✅ Variable temporal<br>
-
-                ✅ Variables geográficas<br>
-
-                ✅ Cobertura nacional<br>
-
-                ✅ Información con granularidad a nivel de vehículo y accidente
-
-            </div>
-
-        </div>
+                </p>
 
 
-        <!-- VARIABLES -->
+                <div class="success">
 
-        <div class="card">
+                    ✅ Más de 10.000 registros
+                    <br><br>
 
-            <h2>🔢 Variables disponibles</h2>
+                    ✅ Más de 10 variables requeridas mediante integración y
+                    caracterización de fuentes
+                    <br><br>
 
-            <div class="columns">
+                    ✅ Variables numéricas
+                    <br><br>
 
-                {% for columna in columnas %}
+                    ✅ Variables categóricas
+                    <br><br>
 
-                    <div class="column">
-                        {{ columna }}
-                    </div>
+                    ✅ Variable temporal
+                    <br><br>
 
-                {% endfor %}
+                    ✅ Variables geográficas
+                    <br><br>
+
+                    ✅ Cobertura nacional
+                    <br><br>
+
+                    ✅ Información con granularidad a nivel de vehículo y
+                    accidente
+
+                </div>
 
             </div>
 
-        </div>
+
+            <!-- ==================================================
+                 VARIABLES DISPONIBLES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    🔢 Variables disponibles
+                </h2>
 
 
-        <!-- TIPOS DE VARIABLES -->
+                <div class="columns">
 
-        <div class="card">
+                    {% for columna in columnas %}
 
-            <h2>🧩 Clasificación inicial</h2>
+                        <div class="column">
+                            {{ columna }}
+                        </div>
 
-            <h3>Variables numéricas</h3>
+                    {% endfor %}
 
-            <span class="tag">modelo_vehiculo</span>
-            <span class="tag">edad_vehiculo</span>
+                </div>
 
-            <h3>Variables categóricas</h3>
-
-            <span class="tag">marca_vehiculo</span>
-            <span class="tag">tipo_vehiculo</span>
-            <span class="tag">gravedad_accidente</span>
-            <span class="tag">departamento_accidente</span>
-            <span class="tag">municipio_accidente</span>
-            <span class="tag">autoridad_de_transito</span>
-
-            <h3>Variable temporal</h3>
-
-            <span class="tag">fecha_accidente</span>
-
-        </div>
+            </div>
 
 
-        <!-- MUESTRA -->
+            <!-- ==================================================
+                 CLASIFICACIÓN DE VARIABLES
+                 ================================================== -->
 
-        <div class="card">
+            <div class="card">
 
-            <h2>🔎 Muestra de registros</h2>
+                <h2>
+                    🧩 Clasificación inicial
+                </h2>
 
-            <p>
-                A continuación se presentan los primeros registros del dataset
-                utilizado. La tabla permite verificar directamente la estructura
-                de los datos obtenidos desde la fuente.
-            </p>
 
-            <div class="table-container">
+                <h3>
+                    Variables numéricas
+                </h3>
 
-                <table>
 
-                    <thead>
+                <span class="tag">
+                    modelo_vehiculo
+                </span>
 
-                        <tr>
+                <span class="tag">
+                    edad_vehiculo
+                </span>
 
-                            {% for columna in columnas %}
 
-                                <th>
-                                    {{ columna }}
-                                </th>
+                <h3>
+                    Variables categóricas
+                </h3>
 
-                            {% endfor %}
 
-                        </tr>
+                <span class="tag">
+                    marca_vehiculo
+                </span>
 
-                    </thead>
+                <span class="tag">
+                    tipo_vehiculo
+                </span>
 
-                    <tbody>
+                <span class="tag">
+                    gravedad_accidente
+                </span>
 
-                        {% for fila in muestra %}
+                <span class="tag">
+                    departamento_accidente
+                </span>
+
+                <span class="tag">
+                    municipio_accidente
+                </span>
+
+                <span class="tag">
+                    autoridad_de_transito
+                </span>
+
+
+                <h3>
+                    Variable temporal
+                </h3>
+
+
+                <span class="tag">
+                    fecha_accidente
+                </span>
+
+            </div>
+
+
+            <!-- ==================================================
+                 MUESTRA DE REGISTROS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    🔎 Muestra de registros
+                </h2>
+
+
+                <p>
+
+                    A continuación se presentan los primeros registros del
+                    dataset utilizado. La tabla permite verificar directamente
+                    la estructura de los datos obtenidos desde la fuente.
+
+                </p>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
 
                             <tr>
 
                                 {% for columna in columnas %}
 
-                                    <td>
-                                        {{ fila[columna] }}
-                                    </td>
+                                    <th>
+                                        {{ columna }}
+                                    </th>
 
                                 {% endfor %}
 
                             </tr>
 
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
+                        </thead>
 
 
-        <!-- INTEGRACIÓN -->
+                        <tbody>
 
-        <div class="card">
+                            {% for fila in muestra %}
 
-            <h2>🔗 Integración con otras fuentes</h2>
+                                <tr>
 
-            <p class="description">
+                                    {% for columna in columnas %}
 
-                Como fuente complementaria se dispone del dataset de
-                <strong>Siniestros Viales ANSV</strong>, que contiene 19.015
-                registros correspondientes al periodo 2019-01-01 a 2019-08-14.
+                                        <td>
+                                            {{ fila[columna] }}
+                                        </td>
 
-                Debido a que ambos conjuntos de datos no presentan coincidencias
-                temporales suficientes para realizar una unión registro a registro,
-                se decidió conservarlos como fuentes complementarias.
+                                    {% endfor %}
 
-            </p>
+                                </tr>
 
-            <div class="warning">
+                            {% endfor %}
 
-                ⚠️ No se realizará un <strong>merge directo</strong> entre ambos
-                datasets utilizando fecha, departamento y municipio.
+                        </tbody>
 
-                La integración se realizará posteriormente mediante análisis
-                comparativos y agregaciones, preservando la trazabilidad de cada
-                fuente.
+                    </table>
+
+                </div>
 
             </div>
 
+
+            <!-- ==================================================
+                 INTEGRACIÓN CON OTRAS FUENTES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    🔗 Integración con otras fuentes
+                </h2>
+
+
+                <p class="description">
+
+                    Como fuente complementaria se dispone del dataset de
+                    <strong>
+                        Siniestros Viales ANSV
+                    </strong>,
+                    que contiene 19.015 registros correspondientes al periodo
+                    2019-01-01 a 2019-08-14.
+
+                    Debido a que ambos conjuntos de datos no presentan
+                    coincidencias temporales suficientes para realizar una
+                    unión registro a registro, se decidió conservarlos como
+                    fuentes complementarias.
+
+                </p>
+
+
+                <div class="warning">
+
+                    ⚠️ No se realizará un
+                    <strong>merge directo</strong>
+                    entre ambos datasets utilizando fecha, departamento y
+                    municipio.
+
+                    La integración se realizará posteriormente mediante
+                    análisis comparativos y agregaciones, preservando la
+                    trazabilidad de cada fuente.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PROCEDENCIA
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    🌐 Procedencia
+                </h2>
+
+
+                <p>
+
+                    <strong>Fuente:</strong>
+                    Datos Abiertos Colombia
+
+                </p>
+
+
+                <p>
+
+                    <strong>Dataset:</strong>
+                    Vehículos involucrados en un accidente de tránsito
+
+                </p>
+
+
+                <p>
+
+                    <strong>Archivo local:</strong>
+                    <code>data/vehiculos_accidentes.csv</code>
+
+                </p>
+
+
+                <p>
+
+                    <strong>Registros descargados:</strong>
+                    {{ "{:,}".format(registros) }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Tamaño aproximado en memoria:</strong>
+                    {{ tamano_mb }} MB
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN INFERIOR
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+
+                <a
+                    href="{{ url_for('Etapa1_fuentes') }}"
+                    class="back"
+                >
+                    ⬅ Punto anterior
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                    🏠 Menú Etapa 1
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1_diccionario') }}"
+                    class="back"
+                >
+                    Siguiente punto ➡
+                </a>
+
+            </div>
+
+
         </div>
 
-
-        <!-- PROCEDENCIA -->
-
-        <div class="card">
-
-            <h2>🌐 Procedencia</h2>
-
-            <p>
-                <strong>Fuente:</strong> Datos Abiertos Colombia
-            </p>
-
-            <p>
-                <strong>Dataset:</strong>
-                Vehículos involucrados en un accidente de tránsito
-            </p>
-
-            <p>
-                <strong>Archivo local:</strong>
-                <code>data/vehiculos_accidentes.csv</code>
-            </p>
-
-            <p>
-                <strong>Registros descargados:</strong>
-                {{ "{:,}".format(registros) }}
-            </p>
-
-            <p>
-                <strong>Tamaño aproximado en memoria:</strong>
-                {{ tamano_mb }} MB
-            </p>
-
-        </div>
+    </main>
 
 
-    </div>
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
+
+    <script>
 
 
-    <div class="footer">
+        const sidebar =
+            document.getElementById("sidebar");
 
-        <p>
 
-            Sistema de Reportes Viales — Minería de Datos
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
 
-        </p>
 
-        
-        <a href="/Etapa1/fuentes" class="back">⬅ Punto anterior</a>
+        const sidebarClose =
+            document.getElementById("sidebarClose");
 
-        <a href="/Etapa1" class="back">⬅ Volver al menú principal</a>
 
-        <a href="/Etapa1/diccionario" class="back">Siguiente punto ➡</a>
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
 
-    </div>
 
+        /* ==================================================
+           CERRAR SIDEBAR
+           ================================================== */
+
+        sidebarClose.addEventListener("click", () => {
+
+            sidebar.classList.add("hidden");
+
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* ==================================================
+           ABRIR SIDEBAR
+           ================================================== */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* ==================================================
+           CERRAR CON OVERLAY
+           ================================================== */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+    </script>
 
 </body>
 
