@@ -5,10 +5,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Menú Principal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    :root {
+      --indigo: #232A54;
+      --indigo-dark: #171B3B;
+      --plum: #8C4E7E;
+      --gold: #D9A441;
+      --teal: #2E9C93;
+      --mist: #F6F4FA;
+      --ink: #2A2A38;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -17,8 +28,9 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Roboto', sans-serif;
+      font-family: 'Inter', sans-serif;
       overflow: hidden;
+      color: var(--ink);
     }
 
     #map {
@@ -29,75 +41,204 @@
       width: 100%;
       z-index: -1;
       opacity: 0.6;
+      filter: saturate(0.85);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(140, 78, 126, 0.16), transparent 45%),
+        radial-gradient(circle at 88% 85%, rgba(46, 156, 147, 0.16), transparent 45%);
+    }
+
+    .wrap {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
     }
 
     .overlay {
-      background: rgba(255, 255, 255, 0.75);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      max-width: 600px;
-      margin: 60px auto;
-      padding: 30px 20px;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 32px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow:
+        0 20px 50px rgba(23, 27, 59, 0.25),
+        0 2px 8px rgba(23, 27, 59, 0.08);
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
       text-align: center;
     }
 
     header {
-      background-color: #007bff;
+      position: relative;
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 55%, var(--plum) 130%);
       color: white;
-      padding: 20px;
-      border-radius: 16px 16px 0 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 38px 28px 32px;
+      overflow: hidden;
+      border-radius: 32px 32px 0 0;
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      top: -90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(217, 164, 65, 0.35), transparent 70%);
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      left: -50px;
+      bottom: -60px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(46, 156, 147, 0.3), transparent 70%);
+    }
+
+    .badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1.5px solid rgba(217, 164, 65, 0.55);
+      margin-bottom: 14px;
+      font-size: 1.4rem;
     }
 
     h1 {
+      position: relative;
       margin: 0;
-      font-size: 2rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      line-height: 1.35;
+      letter-spacing: 0.2px;
     }
 
     header p {
-      margin-top: 10px;
-      font-size: 1rem;
+      position: relative;
+      margin-top: 12px;
+      font-size: 0.95rem;
       font-weight: 400;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    header p strong {
+      color: var(--gold);
+      font-weight: 600;
     }
 
     .menu {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      margin-top: 20px;
+      gap: 12px;
+      padding: 28px 26px 30px;
     }
 
     .menu a {
+      position: relative;
       text-decoration: none;
-      background-color: #007bff;
-      color: white;
-      padding: 14px 20px;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: transform 0.2s ease, background-color 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--mist);
+      color: var(--indigo-dark);
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: 1.5px solid rgba(35, 42, 84, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.25s ease, color 0.25s ease;
     }
 
     .menu a:hover {
-      background-color: #0056b3;
-      transform: scale(1.03);
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--plum) 100%);
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(35, 42, 84, 0.28);
+      border-color: transparent;
+    }
+
+    .menu a:active {
+      transform: translateY(0);
+    }
+
+    /* Acciones principales resaltadas con acento teal/dorado */
+    .menu a.primary {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--indigo) 100%);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 8px 18px rgba(46, 156, 147, 0.28);
+    }
+
+    .menu a.primary:hover {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--plum) 100%);
+      box-shadow: 0 10px 22px rgba(217, 164, 65, 0.3);
+    }
+
+    .menu a.admin {
+      background: rgba(217, 164, 65, 0.12);
+      color: #8a5f16;
+      border-color: rgba(217, 164, 65, 0.4);
+    }
+
+    .menu a.admin:hover {
+      background: linear-gradient(135deg, var(--gold) 0%, #b9791f 100%);
+      color: #fff;
+    }
+
+    .menu a.logout {
+      color: #9c3d5a;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 4px 0 6px;
+      background: linear-gradient(90deg, transparent, rgba(35, 42, 84, 0.14), transparent);
     }
 
     @media (max-width: 480px) {
       h1 {
-        font-size: 1.5rem;
-      }
-
-      .menu a {
-        font-size: 0.95rem;
-        padding: 12px;
+        font-size: 1.2rem;
       }
 
       .overlay {
-        margin: 20px;
-        padding: 20px;
+        border-radius: 24px;
+      }
+
+      header {
+        padding: 30px 20px 26px;
+        border-radius: 24px 24px 0 0;
+      }
+
+      .menu {
+        padding: 22px 18px 24px;
+      }
+
+      .menu a {
+        font-size: 0.9rem;
+        padding: 13px 16px;
       }
     }
   </style>
@@ -105,33 +246,37 @@
 <body>
   <div id="map"></div>
 
-  <div class="overlay">
-    <header>
-      <h1>🚦 Sistema de Reportes Viales Para Accidentalidad Seguridad Vial</h1>
-      {% if nombre %}
-        <p>👋 Bienvenido, <strong>{{ nombre }}</strong></p>
-      {% else %}
-        <p>🔐 Inicia sesión para acceder a todas las funciones</p>
-      {% endif %}
-    </header>
-
-    <div class="menu">
-      <a href="/lista">📋 Ver Lista de Reportes</a>
-
-      {% if nombre %}
-        <a href="/reportar">📍 Reportar Incidente</a>
-        <a href="/dashboard">📊 Dashboard</a>
-        {% if rol == "admin" %}
-          <a href="/admin/dashboard">🛠️ Panel de Administración</a>
+  <div class="wrap">
+    <div class="overlay">
+      <header>
+        
+        <h1>Sistema de Reportes Viales<br>Accidentalidad y Seguridad Vial</h1>
+        {% if nombre %}
+          <p>Bienvenido, <strong>{{ nombre }}</strong></p>
+        {% else %}
+          <p>Inicia sesión para acceder a todas las funciones</p>
         {% endif %}
-        <a href="/logout">🚪 Cerrar Sesión</a>
-      {% else %}
-        <a href="/login">🔐 Iniciar Sesión</a>
-        <a href="/register">📝 Crear Cuenta</a>
-      {% endif %}
+      </header>
 
-       <!-- NUEVO -->
-        <a href="/Etapa1">📚 Etapa 1</a>
+      <div class="menu">
+        <a href="/lista" class="primary"> Ver lista de reportes</a>
+
+        {% if nombre %}
+          <a href="/reportar" class="primary"> Reportar incidente</a>
+          <a href="/dashboard"> Dashboard</a>
+          {% if rol == "admin" %}
+            <a href="/admin/dashboard" class="admin"> Panel de administración</a>
+          {% endif %}
+          <div class="divider"></div>
+          <a href="/logout" class="logout"> Cerrar sesión</a>
+        {% else %}
+          <a href="/login"> Iniciar sesión</a>
+          <a href="/register"> Crear cuenta</a>
+        {% endif %}
+
+        <!-- NUEVO -->
+        <a href="/Etapa1"> Etapa 1</a>
+      </div>
     </div>
   </div>
 

@@ -15,6 +15,22 @@
 
     <style>
 
+        :root {
+            --primary: #6d28d9;
+            --primary-dark: #4c1d95;
+            --primary-darker: #2e1150;
+            --primary-light: #ede9fe;
+            --primary-lighter: #f5f3fb;
+            --gradient-start: #2e1150;
+            --gradient-mid: #4c2f8c;
+            --gradient-end: #4338ca;
+            --teal: #14b8a6;
+            --teal-dark: #0d9488;
+            --bg: #f5f4fa;
+            --text-main: #333;
+            --text-muted: #6b7280;
+        }
+
         /* ==================================================
            ESTILOS GENERALES
            ================================================== */
@@ -26,8 +42,8 @@
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            background: #f4f6f9;
-            color: #333;
+            background: var(--bg);
+            color: var(--text-main);
         }
 
 
@@ -73,6 +89,8 @@
             padding: 24px 20px;
 
             border-bottom: 1px solid #e5e7eb;
+
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
         }
 
 
@@ -82,7 +100,7 @@
 
             font-size: 1.25rem;
 
-            color: #111827;
+            color: #ffffff;
         }
 
 
@@ -90,7 +108,7 @@
 
             font-size: 0.8rem;
 
-            color: #6b7280;
+            color: rgba(255, 255, 255, 0.75);
         }
 
 
@@ -102,11 +120,11 @@
 
             border: none;
 
-            background: transparent;
+            background: rgba(255, 255, 255, 0.12);
 
             font-size: 1.7rem;
 
-            color: #6b7280;
+            color: #ffffff;
 
             cursor: pointer;
 
@@ -121,9 +139,9 @@
 
         .sidebar-close:hover {
 
-            background: #f3f4f6;
+            background: rgba(255, 255, 255, 0.25);
 
-            color: #111827;
+            color: #ffffff;
         }
 
 
@@ -189,9 +207,9 @@
 
         .sidebar-item:hover {
 
-            background: #f3f4f6;
+            background: var(--primary-lighter);
 
-            color: #007bff;
+            color: var(--primary);
         }
 
 
@@ -213,9 +231,9 @@
 
         .sidebar-item.active {
 
-            background: #e8f2ff;
+            background: var(--primary-light);
 
-            color: #007bff;
+            color: var(--primary);
 
             font-weight: 700;
         }
@@ -223,7 +241,7 @@
 
         .sidebar-item.active .number {
 
-            color: #007bff;
+            color: var(--primary);
         }
 
 
@@ -259,9 +277,9 @@
 
         .home-link:hover {
 
-            background: #f3f4f6;
+            background: var(--primary-lighter);
 
-            color: #111827;
+            color: var(--primary-dark);
         }
 
 
@@ -283,7 +301,7 @@
 
             border-radius: 10px;
 
-            background: #007bff;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
 
             color: white;
 
@@ -295,7 +313,7 @@
 
             display: none;
 
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 3px 10px rgba(46, 17, 80, 0.35);
 
             transition: 0.2s;
         }
@@ -303,7 +321,7 @@
 
         .sidebar-toggle:hover {
 
-            background: #0069d9;
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
         }
 
 
@@ -367,7 +385,7 @@
 
         .breadcrumb a {
 
-            color: #007bff;
+            color: var(--primary);
 
             text-decoration: none;
 
@@ -415,7 +433,7 @@
 
         .header {
 
-            background: #007bff;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 55%, var(--gradient-end) 100%);
 
             color: white;
 
@@ -425,7 +443,7 @@
 
             margin-bottom: 25px;
 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px rgba(46, 17, 80, 0.25);
         }
 
 
@@ -444,6 +462,8 @@
             margin-bottom: 0;
 
             line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.85);
         }
 
 
@@ -461,7 +481,7 @@
 
             border-radius: 12px;
 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 15px rgba(46, 17, 80, 0.07);
         }
 
 
@@ -469,13 +489,13 @@
 
             margin-top: 0;
 
-            color: #007bff;
+            color: var(--primary);
         }
 
 
         .card h3 {
 
-            color: #333;
+            color: var(--primary-dark);
 
             margin-top: 20px;
         }
@@ -507,7 +527,7 @@
 
         .stat {
 
-            background: #f4f7fb;
+            background: var(--primary-lighter);
 
             border-radius: 10px;
 
@@ -515,7 +535,7 @@
 
             text-align: center;
 
-            border-left: 5px solid #007bff;
+            border-left: 5px solid var(--teal);
         }
 
 
@@ -525,7 +545,7 @@
 
             font-weight: bold;
 
-            color: #007bff;
+            color: var(--primary);
 
             word-break: break-word;
         }
@@ -565,7 +585,7 @@
 
         th {
 
-            background: #007bff;
+            background: var(--primary);
 
             color: white;
 
@@ -595,7 +615,7 @@
 
         tr:hover {
 
-            background: #eef5ff;
+            background: var(--primary-lighter);
         }
 
 
@@ -611,9 +631,9 @@
 
             border-radius: 20px;
 
-            background: #e7f1ff;
+            background: var(--primary-light);
 
-            color: #0056b3;
+            color: var(--primary-dark);
 
             margin: 3px;
 
@@ -669,9 +689,9 @@
 
         .info {
 
-            background: #eef6ff;
+            background: var(--primary-lighter);
 
-            border-left: 5px solid #007bff;
+            border-left: 5px solid var(--primary);
 
             padding: 15px;
 
@@ -711,9 +731,9 @@
 
         .success {
 
-            background: #d4edda;
+            background: #e6f7f4;
 
-            border-left: 5px solid #28a745;
+            border-left: 5px solid var(--teal);
 
             padding: 15px;
 
@@ -783,7 +803,7 @@
 
         .back:hover {
 
-            background: #545b62;
+            background: var(--primary-darker);
 
             text-decoration: none;
         }
@@ -855,7 +875,7 @@
                 width: 100%;
                 height: 100%;
 
-                background: rgba(0, 0, 0, 0.35);
+                background: rgba(46, 17, 80, 0.35);
 
                 z-index: 999;
 
@@ -1241,7 +1261,7 @@
             <div class="header">
 
                 <h1>
-                    🔎 7. Calidad inicial de los datos
+                     7. Calidad inicial de los datos
                 </h1>
 
                 <p>
@@ -1259,7 +1279,7 @@
             <div class="card">
 
                 <h2>
-                    📌 Objetivo del diagnóstico
+                     Objetivo del diagnóstico
                 </h2>
 
                 <p class="description">
@@ -1292,7 +1312,7 @@
             <div class="card">
 
                 <h2>
-                    📊 Resumen general
+                     Resumen general
                 </h2>
 
                 <div class="table-container">
@@ -1456,7 +1476,7 @@
             <div class="card">
 
                 <h2>
-                    ❓ Valores faltantes
+                     Valores faltantes
                 </h2>
 
 
@@ -1570,7 +1590,7 @@
             <div class="card">
 
                 <h2>
-                    🔁 Registros duplicados
+                     Registros duplicados
                 </h2>
 
 
@@ -1648,7 +1668,7 @@
             <div class="card">
 
                 <h2>
-                    ⚠️ Inconsistencias y valores sospechosos
+                     Inconsistencias y valores sospechosos
                 </h2>
 
 
@@ -1725,7 +1745,7 @@
             <div class="card">
 
                 <h2>
-                    🗺️ Consistencia geográfica
+                    Consistencia geográfica
                 </h2>
 
 
@@ -1852,7 +1872,7 @@
             <div class="card">
 
                 <h2>
-                    📅 Consistencia temporal
+                     Consistencia temporal
                 </h2>
 
 
@@ -2036,7 +2056,7 @@
             <div class="card">
 
                 <h2>
-                    ⚖️ Posibles sesgos y limitaciones de calidad
+                     Posibles sesgos y limitaciones de calidad
                 </h2>
 
 
@@ -2087,7 +2107,7 @@
             <div class="card">
 
                 <h2>
-                    🎯 Conclusión del diagnóstico
+                     Conclusión del diagnóstico
                 </h2>
 
 
@@ -2162,7 +2182,7 @@
                     href="{{ url_for('Etapa1') }}"
                     class="back"
                 >
-                    🏠 Menú Etapa 1
+                     Menú Etapa 1
                 </a>
 
 

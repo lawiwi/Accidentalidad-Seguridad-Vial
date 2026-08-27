@@ -15,6 +15,22 @@
 
     <style>
 
+        :root {
+            --primary: #6d28d9;
+            --primary-dark: #4c1d95;
+            --primary-darker: #2e1150;
+            --primary-light: #ede9fe;
+            --primary-lighter: #f5f3fb;
+            --gradient-start: #2e1150;
+            --gradient-mid: #4c2f8c;
+            --gradient-end: #4338ca;
+            --teal: #14b8a6;
+            --teal-dark: #0d9488;
+            --bg: #f5f4fa;
+            --text-main: #333;
+            --text-muted: #6b7280;
+        }
+
         /* =========================
            ESTILOS GENERALES
            ========================= */
@@ -26,8 +42,8 @@
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            background: #f4f6f9;
-            color: #333;
+            background: var(--bg);
+            color: var(--text-main);
         }
 
 
@@ -69,6 +85,8 @@
             padding: 24px 20px;
 
             border-bottom: 1px solid #e5e7eb;
+
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
         }
 
         .sidebar-header h3 {
@@ -76,13 +94,13 @@
 
             font-size: 1.25rem;
 
-            color: #111827;
+            color: #ffffff;
         }
 
         .sidebar-header span {
             font-size: 0.8rem;
 
-            color: #6b7280;
+            color: rgba(255, 255, 255, 0.75);
         }
 
 
@@ -93,11 +111,11 @@
         .sidebar-close {
             border: none;
 
-            background: transparent;
+            background: rgba(255, 255, 255, 0.12);
 
             font-size: 1.7rem;
 
-            color: #6b7280;
+            color: #ffffff;
 
             cursor: pointer;
 
@@ -110,9 +128,9 @@
         }
 
         .sidebar-close:hover {
-            background: #f3f4f6;
+            background: rgba(255, 255, 255, 0.25);
 
-            color: #111827;
+            color: #ffffff;
         }
 
 
@@ -171,9 +189,9 @@
         }
 
         .sidebar-item:hover {
-            background: #f3f4f6;
+            background: var(--primary-lighter);
 
-            color: #007bff;
+            color: var(--primary);
         }
 
         .sidebar-item .number {
@@ -192,15 +210,15 @@
            ========================= */
 
         .sidebar-item.active {
-            background: #e8f2ff;
+            background: var(--primary-light);
 
-            color: #007bff;
+            color: var(--primary);
 
             font-weight: 700;
         }
 
         .sidebar-item.active .number {
-            color: #007bff;
+            color: var(--primary);
         }
 
 
@@ -231,9 +249,9 @@
         }
 
         .home-link:hover {
-            background: #f3f4f6;
+            background: var(--primary-lighter);
 
-            color: #111827;
+            color: var(--primary-dark);
         }
 
 
@@ -254,7 +272,7 @@
 
             border-radius: 10px;
 
-            background: #007bff;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
 
             color: white;
 
@@ -266,13 +284,13 @@
 
             display: none;
 
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 3px 10px rgba(46, 17, 80, 0.35);
 
             transition: 0.2s;
         }
 
         .sidebar-toggle:hover {
-            background: #0069d9;
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
         }
 
 
@@ -326,7 +344,7 @@
         }
 
         .breadcrumb a {
-            color: #007bff;
+            color: var(--primary);
 
             text-decoration: none;
 
@@ -366,7 +384,7 @@
            ========================= */
 
         .header {
-            background: #007bff;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 55%, var(--gradient-end) 100%);
 
             color: white;
 
@@ -376,7 +394,7 @@
 
             margin-bottom: 25px;
 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px rgba(46, 17, 80, 0.25);
         }
 
         .header h1 {
@@ -389,6 +407,8 @@
             margin-bottom: 0;
 
             line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.85);
         }
 
 
@@ -405,17 +425,17 @@
 
             border-radius: 12px;
 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 15px rgba(46, 17, 80, 0.07);
         }
 
         .card h2 {
-            color: #007bff;
+            color: var(--primary);
 
             margin-top: 0;
         }
 
         .card h3 {
-            color: #0056b3;
+            color: var(--primary-dark);
 
             margin-top: 20px;
         }
@@ -466,9 +486,9 @@
            ========================= */
 
         .info {
-            background: #e7f3ff;
+            background: var(--primary-lighter);
 
-            border-left: 5px solid #007bff;
+            border-left: 5px solid var(--primary);
 
             padding: 15px;
 
@@ -485,9 +505,9 @@
            ========================= */
 
         .success {
-            background: #e8f5e9;
+            background: #e6f7f4;
 
-            border-left: 5px solid #28a745;
+            border-left: 5px solid var(--teal);
 
             padding: 15px;
 
@@ -536,7 +556,7 @@
         }
 
         .back:hover {
-            background: #545b62;
+            background: var(--primary-darker);
 
             text-decoration: none;
         }
@@ -594,7 +614,7 @@
                 width: 100%;
                 height: 100%;
 
-                background: rgba(0, 0, 0, 0.35);
+                background: rgba(46, 17, 80, 0.35);
 
                 z-index: 999;
 
@@ -953,7 +973,7 @@
             <div class="header">
 
                 <h1>
-                    8. Limitaciones y consideraciones
+                     8. Limitaciones y consideraciones
                 </h1>
 
                 <p>
@@ -973,7 +993,7 @@
             <div class="card">
 
                 <h2>
-                    📅 1. Limitación temporal
+                     1. Limitación temporal
                 </h2>
 
                 <p>
@@ -1000,7 +1020,7 @@
                 <div class="warning">
 
                     <strong>
-                        ⚠️ Consideración:
+                         Consideración:
                     </strong>
 
                     Debido a que no existe intersección temporal entre ambas
@@ -1039,7 +1059,7 @@
                 <div class="info">
 
                     <strong>
-                        📌 Decisión metodológica:
+                         Decisión metodológica:
                     </strong>
 
                     Las fuentes serán utilizadas como datasets
@@ -1060,7 +1080,7 @@
             <div class="card">
 
                 <h2>
-                    🔁 3. Registros duplicados
+                     3. Registros duplicados
                 </h2>
 
                 <p>
@@ -1091,7 +1111,7 @@
             <div class="card">
 
                 <h2>
-                    ❓ 4. Valores faltantes
+                     4. Valores faltantes
                 </h2>
 
                 <p>
@@ -1134,7 +1154,7 @@
             <div class="card">
 
                 <h2>
-                    📊 5. Calidad y consistencia
+                     5. Calidad y consistencia
                 </h2>
 
                 <p>
@@ -1175,7 +1195,7 @@
                 <div class="warning">
 
                     <strong>
-                        ⚠️ Importante:
+                         Importante:
                     </strong>
 
                     La existencia de valores atípicos o categorías genéricas
@@ -1195,7 +1215,7 @@
             <div class="card">
 
                 <h2>
-                    ⚖️ 6. Posibles sesgos
+                     6. Posibles sesgos
                 </h2>
 
                 <p>
@@ -1249,7 +1269,7 @@
             <div class="card">
 
                 <h2>
-                    🗺️ 7. Cobertura geográfica
+                     7. Cobertura geográfica
                 </h2>
 
                 <p>
@@ -1274,7 +1294,7 @@
             <div class="card">
 
                 <h2>
-                    📚 8. Trazabilidad y procedencia
+                     8. Trazabilidad y procedencia
                 </h2>
 
                 <p>
@@ -1293,7 +1313,7 @@
                 <div class="success">
 
                     <strong>
-                        ✅ Principio de trazabilidad:
+                         Principio de trazabilidad:
                     </strong>
 
                     cualquier resultado obtenido posteriormente deberá poder
@@ -1312,7 +1332,7 @@
             <div class="card">
 
                 <h2>
-                    🎯 9. Consideraciones para las siguientes etapas
+                    9. Consideraciones para las siguientes etapas
                 </h2>
 
                 <p>
@@ -1385,7 +1405,7 @@
                     href="{{ url_for('Etapa1') }}"
                     class="back"
                 >
-                    🏠 Menú Etapa 1
+                     Menú Etapa 1
                 </a>
 
             </div>
