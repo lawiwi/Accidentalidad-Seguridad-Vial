@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Etapa 1 - Minería de Datos</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--mist);
+            color: var(--ink);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(140, 78, 126, 0.10), transparent 40%),
+                radial-gradient(circle at 90% 30%, rgba(46, 156, 147, 0.10), transparent 40%),
+                radial-gradient(circle at 20% 90%, rgba(217, 164, 65, 0.08), transparent 40%);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 980px;
+            margin: 50px auto 60px;
+        }
+
+        header {
+            position: relative;
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 55%, var(--plum) 130%);
+            color: white;
+            padding: 40px 30px 34px;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 20px 45px rgba(23, 27, 59, 0.25);
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -70px;
+            top: -100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(217, 164, 65, 0.35), transparent 70%);
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            left: -60px;
+            bottom: -70px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(46, 156, 147, 0.3), transparent 70%);
+        }
+
+        .badge {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(217, 164, 65, 0.55);
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+        }
+
+        header h1 {
+            position: relative;
+            margin: 0 0 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.6rem;
+            letter-spacing: 0.2px;
+        }
+
+        header p {
+            position: relative;
+            margin: 0;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* ---- Tarjetas de puntos ---- */
+
+        .menu {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .punto {
+            display: block;
+            text-decoration: none;
+            color: var(--ink);
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 20px 20px 18px;
+            box-shadow: 0 8px 22px rgba(35, 42, 84, 0.08);
+            border: 1.5px solid rgba(35, 42, 84, 0.06);
+            border-top: 4px solid var(--accent, var(--teal));
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.25s ease;
+            position: relative;
+        }
+
+        .punto:hover,
+        .punto:focus-visible {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(35, 42, 84, 0.18);
+            background: linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--accent, var(--teal)) 6%, #ffffff) 100%);
+            outline: none;
+        }
+
+        .punto-cabecera {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .punto-titulo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.98rem;
+            line-height: 1.3;
+        }
+
+        /* Recuadro de imagen: mismo tamaño para las 8 tarjetas */
+        .punto-imagen {
+            display: block;
+            margin-top: 4px;
+            width: 100%;
+            height: 90px;
+            border-radius: 14px;
+            overflow: hidden;
+            object-fit: cover;
+            border: 1.5px solid color-mix(in srgb, var(--accent, var(--teal)) 30%, #e4e4ec);
+        }
+
+        .punto:nth-of-type(1) { --accent: var(--teal); }
+        .punto:nth-of-type(2) { --accent: var(--plum); }
+        .punto:nth-of-type(3) { --accent: var(--gold); }
+        .punto:nth-of-type(4) { --accent: var(--indigo); }
+        .punto:nth-of-type(5) { --accent: var(--teal); }
+        .punto:nth-of-type(6) { --accent: var(--plum); }
+        .punto:nth-of-type(7) { --accent: var(--gold); }
+        .punto:nth-of-type(8) { --accent: var(--indigo); }
+
+        .volver {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 30px auto 0;
+            padding: 10px 22px;
+            border-radius: 999px;
+            background: #ffffff;
+            box-shadow: 0 4px 14px rgba(35, 42, 84, 0.1);
+            text-align: center;
+            color: var(--indigo);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        }
+
+        .volver-wrap {
+            text-align: center;
+        }
+
+        .volver:hover {
+            background: linear-gradient(135deg, var(--indigo) 0%, var(--plum) 100%);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        @media(max-width: 640px) {
+            .menu {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.35rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <h1>Etapa 1</h1>
+        <p>Formulación y contextualización del problema de investigación</p>
+    </header>
+
+    <div class="menu">
+
+        <a href="/Etapa1/problema" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">1. Problema y contexto</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/problemaycontexto.jpg') }}" alt="Problema y contexto" class="punto-imagen">
+        </a>
+
+        <a href="/Etapa1/preguntas" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">2. Pregunta principal y preguntas secundarias</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/pregu.jpg') }}" alt="Preguntas de investigación" class="punto-imagen">
+        </a>
+
+        <a href="/Etapa1/necesidades" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">3. Necesidades de información</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/informacion.jpg') }}" alt="Necesidades de información" class="punto-imagen">
+        </a>
+
+        <a href="/Etapa1/fuentes" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">4. Fuentes de datos</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/datos.jpg') }}" alt="Fuentes de datos" class="punto-imagen">
+        </a>
+
+        <a href="/Etapa1/dataset" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">5. Dataset</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/datset.jpg') }}" alt="Vista del dataset" class="punto-imagen">
+        </a>
+
+        <a href="/Etapa1/diccionario" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">6. Diccionario de datos</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/diccionario.jpg') }}" alt="Diccionario de datos" class="punto-imagen">
+        </a>
+
+        <a href="/Etapa1/calidad" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">7. Calidad inicial de los datos</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/calidad.jpg') }}" alt="Calidad de los datos" class="punto-imagen">
+        </a>
+
+        <a href="/Etapa1/limitaciones" class="punto">
+            <div class="punto-cabecera">
+                <span class="punto-titulo">8. Limitaciones y consideraciones</span>
+            </div>
+            <img src="{{ url_for('static', filename='img/limitaciones.jpg') }}" alt="Limitaciones" class="punto-imagen">
+        </a>
+
+    </div>
+
+    <div class="volver-wrap">
+        <a href="/" class="volver">← Volver al menú principal</a>
+    </div>
+
+</div>
+
+</body>
+</html>

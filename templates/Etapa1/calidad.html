@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calidad | Sistema de Reportes Viales</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --primary: #6d28d9;
+            --primary-dark: #4c1d95;
+            --primary-darker: #2e1150;
+            --primary-light: #ede9fe;
+            --primary-lighter: #f5f3fb;
+            --gradient-start: #2e1150;
+            --gradient-mid: #4c2f8c;
+            --gradient-end: #4338ca;
+            --teal: #14b8a6;
+            --teal-dark: #0d9488;
+            --bg: #f5f4fa;
+            --text-main: #333;
+            --text-muted: #6b7280;
+        }
+
+        /* ==================================================
+           ESTILOS GENERALES
+           ================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+
+        /* ==================================================
+           SIDEBAR
+           ================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: #ffffff;
+
+            border-right: 1px solid #e5e7eb;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        /* ==================================================
+           ENCABEZADO SIDEBAR
+           ================================================== */
+
+        .sidebar-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
+        }
+
+
+        .sidebar-header h3 {
+
+            margin: 0;
+
+            font-size: 1.25rem;
+
+            color: #ffffff;
+        }
+
+
+        .sidebar-header span {
+
+            font-size: 0.8rem;
+
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+
+        /* ==================================================
+           BOTÓN CERRAR SIDEBAR
+           ================================================== */
+
+        .sidebar-close {
+
+            border: none;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            font-size: 1.7rem;
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .sidebar-close:hover {
+
+            background: rgba(255, 255, 255, 0.25);
+
+            color: #ffffff;
+        }
+
+
+        /* ==================================================
+           SECCIÓN DE NAVEGACIÓN
+           ================================================== */
+
+        .sidebar-section {
+
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+
+        .sidebar-label {
+
+            display: block;
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            font-size: 0.7rem;
+
+            font-weight: bold;
+
+            color: #9ca3af;
+
+            letter-spacing: 0.08em;
+        }
+
+
+        /* ==================================================
+           ITEMS SIDEBAR
+           ================================================== */
+
+        .sidebar-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .sidebar-item:hover {
+
+            background: var(--primary-lighter);
+
+            color: var(--primary);
+        }
+
+
+        .sidebar-item .number {
+
+            width: 28px;
+
+            font-size: 0.7rem;
+
+            font-weight: bold;
+
+            color: #9ca3af;
+        }
+
+
+        /* ==================================================
+           PÁGINA ACTUAL
+           ================================================== */
+
+        .sidebar-item.active {
+
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+
+        .sidebar-item.active .number {
+
+            color: var(--primary);
+        }
+
+
+        /* ==================================================
+           FOOTER SIDEBAR
+           ================================================== */
+
+        .sidebar-footer {
+
+            padding: 15px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+
+        .home-link {
+
+            display: block;
+
+            padding: 10px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .home-link:hover {
+
+            background: var(--primary-lighter);
+
+            color: var(--primary-dark);
+        }
+
+
+        /* ==================================================
+           BOTÓN ABRIR SIDEBAR
+           ================================================== */
+
+        .sidebar-toggle {
+
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
+
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 3px 10px rgba(46, 17, 80, 0.35);
+
+            transition: 0.2s;
+        }
+
+
+        .sidebar-toggle:hover {
+
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+        }
+
+
+        /* ==================================================
+           SIDEBAR OCULTO
+           ================================================== */
+
+        .sidebar.hidden {
+
+            transform: translateX(-100%);
+        }
+
+
+        .sidebar-toggle.visible {
+
+            display: block;
+        }
+
+
+        /* ==================================================
+           CONTENIDO PRINCIPAL
+           ================================================== */
+
+        .main-content {
+
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+
+        body.sidebar-hidden .main-content {
+
+            margin-left: 0;
+
+            padding-top: 80px;
+        }
+
+
+        /* ==================================================
+           BREADCRUMBS
+           ================================================== */
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.9rem;
+
+            color: #6b7280;
+        }
+
+
+        .breadcrumb a {
+
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+
+        .breadcrumb a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .breadcrumb span {
+
+            color: #9ca3af;
+        }
+
+
+        .breadcrumb .current {
+
+            color: #374151;
+
+            font-weight: 500;
+        }
+
+
+        /* ==================================================
+           CONTENEDOR
+           ================================================== */
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        .header {
+
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 55%, var(--gradient-end) 100%);
+
+            color: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 10px 25px rgba(46, 17, 80, 0.25);
+        }
+
+
+        .header h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+            font-size: 2rem;
+        }
+
+
+        .header p {
+
+            margin-bottom: 0;
+
+            line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+
+        /* ==================================================
+           CARDS
+           ================================================== */
+
+        .card {
+
+            background: white;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 15px rgba(46, 17, 80, 0.07);
+        }
+
+
+        .card h2 {
+
+            margin-top: 0;
+
+            color: var(--primary);
+        }
+
+
+        .card h3 {
+
+            color: var(--primary-dark);
+
+            margin-top: 20px;
+        }
+
+
+        .description {
+
+            line-height: 1.7;
+
+            text-align: justify;
+        }
+
+
+        /* ==================================================
+           ESTADÍSTICAS
+           ================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+
+        .stat {
+
+            background: var(--primary-lighter);
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-left: 5px solid var(--teal);
+        }
+
+
+        .stat .number {
+
+            font-size: 1.8rem;
+
+            font-weight: bold;
+
+            color: var(--primary);
+
+            word-break: break-word;
+        }
+
+
+        .stat .label {
+
+            margin-top: 8px;
+
+            font-size: 0.9rem;
+
+            color: #666;
+        }
+
+
+        /* ==================================================
+           TABLA
+           ================================================== */
+
+        .table-container {
+
+            overflow-x: auto;
+
+            width: 100%;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+
+        th {
+
+            background: var(--primary);
+
+            color: white;
+
+            padding: 12px;
+
+            text-align: left;
+
+            white-space: nowrap;
+        }
+
+
+        td {
+
+            padding: 10px;
+
+            border-bottom: 1px solid #ddd;
+
+            vertical-align: top;
+        }
+
+
+        tr:nth-child(even) {
+
+            background: #f8f9fa;
+        }
+
+
+        tr:hover {
+
+            background: var(--primary-lighter);
+        }
+
+
+        /* ==================================================
+           ETIQUETAS
+           ================================================== */
+
+        .tag {
+
+            display: inline-block;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            background: var(--primary-light);
+
+            color: var(--primary-dark);
+
+            margin: 3px;
+
+            font-size: 0.85rem;
+        }
+
+
+        /* ==================================================
+           BADGES
+           ================================================== */
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 15px;
+
+            font-size: 0.85rem;
+
+            font-weight: bold;
+        }
+
+
+        .alto {
+
+            background: #f8d7da;
+
+            color: #842029;
+        }
+
+
+        .medio {
+
+            background: #fff3cd;
+
+            color: #856404;
+        }
+
+
+        .bajo {
+
+            background: #d4edda;
+
+            color: #155724;
+        }
+
+
+        /* ==================================================
+           MENSAJES
+           ================================================== */
+
+        .info {
+
+            background: var(--primary-lighter);
+
+            border-left: 5px solid var(--primary);
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+        }
+
+
+        .warning {
+
+            background: #fff3cd;
+
+            border-left: 5px solid #ffc107;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+        }
+
+
+        .danger {
+
+            background: #f8d7da;
+
+            border-left: 5px solid #dc3545;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+        }
+
+
+        .success {
+
+            background: #e6f7f4;
+
+            border-left: 5px solid var(--teal);
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==================================================
+           LISTAS
+           ================================================== */
+
+        ul {
+
+            line-height: 1.7;
+
+            padding-left: 25px;
+        }
+
+
+        li {
+
+            margin-bottom: 7px;
+        }
+
+
+        /* ==================================================
+           NAVEGACIÓN INFERIOR
+           ================================================== */
+
+        .navigation-buttons {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #6c757d;
+
+            color: white;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+
+        .back:hover {
+
+            background: var(--primary-darker);
+
+            text-decoration: none;
+        }
+
+
+        /* ==================================================
+           OVERLAY
+           ================================================== */
+
+        .sidebar-overlay {
+
+            display: none;
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                transform: translateX(-100%);
+            }
+
+
+            .sidebar.open {
+
+                transform: translateX(0);
+            }
+
+
+            .sidebar-toggle {
+
+                display: block;
+            }
+
+
+            .sidebar.hidden {
+
+                transform: translateX(-100%);
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+
+            .sidebar-overlay {
+
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(46, 17, 80, 0.35);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+
+            .sidebar-overlay.active {
+
+                display: block;
+            }
+
+
+            .stats {
+
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+
+                padding: 15px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                padding-top: 75px;
+            }
+
+
+            .header {
+
+                padding: 22px;
+            }
+
+
+            .header h1 {
+
+                font-size: 1.5rem;
+            }
+
+
+            .card {
+
+                padding: 20px;
+            }
+
+
+            .breadcrumb {
+
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .navigation-buttons {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .back {
+
+                text-align: center;
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
+
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
+
+
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <div>
+
+                <h3>
+                    Etapa 1
+                </h3>
+
+                <span>
+                    Minería de datos
+                </span>
+
+            </div>
+
+
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
+
+
+            <!-- ==================================================
+                 01 - INICIO
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    01
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 02 - PROBLEMA
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    02
+                </span>
+
+                <span>
+                    Problema
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 03 - PREGUNTAS
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    03
+                </span>
+
+                <span>
+                    Preguntas
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 04 - NECESIDADES
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    04
+                </span>
+
+                <span>
+                    Necesidades
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 05 - DATASET
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    05
+                </span>
+
+                <span>
+                    Dataset
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 06 - DICCIONARIO
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    06
+                </span>
+
+                <span>
+                    Diccionario de datos
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 07 - CALIDAD
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item active"
+            >
+
+                <span class="number">
+                    07
+                </span>
+
+                <span>
+                    Calidad
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 08 - LIMITACIONES
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    08
+                </span>
+
+                <span>
+                    Limitaciones
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+             FOOTER SIDEBAR
+             ================================================== -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==================================================
+         OVERLAY
+         ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMBS
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <span class="current">
+                    Calidad inicial de los datos
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                     7. Calidad inicial de los datos
+                </h1>
+
+                <p>
+                    Diagnóstico preliminar de integridad, consistencia,
+                    duplicidad, valores faltantes y cobertura de las fuentes.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 INTRODUCCIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Objetivo del diagnóstico
+                </h2>
+
+                <p class="description">
+
+                    En esta etapa se realiza una evaluación inicial del estado
+                    de los datos antes de aplicar procesos de limpieza,
+                    transformación o modelado.
+
+                </p>
+
+
+                <div class="info">
+
+                    <strong>Importante:</strong>
+
+                    No se eliminaron registros ni se modificaron los valores
+                    originales. El propósito de este diagnóstico es identificar
+                    problemas potenciales que deberán ser considerados durante
+                    las siguientes etapas del proyecto.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 RESUMEN GENERAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Resumen general
+                </h2>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Indicador
+                                </th>
+
+                                <th>
+                                    Siniestros Viales
+                                </th>
+
+                                <th>
+                                    Vehículos Involucrados
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    Registros
+                                </td>
+
+                                <td>
+                                    19.015
+                                </td>
+
+                                <td>
+                                    406.540
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Variables
+                                </td>
+
+                                <td>
+                                    16
+                                </td>
+
+                                <td>
+                                    9
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Valores faltantes
+                                </td>
+
+                                <td>
+                                    0
+                                </td>
+
+                                <td>
+                                    64
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Duplicados completos
+                                </td>
+
+                                <td>
+                                    0
+                                </td>
+
+                                <td>
+                                    147.575
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Departamentos
+                                </td>
+
+                                <td>
+                                    32
+                                </td>
+
+                                <td>
+                                    31
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Municipios
+                                </td>
+
+                                <td>
+                                    799
+                                </td>
+
+                                <td>
+                                    638
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Cobertura temporal
+                                </td>
+
+                                <td>
+                                    2019-01-01 → 2019-08-14
+                                </td>
+
+                                <td>
+                                    2022-01-01 → 2026-02-01
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 VALORES FALTANTES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Valores faltantes
+                </h2>
+
+
+                <h3>
+                    Dataset de Siniestros Viales
+                </h3>
+
+
+                <div class="success">
+
+                    <strong>Resultado:</strong>
+
+                    No se identificaron valores faltantes en las 16 variables
+                    analizadas.
+
+                </div>
+
+
+                <h3>
+                    Dataset de Vehículos
+                </h3>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Variable
+                                </th>
+
+                                <th>
+                                    Valores faltantes
+                                </th>
+
+                                <th>
+                                    Impacto
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    marca_vehiculo
+                                </td>
+
+                                <td>
+                                    44
+                                </td>
+
+                                <td>
+                                    <span class="badge bajo">
+                                        Bajo
+                                    </span>
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    edad_vehiculo
+                                </td>
+
+                                <td>
+                                    20
+                                </td>
+
+                                <td>
+                                    <span class="badge bajo">
+                                        Bajo
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <p class="description">
+
+                    Los valores faltantes representan una proporción muy
+                    pequeña respecto a los 406.540 registros del dataset.
+                    Sin embargo, deberán ser considerados cuando se realicen
+                    análisis que utilicen específicamente estas variables.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 DUPLICADOS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Registros duplicados
+                </h2>
+
+
+                <h3>
+                    Siniestros Viales
+                </h3>
+
+
+                <div class="success">
+
+                    <strong>
+                        0 duplicados completos.
+                    </strong>
+
+                    Tampoco se encontraron identificadores
+                    <strong>
+                        hechos_id
+                    </strong>
+                    duplicados.
+
+                </div>
+
+
+                <h3>
+                    Vehículos involucrados
+                </h3>
+
+
+                <div class="warning">
+
+                    <strong>
+                        147.575 registros duplicados completos.
+                    </strong>
+
+                </div>
+
+
+                <p class="description">
+
+                    Este resultado representa aproximadamente el
+                    <strong>
+                        36,3 %
+                    </strong>
+                    del dataset de vehículos.
+
+                </p>
+
+
+                <p class="description">
+
+                    Sin embargo, en esta etapa no se eliminarán
+                    automáticamente estos registros, debido a que un mismo
+                    conjunto de características puede corresponder a
+                    registros legítimos provenientes de diferentes reportes
+                    o eventos.
+
+                </p>
+
+
+                <p class="description">
+
+                    En una etapa posterior será necesario determinar si los
+                    duplicados corresponden a registros realmente repetidos
+                    o a observaciones válidas.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 INCONSISTENCIAS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Inconsistencias y valores sospechosos
+                </h2>
+
+
+                <h3>
+                    Edad del vehículo
+                </h3>
+
+
+                <div class="danger">
+
+                    <strong>
+                        Valor máximo detectado: 1826 años.
+                    </strong>
+
+                </div>
+
+
+                <p class="description">
+
+                    La variable
+                    <strong>
+                        edad_vehiculo
+                    </strong>
+                    presenta valores que no parecen compatibles con la
+                    antigüedad real de un vehículo.
+
+                    Esto puede deberse a errores de registro, problemas de
+                    formato o inconsistencias en la fuente original.
+
+                </p>
+
+
+                <p class="description">
+
+                    Este comportamiento deberá ser investigado antes de
+                    utilizar esta variable en modelos estadísticos o
+                    algoritmos de minería de datos.
+
+                </p>
+
+
+                <h3>
+                    Modelo del vehículo
+                </h3>
+
+
+                <div class="warning">
+
+                    <strong>
+                        Valor máximo detectado: 2027.
+                    </strong>
+
+                </div>
+
+
+                <p class="description">
+
+                    El dataset tiene registros hasta febrero de 2026, pero
+                    se identificaron vehículos con modelo 2027.
+
+                    Estos registros deberán revisarse para determinar si
+                    corresponden a vehículos registrados como modelos futuros
+                    o si representan errores en los datos.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONSISTENCIA GEOGRÁFICA
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Consistencia geográfica
+                </h2>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Característica
+                                </th>
+
+                                <th>
+                                    Siniestros
+                                </th>
+
+                                <th>
+                                    Vehículos
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    Departamentos registrados
+                                </td>
+
+                                <td>
+                                    32
+                                </td>
+
+                                <td>
+                                    31
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Municipios registrados
+                                </td>
+
+                                <td>
+                                    799
+                                </td>
+
+                                <td>
+                                    638
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Departamentos comunes
+                                </td>
+
+                                <td colspan="2">
+                                    27
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Municipios comunes
+                                </td>
+
+                                <td colspan="2">
+                                    455
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <p class="description">
+
+                    Se identificaron diferencias en la cobertura territorial
+                    entre las dos fuentes.
+
+                    Aunque existen departamentos y municipios comunes,
+                    no todos aparecen en ambos datasets.
+
+                </p>
+
+
+                <div class="warning">
+
+                    Esta diferencia debe considerarse al realizar
+                    comparaciones territoriales para evitar interpretar las
+                    diferencias de cobertura como diferencias reales en
+                    accidentalidad.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONSISTENCIA TEMPORAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Consistencia temporal
+                </h2>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Dataset
+                                </th>
+
+                                <th>
+                                    Fecha inicial
+                                </th>
+
+                                <th>
+                                    Fecha final
+                                </th>
+
+                                <th>
+                                    Años
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    Siniestros Viales
+                                </td>
+
+                                <td>
+                                    01/01/2019
+                                </td>
+
+                                <td>
+                                    14/08/2019
+                                </td>
+
+                                <td>
+                                    2019
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Vehículos
+                                </td>
+
+                                <td>
+                                    01/01/2022
+                                </td>
+
+                                <td>
+                                    01/02/2026
+                                </td>
+
+                                <td>
+                                    2022-2026
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="danger">
+
+                    <strong>
+                        No existen años comunes entre las dos fuentes.
+                    </strong>
+
+                </div>
+
+
+                <p class="description">
+
+                    Por esta razón, no es metodológicamente adecuado realizar
+                    una unión registro a registro utilizando la fecha del
+                    accidente como llave.
+
+                </p>
+
+
+                <p class="description">
+
+                    Los datasets serán utilizados como fuentes
+                    complementarias, permitiendo estudiar diferentes
+                    dimensiones del fenómeno de accidentalidad vial.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 INTEGRACIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    🔗 Problemas de integración
+                </h2>
+
+
+                <p>
+                    El diagnóstico de integración permitió identificar:
+                </p>
+
+
+                <ul>
+
+                    <li>
+                        27 departamentos presentes en ambas fuentes.
+                    </li>
+
+                    <li>
+                        455 municipios comunes.
+                    </li>
+
+                    <li>
+                        0 fechas comunes.
+                    </li>
+
+                    <li>
+                        0 combinaciones comunes de fecha + departamento.
+                    </li>
+
+                    <li>
+                        0 combinaciones comunes de fecha + municipio.
+                    </li>
+
+                    <li>
+                        0 combinaciones comunes de fecha +
+                        departamento + municipio.
+                    </li>
+
+                </ul>
+
+
+                <div class="warning">
+
+                    <strong>
+                        Decisión metodológica:
+                    </strong>
+
+                    <br><br>
+
+                    No se realizará un merge directo entre los datasets.
+
+                    Las fuentes serán utilizadas de manera complementaria
+                    para analizar diferentes características de la
+                    accidentalidad vial en Colombia.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 SESGOS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Posibles sesgos y limitaciones de calidad
+                </h2>
+
+
+                <ul>
+
+                    <li>
+                        Diferencias en los periodos de cobertura entre las
+                        fuentes.
+                    </li>
+
+                    <li>
+                        Diferencias en la cobertura territorial.
+                    </li>
+
+                    <li>
+                        Posibles diferencias en los mecanismos de reporte.
+                    </li>
+
+                    <li>
+                        Alta concentración de registros en determinados
+                        departamentos y municipios.
+                    </li>
+
+                    <li>
+                        Presencia de valores faltantes en algunas variables
+                        del dataset de vehículos.
+                    </li>
+
+                    <li>
+                        Presencia de registros duplicados que requieren
+                        investigación antes de ser eliminados.
+                    </li>
+
+                    <li>
+                        Valores potencialmente inconsistentes en la edad
+                        y modelo de los vehículos.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONCLUSIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Conclusión del diagnóstico
+                </h2>
+
+
+                <p class="description">
+
+                    Los datasets presentan información suficiente para
+                    continuar con el proyecto de minería de datos y cumplen
+                    con los requisitos básicos de cantidad de registros,
+                    variables, cobertura geográfica y presencia de
+                    información temporal.
+
+                </p>
+
+
+                <p class="description">
+
+                    El dataset de siniestros presenta una estructura
+                    relativamente completa, sin valores faltantes ni
+                    duplicados completos.
+
+                    Por otra parte, el dataset de vehículos posee un volumen
+                    considerablemente mayor y permite incorporar
+                    características específicas de los vehículos
+                    involucrados.
+
+                </p>
+
+
+                <p class="description">
+
+                    Los problemas identificados serán documentados y
+                    tratados durante las siguientes etapas.
+
+                    En esta fase se conserva la información original para
+                    garantizar la trazabilidad de los datos.
+
+                </p>
+
+
+                <div class="success">
+
+                    <strong>
+                        Estado:
+                    </strong>
+
+                    Diagnóstico inicial completado.
+
+                    Los datos están listos para continuar con las siguientes
+                    etapas de preparación y análisis.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN INFERIOR
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+
+                <a
+                    href="{{ url_for('Etapa1_diccionario') }}"
+                    class="back"
+                >
+                    ⬅ Punto anterior
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                     Menú Etapa 1
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1_limitaciones') }}"
+                    class="back"
+                >
+                    Siguiente punto ➡
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
+
+    <script>
+
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+
+        const sidebarClose =
+            document.getElementById("sidebarClose");
+
+
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
+
+
+        /* ==================================================
+           CERRAR SIDEBAR
+           ================================================== */
+
+        sidebarClose.addEventListener("click", () => {
+
+            sidebar.classList.add("hidden");
+
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* ==================================================
+           ABRIR SIDEBAR
+           ================================================== */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* ==================================================
+           CERRAR CON OVERLAY
+           ================================================== */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+    </script>
+
+</body>
+
+</html>

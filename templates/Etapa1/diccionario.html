@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>6. Diccionario de Datos | Sistema de Reportes Viales</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* ==================================================
+           TOKENS DE DISEÑO
+           ================================================== */
+
+        :root {
+            --navy-950: #14102b;
+            --navy-900: #1c1638;
+            --plum-800: #3a2456;
+            --plum-700: #55296b;
+            --magenta-700: #6b2f66;
+
+            --teal-500: #17a398;
+            --teal-600: #0f8478;
+            --teal-700: #0b6a61;
+
+            --ink: #241f38;
+            --ink-soft: #6b6584;
+            --ink-faint: #9d97b3;
+
+            --bg: #f5f3fa;
+            --surface: #ffffff;
+            --border: #e7e2f2;
+            --border-soft: #efebf7;
+
+            --lavender-50: #f2eef9;
+            --lavender-100: #e9e2f5;
+
+            --amber-100: #fdf1e0;
+            --amber-600: #b3781a;
+
+            --steel-100: #e5edf7;
+            --steel-700: #24507a;
+
+            --teal-100: #e3f5f2;
+
+            --header-grad: linear-gradient(135deg, var(--navy-950) 0%, var(--plum-800) 55%, var(--magenta-700) 100%);
+            --accent-grad: linear-gradient(135deg, var(--teal-500) 0%, var(--navy-900) 100%);
+
+            --shadow-sm: 0 2px 10px rgba(28, 22, 56, 0.06);
+            --shadow-header: 0 14px 34px rgba(28, 15, 46, 0.28);
+        }
+
+
+        /* ==================================================
+           ESTILOS GENERALES
+           ================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+
+        /* ==================================================
+           SIDEBAR
+           ================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: var(--surface);
+
+            border-right: 1px solid var(--border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        /* ==================================================
+           ENCABEZADO SIDEBAR
+           ================================================== */
+
+        .sidebar-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            background: var(--header-grad);
+            color: #ffffff;
+        }
+
+
+        .sidebar-header h3 {
+
+            margin: 0;
+
+            font-size: 1.2rem;
+            font-weight: 700;
+
+            color: #ffffff;
+        }
+
+
+        .sidebar-header span {
+
+            font-size: 0.78rem;
+
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+
+        /* ==================================================
+           BOTÓN CERRAR SIDEBAR
+           ================================================== */
+
+        .sidebar-close {
+
+            border: none;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            font-size: 1.4rem;
+
+            color: rgba(255, 255, 255, 0.85);
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .sidebar-close:hover {
+
+            background: rgba(255, 255, 255, 0.18);
+
+            color: #ffffff;
+        }
+
+
+        /* ==================================================
+           SECCIÓN DE NAVEGACIÓN
+           ================================================== */
+
+        .sidebar-section {
+
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+
+        .sidebar-label {
+
+            display: block;
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            font-size: 0.68rem;
+
+            font-weight: 700;
+
+            color: var(--ink-faint);
+
+            letter-spacing: 0.1em;
+        }
+
+
+        /* ==================================================
+           ITEMS SIDEBAR
+           ================================================== */
+
+        .sidebar-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+
+            margin-bottom: 4px;
+
+            border-radius: 9px;
+
+            color: var(--ink-soft);
+
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .sidebar-item:hover {
+
+            background: var(--lavender-50);
+
+            color: var(--plum-700);
+        }
+
+
+        .sidebar-item .number {
+
+            width: 28px;
+
+            font-size: 0.68rem;
+
+            font-weight: 700;
+
+            color: var(--ink-faint);
+        }
+
+
+        /* ==================================================
+           PÁGINA ACTUAL
+           ================================================== */
+
+        .sidebar-item.active {
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            font-weight: 700;
+        }
+
+
+        .sidebar-item.active .number {
+
+            color: var(--teal-600);
+        }
+
+
+        /* ==================================================
+           FOOTER SIDEBAR
+           ================================================== */
+
+        .sidebar-footer {
+
+            padding: 15px;
+
+            border-top: 1px solid var(--border);
+        }
+
+
+        .home-link {
+
+            display: block;
+
+            padding: 10px;
+
+            color: var(--ink-soft);
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .home-link:hover {
+
+            background: var(--lavender-50);
+
+            color: var(--ink);
+        }
+
+
+        /* ==================================================
+           BOTÓN ABRIR SIDEBAR
+           ================================================== */
+
+        .sidebar-toggle {
+
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: var(--accent-grad);
+
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 6px 16px rgba(23, 163, 152, 0.35);
+
+            transition: 0.2s;
+        }
+
+
+        .sidebar-toggle:hover {
+
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+
+        /* ==================================================
+           SIDEBAR OCULTO
+           ================================================== */
+
+        .sidebar.hidden {
+
+            transform: translateX(-100%);
+        }
+
+
+        .sidebar-toggle.visible {
+
+            display: block;
+        }
+
+
+        /* ==================================================
+           CONTENIDO PRINCIPAL
+           ================================================== */
+
+        .main-content {
+
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+
+        body.sidebar-hidden .main-content {
+
+            margin-left: 0;
+
+            padding-top: 80px;
+        }
+
+
+        /* ==================================================
+           BREADCRUMBS
+           ================================================== */
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.88rem;
+
+            color: var(--ink-faint);
+        }
+
+
+        .breadcrumb a {
+
+            color: var(--plum-700);
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+
+        .breadcrumb a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .breadcrumb span {
+
+            color: var(--ink-faint);
+        }
+
+
+        .breadcrumb .current {
+
+            color: var(--ink);
+
+            font-weight: 500;
+        }
+
+
+        /* ==================================================
+           CONTENEDOR
+           ================================================== */
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        .header {
+
+            background: var(--header-grad);
+
+            color: white;
+
+            padding: 34px 32px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow: var(--shadow-header);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            top: -60%;
+            right: -10%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(23, 163, 152, 0.35) 0%, rgba(23, 163, 152, 0) 70%);
+            pointer-events: none;
+        }
+
+
+        .header h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+
+        .header p {
+
+            margin-bottom: 0;
+
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.78);
+            position: relative;
+        }
+
+
+        /* ==================================================
+           CARDS
+           ================================================== */
+
+        .card {
+
+            background: var(--surface);
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 14px;
+
+            border: 1px solid var(--border-soft);
+
+            box-shadow: var(--shadow-sm);
+        }
+
+
+        .card h2 {
+
+            margin-top: 0;
+
+            color: var(--plum-700);
+            font-weight: 700;
+        }
+
+
+        .card h3 {
+
+            color: var(--ink);
+
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+
+        .description {
+
+            line-height: 1.7;
+
+            text-align: justify;
+        }
+
+
+        /* ==================================================
+           TABLA
+           ================================================== */
+
+        .table-container {
+
+            overflow-x: auto;
+
+            width: 100%;
+
+            border-radius: 12px;
+
+            border: 1px solid var(--border-soft);
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+
+        th {
+
+            background: linear-gradient(135deg, var(--navy-950) 0%, var(--plum-800) 100%);
+
+            color: white;
+
+            padding: 12px;
+
+            text-align: left;
+
+            white-space: nowrap;
+
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+
+        td {
+
+            padding: 10px 12px;
+
+            border-bottom: 1px solid var(--border-soft);
+
+            vertical-align: top;
+        }
+
+
+        tr:nth-child(even) {
+
+            background: #faf9fd;
+        }
+
+
+        tr:hover {
+
+            background: var(--lavender-50);
+        }
+
+
+        /* ==================================================
+           ETIQUETAS
+           ================================================== */
+
+        .numeric {
+
+            display: inline-block;
+
+            background: var(--teal-100);
+
+            color: var(--teal-700);
+
+            padding: 4px 9px;
+
+            border-radius: 6px;
+
+            font-size: 0.82rem;
+
+            font-weight: 600;
+        }
+
+
+        .categorical {
+
+            display: inline-block;
+
+            background: var(--amber-100);
+
+            color: var(--amber-600);
+
+            padding: 4px 9px;
+
+            border-radius: 6px;
+
+            font-size: 0.82rem;
+
+            font-weight: 600;
+        }
+
+
+        .temporal {
+
+            display: inline-block;
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            padding: 4px 9px;
+
+            border-radius: 6px;
+
+            font-size: 0.82rem;
+
+            font-weight: 600;
+        }
+
+
+        .geographic {
+
+            display: inline-block;
+
+            background: var(--steel-100);
+
+            color: var(--steel-700);
+
+            padding: 4px 9px;
+
+            border-radius: 6px;
+
+            font-size: 0.82rem;
+
+            font-weight: 600;
+        }
+
+
+        /* ==================================================
+           MENSAJE INFORMATIVO
+           ================================================== */
+
+        .info {
+
+            background: var(--lavender-50);
+
+            border-left: 4px solid var(--teal-500);
+
+            padding: 15px 18px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==================================================
+           TÍTULO DE FUENTE
+           ================================================== */
+
+        .source-title {
+
+            color: var(--plum-700);
+
+            border-bottom: 2px solid var(--teal-500);
+
+            padding-bottom: 8px;
+        }
+
+
+        /* ==================================================
+           NAVEGACIÓN INFERIOR
+           ================================================== */
+
+        .navigation-buttons {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            padding: 12px 22px;
+
+            border-radius: 999px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .back:hover {
+
+            background: var(--lavender-50);
+
+            text-decoration: none;
+        }
+
+        .back.next {
+            background: var(--accent-grad);
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(23, 163, 152, 0.3);
+        }
+
+        .back.next:hover {
+            filter: brightness(1.06);
+            transform: translateY(-1px);
+        }
+
+
+        /* ==================================================
+           OVERLAY
+           ================================================== */
+
+        .sidebar-overlay {
+
+            display: none;
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                transform: translateX(-100%);
+            }
+
+
+            .sidebar.open {
+
+                transform: translateX(0);
+            }
+
+
+            .sidebar-toggle {
+
+                display: block;
+            }
+
+
+            .sidebar.hidden {
+
+                transform: translateX(-100%);
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+
+            .sidebar-overlay {
+
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(20, 16, 43, 0.45);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+
+            .sidebar-overlay.active {
+
+                display: block;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+
+                padding: 15px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                padding-top: 75px;
+            }
+
+
+            .header {
+
+                padding: 22px;
+            }
+
+
+            .header h1 {
+
+                font-size: 1.5rem;
+            }
+
+
+            .card {
+
+                padding: 20px;
+            }
+
+
+            .breadcrumb {
+
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
+
+            .navigation-buttons {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .back {
+
+                text-align: center;
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
+
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
+
+
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <div>
+
+                <h3>
+                    Etapa 1
+                </h3>
+
+                <span>
+                    Minería de datos
+                </span>
+
+            </div>
+
+
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
+
+
+            <!-- 01 - INICIO -->
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    01
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- 02 - PROBLEMA -->
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    02
+                </span>
+
+                <span>
+                    Problema
+                </span>
+
+            </a>
+
+
+            <!-- 03 - PREGUNTAS -->
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    03
+                </span>
+
+                <span>
+                    Preguntas
+                </span>
+
+            </a>
+
+
+            <!-- 04 - NECESIDADES -->
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    04
+                </span>
+
+                <span>
+                    Necesidades
+                </span>
+
+            </a>
+
+
+            <!-- 05 - DATASET -->
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    05
+                </span>
+
+                <span>
+                    Dataset
+                </span>
+
+            </a>
+
+
+            <!-- 06 - DICCIONARIO -->
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item active"
+            >
+
+                <span class="number">
+                    06
+                </span>
+
+                <span>
+                    Diccionario de datos
+                </span>
+
+            </a>
+
+
+            <!-- 07 - CALIDAD -->
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    07
+                </span>
+
+                <span>
+                    Calidad
+                </span>
+
+            </a>
+
+
+            <!-- 08 - LIMITACIONES -->
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    08
+                </span>
+
+                <span>
+                    Limitaciones
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+             FOOTER SIDEBAR
+             ================================================== -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==================================================
+         OVERLAY
+         ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMBS
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <span class="current">
+                    Diccionario de datos
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                     6. Diccionario de Datos
+                </h1>
+
+                <p>
+                    Descripción de las variables utilizadas en los datasets
+                    seleccionados para el proyecto de minería de datos.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PROPÓSITO
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Propósito del diccionario
+                </h2>
+
+
+                <div class="info">
+
+                    El diccionario de datos permite identificar el significado,
+                    tipo, dominio, unidad de medida, procedencia y utilidad
+                    analítica de cada variable utilizada en el proyecto.
+
+                </div>
+
+
+                <p class="description">
+
+                    El proyecto utiliza dos fuentes principales de información:
+                    el dataset de <strong>Siniestros Viales</strong> de la
+                    Agencia Nacional de Seguridad Vial (ANSV) y el dataset de
+                    <strong>Vehículos involucrados en accidentes de tránsito</strong>
+                    disponible en Datos Abiertos Colombia.
+
+                </p>
+
+
+                <p class="description">
+
+                    Debido a que ambos conjuntos presentan diferentes periodos
+                    de cobertura y no poseen una llave común que permita realizar
+                    una integración registro a registro, serán tratados como
+                    <strong>fuentes complementarias</strong>.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 DATASET 1
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2 class="source-title">
+
+                    🚦 Dataset 1 — Siniestros Viales ANSV
+
+                </h2>
+
+
+                <p>
+
+                    <strong>Registros:</strong> 19.015
+
+                    &nbsp; | &nbsp;
+
+                    <strong>Variables:</strong> 16
+
+                    &nbsp; | &nbsp;
+
+                    <strong>Periodo:</strong>
+                    2019-01-01 a 2019-08-14
+
+                </p>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Variable
+                                </th>
+
+                                <th>
+                                    Tipo
+                                </th>
+
+                                <th>
+                                    Descripción
+                                </th>
+
+                                <th>
+                                    Unidad
+                                </th>
+
+                                <th>
+                                    Dominio / valores
+                                </th>
+
+                                <th>
+                                    Utilidad analítica
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>
+                                    fid
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Identificador único del registro geográfico.
+                                </td>
+
+                                <td>
+                                    Identificador
+                                </td>
+
+                                <td>
+                                    Enteros
+                                </td>
+
+                                <td>
+                                    Identificar registros y controlar duplicados.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    hechos_id
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Identificador del hecho o siniestro vial.
+                                </td>
+
+                                <td>
+                                    Identificador
+                                </td>
+
+                                <td>
+                                    Enteros
+                                </td>
+
+                                <td>
+                                    Identificar individualmente cada siniestro.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    latitud
+                                </td>
+
+                                <td>
+                                    <span class="geographic">
+                                        Geográfica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Coordenada geográfica de latitud del lugar
+                                    del siniestro.
+                                </td>
+
+                                <td>
+                                    Grados decimales
+                                </td>
+
+                                <td>
+                                    Coordenadas geográficas
+                                </td>
+
+                                <td>
+                                    Realizar análisis espacial.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    longitud
+                                </td>
+
+                                <td>
+                                    <span class="geographic">
+                                        Geográfica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Coordenada geográfica de longitud del lugar
+                                    del siniestro.
+                                </td>
+
+                                <td>
+                                    Grados decimales
+                                </td>
+
+                                <td>
+                                    Coordenadas geográficas
+                                </td>
+
+                                <td>
+                                    Ubicar espacialmente los siniestros.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    fecha_hech
+                                </td>
+
+                                <td>
+                                    <span class="temporal">
+                                        Temporal
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Fecha en la que ocurrió el hecho vial.
+                                </td>
+
+                                <td>
+                                    Fecha
+                                </td>
+
+                                <td>
+                                    YYYY-MM-DD
+                                </td>
+
+                                <td>
+                                    Analizar comportamiento temporal.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    mes_largo
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Mes correspondiente a la fecha del siniestro.
+                                </td>
+
+                                <td>
+                                    Mes
+                                </td>
+
+                                <td>
+                                    Enero - Diciembre
+                                </td>
+
+                                <td>
+                                    Comparar accidentalidad entre meses.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    depto_hech
+                                </td>
+
+                                <td>
+                                    <span class="geographic">
+                                        Geográfica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Departamento donde ocurrió el siniestro.
+                                </td>
+
+                                <td>
+                                    Departamento
+                                </td>
+
+                                <td>
+                                    Departamentos de Colombia
+                                </td>
+
+                                <td>
+                                    Comparar accidentalidad regional.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    municipio_
+                                </td>
+
+                                <td>
+                                    <span class="geographic">
+                                        Geográfica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Municipio donde ocurrió el siniestro.
+                                </td>
+
+                                <td>
+                                    Municipio
+                                </td>
+
+                                <td>
+                                    Municipios de Colombia
+                                </td>
+
+                                <td>
+                                    Analizar concentración territorial.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    sievi_clas
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Clasificación o tipo del siniestro vial.
+                                </td>
+
+                                <td>
+                                    Categoría
+                                </td>
+
+                                <td>
+                                    Choque, atropello, volcamiento, etc.
+                                </td>
+
+                                <td>
+                                    Identificar tipos de accidentes predominantes.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    hipotesis_
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Hipótesis o posible causa asociada al siniestro.
+                                </td>
+
+                                <td>
+                                    Categoría
+                                </td>
+
+                                <td>
+                                    88 categorías registradas
+                                </td>
+
+                                <td>
+                                    Analizar factores asociados a los accidentes.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    medio_cono
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Medio mediante el cual fue conocido o reportado
+                                    el hecho.
+                                </td>
+
+                                <td>
+                                    Categoría
+                                </td>
+
+                                <td>
+                                    Policía, fiscalía, denuncia, etc.
+                                </td>
+
+                                <td>
+                                    Analizar procedencia de los registros.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    lugaro
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Tipo de lugar donde ocurrió el siniestro.
+                                </td>
+
+                                <td>
+                                    Categoría
+                                </td>
+
+                                <td>
+                                    Vía urbana, nacional, rural, etc.
+                                </td>
+
+                                <td>
+                                    Comparar accidentalidad según tipo de vía.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    smuertos
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Número de personas fallecidas asociadas
+                                    al siniestro.
+                                </td>
+
+                                <td>
+                                    Personas
+                                </td>
+
+                                <td>
+                                    0 - 9
+                                </td>
+
+                                <td>
+                                    Medir gravedad y mortalidad.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    slesionado
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Número de personas lesionadas.
+                                </td>
+
+                                <td>
+                                    Personas
+                                </td>
+
+                                <td>
+                                    0 - 58
+                                </td>
+
+                                <td>
+                                    Analizar consecuencias de los siniestros.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    tvictimas
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Total de víctimas registradas en el siniestro.
+                                </td>
+
+                                <td>
+                                    Personas
+                                </td>
+
+                                <td>
+                                    1 - 58
+                                </td>
+
+                                <td>
+                                    Medir impacto de cada siniestro.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    cid
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Identificador interno del registro.
+                                </td>
+
+                                <td>
+                                    Identificador
+                                </td>
+
+                                <td>
+                                    Enteros
+                                </td>
+
+                                <td>
+                                    Control y trazabilidad de los registros.
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 DATASET 2
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2 class="source-title">
+
+                     Dataset 2 — Vehículos involucrados en accidentes
+
+                </h2>
+
+
+                <p>
+
+                    <strong>Registros:</strong> 406.540
+
+                    &nbsp; | &nbsp;
+
+                    <strong>Variables:</strong> 9
+
+                    &nbsp; | &nbsp;
+
+                    <strong>Periodo:</strong>
+                    2022-01-01 a 2026-02-01
+
+                </p>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Variable
+                                </th>
+
+                                <th>
+                                    Tipo
+                                </th>
+
+                                <th>
+                                    Descripción
+                                </th>
+
+                                <th>
+                                    Unidad
+                                </th>
+
+                                <th>
+                                    Dominio / valores
+                                </th>
+
+                                <th>
+                                    Utilidad analítica
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>
+                                    marca_vehiculo
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Marca comercial del vehículo involucrado.
+                                </td>
+
+                                <td>
+                                    Marca
+                                </td>
+
+                                <td>
+                                    BAJAJ, YAMAHA, CHEVROLET, etc.
+                                </td>
+
+                                <td>
+                                    Analizar distribución de vehículos involucrados.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    modelo_vehiculo
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Año del modelo del vehículo.
+                                </td>
+
+                                <td>
+                                    Año
+                                </td>
+
+                                <td>
+                                    1937 - 2027
+                                </td>
+
+                                <td>
+                                    Analizar relación entre antigüedad y accidentes.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    tipo_vehiculo
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Tipo de vehículo involucrado.
+                                </td>
+
+                                <td>
+                                    Categoría
+                                </td>
+
+                                <td>
+                                    Motocicleta, automóvil, camioneta, bus, etc.
+                                </td>
+
+                                <td>
+                                    Identificar los tipos de vehículos más involucrados.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    edad_vehiculo
+                                </td>
+
+                                <td>
+                                    <span class="numeric">
+                                        Numérica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Edad del vehículo al momento del accidente.
+                                </td>
+
+                                <td>
+                                    Años
+                                </td>
+
+                                <td>
+                                    0 - 1826
+                                </td>
+
+                                <td>
+                                    Estudiar la relación entre antigüedad y accidentes.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    fecha_accidente
+                                </td>
+
+                                <td>
+                                    <span class="temporal">
+                                        Temporal
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Fecha en la que ocurrió el accidente.
+                                </td>
+
+                                <td>
+                                    Fecha
+                                </td>
+
+                                <td>
+                                    YYYY-MM-DD
+                                </td>
+
+                                <td>
+                                    Analizar evolución temporal.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    gravedad_accidente
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Gravedad registrada para el accidente.
+                                </td>
+
+                                <td>
+                                    Categoría
+                                </td>
+
+                                <td>
+                                    CON HERIDOS / CON MUERTOS
+                                </td>
+
+                                <td>
+                                    Analizar factores relacionados con la gravedad.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    departamento_accidente
+                                </td>
+
+                                <td>
+                                    <span class="geographic">
+                                        Geográfica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Departamento donde ocurrió el accidente.
+                                </td>
+
+                                <td>
+                                    Departamento
+                                </td>
+
+                                <td>
+                                    Departamentos de Colombia
+                                </td>
+
+                                <td>
+                                    Comparar comportamiento territorial.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    municipio_accidente
+                                </td>
+
+                                <td>
+                                    <span class="geographic">
+                                        Geográfica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Municipio donde ocurrió el accidente.
+                                </td>
+
+                                <td>
+                                    Municipio
+                                </td>
+
+                                <td>
+                                    Municipios de Colombia
+                                </td>
+
+                                <td>
+                                    Analizar concentración por municipio.
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    autoridad_de_transito
+                                </td>
+
+                                <td>
+                                    <span class="categorical">
+                                        Categórica
+                                    </span>
+                                </td>
+
+                                <td>
+                                    Autoridad de tránsito que reportó o registró
+                                    el accidente.
+                                </td>
+
+                                <td>
+                                    Entidad
+                                </td>
+
+                                <td>
+                                    Secretarías, Policía Nacional, etc.
+                                </td>
+
+                                <td>
+                                    Analizar procedencia institucional de los registros.
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CARACTERIZACIÓN GENERAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Caracterización general
+                </h2>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Característica
+                                </th>
+
+                                <th>
+                                    Dataset Siniestros
+                                </th>
+
+                                <th>
+                                    Dataset Vehículos
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>
+                                    Unidad de análisis
+                                </td>
+
+                                <td>
+                                    Siniestro vial
+                                </td>
+
+                                <td>
+                                    Vehículo involucrado en accidente
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Registros
+                                </td>
+
+                                <td>
+                                    19.015
+                                </td>
+
+                                <td>
+                                    406.540
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Variables
+                                </td>
+
+                                <td>
+                                    16
+                                </td>
+
+                                <td>
+                                    9
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Variable temporal
+                                </td>
+
+                                <td>
+                                    fecha_hech
+                                </td>
+
+                                <td>
+                                    fecha_accidente
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Variables geográficas
+                                </td>
+
+                                <td>
+                                    Departamento, municipio, latitud, longitud
+                                </td>
+
+                                <td>
+                                    Departamento, municipio
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Cobertura geográfica
+                                </td>
+
+                                <td>
+                                    Colombia
+                                </td>
+
+                                <td>
+                                    Colombia
+                                </td>
+
+                            </tr>
+
+
+                            <tr>
+
+                                <td>
+                                    Granularidad
+                                </td>
+
+                                <td>
+                                    Registro individual de siniestro
+                                </td>
+
+                                <td>
+                                    Registro individual de vehículo involucrado
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 TRAZABILIDAD E INTEGRACIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Trazabilidad e integración
+                </h2>
+
+
+                <p class="description">
+
+                    Los datasets fueron obtenidos de fuentes institucionales
+                    relacionadas con la seguridad vial en Colombia.
+
+                </p>
+
+
+                <p class="description">
+
+                    Durante el diagnóstico de integración se identificaron
+                    coincidencias geográficas entre departamentos y municipios,
+                    pero no existen años ni fechas comunes entre los dos
+                    conjuntos de datos disponibles.
+
+                </p>
+
+
+                <div class="info">
+
+                    <strong>
+                        Resultado:
+                    </strong>
+
+                    <br><br>
+
+                    Los datasets no se integrarán mediante un
+                    <em>merge</em>
+                    registro a registro.
+
+                    Se utilizarán como
+                    <strong>
+                        fuentes complementarias
+                    </strong>
+                    para ampliar el análisis del fenómeno de accidentalidad vial.
+
+                </div>
+
+
+                <p class="description">
+
+                    El dataset de siniestros permite estudiar principalmente
+                    características del hecho, ubicación, causas, víctimas y
+                    tipo de vía, mientras que el dataset de vehículos permite
+                    analizar características del parque automotor involucrado,
+                    como tipo, marca, modelo y edad del vehículo.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN INFERIOR
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+
+                <a
+                    href="{{ url_for('dataset') }}"
+                    class="back"
+                >
+                    ⬅ Punto anterior
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                    Menú Etapa 1
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1_calidad') }}"
+                    class="back next"
+                >
+                    Siguiente punto ➡
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
+
+    <script>
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+
+        const sidebarClose =
+            document.getElementById("sidebarClose");
+
+
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
+
+
+        /* ==================================================
+           CERRAR SIDEBAR
+           ================================================== */
+
+        sidebarClose.addEventListener("click", () => {
+
+            sidebar.classList.add("hidden");
+
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* ==================================================
+           ABRIR SIDEBAR
+           ================================================== */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* ==================================================
+           CERRAR CON OVERLAY
+           ================================================== */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

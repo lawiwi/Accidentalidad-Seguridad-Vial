@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dataset | Sistema de Reportes Viales</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* ==================================================
+           TOKENS DE DISEÑO
+           ================================================== */
+
+        :root {
+            --navy-950: #14102b;
+            --navy-900: #1c1638;
+            --plum-800: #3a2456;
+            --plum-700: #55296b;
+            --magenta-700: #6b2f66;
+
+            --teal-500: #17a398;
+            --teal-600: #0f8478;
+            --teal-700: #0b6a61;
+
+            --ink: #241f38;
+            --ink-soft: #6b6584;
+            --ink-faint: #9d97b3;
+
+            --bg: #f5f3fa;
+            --surface: #ffffff;
+            --border: #e7e2f2;
+            --border-soft: #efebf7;
+
+            --lavender-50: #f2eef9;
+            --lavender-100: #e9e2f5;
+
+            --amber-100: #fdf1e0;
+            --amber-600: #b3781a;
+
+            --success-bg: #eaf7f2;
+            --success-ink: #0b6a56;
+            --success-border: var(--teal-500);
+
+            --header-grad: linear-gradient(135deg, var(--navy-950) 0%, var(--plum-800) 55%, var(--magenta-700) 100%);
+            --accent-grad: linear-gradient(135deg, var(--teal-500) 0%, var(--navy-900) 100%);
+
+            --shadow-sm: 0 2px 10px rgba(28, 22, 56, 0.06);
+            --shadow-header: 0 14px 34px rgba(28, 15, 46, 0.28);
+        }
+
+
+        /* ==================================================
+           ESTILOS GENERALES
+           ================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+
+        /* ==================================================
+           SIDEBAR
+           ================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: var(--surface);
+
+            border-right: 1px solid var(--border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        /* ==================================================
+           ENCABEZADO SIDEBAR
+           ================================================== */
+
+        .sidebar-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            background: var(--header-grad);
+            color: #ffffff;
+        }
+
+
+        .sidebar-header h3 {
+
+            margin: 0;
+
+            font-size: 1.2rem;
+            font-weight: 700;
+
+            color: #ffffff;
+        }
+
+
+        .sidebar-header span {
+
+            font-size: 0.78rem;
+
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+
+        /* ==================================================
+           BOTÓN CERRAR SIDEBAR
+           ================================================== */
+
+        .sidebar-close {
+
+            border: none;
+
+            background: rgba(255, 255, 255, 0.08);
+
+            font-size: 1.4rem;
+
+            color: rgba(255, 255, 255, 0.85);
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .sidebar-close:hover {
+
+            background: rgba(255, 255, 255, 0.18);
+
+            color: #ffffff;
+        }
+
+
+        /* ==================================================
+           SECCIÓN DE NAVEGACIÓN
+           ================================================== */
+
+        .sidebar-section {
+
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+
+        .sidebar-label {
+
+            display: block;
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            font-size: 0.68rem;
+
+            font-weight: 700;
+
+            color: var(--ink-faint);
+
+            letter-spacing: 0.1em;
+        }
+
+
+        /* ==================================================
+           ITEMS SIDEBAR
+           ================================================== */
+
+        .sidebar-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+
+            margin-bottom: 4px;
+
+            border-radius: 9px;
+
+            color: var(--ink-soft);
+
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+
+        .sidebar-item:hover {
+
+            background: var(--lavender-50);
+
+            color: var(--plum-700);
+        }
+
+
+        .sidebar-item .number {
+
+            width: 28px;
+
+            font-size: 0.68rem;
+
+            font-weight: 700;
+
+            color: var(--ink-faint);
+        }
+
+
+        /* ==================================================
+           PÁGINA ACTUAL
+           ================================================== */
+
+        .sidebar-item.active {
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            font-weight: 700;
+        }
+
+
+        .sidebar-item.active .number {
+
+            color: var(--teal-600);
+        }
+
+
+        /* ==================================================
+           FOOTER SIDEBAR
+           ================================================== */
+
+        .sidebar-footer {
+
+            padding: 15px;
+
+            border-top: 1px solid var(--border);
+        }
+
+
+        .home-link {
+
+            display: block;
+
+            padding: 10px;
+
+            color: var(--ink-soft);
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+
+        .home-link:hover {
+
+            background: var(--lavender-50);
+
+            color: var(--ink);
+        }
+
+
+        /* ==================================================
+           BOTÓN ABRIR SIDEBAR
+           ================================================== */
+
+        .sidebar-toggle {
+
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: var(--accent-grad);
+
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 6px 16px rgba(23, 163, 152, 0.35);
+
+            transition: 0.2s;
+        }
+
+
+        .sidebar-toggle:hover {
+
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+
+        /* ==================================================
+           SIDEBAR OCULTO
+           ================================================== */
+
+        .sidebar.hidden {
+
+            transform: translateX(-100%);
+        }
+
+
+        .sidebar-toggle.visible {
+
+            display: block;
+        }
+
+
+        /* ==================================================
+           CONTENIDO PRINCIPAL
+           ================================================== */
+
+        .main-content {
+
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+
+        body.sidebar-hidden .main-content {
+
+            margin-left: 0;
+
+            padding-top: 80px;
+        }
+
+
+        /* ==================================================
+           BREADCRUMBS
+           ================================================== */
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.88rem;
+
+            color: var(--ink-faint);
+        }
+
+
+        .breadcrumb a {
+
+            color: var(--plum-700);
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+
+        .breadcrumb a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        .breadcrumb span {
+
+            color: var(--ink-faint);
+        }
+
+
+        .breadcrumb .current {
+
+            color: var(--ink);
+
+            font-weight: 500;
+        }
+
+
+        /* ==================================================
+           CONTENEDOR
+           ================================================== */
+
+        .container {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        .header {
+
+            background: var(--header-grad);
+
+            color: white;
+
+            padding: 34px 32px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow: var(--shadow-header);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            top: -60%;
+            right: -10%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(23, 163, 152, 0.35) 0%, rgba(23, 163, 152, 0) 70%);
+            pointer-events: none;
+        }
+
+
+        .header h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+            font-size: 2rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+
+        .header p {
+
+            margin-bottom: 0;
+
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.78);
+            position: relative;
+        }
+
+
+        /* ==================================================
+           CARDS
+           ================================================== */
+
+        .card {
+
+            background: var(--surface);
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 14px;
+
+            border: 1px solid var(--border-soft);
+
+            box-shadow: var(--shadow-sm);
+        }
+
+
+        .card h2 {
+
+            margin-top: 0;
+
+            color: var(--plum-700);
+            font-weight: 700;
+        }
+
+
+        .card h3 {
+
+            color: var(--ink);
+
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+
+        .description {
+
+            line-height: 1.7;
+
+            text-align: justify;
+        }
+
+
+        /* ==================================================
+           ESTADÍSTICAS
+           ================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+
+        .stat {
+
+            background: var(--lavender-50);
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-left: 4px solid var(--teal-500);
+        }
+
+
+        .stat .number {
+
+            font-size: 1.8rem;
+
+            font-weight: 700;
+
+            font-family: 'Outfit', sans-serif;
+
+            color: var(--plum-700);
+
+            word-break: break-word;
+        }
+
+
+        .stat .label {
+
+            margin-top: 8px;
+
+            font-size: 0.85rem;
+
+            color: var(--ink-soft);
+        }
+
+
+        /* ==================================================
+           COLUMNAS DE VARIABLES
+           ================================================== */
+
+        .columns {
+
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 10px;
+        }
+
+
+        .column {
+
+            background: var(--lavender-50);
+
+            padding: 10px 14px;
+
+            border-radius: 8px;
+
+            border: 1px solid var(--border-soft);
+
+            font-family: monospace;
+
+            color: var(--plum-700);
+
+            overflow-wrap: anywhere;
+        }
+
+
+        /* ==================================================
+           TABLA
+           ================================================== */
+
+        .table-container {
+
+            overflow-x: auto;
+
+            width: 100%;
+
+            border-radius: 12px;
+
+            border: 1px solid var(--border-soft);
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+
+        th {
+
+            background: linear-gradient(135deg, var(--navy-950) 0%, var(--plum-800) 100%);
+
+            color: white;
+
+            padding: 12px;
+
+            text-align: left;
+
+            white-space: nowrap;
+
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+
+        td {
+
+            padding: 10px 12px;
+
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+
+        tr:nth-child(even) {
+
+            background: #faf9fd;
+        }
+
+
+        tr:hover {
+
+            background: var(--lavender-50);
+        }
+
+
+        /* ==================================================
+           ETIQUETAS
+           ================================================== */
+
+        .tag {
+
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            margin: 3px;
+
+            font-size: 0.85rem;
+
+            font-weight: 600;
+        }
+
+
+        /* ==================================================
+           MENSAJES
+           ================================================== */
+
+        .warning {
+
+            background: var(--amber-100);
+
+            border-left: 4px solid #d99a2b;
+
+            padding: 15px 18px;
+
+            border-radius: 10px;
+
+            line-height: 1.6;
+
+            color: #6b4a10;
+        }
+
+
+        .success {
+
+            background: var(--success-bg);
+
+            border-left: 4px solid var(--success-border);
+
+            padding: 15px 18px;
+
+            border-radius: 10px;
+
+            line-height: 1.6;
+
+            color: var(--success-ink);
+        }
+
+
+        /* ==================================================
+           NAVEGACIÓN INFERIOR
+           ================================================== */
+
+        .navigation-buttons {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .back {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            padding: 12px 22px;
+
+            border-radius: 999px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+
+        .back:hover {
+
+            background: var(--lavender-50);
+
+            text-decoration: none;
+        }
+
+        .back.next {
+            background: var(--accent-grad);
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(23, 163, 152, 0.3);
+        }
+
+        .back.next:hover {
+            filter: brightness(1.06);
+            transform: translateY(-1px);
+        }
+
+
+        /* ==================================================
+           OVERLAY
+           ================================================== */
+
+        .sidebar-overlay {
+
+            display: none;
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                transform: translateX(-100%);
+            }
+
+
+            .sidebar.open {
+
+                transform: translateX(0);
+            }
+
+
+            .sidebar-toggle {
+
+                display: block;
+            }
+
+
+            .sidebar.hidden {
+
+                transform: translateX(-100%);
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+
+            .sidebar-overlay {
+
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(20, 16, 43, 0.45);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+
+            .sidebar-overlay.active {
+
+                display: block;
+            }
+
+
+            .stats {
+
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+
+                padding: 15px;
+            }
+
+
+            body.sidebar-hidden .main-content {
+
+                padding-top: 75px;
+            }
+
+
+            .header {
+
+                padding: 22px;
+            }
+
+
+            .header h1 {
+
+                font-size: 1.5rem;
+            }
+
+
+            .card {
+
+                padding: 20px;
+            }
+
+
+            .breadcrumb {
+
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .columns {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .navigation-buttons {
+
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+
+            .back {
+
+                text-align: center;
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
+
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
+
+
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-header">
+
+            <div>
+
+                <h3>
+                    Etapa 1
+                </h3>
+
+                <span>
+                    Minería de datos
+                </span>
+
+            </div>
+
+
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
+
+
+            <!-- ==================================================
+                 01 - INICIO
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    01
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 02 - PROBLEMA
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    02
+                </span>
+
+                <span>
+                    Problema
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 03 - PREGUNTAS
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    03
+                </span>
+
+                <span>
+                    Preguntas
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 04 - NECESIDADES
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    04
+                </span>
+
+                <span>
+                    Necesidades
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 05 - DATASET ACTUAL
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item active"
+            >
+
+                <span class="number">
+                    05
+                </span>
+
+                <span>
+                    Dataset
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 06 - DICCIONARIO
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    06
+                </span>
+
+                <span>
+                    Diccionario de datos
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 07 - CALIDAD
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    07
+                </span>
+
+                <span>
+                    Calidad
+                </span>
+
+            </a>
+
+
+            <!-- ==================================================
+                 08 - LIMITACIONES
+                 ================================================== -->
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    08
+                </span>
+
+                <span>
+                    Limitaciones
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+             FOOTER SIDEBAR
+             ================================================== -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==================================================
+         OVERLAY
+         ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMBS
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <span class="current">
+                    Dataset
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                     5. Dataset
+                </h1>
+
+                <p>
+                    Etapa 1 — Problema, fuentes y caracterización de datos
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 DESCRIPCIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Dataset principal
+                </h2>
+
+                <p class="description">
+
+                    Para el desarrollo del proyecto de minería de datos se
+                    seleccionó como conjunto de datos principal el dataset
+                    <strong>
+                        Vehículos involucrados en un accidente de tránsito
+                    </strong>,
+                    publicado a través de Datos Abiertos Colombia.
+
+                    El conjunto contiene información relacionada con los
+                    vehículos involucrados en accidentes de tránsito
+                    registrados en Colombia, incluyendo características del
+                    vehículo, fecha y ubicación del accidente y gravedad del
+                    evento.
+
+                </p>
+
+
+                <p class="description">
+
+                    Este dataset fue seleccionado debido a que presenta una
+                    cobertura temporal más amplia que la fuente inicialmente
+                    analizada y permite estudiar la relación entre las
+                    características de los vehículos, la ubicación y la
+                    gravedad de los accidentes.
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 ESTADÍSTICAS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Características generales
+                </h2>
+
+
+                <div class="stats">
+
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ "{:,}".format(registros) }}
+                        </div>
+
+                        <div class="label">
+                            Registros
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ variables }}
+                        </div>
+
+                        <div class="label">
+                            Variables
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ faltantes }}
+                        </div>
+
+                        <div class="label">
+                            Valores faltantes
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ "{:,}".format(duplicados) }}
+                        </div>
+
+                        <div class="label">
+                            Registros duplicados
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 COBERTURA TEMPORAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Cobertura temporal
+                </h2>
+
+
+                <div class="stats">
+
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ fecha_inicio }}
+                        </div>
+
+                        <div class="label">
+                            Fecha inicial
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat">
+
+                        <div class="number">
+                            {{ fecha_fin }}
+                        </div>
+
+                        <div class="label">
+                            Fecha final
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <br>
+
+
+                <div class="success">
+
+                    ✅ El dataset presenta información correspondiente al
+                    periodo
+                    <strong>{{ fecha_inicio }}</strong>
+                    a
+                    <strong>{{ fecha_fin }}</strong>.
+
+                    Esta cobertura permite realizar análisis temporales y
+                    comparar el comportamiento de los accidentes entre
+                    diferentes años.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CUMPLIMIENTO DE REQUISITOS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Cumplimiento de requisitos
+                </h2>
+
+
+                <p>
+
+                    El dataset cumple los requisitos mínimos establecidos para
+                    la construcción del conjunto inicial de datos:
+
+                </p>
+
+
+                <div class="success">
+
+                    ✅ Más de 10.000 registros
+                    <br><br>
+
+                    ✅ Más de 10 variables requeridas mediante integración y
+                    caracterización de fuentes
+                    <br><br>
+
+                    ✅ Variables numéricas
+                    <br><br>
+
+                    ✅ Variables categóricas
+                    <br><br>
+
+                    ✅ Variable temporal
+                    <br><br>
+
+                    ✅ Variables geográficas
+                    <br><br>
+
+                    ✅ Cobertura nacional
+                    <br><br>
+
+                    ✅ Información con granularidad a nivel de vehículo y
+                    accidente
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 VARIABLES DISPONIBLES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Variables disponibles
+                </h2>
+
+
+                <div class="columns">
+
+                    {% for columna in columnas %}
+
+                        <div class="column">
+                            {{ columna }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CLASIFICACIÓN DE VARIABLES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Clasificación inicial
+                </h2>
+
+
+                <h3>
+                    Variables numéricas
+                </h3>
+
+
+                <span class="tag">
+                    modelo_vehiculo
+                </span>
+
+                <span class="tag">
+                    edad_vehiculo
+                </span>
+
+
+                <h3>
+                    Variables categóricas
+                </h3>
+
+
+                <span class="tag">
+                    marca_vehiculo
+                </span>
+
+                <span class="tag">
+                    tipo_vehiculo
+                </span>
+
+                <span class="tag">
+                    gravedad_accidente
+                </span>
+
+                <span class="tag">
+                    departamento_accidente
+                </span>
+
+                <span class="tag">
+                    municipio_accidente
+                </span>
+
+                <span class="tag">
+                    autoridad_de_transito
+                </span>
+
+
+                <h3>
+                    Variable temporal
+                </h3>
+
+
+                <span class="tag">
+                    fecha_accidente
+                </span>
+
+            </div>
+
+
+            <!-- ==================================================
+                 MUESTRA DE REGISTROS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Muestra de registros
+                </h2>
+
+
+                <p>
+
+                    A continuación se presentan los primeros registros del
+                    dataset utilizado. La tabla permite verificar directamente
+                    la estructura de los datos obtenidos desde la fuente.
+
+                </p>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                {% for columna in columnas %}
+
+                                    <th>
+                                        {{ columna }}
+                                    </th>
+
+                                {% endfor %}
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for fila in muestra %}
+
+                                <tr>
+
+                                    {% for columna in columnas %}
+
+                                        <td>
+                                            {{ fila[columna] }}
+                                        </td>
+
+                                    {% endfor %}
+
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 INTEGRACIÓN CON OTRAS FUENTES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     Integración con otras fuentes
+                </h2>
+
+
+                <p class="description">
+
+                    Como fuente complementaria se dispone del dataset de
+                    <strong>
+                        Siniestros Viales ANSV
+                    </strong>,
+                    que contiene 19.015 registros correspondientes al periodo
+                    2019-01-01 a 2019-08-14.
+
+                    Debido a que ambos conjuntos de datos no presentan
+                    coincidencias temporales suficientes para realizar una
+                    unión registro a registro, se decidió conservarlos como
+                    fuentes complementarias.
+
+                </p>
+
+
+                <div class="warning">
+
+                    No se realizará un
+                    <strong>merge directo</strong>
+                    entre ambos datasets utilizando fecha, departamento y
+                    municipio.
+
+                    La integración se realizará posteriormente mediante
+                    análisis comparativos y agregaciones, preservando la
+                    trazabilidad de cada fuente.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PROCEDENCIA
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Procedencia
+                </h2>
+
+
+                <p>
+
+                    <strong>Fuente:</strong>
+                    Datos Abiertos Colombia
+
+                </p>
+
+
+                <p>
+
+                    <strong>Dataset:</strong>
+                    Vehículos involucrados en un accidente de tránsito
+
+                </p>
+
+
+                <p>
+
+                    <strong>Archivo local:</strong>
+                    <code>data/vehiculos_accidentes.csv</code>
+
+                </p>
+
+
+                <p>
+
+                    <strong>Registros descargados:</strong>
+                    {{ "{:,}".format(registros) }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>Tamaño aproximado en memoria:</strong>
+                    {{ tamano_mb }} MB
+
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN INFERIOR
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+
+                <a
+                    href="{{ url_for('Etapa1_fuentes') }}"
+                    class="back"
+                >
+                    ⬅ Punto anterior
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                     Menú Etapa 1
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1_diccionario') }}"
+                    class="back next"
+                >
+                    Siguiente punto ➡
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
+
+    <script>
+
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+
+        const sidebarClose =
+            document.getElementById("sidebarClose");
+
+
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
+
+
+        /* ==================================================
+           CERRAR SIDEBAR
+           ================================================== */
+
+        sidebarClose.addEventListener("click", () => {
+
+            sidebar.classList.add("hidden");
+
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* ==================================================
+           ABRIR SIDEBAR
+           ================================================== */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* ==================================================
+           CERRAR CON OVERLAY
+           ================================================== */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+    </script>
+
+</body>
+
+</html>

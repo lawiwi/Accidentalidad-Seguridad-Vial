@@ -1,0 +1,1547 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fuentes de datos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* =========================
+           TOKENS DE DISEÑO
+           ========================= */
+
+        :root {
+            --navy-950: #14102b;
+            --navy-900: #1c1638;
+            --plum-800: #3a2456;
+            --plum-700: #55296b;
+            --magenta-700: #6b2f66;
+
+            --teal-500: #17a398;
+            --teal-600: #0f8478;
+            --teal-700: #0b6a61;
+
+            --ink: #241f38;
+            --ink-soft: #6b6584;
+            --ink-faint: #9d97b3;
+
+            --bg: #f5f3fa;
+            --surface: #ffffff;
+            --border: #e7e2f2;
+            --border-soft: #efebf7;
+
+            --lavender-50: #f2eef9;
+            --lavender-100: #e9e2f5;
+
+            --amber-100: #fdf1e0;
+            --amber-600: #b3781a;
+
+            --header-grad: linear-gradient(135deg, var(--navy-950) 0%, var(--plum-800) 55%, var(--magenta-700) 100%);
+            --accent-grad: linear-gradient(135deg, var(--teal-500) 0%, var(--navy-900) 100%);
+
+            --shadow-sm: 0 2px 10px rgba(28, 22, 56, 0.06);
+            --shadow-header: 0 14px 34px rgba(28, 15, 46, 0.28);
+        }
+
+
+        /* =========================
+           ESTILOS GENERALES
+           ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* =========================
+           SIDEBAR
+           ========================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
+        }
+
+        /* Encabezado del sidebar */
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            background: var(--header-grad);
+            color: #ffffff;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .sidebar-header span {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        /* Botón cerrar */
+
+        .sidebar-close {
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.85);
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+        }
+
+        /* Sección navegación */
+
+        .sidebar-section {
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+        .sidebar-label {
+            display: block;
+
+            padding: 0 10px;
+            margin-bottom: 10px;
+
+            font-size: 0.68rem;
+            font-weight: 700;
+
+            color: var(--ink-faint);
+
+            letter-spacing: 0.1em;
+        }
+
+        /* Elementos del menú */
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+            margin-bottom: 4px;
+
+            border-radius: 9px;
+
+            color: var(--ink-soft);
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background: var(--lavender-50);
+            color: var(--plum-700);
+        }
+
+        .sidebar-item .number {
+            width: 28px;
+
+            font-size: 0.68rem;
+            font-weight: 700;
+
+            color: var(--ink-faint);
+        }
+
+        /* Página actual */
+
+        .sidebar-item.active {
+            background: var(--lavender-100);
+            color: var(--plum-700);
+
+            font-weight: 700;
+        }
+
+        .sidebar-item.active .number {
+            color: var(--teal-600);
+        }
+
+        /* Footer */
+
+        .sidebar-footer {
+            padding: 15px;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .home-link {
+            display: block;
+
+            padding: 10px;
+
+            color: var(--ink-soft);
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .home-link:hover {
+            background: var(--lavender-50);
+            color: var(--ink);
+        }
+
+
+        /* =========================
+           BOTÓN ABRIR SIDEBAR
+           ========================= */
+
+        .sidebar-toggle {
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 11px;
+
+            background: var(--accent-grad);
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 900;
+
+            display: none;
+
+            box-shadow: 0 6px 16px rgba(23, 163, 152, 0.35);
+
+            transition: 0.2s;
+        }
+
+        .sidebar-toggle:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+        /* Sidebar oculto */
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-toggle.visible {
+            display: block;
+        }
+
+        body.sidebar-hidden .main-content {
+            margin-left: 0;
+            padding-top: 80px;
+        }
+
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+           ========================= */
+
+        .main-content {
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Cuando sidebar está oculto */
+
+        body.sidebar-hidden .main-content {
+            margin-left: 0;
+        }
+
+
+        /* =========================
+           BREADCRUMB
+           ========================= */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.88rem;
+
+            color: var(--ink-faint);
+        }
+
+        .breadcrumb a {
+            color: var(--plum-700);
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: var(--ink-faint);
+        }
+
+        .breadcrumb .current {
+            color: var(--ink);
+
+            font-weight: 500;
+        }
+
+
+        /* =========================
+           CONTENEDOR
+           ========================= */
+
+        .container {
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+            background: var(--header-grad);
+
+            color: white;
+
+            padding: 34px 32px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow: var(--shadow-header);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            top: -60%;
+            right: -10%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(23, 163, 152, 0.35) 0%, rgba(23, 163, 152, 0) 70%);
+            pointer-events: none;
+        }
+
+        .header h1 {
+            margin-top: 0;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .header p {
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, 0.78);
+            position: relative;
+        }
+
+
+        /* =========================
+           CARDS
+           ========================= */
+
+        .card {
+            background: var(--surface);
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 14px;
+
+            border: 1px solid var(--border-soft);
+
+            box-shadow: var(--shadow-sm);
+        }
+
+        h2 {
+            color: var(--plum-700);
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        p {
+            line-height: 1.7;
+
+            text-align: justify;
+            color: var(--ink);
+        }
+
+
+        /* =========================
+           FUENTES
+           ========================= */
+
+        .fuente {
+            border-left: 4px solid var(--teal-500);
+
+            padding-left: 18px;
+
+            margin: 25px 0;
+        }
+
+
+        /* =========================
+           BADGES
+           ========================= */
+
+        .badges-container {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 6px 13px;
+
+            border-radius: 20px;
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            font-size: 0.8rem;
+
+            font-weight: 700;
+
+            letter-spacing: 0.02em;
+        }
+
+        .badge-download {
+            text-decoration: none;
+
+            background: var(--accent-grad);
+            color: #ffffff;
+
+            transition: 0.2s;
+        }
+
+        .badge-download:hover {
+            filter: brightness(1.08);
+        }
+
+
+        /* =========================
+           DATOS
+           ========================= */
+
+        .dato {
+            margin: 7px 0;
+        }
+
+        .dato strong {
+            color: var(--ink-soft);
+        }
+
+        code {
+            background: var(--lavender-50);
+
+            color: var(--plum-700);
+
+            padding: 3px 7px;
+
+            border-radius: 5px;
+
+            font-size: 0.9rem;
+        }
+
+
+        /* =========================
+           LINKS
+           ========================= */
+
+        a {
+            color: var(--plum-700);
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           BOTONES INFERIORES
+           ========================= */
+
+        .navigation-buttons {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+        .back {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            padding: 12px 22px;
+
+            border-radius: 999px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            background: var(--lavender-50);
+            text-decoration: none;
+        }
+
+        .back.next {
+            background: var(--accent-grad);
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(23, 163, 152, 0.3);
+        }
+
+        .back.next:hover {
+            filter: brightness(1.06);
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .sidebar.hidden {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(20, 16, 43, 0.45);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            .header {
+                padding: 22px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .back {
+                text-align: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     BOTÓN PARA ABRIR EL MENÚ
+     ================================================== -->
+
+<button class="sidebar-toggle" id="sidebarToggle">
+    ☰
+</button>
+
+
+<!-- ==================================================
+     MENÚ LATERAL
+     ================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-header">
+
+        <div>
+            <h3>Etapa 1</h3>
+
+            <span>Minería de datos</span>
+        </div>
+
+        <button class="sidebar-close" id="sidebarClose">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="sidebar-section">
+
+        <span class="sidebar-label">
+            NAVEGACIÓN
+        </span>
+
+
+        <a href="{{ url_for('Etapa1') }}" class="sidebar-item">
+
+            <span class="number">01</span>
+
+            <span>Inicio</span>
+
+        </a>
+
+
+        <a href="{{ url_for('Etapa1_problema') }}" class="sidebar-item">
+
+            <span class="number">02</span>
+
+            <span>Problema</span>
+
+        </a>
+
+
+        <a href="{{ url_for('Etapa1_preguntas') }}" class="sidebar-item">
+
+            <span class="number">03</span>
+
+            <span>Preguntas</span>
+
+        </a>
+
+
+        <a href="{{ url_for('Etapa1_necesidades') }}" class="sidebar-item">
+
+            <span class="number">04</span>
+
+            <span>Necesidades</span>
+
+        </a>
+
+
+        <a href="{{ url_for('Etapa1_fuentes') }}" class="sidebar-item active">
+
+            <span class="number">05</span>
+
+            <span>Fuentes</span>
+
+        </a>
+
+
+        <a href="{{ url_for('dataset') }}" class="sidebar-item">
+
+            <span class="number">06</span>
+
+            <span>Dataset</span>
+
+        </a>
+
+
+        <a href="{{ url_for('Etapa1_diccionario') }}" class="sidebar-item">
+
+            <span class="number">07</span>
+
+            <span>Diccionario de datos</span>
+
+        </a>
+
+
+        <a href="{{ url_for('Etapa1_calidad') }}" class="sidebar-item">
+
+            <span class="number">08</span>
+
+            <span>Calidad</span>
+
+        </a>
+
+
+        <a href="{{ url_for('Etapa1_limitaciones') }}" class="sidebar-item">
+
+            <span class="number">09</span>
+
+            <span>Limitaciones</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="sidebar-footer">
+
+        <a href="{{ url_for('home') }}" class="home-link">
+
+            ← Menú principal
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- Fondo para dispositivos pequeños -->
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+
+<!-- ==================================================
+     CONTENIDO PRINCIPAL
+     ================================================== -->
+
+<main class="main-content">
+
+
+    <div class="container">
+
+
+        <!-- =========================
+             BREADCRUMB
+             ========================= -->
+
+        <nav class="breadcrumb">
+
+            <a href="{{ url_for('home') }}">
+                Inicio
+            </a>
+
+            <span>›</span>
+
+            <a href="{{ url_for('Etapa1') }}">
+                Etapa 1
+            </a>
+
+            <span>›</span>
+
+            <span class="current">
+                Fuentes de datos
+            </span>
+
+        </nav>
+
+
+
+        <!-- =========================
+             HEADER
+             ========================= -->
+
+        <div class="header">
+
+            <h1>
+                4. Fuentes de datos
+            </h1>
+
+            <p>
+                Fuentes utilizadas para contextualizar y analizar
+                la accidentalidad vial.
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             CLASIFICACIÓN
+             ========================= -->
+
+        <div class="card">
+
+            <h2>
+                Clasificación de las fuentes
+            </h2>
+
+            <p>
+                Para el proyecto se consideran fuentes de información
+                de diferentes niveles. Las fuentes secundarias
+                constituyen la base principal del análisis cuantitativo,
+                mientras que las fuentes primarias y terciarias permiten
+                complementar el contexto y la interpretación del fenómeno.
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             FUENTE 1
+             ========================= -->
+
+        <div class="card">
+
+            <h2>
+
+                🇨🇴
+
+                <a
+                    href="https://www.arcgis.com/apps/mapviewer/index.html?url=https://srvansvargweb.ansv.gov.co/server/rest/services/Hosted/Datos_siniestros/FeatureServer&source=sd"
+                    target="_blank"
+                    style="color: inherit; text-decoration: none; border-bottom: 1px dotted var(--plum-700);"
+                >
+                    Siniestros viales ANSV ↗
+                </a>
+
+            </h2>
+
+
+            <div class="fuente">
+
+                <div class="badges-container">
+
+                    <span class="badge">
+                        SECUNDARIA
+                    </span>
+
+                    <span class="badge">
+                        01/01/2019 – 14/08/2019
+                    </span>
+
+                    <a
+                        href="{{ url_for('descargar_siniestros') }}"
+                        class="badge badge-download"
+                    >
+                        ↓ CSV
+                    </a>
+
+                </div>
+
+
+                <h3>
+                    Datos de Siniestros Viales
+                </h3>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Institución:
+                    </strong>
+
+                    Agencia Nacional de Seguridad Vial (ANSV)
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Fuente:
+                    </strong>
+
+                    Servicio geográfico institucional / ArcGIS
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Registros:
+                    </strong>
+
+                    19.015
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Variables:
+                    </strong>
+
+                    16 variables originales
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Cobertura:
+                    </strong>
+
+                    Colombia
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Departamentos:
+                    </strong>
+
+                    32
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Municipios:
+                    </strong>
+
+                    799
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Formato obtenido:
+                    </strong>
+
+                    JSON mediante API REST y posteriormente CSV
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Método de adquisición:
+                    </strong>
+
+                    Consulta automatizada mediante API
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Archivo local:
+                    </strong>
+
+                    <code>
+                        data/siniestros_viales.csv
+                    </code>
+
+                </div>
+
+
+                <p>
+                    Esta fuente permite analizar características
+                    temporales, geográficas y relacionadas con los
+                    siniestros, incluyendo ubicación, clasificación,
+                    hipótesis, víctimas y lugar del accidente.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             FUENTE 2
+             ========================= -->
+
+        <div class="card">
+
+            <h2>
+
+                
+
+                <a
+                    href="https://www.datos.gov.co/Transporte/VEHICULOS-INVOLUCRADOS-EN-UN-ACCIDENTE-DE-TRANSITO/6jmc-vaxk/about_data"
+                    target="_blank"
+                    style="color: inherit; text-decoration: none; border-bottom: 1px dotted var(--plum-700);"
+                >
+                    Vehículos involucrados ↗
+                </a>
+
+            </h2>
+
+
+            <div class="fuente">
+
+                <div class="badges-container">
+
+                    <span class="badge">
+                        SECUNDARIA
+                    </span>
+
+                    <span class="badge">
+                        01/01/2022 – 01/02/2026
+                    </span>
+
+                    <a
+                        href="{{ url_for('descargar_vehiculos') }}"
+                        class="badge badge-download"
+                    >
+                        ↓ CSV
+                    </a>
+
+                </div>
+
+
+                <h3>
+                    Vehículos involucrados en un accidente de tránsito —
+                    Ley 2251 de 2022
+                </h3>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Institución:
+                    </strong>
+
+                    Datos Abiertos Colombia
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Registros descargados:
+                    </strong>
+
+                    406.540
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Variables:
+                    </strong>
+
+                    9
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Cobertura:
+                    </strong>
+
+                    Colombia
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Departamentos:
+                    </strong>
+
+                    31
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Municipios:
+                    </strong>
+
+                    639
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Formato obtenido:
+                    </strong>
+
+                    API de Datos Abiertos / CSV
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Método de adquisición:
+                    </strong>
+
+                    Consulta automatizada y descarga mediante API
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Archivo local:
+                    </strong>
+
+                    <code>
+                        data/vehiculos_accidentes.csv
+                    </code>
+
+                </div>
+
+
+                <p>
+                    Esta fuente complementa el análisis proporcionando
+                    características específicas de los vehículos
+                    involucrados, tales como marca, modelo, tipo,
+                    edad, municipio, departamento y gravedad del accidente.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             FUENTES TERCIARIAS
+             ========================= -->
+
+        <div class="card">
+
+            <h2>
+                 Fuentes terciarias
+            </h2>
+
+
+            <div class="fuente">
+
+                <span class="badge">
+                    TERCIARIA
+                </span>
+
+
+                <h3>
+                    Datos Abiertos Colombia
+                </h3>
+
+
+                <p>
+                    El portal Datos Abiertos Colombia funciona como
+                    plataforma de distribución y consulta de conjuntos
+                    de datos publicados por diferentes entidades públicas.
+                    Para este proyecto se utiliza como mecanismo de acceso
+                    y consulta de información pública relacionada con
+                    movilidad y accidentalidad.
+                </p>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Institución responsable:
+                    </strong>
+
+                    Gobierno de Colombia
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Tipo:
+                    </strong>
+
+                    Portal de distribución de datos
+
+                </div>
+
+
+                <div class="dato">
+
+                    <strong>
+                        Cobertura:
+                    </strong>
+
+                    Nacional
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             FUENTE PRIMARIA
+             ========================= -->
+
+        <div class="card">
+
+            <h2>
+                 Fuente primaria propuesta
+            </h2>
+
+
+            <div class="fuente">
+
+                <span class="badge">
+                    PRIMARIA
+                </span>
+
+
+                <h3>
+                    Observación directa / levantamiento propio
+                </h3>
+
+
+                <p>
+                    Como fuente primaria complementaria se plantea
+                    la posibilidad de realizar observación directa
+                    de condiciones relacionadas con la movilidad
+                    y seguridad vial en un contexto regional.
+                </p>
+
+
+                <p>
+                    Esta información no será utilizada para modificar
+                    los registros oficiales descargados. En caso de
+                    realizarse, funcionará como información contextual
+                    adicional y deberá documentarse mediante fecha,
+                    ubicación, metodología de observación y variables
+                    registradas.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             INTEGRACIÓN
+             ========================= -->
+
+        <div class="card">
+
+            <h2>
+                🔗 Integración de las fuentes
+            </h2>
+
+
+            <p>
+                Las dos fuentes secundarias principales no presentan
+                coincidencia temporal suficiente para realizar una
+                integración registro a registro. El dataset de siniestros
+                corresponde a 2019, mientras que el dataset de vehículos
+                contiene información desde 2022.
+            </p>
+
+
+            <p>
+                Por esta razón, las fuentes serán utilizadas como datasets
+                complementarios. Se podrán realizar comparaciones y
+                análisis independientes utilizando dimensiones comunes
+                como departamento, municipio y características de los
+                accidentes, sin afirmar que un registro de una fuente
+                corresponde directamente a un registro de la otra.
+            </p>
+
+        </div>
+
+
+
+        <!-- =========================
+             LIMITACIONES
+             ========================= -->
+
+        <div class="card">
+
+            <h2>
+                 Limitaciones de las fuentes
+            </h2>
+
+
+            <ul>
+
+                <li>
+                    Las fuentes tienen diferentes periodos de cobertura.
+                </li>
+
+                <li>
+                    Los nombres de municipios y departamentos pueden
+                    presentar diferencias de formato.
+                </li>
+
+                <li>
+                    Las fuentes poseen diferentes niveles de granularidad.
+                </li>
+
+                <li>
+                    El dataset de vehículos presenta registros duplicados.
+                </li>
+
+                <li>
+                    Existen algunos valores faltantes en marca y edad
+                    del vehículo.
+                </li>
+
+                <li>
+                    La cobertura territorial no es idéntica entre ambas fuentes.
+                </li>
+
+            </ul>
+
+        </div>
+
+
+
+        <!-- =========================
+             NAVEGACIÓN
+             ========================= -->
+
+        <div class="navigation-buttons">
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="back"
+            >
+                ⬅ Punto anterior
+            </a>
+
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="back"
+            >
+                 Menú Etapa 1
+            </a>
+
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="back next"
+            >
+                Siguiente punto ➡
+            </a>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- ==================================================
+     JAVASCRIPT SIDEBAR
+     ================================================== -->
+
+<script>
+
+    const sidebar = document.getElementById("sidebar");
+
+    const sidebarToggle =
+        document.getElementById("sidebarToggle");
+
+    const sidebarClose =
+        document.getElementById("sidebarClose");
+
+    const sidebarOverlay =
+        document.getElementById("sidebarOverlay");
+
+
+    /* =========================
+       CERRAR SIDEBAR
+       ========================= */
+
+    sidebarClose.addEventListener("click", () => {
+
+        sidebar.classList.add("hidden");
+
+        sidebarToggle.classList.add("visible");
+
+        document.body.classList.add("sidebar-hidden");
+
+        sidebarOverlay.classList.remove("active");
+
+    });
+
+
+    /* =========================
+       ABRIR SIDEBAR
+       ========================= */
+
+    sidebarToggle.addEventListener("click", () => {
+
+        sidebar.classList.remove("hidden");
+
+        sidebar.classList.add("open");
+
+        sidebarToggle.classList.remove("visible");
+
+        document.body.classList.remove("sidebar-hidden");
+
+        sidebarOverlay.classList.add("active");
+
+    });
+
+
+    /* =========================
+       CERRAR CON OVERLAY
+       ========================= */
+
+    sidebarOverlay.addEventListener("click", () => {
+
+        sidebar.classList.remove("open");
+
+        sidebar.classList.add("hidden");
+
+        sidebarToggle.classList.add("visible");
+
+        document.body.classList.add("sidebar-hidden");
+
+        sidebarOverlay.classList.remove("active");
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>

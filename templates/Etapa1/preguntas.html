@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Preguntas de investigación</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* =========================
+           TOKENS DE DISEÑO
+           ========================= */
+
+        :root {
+            --navy-950: #14102b;
+            --navy-900: #1c1638;
+            --plum-800: #3a2456;
+            --plum-700: #55296b;
+            --magenta-700: #6b2f66;
+
+            --teal-500: #17a398;
+            --teal-600: #0f8478;
+            --teal-700: #0b6a61;
+
+            --ink: #241f38;
+            --ink-soft: #6b6584;
+            --ink-faint: #9d97b3;
+
+            --bg: #f5f3fa;
+            --surface: #ffffff;
+            --border: #e7e2f2;
+            --border-soft: #efebf7;
+
+            --lavender-50: #f2eef9;
+            --lavender-100: #e9e2f5;
+
+            --header-grad: linear-gradient(135deg, var(--navy-950) 0%, var(--plum-800) 55%, var(--magenta-700) 100%);
+            --accent-grad: linear-gradient(135deg, var(--teal-500) 0%, var(--navy-900) 100%);
+
+            --shadow-sm: 0 2px 10px rgba(28, 22, 56, 0.06);
+            --shadow-md: 0 10px 30px rgba(28, 22, 56, 0.10);
+            --shadow-header: 0 14px 34px rgba(28, 15, 46, 0.28);
+        }
+
+
+        /* =========================
+           ESTILOS GENERALES
+           ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+
+        /* =========================
+           SIDEBAR
+           ========================= */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        /* Encabezado */
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            background: var(--header-grad);
+            color: #ffffff;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .sidebar-header span {
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+
+        /* Botón cerrar */
+
+        .sidebar-close {
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.85);
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+        }
+
+
+        /* Sección navegación */
+
+        .sidebar-section {
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+        .sidebar-label {
+            display: block;
+
+            padding: 0 10px;
+            margin-bottom: 10px;
+
+            font-size: 0.68rem;
+            font-weight: 700;
+
+            color: var(--ink-faint);
+
+            letter-spacing: 0.1em;
+        }
+
+
+        /* Elementos del menú */
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+            margin-bottom: 4px;
+
+            border-radius: 9px;
+
+            color: var(--ink-soft);
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background: var(--lavender-50);
+            color: var(--plum-700);
+        }
+
+        .sidebar-item .number {
+            width: 28px;
+
+            font-size: 0.68rem;
+            font-weight: 700;
+
+            color: var(--ink-faint);
+        }
+
+
+        /* Página actual */
+
+        .sidebar-item.active {
+            background: var(--lavender-100);
+            color: var(--plum-700);
+
+            font-weight: 700;
+        }
+
+        .sidebar-item.active .number {
+            color: var(--teal-600);
+        }
+
+
+        /* Footer */
+
+        .sidebar-footer {
+            padding: 15px;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .home-link {
+            display: block;
+
+            padding: 10px;
+
+            color: var(--ink-soft);
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .home-link:hover {
+            background: var(--lavender-50);
+            color: var(--ink);
+        }
+
+
+        /* =========================
+           BOTÓN ABRIR SIDEBAR
+           ========================= */
+
+        .sidebar-toggle {
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 11px;
+
+            background: var(--accent-grad);
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 6px 16px rgba(23, 163, 152, 0.35);
+
+            transition: 0.2s;
+        }
+
+        .sidebar-toggle:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+
+        /* Sidebar oculto */
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-toggle.visible {
+            display: block;
+        }
+
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+           ========================= */
+
+        .main-content {
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+        body.sidebar-hidden .main-content {
+            margin-left: 0;
+            padding-top: 80px;
+        }
+
+
+        /* =========================
+           BREADCRUMB
+           ========================= */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.88rem;
+
+            color: var(--ink-faint);
+        }
+
+        .breadcrumb a {
+            color: var(--plum-700);
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: var(--ink-faint);
+        }
+
+        .breadcrumb .current {
+            color: var(--ink);
+
+            font-weight: 500;
+        }
+
+
+        /* =========================
+           CONTENEDOR
+           ========================= */
+
+        .container {
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+            background: var(--header-grad);
+
+            color: white;
+
+            padding: 34px 32px;
+
+            border-radius: 18px;
+
+            margin-bottom: 25px;
+
+            box-shadow: var(--shadow-header);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "";
+            position: absolute;
+            top: -60%;
+            right: -10%;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(23, 163, 152, 0.35) 0%, rgba(23, 163, 152, 0) 70%);
+            pointer-events: none;
+        }
+
+        .header h1 {
+            margin-top: 0;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .header p {
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, 0.78);
+            position: relative;
+        }
+
+
+        /* =========================
+           CARDS
+           ========================= */
+
+        .card {
+            background: var(--surface);
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 14px;
+
+            border: 1px solid var(--border-soft);
+
+            box-shadow: var(--shadow-sm);
+        }
+
+        h2 {
+            color: var(--plum-700);
+            font-weight: 700;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.7;
+
+            text-align: justify;
+            color: var(--ink);
+        }
+
+
+        /* =========================
+           PREGUNTA PRINCIPAL
+           ========================= */
+
+        .principal {
+            border-left: 5px solid var(--teal-500);
+
+            padding: 20px 22px;
+
+            background: var(--lavender-50);
+
+            border-radius: 10px;
+        }
+
+        .principal p {
+            text-align: left;
+            margin: 0;
+        }
+
+
+        /* =========================
+           PREGUNTAS SECUNDARIAS
+           ========================= */
+
+        .pregunta {
+            padding: 16px 18px;
+
+            margin: 12px 0;
+
+            background: #faf9fd;
+
+            border-radius: 10px;
+
+            border-left: 4px solid var(--plum-700);
+
+            line-height: 1.6;
+        }
+
+        .pregunta strong {
+            color: var(--teal-600);
+        }
+
+
+        /* =========================
+           BOTONES INFERIORES
+           ========================= */
+
+        .navigation-buttons {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+        .back {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: var(--lavender-100);
+
+            color: var(--plum-700);
+
+            padding: 12px 22px;
+
+            border-radius: 999px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            background: var(--lavender-50);
+            text-decoration: none;
+        }
+
+        .back.next {
+            background: var(--accent-grad);
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(23, 163, 152, 0.3);
+        }
+
+        .back.next:hover {
+            filter: brightness(1.06);
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================
+           OVERLAY
+           ========================= */
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .sidebar.hidden {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            body.sidebar-hidden .main-content {
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(20, 16, 43, 0.45);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            body.sidebar-hidden .main-content {
+                padding-top: 75px;
+            }
+
+            .header {
+                padding: 22px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .breadcrumb {
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .back {
+                text-align: center;
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
+
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
+
+
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div>
+
+                <h3>
+                    Etapa 1
+                </h3>
+
+                <span>
+                    Minería de datos
+                </span>
+
+            </div>
+
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
+
+
+            <!-- 01 -->
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    01
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- 02 -->
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    02
+                </span>
+
+                <span>
+                    Problema
+                </span>
+
+            </a>
+
+
+            <!-- 03 - ACTUAL -->
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item active"
+            >
+
+                <span class="number">
+                    03
+                </span>
+
+                <span>
+                    Preguntas
+                </span>
+
+            </a>
+
+
+            <!-- 04 -->
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    04
+                </span>
+
+                <span>
+                    Necesidades
+                </span>
+
+            </a>
+
+
+            <!-- 05 -->
+
+            <a
+                href="{{ url_for('Etapa1_fuentes') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    05
+                </span>
+
+                <span>
+                    Fuentes
+                </span>
+
+            </a>
+
+
+            <!-- 06 -->
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    06
+                </span>
+
+                <span>
+                    Dataset
+                </span>
+
+            </a>
+
+
+            <!-- 07 -->
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    07
+                </span>
+
+                <span>
+                    Diccionario de datos
+                </span>
+
+            </a>
+
+
+            <!-- 08 -->
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    08
+                </span>
+
+                <span>
+                    Calidad
+                </span>
+
+            </a>
+
+
+            <!-- 09 -->
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    09
+                </span>
+
+                <span>
+                    Limitaciones
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- Footer -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==================================================
+         OVERLAY PARA DISPOSITIVOS PEQUEÑOS
+         ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMBS
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <span class="current">
+                    Preguntas de investigación
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                    2. Pregunta principal y preguntas secundarias
+                </h1>
+
+                <p>
+                    Preguntas que orientarán el proceso de minería de datos.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PREGUNTA PRINCIPAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Pregunta principal
+                </h2>
+
+                <div class="principal">
+
+                    <p>
+                        <strong>
+                            ¿Qué patrones temporales, geográficos y
+                            relacionados con las características de los
+                            vehículos están asociados con una mayor frecuencia
+                            y gravedad de los accidentes de tránsito en
+                            Colombia?
+                        </strong>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 PREGUNTAS SECUNDARIAS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Preguntas secundarias
+                </h2>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        1.
+                    </strong>
+
+                    ¿Qué periodos de tiempo presentan una mayor
+                    concentración de accidentes de tránsito?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        2.
+                    </strong>
+
+                    ¿Qué departamentos y municipios presentan la mayor
+                    cantidad de accidentes registrados?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        3.
+                    </strong>
+
+                    ¿Qué tipos de vehículos aparecen con mayor frecuencia
+                    en los accidentes de tránsito?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        4.
+                    </strong>
+
+                    ¿Existe una relación entre el tipo de vehículo y la
+                    gravedad del accidente?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        5.
+                    </strong>
+
+                    ¿Qué marcas y modelos de vehículos presentan mayor
+                    participación dentro de los registros de accidentes?
+
+                </div>
+
+
+                <div class="pregunta">
+
+                    <strong>
+                        6.
+                    </strong>
+
+                    ¿Existen diferencias territoriales en los tipos de
+                    vehículos involucrados y en la gravedad de los accidentes?
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONOCIMIENTO ESPERADO
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    Conocimiento esperado
+                </h2>
+
+                <p>
+                    Las preguntas planteadas permitirán orientar la selección
+                    de variables y técnicas de análisis posteriores. Se
+                    buscará identificar concentraciones temporales y
+                    territoriales, patrones asociados a determinados tipos de
+                    vehículos y posibles relaciones entre las características
+                    de los vehículos y la gravedad de los accidentes.
+                </p>
+
+                <p>
+                    Las respuestas deberán sustentarse en evidencia observable
+                    dentro de los datasets seleccionados, evitando establecer
+                    conclusiones causales cuando los datos únicamente permitan
+                    identificar asociaciones o patrones.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN INFERIOR
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+                <a
+                    href="{{ url_for('Etapa1_problema') }}"
+                    class="back"
+                >
+                    ⬅ Punto anterior
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                    Menú Etapa 1
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1_necesidades') }}"
+                    class="back next"
+                >
+                    Siguiente punto ➡
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
+
+    <script>
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+        const sidebarClose =
+            document.getElementById("sidebarClose");
+
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
+
+
+        /* =========================
+           CERRAR SIDEBAR
+           ========================= */
+
+        sidebarClose.addEventListener("click", () => {
+
+            sidebar.classList.add("hidden");
+
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* =========================
+           ABRIR SIDEBAR
+           ========================= */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* =========================
+           CERRAR CON OVERLAY
+           ========================= */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+    </script>
+
+</body>
+
+</html>

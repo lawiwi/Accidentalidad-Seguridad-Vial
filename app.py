@@ -1,9 +1,6 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect,send_from_directory
 from datetime import datetime
 import os
-from flask import session
-
-from flask import Flask, render_template, request, jsonify, session, redirect
 import json
 from dotenv import load_dotenv
 import logging
@@ -160,7 +157,101 @@ def logout():
     session.clear()
     return redirect("/")
 
+# =========================
+# ETAPA 1 - MINERÍA DE DATOS
+# =========================
 
+@app.route("/Etapa1")
+def Etapa1():
+    return render_template("Etapa1/menu.html")
+
+
+@app.route("/Etapa1/problema")
+def Etapa1_problema():
+    return render_template("Etapa1/problema.html")
+
+
+@app.route("/Etapa1/preguntas")
+def Etapa1_preguntas():
+    return render_template("Etapa1/preguntas.html")
+
+
+@app.route("/Etapa1/necesidades")
+def Etapa1_necesidades():
+    return render_template("Etapa1/necesidades.html")
+
+
+@app.route("/Etapa1/fuentes")
+def Etapa1_fuentes():
+    return render_template("Etapa1/fuentes.html")
+
+
+@app.route("/Etapa1/dataset")
+def dataset():
+    import pandas as pd
+
+    try:
+        ruta = "data/vehiculos_accidentes.csv"
+        df = pd.read_csv(ruta)
+
+        # Información general
+        registros = len(df)
+        variables = len(df.columns)
+
+        # Tamaño aproximado
+        tamano_mb = round(df.memory_usage(deep=True).sum() / (1024 * 1024), 2)
+
+        # Columnas
+        columnas = list(df.columns)
+
+        # Primeros registros
+        muestra = df.head(10).to_dict(orient="records")
+
+        # Valores faltantes
+        faltantes = int(df.isnull().sum().sum())
+
+        # Duplicados
+        duplicados = int(df.duplicated().sum())
+
+        # Fechas
+        df["fecha_accidente"] = pd.to_datetime(
+            df["fecha_accidente"],
+            errors="coerce"
+        )
+
+        fecha_inicio = df["fecha_accidente"].min()
+        fecha_fin = df["fecha_accidente"].max()
+
+        return render_template(
+            "Etapa1/dataset.html",
+            registros=registros,
+            variables=variables,
+            tamano_mb=tamano_mb,
+            columnas=columnas,
+            muestra=muestra,
+            faltantes=faltantes,
+            duplicados=duplicados,
+            fecha_inicio=fecha_inicio.strftime("%Y-%m-%d") if pd.notna(fecha_inicio) else "N/D",
+            fecha_fin=fecha_fin.strftime("%Y-%m-%d") if pd.notna(fecha_fin) else "N/D"
+        )
+
+    except Exception as e:
+        return f"Error al cargar el dataset: {e}", 500
+
+
+@app.route("/Etapa1/diccionario")
+def Etapa1_diccionario():
+    return render_template("Etapa1/diccionario.html")
+
+
+@app.route("/Etapa1/calidad")
+def Etapa1_calidad():
+    return render_template("Etapa1/calidad.html")
+
+
+@app.route("/Etapa1/limitaciones")
+def Etapa1_limitaciones():
+    return render_template("Etapa1/limitaciones.html")
 
 @app.route("/dashboard")
 def dashboard_view():
@@ -211,6 +302,21 @@ def admin_dashboard_view():
 def health_check():
     return jsonify({"status": "healthy"}), 200
 
+@app.route('/descargar-siniestros')
+def descargar_siniestros():
+    return send_from_directory(
+        os.path.join(app.root_path, 'data'),
+        'siniestros_viales.csv',
+        as_attachment=True
+    )
+
+@app.route('/descargar-vehiculos')
+def descargar_vehiculos():
+    return send_from_directory(
+        os.path.join(app.root_path, 'data'),
+        'vehiculos_accidentes.csv',
+        as_attachment=True
+    )
 @app.errorhandler(500)
 def internal_error(e):
     app.logger.exception("Internal server error")

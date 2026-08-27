@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Limitaciones y consideraciones</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --primary: #6d28d9;
+            --primary-dark: #4c1d95;
+            --primary-darker: #2e1150;
+            --primary-light: #ede9fe;
+            --primary-lighter: #f5f3fb;
+            --gradient-start: #2e1150;
+            --gradient-mid: #4c2f8c;
+            --gradient-end: #4338ca;
+            --teal: #14b8a6;
+            --teal-dark: #0d9488;
+            --bg: #f5f4fa;
+            --text-main: #333;
+            --text-muted: #6b7280;
+        }
+
+        /* =========================
+           ESTILOS GENERALES
+           ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+
+        /* =========================
+           SIDEBAR
+           ========================= */
+
+        .sidebar {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 270px;
+            height: 100vh;
+
+            background: #ffffff;
+
+            border-right: 1px solid #e5e7eb;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition: transform 0.3s ease;
+        }
+
+
+        /* =========================
+           ENCABEZADO SIDEBAR
+           ========================= */
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 24px 20px;
+
+            border-bottom: 1px solid #e5e7eb;
+
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+
+            font-size: 1.25rem;
+
+            color: #ffffff;
+        }
+
+        .sidebar-header span {
+            font-size: 0.8rem;
+
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+
+        /* =========================
+           BOTÓN CERRAR
+           ========================= */
+
+        .sidebar-close {
+            border: none;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            font-size: 1.7rem;
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+
+            color: #ffffff;
+        }
+
+
+        /* =========================
+           SECCIÓN NAVEGACIÓN
+           ========================= */
+
+        .sidebar-section {
+            padding: 20px 12px;
+
+            flex: 1;
+
+            overflow-y: auto;
+        }
+
+        .sidebar-label {
+            display: block;
+
+            padding: 0 10px;
+
+            margin-bottom: 10px;
+
+            font-size: 0.7rem;
+
+            font-weight: bold;
+
+            color: #9ca3af;
+
+            letter-spacing: 0.08em;
+        }
+
+
+        /* =========================
+           ELEMENTOS DEL MENÚ
+           ========================= */
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 10px;
+
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: #374151;
+
+            text-decoration: none;
+
+            font-size: 0.9rem;
+
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-item:hover {
+            background: var(--primary-lighter);
+
+            color: var(--primary);
+        }
+
+        .sidebar-item .number {
+            width: 28px;
+
+            font-size: 0.7rem;
+
+            font-weight: bold;
+
+            color: #9ca3af;
+        }
+
+
+        /* =========================
+           PÁGINA ACTUAL
+           ========================= */
+
+        .sidebar-item.active {
+            background: var(--primary-light);
+
+            color: var(--primary);
+
+            font-weight: 700;
+        }
+
+        .sidebar-item.active .number {
+            color: var(--primary);
+        }
+
+
+        /* =========================
+           FOOTER SIDEBAR
+           ========================= */
+
+        .sidebar-footer {
+            padding: 15px;
+
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .home-link {
+            display: block;
+
+            padding: 10px;
+
+            color: #6b7280;
+
+            text-decoration: none;
+
+            font-size: 0.85rem;
+
+            border-radius: 8px;
+
+            transition: 0.2s;
+        }
+
+        .home-link:hover {
+            background: var(--primary-lighter);
+
+            color: var(--primary-dark);
+        }
+
+
+        /* =========================
+           BOTÓN ABRIR SIDEBAR
+           ========================= */
+
+        .sidebar-toggle {
+            position: fixed;
+
+            top: 20px;
+            left: 20px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 100%);
+
+            color: white;
+
+            font-size: 1.2rem;
+
+            cursor: pointer;
+
+            z-index: 1100;
+
+            display: none;
+
+            box-shadow: 0 3px 10px rgba(46, 17, 80, 0.35);
+
+            transition: 0.2s;
+        }
+
+        .sidebar-toggle:hover {
+            background: linear-gradient(135deg, var(--primary-darker) 0%, var(--primary-dark) 100%);
+        }
+
+
+        /* =========================
+           SIDEBAR OCULTO
+           ========================= */
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .sidebar-toggle.visible {
+            display: block;
+        }
+
+
+        /* =========================
+           CONTENIDO PRINCIPAL
+           ========================= */
+
+        .main-content {
+            margin-left: 270px;
+
+            padding: 40px;
+
+            transition: margin-left 0.3s ease;
+        }
+
+        body.sidebar-hidden .main-content {
+            margin-left: 0;
+
+            padding-top: 80px;
+        }
+
+
+        /* =========================
+           BREADCRUMBS
+           ========================= */
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            font-size: 0.9rem;
+
+            color: #6b7280;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: #9ca3af;
+        }
+
+        .breadcrumb .current {
+            color: #374151;
+
+            font-weight: 500;
+        }
+
+
+        /* =========================
+           CONTENEDOR
+           ========================= */
+
+        .container {
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 0;
+        }
+
+
+        /* =========================
+           HEADER
+           ========================= */
+
+        .header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 55%, var(--gradient-end) 100%);
+
+            color: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            margin-bottom: 25px;
+
+            box-shadow: 0 10px 25px rgba(46, 17, 80, 0.25);
+        }
+
+        .header h1 {
+            margin-top: 0;
+
+            font-size: 2rem;
+        }
+
+        .header p {
+            margin-bottom: 0;
+
+            line-height: 1.6;
+
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+
+        /* =========================
+           CARDS
+           ========================= */
+
+        .card {
+            background: white;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            box-shadow: 0 4px 15px rgba(46, 17, 80, 0.07);
+        }
+
+        .card h2 {
+            color: var(--primary);
+
+            margin-top: 0;
+        }
+
+        .card h3 {
+            color: var(--primary-dark);
+
+            margin-top: 20px;
+        }
+
+        .card p {
+            line-height: 1.7;
+
+            text-align: justify;
+        }
+
+
+        /* =========================
+           LISTAS
+           ========================= */
+
+        ul {
+            line-height: 1.8;
+
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================
+           MENSAJE WARNING
+           ========================= */
+
+        .warning {
+            background: #fff3cd;
+
+            border-left: 5px solid #ffc107;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-top: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           MENSAJE INFO
+           ========================= */
+
+        .info {
+            background: var(--primary-lighter);
+
+            border-left: 5px solid var(--primary);
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-top: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           MENSAJE SUCCESS
+           ========================= */
+
+        .success {
+            background: #e6f7f4;
+
+            border-left: 5px solid var(--teal);
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-top: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           BOTONES INFERIORES
+           ========================= */
+
+        .navigation-buttons {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            flex-wrap: wrap;
+        }
+
+        .back {
+            display: inline-block;
+
+            text-decoration: none;
+
+            background: #6c757d;
+
+            color: white;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .back:hover {
+            background: var(--primary-darker);
+
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           OVERLAY
+           ========================= */
+
+        .sidebar-overlay {
+            display: none;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .sidebar.hidden {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+
+                padding: 20px;
+            }
+
+            body.sidebar-hidden .main-content {
+                margin-left: 0;
+
+                padding-top: 80px;
+            }
+
+            .sidebar-overlay {
+                position: fixed;
+
+                top: 0;
+                left: 0;
+
+                width: 100%;
+                height: 100%;
+
+                background: rgba(46, 17, 80, 0.35);
+
+                z-index: 999;
+
+                display: none;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+
+
+        /* =========================
+           MÓVILES
+           ========================= */
+
+        @media (max-width: 600px) {
+
+            .main-content {
+                padding: 15px;
+            }
+
+            body.sidebar-hidden .main-content {
+                padding-top: 75px;
+            }
+
+            .header {
+                padding: 22px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .breadcrumb {
+                flex-wrap: wrap;
+
+                gap: 7px;
+
+                font-size: 0.82rem;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+
+                align-items: stretch;
+            }
+
+            .back {
+                text-align: center;
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         BOTÓN PARA ABRIR EL MENÚ
+         ================================================== -->
+
+    <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        aria-label="Abrir menú"
+    >
+        ☰
+    </button>
+
+
+    <!-- ==================================================
+         MENÚ LATERAL
+         ================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <div>
+
+                <h3>
+                    Etapa 1
+                </h3>
+
+                <span>
+                    Minería de datos
+                </span>
+
+            </div>
+
+            <button
+                class="sidebar-close"
+                id="sidebarClose"
+                aria-label="Cerrar menú"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <span class="sidebar-label">
+                NAVEGACIÓN
+            </span>
+
+
+            <!-- 01 -->
+
+            <a
+                href="{{ url_for('Etapa1') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    01
+                </span>
+
+                <span>
+                    Inicio
+                </span>
+
+            </a>
+
+
+            <!-- 02 -->
+
+            <a
+                href="{{ url_for('Etapa1_problema') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    02
+                </span>
+
+                <span>
+                    Problema
+                </span>
+
+            </a>
+
+
+            <!-- 03 -->
+
+            <a
+                href="{{ url_for('Etapa1_preguntas') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    03
+                </span>
+
+                <span>
+                    Preguntas
+                </span>
+
+            </a>
+
+
+            <!-- 04 -->
+
+            <a
+                href="{{ url_for('Etapa1_necesidades') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    04
+                </span>
+
+                <span>
+                    Necesidades
+                </span>
+
+            </a>
+
+
+            <!-- 05 -->
+
+            <a
+                href="{{ url_for('Etapa1_fuentes') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    05
+                </span>
+
+                <span>
+                    Fuentes
+                </span>
+
+            </a>
+
+
+            <!-- 06 -->
+
+            <a
+                href="{{ url_for('dataset') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    06
+                </span>
+
+                <span>
+                    Dataset
+                </span>
+
+            </a>
+
+
+            <!-- 07 -->
+
+            <a
+                href="{{ url_for('Etapa1_diccionario') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    07
+                </span>
+
+                <span>
+                    Diccionario de datos
+                </span>
+
+            </a>
+
+
+            <!-- 08 -->
+
+            <a
+                href="{{ url_for('Etapa1_calidad') }}"
+                class="sidebar-item"
+            >
+
+                <span class="number">
+                    08
+                </span>
+
+                <span>
+                    Calidad
+                </span>
+
+            </a>
+
+
+            <!-- 09 - ACTUAL -->
+
+            <a
+                href="{{ url_for('Etapa1_limitaciones') }}"
+                class="sidebar-item active"
+            >
+
+                <span class="number">
+                    09
+                </span>
+
+                <span>
+                    Limitaciones
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- ==================================================
+             FOOTER
+             ================================================== -->
+
+        <div class="sidebar-footer">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="home-link"
+            >
+                ← Menú principal
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ==================================================
+         OVERLAY
+         ================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+
+            <!-- ==================================================
+                 BREADCRUMBS
+                 ================================================== -->
+
+            <nav
+                class="breadcrumb"
+                aria-label="Navegación de ubicación"
+            >
+
+                <a href="{{ url_for('home') }}">
+                    Inicio
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <a href="{{ url_for('Etapa1') }}">
+                    Etapa 1
+                </a>
+
+                <span>
+                    ›
+                </span>
+
+                <span class="current">
+                    Limitaciones y consideraciones
+                </span>
+
+            </nav>
+
+
+            <!-- ==================================================
+                 HEADER
+                 ================================================== -->
+
+            <div class="header">
+
+                <h1>
+                     8. Limitaciones y consideraciones
+                </h1>
+
+                <p>
+                    Identificación de las principales limitaciones,
+                    restricciones y consideraciones asociadas a las fuentes
+                    y datasets utilizados durante la Etapa 1 del proyecto
+                    de Minería de Datos.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 1. LIMITACIÓN TEMPORAL
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     1. Limitación temporal
+                </h2>
+
+                <p>
+                    Una de las principales limitaciones identificadas
+                    corresponde a la diferencia en los periodos de cobertura
+                    de las fuentes utilizadas.
+                </p>
+
+                <p>
+                    El dataset de
+                    <strong>Siniestros Viales ANSV</strong>
+                    contiene información correspondiente principalmente al
+                    periodo comprendido entre el
+                    <strong>1 de enero de 2019 y el 14 de agosto de 2019</strong>.
+                </p>
+
+                <p>
+                    Por otra parte, el dataset de
+                    <strong>Vehículos Involucrados en un Accidente de Tránsito</strong>
+                    presenta información desde
+                    <strong>2022 hasta febrero de 2026</strong>.
+                </p>
+
+                <div class="warning">
+
+                    <strong>
+                         Consideración:
+                    </strong>
+
+                    Debido a que no existe intersección temporal entre ambas
+                    fuentes, no es posible realizar una integración registro
+                    a registro utilizando la fecha del accidente.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 2. LIMITACIONES DE INTEGRACIÓN
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    🔗 2. Limitaciones de integración
+                </h2>
+
+                <p>
+                    Aunque ambas fuentes contienen información relacionada
+                    con accidentalidad vial en Colombia y comparten variables
+                    geográficas como departamento y municipio, no poseen una
+                    clave común que permita relacionar directamente cada
+                    registro.
+                </p>
+
+                <p>
+                    El diagnóstico realizado mostró coincidencias geográficas
+                    entre departamentos y municipios, pero no coincidencias
+                    entre las fechas de ambas fuentes.
+                </p>
+
+                <div class="info">
+
+                    <strong>
+                         Decisión metodológica:
+                    </strong>
+
+                    Las fuentes serán utilizadas como datasets
+                    complementarios, evitando realizar un
+                    <strong>merge artificial</strong>
+                    que pueda generar relaciones incorrectas entre
+                    accidentes y vehículos.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 3. REGISTROS DUPLICADOS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     3. Registros duplicados
+                </h2>
+
+                <p>
+                    El dataset de vehículos contiene aproximadamente
+                    <strong>147.575 registros duplicados completos</strong>.
+                </p>
+
+                <p>
+                    En esta primera etapa no se eliminarán dichos registros,
+                    ya que el objetivo corresponde al diagnóstico inicial de
+                    calidad y no a la limpieza definitiva de los datos.
+                </p>
+
+                <p>
+                    Durante etapas posteriores será necesario determinar si
+                    estos registros representan verdaderos duplicados o si
+                    corresponden a diferentes vehículos relacionados con un
+                    mismo accidente.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 4. VALORES FALTANTES
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     4. Valores faltantes
+                </h2>
+
+                <p>
+                    El dataset de siniestros viales no presenta valores
+                    faltantes en las variables analizadas.
+                </p>
+
+                <p>
+                    En el dataset de vehículos se identificaron pocos
+                    valores faltantes:
+                </p>
+
+                <ul>
+
+                    <li>
+                        <strong>marca_vehiculo:</strong>
+                        44 registros.
+                    </li>
+
+                    <li>
+                        <strong>edad_vehiculo:</strong>
+                        20 registros.
+                    </li>
+
+                </ul>
+
+                <p>
+                    Estos valores deberán ser tratados posteriormente de
+                    acuerdo con la naturaleza de cada variable, evitando
+                    reemplazos arbitrarios que puedan alterar los resultados.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 5. CALIDAD Y CONSISTENCIA
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     5. Calidad y consistencia
+                </h2>
+
+                <p>
+                    Se identificaron algunas situaciones que requieren
+                    revisión antes de realizar análisis estadísticos o
+                    técnicas de minería de datos.
+                </p>
+
+                <ul>
+
+                    <li>
+                        Diferencias en la nomenclatura de departamentos y
+                        municipios entre fuentes.
+                    </li>
+
+                    <li>
+                        Diferencias en los formatos y granularidad de las
+                        variables.
+                    </li>
+
+                    <li>
+                        Valores potencialmente atípicos en la edad de los
+                        vehículos.
+                    </li>
+
+                    <li>
+                        Diferencias en la estructura y significado de las
+                        variables entre datasets.
+                    </li>
+
+                    <li>
+                        Categorías con valores genéricos como
+                        "-" u "OTRA".
+                    </li>
+
+                </ul>
+
+                <div class="warning">
+
+                    <strong>
+                         Importante:
+                    </strong>
+
+                    La existencia de valores atípicos o categorías genéricas
+                    no implica necesariamente que los registros sean
+                    incorrectos. Primero será necesario determinar su
+                    significado dentro de la fuente original.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 6. POSIBLES SESGOS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     6. Posibles sesgos
+                </h2>
+
+                <p>
+                    Los datos disponibles pueden presentar sesgos derivados
+                    de los mecanismos utilizados para registrar los
+                    accidentes.
+                </p>
+
+                <ul>
+
+                    <li>
+                        Diferencias en los mecanismos de reporte entre
+                        autoridades.
+                    </li>
+
+                    <li>
+                        Posible subregistro de accidentes de menor gravedad.
+                    </li>
+
+                    <li>
+                        Diferencias en la cobertura entre departamentos y
+                        municipios.
+                    </li>
+
+                    <li>
+                        Cambios en los sistemas de registro a través del
+                        tiempo.
+                    </li>
+
+                    <li>
+                        Diferencias en la cantidad de información suministrada
+                        por las entidades responsables.
+                    </li>
+
+                </ul>
+
+                <p>
+                    Por esta razón, los resultados obtenidos deberán
+                    interpretarse como patrones presentes en los datos
+                    disponibles y no necesariamente como una representación
+                    absoluta de toda la accidentalidad vial del país.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 7. COBERTURA GEOGRÁFICA
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     7. Cobertura geográfica
+                </h2>
+
+                <p>
+                    Los datasets presentan una cobertura amplia del territorio
+                    colombiano. Sin embargo, existen diferencias en la cantidad
+                    de registros disponibles por departamento y municipio.
+                </p>
+
+                <p>
+                    Esto puede generar una representación desigual de
+                    determinadas regiones y debe considerarse al realizar
+                    comparaciones territoriales.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 8. TRAZABILIDAD Y PROCEDENCIA
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                     8. Trazabilidad y procedencia
+                </h2>
+
+                <p>
+                    Los archivos originales descargados de las fuentes
+                    oficiales serán conservados sin modificaciones como
+                    respaldo del proceso.
+                </p>
+
+                <p>
+                    Las transformaciones, conversiones de formatos, filtros
+                    y procesos de preparación realizados sobre los datos
+                    serán documentados mediante scripts y archivos
+                    independientes.
+                </p>
+
+                <div class="success">
+
+                    <strong>
+                         Principio de trazabilidad:
+                    </strong>
+
+                    cualquier resultado obtenido posteriormente deberá poder
+                    relacionarse con la fuente original y con las
+                    transformaciones aplicadas al dataset.
+
+                </div>
+
+            </div>
+
+
+            <!-- ==================================================
+                 9. CONSIDERACIONES PARA LAS SIGUIENTES ETAPAS
+                 ================================================== -->
+
+            <div class="card">
+
+                <h2>
+                    9. Consideraciones para las siguientes etapas
+                </h2>
+
+                <p>
+                    Antes de aplicar técnicas de minería de datos será
+                    necesario realizar un proceso de preparación y limpieza
+                    que incluya:
+                </p>
+
+                <ul>
+
+                    <li>
+                        Normalización de nombres geográficos.
+                    </li>
+
+                    <li>
+                        Conversión y validación de tipos de datos.
+                    </li>
+
+                    <li>
+                        Tratamiento de valores faltantes.
+                    </li>
+
+                    <li>
+                        Identificación y análisis de duplicados.
+                    </li>
+
+                    <li>
+                        Revisión de valores atípicos.
+                    </li>
+
+                    <li>
+                        Homologación de categorías.
+                    </li>
+
+                    <li>
+                        Selección de variables relevantes.
+                    </li>
+
+                    <li>
+                        Definición de estrategias de integración o
+                        comparación.
+                    </li>
+
+                </ul>
+
+                <p>
+                    Estas actividades se realizarán en etapas posteriores,
+                    conservando siempre una copia de los datos originales
+                    para garantizar la reproducibilidad del proyecto.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 NAVEGACIÓN INFERIOR
+                 ================================================== -->
+
+            <div class="navigation-buttons">
+
+                <a
+                    href="{{ url_for('Etapa1_calidad') }}"
+                    class="back"
+                >
+                    ⬅ Punto anterior
+                </a>
+
+
+                <a
+                    href="{{ url_for('Etapa1') }}"
+                    class="back"
+                >
+                     Menú Etapa 1
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ==================================================
+         JAVASCRIPT SIDEBAR
+         ================================================== -->
+
+    <script>
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const sidebarToggle =
+            document.getElementById("sidebarToggle");
+
+        const sidebarClose =
+            document.getElementById("sidebarClose");
+
+        const sidebarOverlay =
+            document.getElementById("sidebarOverlay");
+
+
+        /* =========================
+           CERRAR SIDEBAR
+           ========================= */
+
+        sidebarClose.addEventListener("click", () => {
+
+            sidebar.classList.add("hidden");
+
+            sidebar.classList.remove("open");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+
+        /* =========================
+           ABRIR SIDEBAR
+           ========================= */
+
+        sidebarToggle.addEventListener("click", () => {
+
+            sidebar.classList.remove("hidden");
+
+            sidebar.classList.add("open");
+
+            sidebarToggle.classList.remove("visible");
+
+            document.body.classList.remove("sidebar-hidden");
+
+            sidebarOverlay.classList.add("active");
+
+        });
+
+
+        /* =========================
+           CERRAR CON OVERLAY
+           ========================= */
+
+        sidebarOverlay.addEventListener("click", () => {
+
+            sidebar.classList.remove("open");
+
+            sidebar.classList.add("hidden");
+
+            sidebarToggle.classList.add("visible");
+
+            document.body.classList.add("sidebar-hidden");
+
+            sidebarOverlay.classList.remove("active");
+
+        });
+
+    </script>
+
+</body>
+
+</html>
