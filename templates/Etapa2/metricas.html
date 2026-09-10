@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dimensiones y métricas | Etapa 2</title>
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* ==================================================
+           VARIABLES
+           ================================================== */
+
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+            --muted: #777687;
+            --border: #E4E1EB;
+            --white: #FFFFFF;
+        }
+
+
+        /* ==================================================
+           CONFIGURACIÓN GENERAL
+           ================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--mist);
+            color: var(--ink);
+
+            font-family: "Inter", sans-serif;
+
+            line-height: 1.7;
+
+            min-height: 100vh;
+        }
+
+
+        /* ==================================================
+           FONDO
+           ================================================== */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(140, 78, 126, 0.07),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(46, 156, 147, 0.07),
+                    transparent 25%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(217, 164, 65, 0.05),
+                    transparent 30%
+                );
+
+            z-index: -1;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        header {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--indigo-dark),
+                    var(--indigo)
+                );
+
+            color: white;
+
+            padding: 55px 25px 70px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            right: -130px;
+            top: -180px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .header-content {
+            max-width: 1050px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 7px 14px;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-family: "Poppins", sans-serif;
+
+            font-size: clamp(32px, 5vw, 52px);
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        header p {
+            max-width: 760px;
+
+            color: rgba(255, 255, 255, 0.76);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+
+        /* ==================================================
+           CONTENEDOR
+           ================================================== */
+
+        main {
+            max-width: 1050px;
+
+            margin: -35px auto 0;
+
+            padding: 0 20px 60px;
+
+            position: relative;
+            z-index: 3;
+        }
+
+
+        /* ==================================================
+           TARJETAS
+           ================================================== */
+
+        .section-card {
+            background: var(--white);
+
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 12px 35px rgba(35, 42, 84, 0.045);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        .section-number {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: rgba(46, 156, 147, 0.10);
+
+            color: var(--teal);
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            flex-shrink: 0;
+        }
+
+        .section-title h2 {
+            font-family: "Poppins", sans-serif;
+
+            color: var(--indigo);
+
+            font-size: 21px;
+
+            line-height: 1.3;
+        }
+
+        .section-card p {
+            color: var(--muted);
+
+            font-size: 14px;
+
+            margin-bottom: 12px;
+        }
+
+        .section-card p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        /* ==================================================
+           INTRODUCCIÓN
+           ================================================== */
+
+        .intro-card {
+            border-left: 4px solid var(--teal);
+        }
+
+        .intro-card p {
+            font-size: 15px;
+        }
+
+
+        /* ==================================================
+           FÓRMULA
+           ================================================== */
+
+        .formula {
+            margin-top: 20px;
+
+            padding: 22px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(46, 156, 147, 0.08),
+                    rgba(35, 42, 84, 0.035)
+                );
+
+            border: 1px solid rgba(46, 156, 147, 0.18);
+
+            text-align: center;
+        }
+
+        .formula-label {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 8px;
+        }
+
+        .formula-value {
+            color: var(--indigo);
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 18px;
+
+            font-weight: 600;
+        }
+
+
+        /* ==================================================
+           TARJETAS DE DIMENSIONES
+           ================================================== */
+
+        .dimension-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 16px;
+
+            margin-top: 22px;
+        }
+
+        .dimension-card {
+            padding: 22px;
+
+            background: #FCFBFD;
+
+            border: 1px solid var(--border);
+
+            border-radius: 17px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .dimension-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 22px rgba(35, 42, 84, 0.07);
+        }
+
+        .dimension-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 10px;
+        }
+
+        .dimension-card h3 {
+            color: var(--indigo);
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 16px;
+        }
+
+        .dimension-code {
+            padding: 4px 8px;
+
+            border-radius: 7px;
+
+            background: rgba(46, 156, 147, 0.09);
+
+            color: var(--teal);
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+        .dimension-card p {
+            font-size: 13px;
+
+            margin-bottom: 10px;
+        }
+
+        .indicator {
+            color: var(--plum);
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* ==================================================
+           TABLAS
+           ================================================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+
+            margin-top: 20px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 800px;
+        }
+
+        th {
+            padding: 15px;
+
+            text-align: left;
+
+            background: var(--indigo);
+
+            color: white;
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        td {
+            padding: 14px 15px;
+
+            border-bottom: 1px solid var(--border);
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        td:first-child {
+            color: var(--indigo);
+
+            font-weight: 700;
+        }
+
+
+        /* ==================================================
+           INDICADORES
+           ================================================== */
+
+        .metric-value {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 8px;
+
+            background: rgba(46, 156, 147, 0.09);
+
+            color: var(--teal);
+
+            font-weight: 700;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+        .metric-warning {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 8px;
+
+            background: rgba(217, 164, 65, 0.10);
+
+            color: #9A711B;
+
+            font-weight: 700;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+        .metric-critical {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border-radius: 8px;
+
+            background: rgba(140, 78, 126, 0.10);
+
+            color: var(--plum);
+
+            font-weight: 700;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+
+        /* ==================================================
+           LISTA
+           ================================================== */
+
+        .metric-list {
+            display: grid;
+
+            gap: 12px;
+
+            margin-top: 20px;
+        }
+
+        .metric-item {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 14px;
+
+            padding: 17px;
+
+            border-radius: 14px;
+
+            background: #FCFBFD;
+
+            border: 1px solid var(--border);
+        }
+
+        .metric-marker {
+            width: 27px;
+            height: 27px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background: rgba(46, 156, 147, 0.10);
+
+            color: var(--teal);
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+        .metric-item h3 {
+            color: var(--indigo);
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 14px;
+
+            margin-bottom: 3px;
+        }
+
+        .metric-item p {
+            margin: 0;
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           NOTA
+           ================================================== */
+
+        .notice {
+            margin-top: 20px;
+
+            padding: 20px 22px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(217, 164, 65, 0.08);
+
+            border: 1px solid rgba(217, 164, 65, 0.22);
+        }
+
+        .notice strong {
+            color: var(--indigo);
+
+            font-family: "Poppins", sans-serif;
+        }
+
+        .notice p {
+            margin-top: 6px;
+
+            margin-bottom: 0;
+        }
+
+
+        /* ==================================================
+           CONCLUSIÓN
+           ================================================== */
+
+        .conclusion {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--indigo),
+                    var(--indigo-dark)
+                );
+
+            color: white;
+
+            border: none;
+        }
+
+        .conclusion .section-number {
+            background: rgba(255, 255, 255, 0.12);
+
+            color: white;
+        }
+
+        .conclusion .section-title h2 {
+            color: white;
+        }
+
+        .conclusion p {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+
+        /* ==================================================
+           NAVEGACIÓN ETAPA 2
+           ================================================== */
+
+        .navigation-buttons {
+            max-width: 1050px;
+
+            margin: 45px auto 25px;
+
+            padding: 24px 5px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-button {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            text-decoration: none;
+
+            color: var(--indigo);
+
+            font-family: "Poppins", sans-serif;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: all 0.25s ease;
+        }
+
+        .nav-button small {
+            display: block;
+
+            font-family: "Inter", sans-serif;
+
+            font-size: 8px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.2px;
+
+            color: #9998A8;
+
+            margin-bottom: 3px;
+        }
+
+        .nav-arrow {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: white;
+
+            border: 1px solid var(--border);
+
+            font-size: 17px;
+
+            transition: all 0.25s ease;
+        }
+
+        .nav-button:hover {
+            color: var(--plum);
+        }
+
+        .nav-button:hover .nav-arrow {
+            background: var(--indigo);
+
+            border-color: var(--indigo);
+
+            color: white;
+
+            transform: scale(1.08);
+        }
+
+        .nav-progress {
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+        }
+
+        .nav-progress span {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #D9D7E2;
+        }
+
+        .nav-progress span.active {
+            width: 22px;
+
+            border-radius: 10px;
+
+            background: var(--teal);
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+           ================================================== */
+
+        @media (max-width: 800px) {
+
+            .dimension-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .section-card {
+                padding: 23px;
+            }
+
+            header {
+                padding: 45px 20px 60px;
+            }
+
+            main {
+                padding-left: 14px;
+                padding-right: 14px;
+            }
+
+            .navigation-buttons {
+                gap: 15px;
+            }
+
+            .nav-progress {
+                display: none;
+            }
+
+            .nav-button {
+                font-size: 12px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            header h1 {
+                font-size: 31px;
+            }
+
+            header p {
+                font-size: 14px;
+            }
+
+            .section-card {
+                padding: 20px;
+            }
+
+            .section-title h2 {
+                font-size: 18px;
+            }
+
+            .navigation-buttons {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .nav-arrow {
+                width: 34px;
+                height: 34px;
+            }
+
+            .nav-button small {
+                font-size: 7px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================================
+         HEADER
+         ================================================== -->
+
+    <header>
+
+        <div class="header-content">
+
+            <div class="badge">
+                ETAPA 2 · CALIDAD DE DATOS
+            </div>
+
+            <h1>
+                Dimensiones y métricas
+            </h1>
+
+            <p>
+                Definición de indicadores cuantificables para evaluar
+                la calidad del dataset de vehículos involucrados en
+                accidentes de tránsito.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main>
+
+
+        <!-- INTRODUCCIÓN -->
+
+        <section class="section-card intro-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <h2>
+                    ¿Por qué medir la calidad?
+                </h2>
+
+            </div>
+
+            <p>
+                La evaluación de calidad requiere convertir los requisitos
+                definidos anteriormente en indicadores que puedan ser
+                calculados y comprobados directamente sobre los datos.
+            </p>
+
+            <p>
+                Para este proyecto se utilizarán seis dimensiones:
+                completitud, exactitud, consistencia, unicidad, validez
+                y oportunidad.
+            </p>
+
+            <div class="formula">
+
+                <span class="formula-label">
+                    Principio general
+                </span>
+
+                <span class="formula-value">
+                    Calidad de datos = condiciones medibles + evidencia
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- DIMENSIONES -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <h2>
+                    Dimensiones de calidad evaluadas
+                </h2>
+
+            </div>
+
+            <p>
+                Cada dimensión representa una característica diferente
+                que permite determinar si los datos son adecuados para
+                el análisis.
+            </p>
+
+
+            <div class="dimension-grid">
+
+
+                <div class="dimension-card">
+
+                    <div class="dimension-header">
+
+                        <h3>
+                            Completitud
+                        </h3>
+
+                        <span class="dimension-code">
+                            D01
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Determina qué proporción de los datos requeridos
+                        está disponible y no presenta valores faltantes.
+                    </p>
+
+                    <span class="indicator">
+                        Indicador: porcentaje de valores completos
+                    </span>
+
+                </div>
+
+
+                <div class="dimension-card">
+
+                    <div class="dimension-header">
+
+                        <h3>
+                            Exactitud
+                        </h3>
+
+                        <span class="dimension-code">
+                            D02
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Evalúa qué tan adecuadamente los valores registrados
+                        representan la información que pretenden describir.
+                    </p>
+
+                    <span class="indicator">
+                        Indicador: registros que cumplen reglas de plausibilidad
+                    </span>
+
+                </div>
+
+
+                <div class="dimension-card">
+
+                    <div class="dimension-header">
+
+                        <h3>
+                            Consistencia
+                        </h3>
+
+                        <span class="dimension-code">
+                            D03
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Comprueba que las variables relacionadas no presenten
+                        contradicciones entre sus valores.
+                    </p>
+
+                    <span class="indicator">
+                        Indicador: porcentaje de registros coherentes
+                    </span>
+
+                </div>
+
+
+                <div class="dimension-card">
+
+                    <div class="dimension-header">
+
+                        <h3>
+                            Unicidad
+                        </h3>
+
+                        <span class="dimension-code">
+                            D04
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Identifica registros completamente duplicados que
+                        pueden generar conteos incorrectos.
+                    </p>
+
+                    <span class="indicator">
+                        Indicador: porcentaje de registros duplicados
+                    </span>
+
+                </div>
+
+
+                <div class="dimension-card">
+
+                    <div class="dimension-header">
+
+                        <h3>
+                            Validez
+                        </h3>
+
+                        <span class="dimension-code">
+                            D05
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Determina si los valores respetan los formatos,
+                        rangos y categorías esperadas.
+                    </p>
+
+                    <span class="indicator">
+                        Indicador: porcentaje de valores válidos
+                    </span>
+
+                </div>
+
+
+                <div class="dimension-card">
+
+                    <div class="dimension-header">
+
+                        <h3>
+                            Oportunidad
+                        </h3>
+
+                        <span class="dimension-code">
+                            D06
+                        </span>
+
+                    </div>
+
+                    <p>
+                        Evalúa si la información permite conocer de manera
+                        adecuada el período al que corresponden los registros.
+                    </p>
+
+                    <span class="indicator">
+                        Indicador: cobertura temporal y actualidad
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- TABLA GENERAL -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <h2>
+                    Matriz de métricas
+                </h2>
+
+            </div>
+
+            <p>
+                La siguiente matriz establece la forma en que cada
+                dimensión será cuantificada y el tipo de evidencia
+                utilizada para sustentar el resultado.
+            </p>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Dimensión
+                            </th>
+
+                            <th>
+                                Métrica
+                            </th>
+
+                            <th>
+                                Fórmula / criterio
+                            </th>
+
+                            <th>
+                                Resultado esperado
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                Completitud
+                            </td>
+
+                            <td>
+                                Porcentaje de completitud
+                            </td>
+
+                            <td>
+                                (Valores no nulos / valores esperados) × 100
+                            </td>
+
+                            <td>
+                                Mayor porcentaje = mejor calidad.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Exactitud
+                            </td>
+
+                            <td>
+                                Tasa de plausibilidad
+                            </td>
+
+                            <td>
+                                (Registros que cumplen reglas / registros evaluados) × 100
+                            </td>
+
+                            <td>
+                                Valores razonables según reglas definidas.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Consistencia
+                            </td>
+
+                            <td>
+                                Tasa de coherencia
+                            </td>
+
+                            <td>
+                                (Registros coherentes / registros evaluados) × 100
+                            </td>
+
+                            <td>
+                                Ausencia de contradicciones lógicas.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Unicidad
+                            </td>
+
+                            <td>
+                                Tasa de duplicación
+                            </td>
+
+                            <td>
+                                (Duplicados / total de registros) × 100
+                            </td>
+
+                            <td>
+                                Menor porcentaje = mejor calidad.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Validez
+                            </td>
+
+                            <td>
+                                Tasa de valores válidos
+                            </td>
+
+                            <td>
+                                (Valores válidos / valores evaluados) × 100
+                            </td>
+
+                            <td>
+                                Mayor porcentaje = mejor calidad.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Oportunidad
+                            </td>
+
+                            <td>
+                                Cobertura temporal
+                            </td>
+
+                            <td>
+                                Período mínimo y máximo disponible.
+                            </td>
+
+                            <td>
+                                Cobertura suficiente para el objetivo.
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- MÉTRICAS DEL DATASET -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    04
+                </div>
+
+                <h2>
+                    Indicadores iniciales
+                </h2>
+
+            </div>
+
+            <p>
+                A partir del perfilamiento realizado, algunos indicadores
+                pueden calcularse directamente y servir como línea base
+                para comparar posteriormente el resultado después del
+                tratamiento.
+            </p>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Dimensión
+                            </th>
+
+                            <th>
+                                Indicador
+                            </th>
+
+                            <th>
+                                Resultado
+                            </th>
+
+                            <th>
+                                Interpretación
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                Completitud
+                            </td>
+
+                            <td>
+                                Valores faltantes
+                            </td>
+
+                            <td>
+                                <span class="metric-value">
+                                    64 registros
+                                </span>
+                            </td>
+
+                            <td>
+                                Los valores faltantes representan una
+                                proporción muy pequeña del dataset.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Unicidad
+                            </td>
+
+                            <td>
+                                Registros duplicados
+                            </td>
+
+                            <td>
+                                <span class="metric-critical">
+                                    36,3 %
+                                </span>
+                            </td>
+
+                            <td>
+                                Es un problema relevante debido al volumen
+                                de duplicados completos.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Unicidad
+                            </td>
+
+                            <td>
+                                Registros únicos
+                            </td>
+
+                            <td>
+                                <span class="metric-value">
+                                    63,7 %
+                                </span>
+                            </td>
+
+                            <td>
+                                Corresponde a la proporción de registros
+                                que no forman parte de duplicados completos.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Validez
+                            </td>
+
+                            <td>
+                                Edad máxima registrada
+                            </td>
+
+                            <td>
+                                <span class="metric-critical">
+                                    1.826 años
+                                </span>
+                            </td>
+
+                            <td>
+                                Valor incompatible con una edad razonable
+                                de un vehículo y requiere investigación.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Oportunidad
+                            </td>
+
+                            <td>
+                                Cobertura disponible
+                            </td>
+
+                            <td>
+                                <span class="metric-value">
+                                    2022–2026
+                                </span>
+                            </td>
+
+                            <td>
+                                El año 2026 presenta cobertura parcial.
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- REGLAS DE VALIDACIÓN -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    05
+                </div>
+
+                <h2>
+                    Reglas para las métricas
+                </h2>
+
+            </div>
+
+            <p>
+                Para evitar evaluaciones subjetivas, los indicadores
+                estarán asociados a reglas explícitas que puedan ser
+                reproducidas durante el procesamiento del dataset.
+            </p>
+
+
+            <div class="metric-list">
+
+
+                <div class="metric-item">
+
+                    <div class="metric-marker">
+                        01
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Valores faltantes
+                        </h3>
+
+                        <p>
+                            Un valor será considerado faltante cuando sea
+                            nulo, vacío o no contenga información utilizable.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric-item">
+
+                    <div class="metric-marker">
+                        02
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Duplicados
+                        </h3>
+
+                        <p>
+                            Se considerará duplicado un registro cuyos valores
+                            coincidan completamente con otro registro.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric-item">
+
+                    <div class="metric-marker">
+                        03
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Edad del vehículo
+                        </h3>
+
+                        <p>
+                            Se deberán identificar edades negativas,
+                            extremadamente altas o incompatibles con la
+                            fecha del accidente y el año del modelo.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric-item">
+
+                    <div class="metric-marker">
+                        04
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Año del modelo
+                        </h3>
+
+                        <p>
+                            Se deberán revisar años fuera de un rango
+                            razonable y su relación temporal con la fecha
+                            del accidente.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric-item">
+
+                    <div class="metric-marker">
+                        05
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Fechas
+                        </h3>
+
+                        <p>
+                            Las fechas deberán poder convertirse a un
+                            formato temporal válido y no presentar valores
+                            imposibles.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="metric-item">
+
+                    <div class="metric-marker">
+                        06
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Categorías
+                        </h3>
+
+                        <p>
+                            Las variables categóricas deberán mantener
+                            denominaciones consistentes para evitar que
+                            una misma categoría sea contabilizada varias
+                            veces por diferencias de escritura.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- EXACTITUD -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    06
+                </div>
+
+                <h2>
+                    Consideración sobre la exactitud
+                </h2>
+
+            </div>
+
+            <p>
+                La exactitud es una dimensión especialmente importante
+                porque implica determinar si el valor registrado coincide
+                con la realidad.
+            </p>
+
+            <p>
+                En este proyecto no se dispone de una fuente de verdad
+                independiente que permita comprobar individualmente cada
+                registro del dataset.
+            </p>
+
+            <div class="notice">
+
+                <strong>
+                    Limitación metodológica
+                </strong>
+
+                <p>
+                    Por esta razón, la evaluación de exactitud no se
+                    presentará como una comprobación absoluta de la verdad
+                    de los datos. Se utilizarán reglas de plausibilidad y
+                    coherencia como indicadores indirectos, dejando
+                    explícita esta limitación en los resultados.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ESCALA DE INTERPRETACIÓN -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    07
+                </div>
+
+                <h2>
+                    Interpretación de los resultados
+                </h2>
+
+            </div>
+
+            <p>
+                Para facilitar la interpretación de los indicadores,
+                se podrá utilizar una escala orientativa. Esta escala
+                será aplicada principalmente a las dimensiones expresadas
+                como porcentajes.
+            </p>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Resultado
+                            </th>
+
+                            <th>
+                                Nivel
+                            </th>
+
+                            <th>
+                                Interpretación
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                95 % – 100 %
+                            </td>
+
+                            <td>
+                                <span class="metric-value">
+                                    Alto
+                                </span>
+                            </td>
+
+                            <td>
+                                Cumplimiento elevado del requisito.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                80 % – 94,99 %
+                            </td>
+
+                            <td>
+                                <span class="metric-warning">
+                                    Medio
+                                </span>
+                            </td>
+
+                            <td>
+                                Requiere revisión o tratamiento moderado.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Menor a 80 %
+                            </td>
+
+                            <td>
+                                <span class="metric-critical">
+                                    Bajo
+                                </span>
+                            </td>
+
+                            <td>
+                                Existe un problema relevante de calidad.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="notice">
+
+                <strong>
+                    Nota
+                </strong>
+
+                <p>
+                    Esta escala es una referencia para facilitar la
+                    interpretación y no sustituye el análisis específico
+                    de cada variable o dimensión.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONCLUSIÓN -->
+
+        <section class="section-card conclusion">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    08
+                </div>
+
+                <h2>
+                    Resultado de la definición de métricas
+                </h2>
+
+            </div>
+
+            <p>
+                Las dimensiones seleccionadas permiten transformar los
+                requisitos de calidad en indicadores cuantificables.
+                Esto proporciona una línea base para determinar cuáles
+                son los principales problemas del dataset y establecer
+                posteriormente las acciones de tratamiento.
+            </p>
+
+            <p>
+                Los resultados iniciales muestran que la unicidad y la
+                validez requieren especial atención, mientras que los
+                valores faltantes representan una afectación mucho menor.
+            </p>
+
+        </section>
+
+
+        <!-- ==================================================
+             NAVEGACIÓN ETAPA 2
+             ================================================== -->
+
+        <div class="navigation-buttons">
+
+
+            <a
+                href="{{ url_for('Etapa2_perfilamiento') }}"
+                class="nav-button nav-prev"
+            >
+
+                <span class="nav-arrow">
+                    ←
+                </span>
+
+                <span>
+
+                    <small>
+                        ANTERIOR
+                    </small>
+
+                    Perfilamiento
+
+                </span>
+
+            </a>
+
+
+            <div class="nav-progress">
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+                <span class="active"></span>
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+                <span></span>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('Etapa2_problemas') }}"
+                class="nav-button nav-next"
+            >
+
+                <span>
+
+                    <small>
+                        SIGUIENTE
+                    </small>
+
+                    Problemas encontrados
+
+                </span>
+
+                <span class="nav-arrow">
+                    →
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>

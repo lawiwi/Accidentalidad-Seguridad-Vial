@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Análisis de causas | Calidad de Datos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+            --muted: #777689;
+            --border: #E4E1EB;
+            --white: #FFFFFF;
+            --danger: #B85C5C;
+            --warning: #C58A35;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 10% 10%, rgba(140, 78, 126, 0.07), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(46, 156, 147, 0.07), transparent 30%),
+                var(--mist);
+            color: var(--ink);
+            font-family: "Inter", sans-serif;
+            line-height: 1.7;
+        }
+
+        main {
+            width: 100%;
+            padding-bottom: 40px;
+        }
+
+        /* =========================
+           HERO
+        ========================== */
+
+        .hero {
+            background: linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+            color: white;
+            padding: 75px 25px 85px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .hero::before {
+            width: 340px;
+            height: 340px;
+            top: -180px;
+            right: -100px;
+        }
+
+        .hero::after {
+            width: 260px;
+            height: 260px;
+            bottom: -170px;
+            left: -80px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #C9C7D8;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: auto;
+            color: #E5E3ED;
+            font-size: 16px;
+        }
+
+        /* =========================
+           CONTENEDOR
+        ========================== */
+
+        .container {
+            max-width: 1050px;
+            margin: -35px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 35px rgba(35, 42, 84, 0.06);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(46, 156, 147, 0.12);
+            color: var(--teal);
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        h2 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 23px;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 17px;
+            margin: 25px 0 10px;
+        }
+
+        p {
+            color: #555565;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        /* =========================
+           INTRO
+        ========================== */
+
+        .intro-box {
+            border-left: 4px solid var(--plum);
+            background: #FAF7FB;
+            padding: 20px 22px;
+            border-radius: 0 14px 14px 0;
+            margin-top: 18px;
+        }
+
+        .intro-box p {
+            margin-bottom: 0;
+        }
+
+        /* =========================
+           MODELO DE CAUSAS
+        ========================== */
+
+        .cause-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 25px;
+        }
+
+        .cause-card {
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            padding: 22px;
+            background: #FCFBFD;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cause-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(35, 42, 84, 0.07);
+        }
+
+        .cause-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 8px;
+        }
+
+        .cause-card h3 {
+            margin: 0 0 9px;
+            font-size: 16px;
+        }
+
+        .cause-card p {
+            font-size: 12px;
+            margin: 0;
+        }
+
+        /* =========================
+           TABLA
+        ========================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 22px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 950px;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th {
+            background: var(--indigo);
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            padding: 15px 13px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 13px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            color: #555565;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background: #FCFBFD;
+        }
+
+        .variable {
+            font-weight: 600;
+            color: var(--indigo);
+            white-space: nowrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-high {
+            background: rgba(184, 92, 92, 0.11);
+            color: var(--danger);
+        }
+
+        .badge-medium {
+            background: rgba(197, 138, 53, 0.12);
+            color: var(--warning);
+        }
+
+        .badge-low {
+            background: rgba(46, 156, 147, 0.11);
+            color: var(--teal);
+        }
+
+        /* =========================
+           CADENA CAUSAL
+        ========================== */
+
+        .chain {
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+            gap: 0;
+            margin-top: 28px;
+        }
+
+        .chain-item {
+            flex: 1;
+            max-width: 230px;
+            padding: 22px 18px;
+            background: #FCFBFD;
+            border: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+        }
+
+        .chain-item:first-child {
+            border-radius: 16px 0 0 16px;
+        }
+
+        .chain-item:last-child {
+            border-radius: 0 16px 16px 0;
+        }
+
+        .chain-item:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            font-size: 14px;
+        }
+
+        .chain-number {
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            color: var(--plum);
+            font-size: 11px;
+            margin-bottom: 7px;
+        }
+
+        .chain-item h3 {
+            font-size: 14px;
+            margin: 0 0 6px;
+        }
+
+        .chain-item p {
+            font-size: 11px;
+            margin: 0;
+        }
+
+        /* =========================
+           NOTA
+        ========================== */
+
+        .method-note {
+            background: #F8F7FC;
+            border: 1px dashed #CFC9DA;
+            border-radius: 15px;
+            padding: 20px 22px;
+            margin-top: 22px;
+        }
+
+        .method-note strong {
+            color: var(--indigo);
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+        }
+
+        .method-note p {
+            margin: 8px 0 0;
+            font-size: 12px;
+        }
+
+        /* =========================
+           LISTA
+        ========================== */
+
+        .evidence-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .evidence-list li {
+            position: relative;
+            padding: 10px 0 10px 23px;
+            color: #5A5968;
+            font-size: 13px;
+            border-bottom: 1px solid #EEEAF2;
+        }
+
+        .evidence-list li:last-child {
+            border-bottom: none;
+        }
+
+        .evidence-list li::before {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 18px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+        }
+
+        /* =========================
+           NAVEGACIÓN
+        ========================== */
+
+        .navigation-buttons {
+            max-width: 1050px;
+            margin: 45px auto 25px;
+            padding: 24px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+            color: var(--indigo);
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .nav-button small {
+            display: block;
+            font-family: "Inter", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: #9998A8;
+            margin-bottom: 3px;
+        }
+
+        .nav-arrow {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--border);
+            font-size: 17px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-button:hover {
+            color: var(--plum);
+        }
+
+        .nav-button:hover .nav-arrow {
+            background: var(--indigo);
+            border-color: var(--indigo);
+            color: white;
+            transform: scale(1.08);
+        }
+
+        .nav-progress {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-progress span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #D9D7E2;
+        }
+
+        .nav-progress span.active {
+            width: 22px;
+            border-radius: 10px;
+            background: var(--teal);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 850px) {
+
+            .cause-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chain {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .chain-item {
+                max-width: none;
+                border-radius: 15px !important;
+            }
+
+            .chain-item:not(:last-child)::after {
+                content: "↓";
+                right: auto;
+                left: 50%;
+                top: auto;
+                bottom: -19px;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navigation-buttons {
+                gap: 15px;
+            }
+
+            .nav-progress {
+                display: none;
+            }
+
+            .nav-button {
+                font-size: 12px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .hero {
+                padding: 55px 20px 70px;
+            }
+
+            .container {
+                padding: 0 12px;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 17px;
+            }
+
+            .navigation-buttons {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .nav-arrow {
+                width: 34px;
+                height: 34px;
+            }
+
+            .nav-button small {
+                font-size: 7px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main>
+
+    <!-- =========================
+         ENCABEZADO
+    ========================== -->
+
+    <header class="hero">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                Etapa 2 · Calidad de datos
+            </div>
+
+            <h1>Análisis de causas</h1>
+
+            <p>
+                Identificación de los posibles factores que originan los
+                problemas de calidad encontrados en el conjunto de datos.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <div class="container">
+
+        <!-- =========================
+             CONTEXTO
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">01</div>
+                <h2>¿Por qué analizar las causas?</h2>
+            </div>
+
+            <p>
+                Identificar un problema de calidad no es suficiente para
+                solucionarlo. Es necesario analizar su posible origen para
+                determinar si se trata de un error de captura, transformación,
+                integración, almacenamiento o actualización de los datos.
+            </p>
+
+            <div class="intro-box">
+
+                <p>
+                    El análisis de causas permite pasar de
+                    <strong>“qué está mal”</strong> a
+                    <strong>“por qué puede estar ocurriendo y qué debe
+                    hacerse para evitar que vuelva a ocurrir”.</strong>
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CATEGORÍAS
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">02</div>
+                <h2>Categorías de causas</h2>
+            </div>
+
+            <p>
+                Los problemas encontrados pueden asociarse principalmente a
+                cuatro tipos de causas dentro del ciclo de vida de los datos.
+            </p>
+
+            <div class="cause-grid">
+
+                <div class="cause-card">
+
+                    <div class="cause-label">
+                        Captura
+                    </div>
+
+                    <h3>Registro de información</h3>
+
+                    <p>
+                        La ausencia de datos puede producirse cuando un campo
+                        no es diligenciado durante la captura o cuando la
+                        información no está disponible en el momento del
+                        registro.
+                    </p>
+
+                </div>
+
+
+                <div class="cause-card">
+
+                    <div class="cause-label">
+                        Integración
+                    </div>
+
+                    <h3>Fuentes y procesos</h3>
+
+                    <p>
+                        La combinación de diferentes fuentes puede generar
+                        registros repetidos, nombres diferentes para una misma
+                        categoría o estructuras de datos incompatibles.
+                    </p>
+
+                </div>
+
+
+                <div class="cause-card">
+
+                    <div class="cause-label">
+                        Transformación
+                    </div>
+
+                    <h3>Conversión y procesamiento</h3>
+
+                    <p>
+                        Las diferencias en formatos, tipos de datos o reglas de
+                        transformación pueden producir inconsistencias durante
+                        la preparación del dataset.
+                    </p>
+
+                </div>
+
+
+                <div class="cause-card">
+
+                    <div class="cause-label">
+                        Validación
+                    </div>
+
+                    <h3>Reglas insuficientes</h3>
+
+                    <p>
+                        Valores extremos o inconsistentes pueden permanecer
+                        cuando no existen controles que verifiquen rangos,
+                        relaciones y dominios permitidos.
+                    </p>
+
+                </div>
+
+
+                <div class="cause-card">
+
+                    <div class="cause-label">
+                        Estandarización
+                    </div>
+
+                    <h3>Catálogos y formatos</h3>
+
+                    <p>
+                        Diferencias en nombres, abreviaturas, mayúsculas,
+                        espacios o categorías pueden fragmentar la información
+                        que conceptualmente representa lo mismo.
+                    </p>
+
+                </div>
+
+
+                <div class="cause-card">
+
+                    <div class="cause-label">
+                        Actualización
+                    </div>
+
+                    <h3>Oportunidad de los datos</h3>
+
+                    <p>
+                        La información correspondiente a períodos recientes
+                        puede estar incompleta debido a procesos de carga,
+                        reporte o actualización aún no finalizados.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             MATRIZ DE CAUSAS
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">03</div>
+                <h2>Matriz de análisis causal</h2>
+            </div>
+
+            <p>
+                La siguiente matriz relaciona cada problema con una causa
+                probable, la evidencia disponible y la consecuencia que puede
+                generar sobre el análisis.
+            </p>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Problema</th>
+                            <th>Causa probable</th>
+                            <th>Evidencia</th>
+                            <th>Consecuencia</th>
+                            <th>Prioridad</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+
+                            <td class="variable">
+                                Registros duplicados
+                            </td>
+
+                            <td>
+                                Reprocesamiento, cargas repetidas o ausencia
+                                de un control de unicidad durante la integración
+                                de registros.
+                            </td>
+
+                            <td>
+                                147.575 filas completamente duplicadas,
+                                equivalentes aproximadamente al 36,30% del
+                                dataset.
+                            </td>
+
+                            <td>
+                                Sobreestimación de frecuencias y posible sesgo
+                                en conteos, agrupaciones y modelos.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-high">
+                                    Alta
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="variable">
+                                Marca faltante
+                            </td>
+
+                            <td>
+                                Campo no diligenciado durante el registro o
+                                ausencia de la información de marca en la
+                                fuente original.
+                            </td>
+
+                            <td>
+                                44 registros sin valor en
+                                <strong>marca_vehiculo</strong>.
+                            </td>
+
+                            <td>
+                                Pérdida mínima de información para análisis
+                                por fabricante.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-low">
+                                    Baja
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="variable">
+                                Edad faltante
+                            </td>
+
+                            <td>
+                                Información no registrada o no disponible
+                                para determinados vehículos.
+                            </td>
+
+                            <td>
+                                20 registros sin valor en
+                                <strong>edad_vehiculo</strong>.
+                            </td>
+
+                            <td>
+                                Reducción de la cobertura del análisis de
+                                antigüedad.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-low">
+                                    Baja
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="variable">
+                                Edad extrema
+                            </td>
+
+                            <td>
+                                Posible error de digitación, conversión,
+                                cálculo o interpretación de la variable.
+                            </td>
+
+                            <td>
+                                Máximo de 1.826 años frente a una mediana
+                                aproximada de 9 años.
+                            </td>
+
+                            <td>
+                                Distorsión de estadísticas descriptivas y
+                                análisis relacionados con la antigüedad.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-high">
+                                    Alta
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="variable">
+                                Modelo 2027
+                            </td>
+
+                            <td>
+                                Posible diferencia entre el año registrado y
+                                la fecha del accidente, o particularidad de
+                                actualización del registro.
+                            </td>
+
+                            <td>
+                                El dataset tiene accidentes registrados hasta
+                                2026 y presenta un modelo máximo de 2027.
+                            </td>
+
+                            <td>
+                                Puede generar una antigüedad negativa o
+                                inconsistente si no se valida la relación
+                                temporal.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Media
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="variable">
+                                Fecha como texto
+                            </td>
+
+                            <td>
+                                El formato de almacenamiento original no
+                                representa directamente una variable temporal
+                                para operaciones analíticas.
+                            </td>
+
+                            <td>
+                                <strong>fecha_accidente</strong> requiere
+                                conversión a tipo fecha.
+                            </td>
+
+                            <td>
+                                Puede dificultar filtros, agrupaciones,
+                                diferencias temporales y series históricas.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Media
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="variable">
+                                Categorías no homologadas
+                            </td>
+
+                            <td>
+                                Diferencias de escritura, abreviaturas,
+                                espacios o criterios de clasificación entre
+                                registros.
+                            </td>
+
+                            <td>
+                                Requiere revisión de variables categóricas
+                                como marca, tipo, departamento, municipio y
+                                autoridad.
+                            </td>
+
+                            <td>
+                                Fragmentación de categorías y resultados
+                                inconsistentes al agrupar.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Media
+                                </span>
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td class="variable">
+                                Cobertura reciente parcial
+                            </td>
+
+                            <td>
+                                El período más reciente puede encontrarse aún
+                                en proceso de actualización o consolidación.
+                            </td>
+
+                            <td>
+                                2026 contiene información únicamente hasta
+                                febrero y presenta 2.244 registros.
+                            </td>
+
+                            <td>
+                                Comparaciones anuales potencialmente
+                                incorrectas si se interpreta 2026 como año
+                                completo.
+                            </td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Media
+                                </span>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CADENA CAUSAL
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">04</div>
+                <h2>Cadena causal de los problemas</h2>
+            </div>
+
+            <p>
+                Los problemas de calidad pueden entenderse como parte de una
+                cadena en la que una deficiencia en una etapa del proceso
+                termina afectando el análisis final.
+            </p>
+
+            <div class="chain">
+
+                <div class="chain-item">
+
+                    <div class="chain-number">01</div>
+
+                    <h3>Captura</h3>
+
+                    <p>
+                        Se registra información incompleta o con valores
+                        inconsistentes.
+                    </p>
+
+                </div>
+
+
+                <div class="chain-item">
+
+                    <div class="chain-number">02</div>
+
+                    <h3>Almacenamiento</h3>
+
+                    <p>
+                        Los datos ingresan sin controles suficientes de formato
+                        o unicidad.
+                    </p>
+
+                </div>
+
+
+                <div class="chain-item">
+
+                    <div class="chain-number">03</div>
+
+                    <h3>Integración</h3>
+
+                    <p>
+                        Las fuentes o cargas pueden generar duplicados y
+                        diferencias de categorías.
+                    </p>
+
+                </div>
+
+
+                <div class="chain-item">
+
+                    <div class="chain-number">04</div>
+
+                    <h3>Procesamiento</h3>
+
+                    <p>
+                        Los datos requieren conversión, validación y
+                        estandarización antes de analizarlos.
+                    </p>
+
+                </div>
+
+
+                <div class="chain-item">
+
+                    <div class="chain-number">05</div>
+
+                    <h3>Análisis</h3>
+
+                    <p>
+                        Los problemas no tratados pueden producir resultados
+                        sesgados o difíciles de interpretar.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CAUSA POR PROBLEMA
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">05</div>
+                <h2>Interpretación de las causas</h2>
+            </div>
+
+            <h3>Duplicidad</h3>
+
+            <p>
+                Debido a que los duplicados son exactamente iguales en todas
+                las variables evaluadas, una causa probable es la existencia
+                de registros repetidos durante procesos de carga o
+                consolidación. No obstante, con el dataset disponible no es
+                posible determinar el punto exacto del proceso donde se
+                originaron.
+            </p>
+
+            <h3>Valores faltantes</h3>
+
+            <p>
+                Los valores ausentes en marca y edad pueden deberse a campos
+                que no fueron diligenciados, información no disponible en la
+                fuente original o diferencias en los procesos de registro.
+                Debido a que representan una proporción muy pequeña del
+                dataset, su impacto cuantitativo es bajo.
+            </p>
+
+            <h3>Valor extremo de edad</h3>
+
+            <p>
+                El valor de 1.826 años constituye una señal clara de validación.
+                La causa podría encontrarse en un error de digitación,
+                conversión de unidades, cálculo incorrecto o interpretación
+                diferente del campo. No debe eliminarse sin antes establecer
+                una regla de negocio que determine qué valores son válidos.
+            </p>
+
+            <h3>Inconsistencias temporales</h3>
+
+            <p>
+                Un modelo 2027 asociado a un accidente registrado hasta 2026
+                requiere revisión. Puede representar un dato incorrecto o una
+                particularidad de la fuente. Por ello, la relación entre
+                <strong>modelo_vehiculo</strong> y
+                <strong>fecha_accidente</strong> debe utilizarse como regla de
+                consistencia.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             LIMITACIONES
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">06</div>
+                <h2>Limitaciones del análisis causal</h2>
+            </div>
+
+            <div class="method-note">
+
+                <strong>Importante</strong>
+
+                <p>
+                    Las causas presentadas son hipótesis fundamentadas en el
+                    comportamiento observado en los datos. El dataset no
+                    contiene información suficiente para reconstruir el proceso
+                    interno de captura, validación o publicación que originó
+                    cada registro. Por esta razón, se diferencian las
+                    <strong>evidencias observadas</strong> de las
+                    <strong>causas probables</strong>.
+                </p>
+
+            </div>
+
+            <ul class="evidence-list">
+
+                <li>
+                    La duplicidad está comprobada mediante comparación de
+                    registros, pero su origen exacto no puede establecerse
+                    únicamente con el archivo.
+                </li>
+
+                <li>
+                    Los valores faltantes están cuantificados, pero no es
+                    posible conocer con certeza por qué no fueron registrados.
+                </li>
+
+                <li>
+                    El valor extremo de edad requiere validación con una regla
+                    de negocio o fuente de referencia.
+                </li>
+
+                <li>
+                    El modelo 2027 debe contrastarse con la fecha del accidente
+                    antes de clasificarlo definitivamente como error.
+                </li>
+
+                <li>
+                    La evaluación de exactitud requiere una fuente externa de
+                    referencia o mecanismo de validación adicional.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =========================
+             CONCLUSION
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">07</div>
+                <h2>Conclusión del análisis causal</h2>
+            </div>
+
+            <p>
+                Los problemas encontrados no tienen un único origen. Se
+                relacionan con diferentes etapas del ciclo de vida de los
+                datos, principalmente captura, almacenamiento, integración,
+                transformación, validación y actualización.
+            </p>
+
+            <p>
+                La duplicidad representa la situación de mayor impacto y debe
+                ser priorizada. Los valores extremos y las inconsistencias
+                temporales requieren reglas de validación antes de ser
+                modificados, mientras que los valores faltantes presentan un
+                impacto cuantitativo reducido.
+            </p>
+
+            <p>
+                Este análisis permite definir un tratamiento de datos basado
+                en evidencia y no únicamente en la eliminación automática de
+                registros. El siguiente paso consiste en establecer las
+                estrategias de <strong>integración y homologación</strong> para
+                garantizar que las diferentes fuentes puedan compararse sin
+                introducir nuevas inconsistencias.
+            </p>
+
+        </section>
+
+    </div>
+
+
+    <!-- =========================
+         NAVEGACIÓN
+    ========================== -->
+
+    <div class="navigation-buttons">
+
+        <a href="{{ url_for('Etapa2_problemas') }}" class="nav-button">
+
+            <span class="nav-arrow">←</span>
+
+            <span>
+                <small>ANTERIOR</small>
+                Problemas encontrados
+            </span>
+
+        </a>
+
+
+        <div class="nav-progress">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <a href="{{ url_for('Etapa2_integracion') }}" class="nav-button">
+
+            <span>
+                <small>SIGUIENTE</small>
+                Integración y homologación
+            </span>
+
+            <span class="nav-arrow">→</span>
+
+        </a>
+
+    </div>
+
+</main>
+
+</body>
+</html>

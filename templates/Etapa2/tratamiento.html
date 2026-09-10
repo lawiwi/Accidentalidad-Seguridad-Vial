@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tratamiento de datos | Calidad de Datos</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+            --muted: #777589;
+            --border: #E6E3ED;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 10% 10%, rgba(140, 78, 126, 0.08), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(46, 156, 147, 0.08), transparent 25%),
+                var(--mist);
+            line-height: 1.65;
+        }
+
+        main {
+            width: 100%;
+            padding: 45px 20px 20px;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 48px 45px;
+            border-radius: 28px;
+            color: white;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(217, 164, 65, 0.22), transparent 25%),
+                radial-gradient(circle at 10% 90%, rgba(46, 156, 147, 0.20), transparent 30%),
+                linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+            box-shadow: 0 18px 45px rgba(35, 42, 84, 0.16);
+            margin-bottom: 30px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            right: -70px;
+            bottom: -90px;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 50%;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #D7D7E6;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.15;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 780px;
+            color: #E4E4EE;
+            font-size: 15px;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: rgba(255,255,255,0.92);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 25px rgba(35, 42, 84, 0.05);
+        }
+
+        .section h2 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .section h3 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 17px;
+            margin-bottom: 7px;
+        }
+
+        .section > p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* PRINCIPLES */
+
+        .principles {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .principle {
+            padding: 18px 14px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            background: #FBFAFD;
+            text-align: center;
+        }
+
+        .principle strong {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            color: var(--indigo);
+            margin-bottom: 5px;
+        }
+
+        .principle span {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        /* FLOW */
+
+        .flow {
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .flow-step {
+            flex: 1;
+            position: relative;
+            padding: 20px 15px;
+            border-radius: 16px;
+            background: #F9F8FC;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .flow-step:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -17px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            color: var(--teal);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .flow-step .number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 27px;
+            height: 27px;
+            border-radius: 50%;
+            background: var(--indigo);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .flow-step strong {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            font-size: 12px;
+            color: var(--indigo);
+        }
+
+        .flow-step small {
+            display: block;
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+            background: white;
+        }
+
+        th {
+            padding: 14px 15px;
+            background: var(--indigo);
+            color: white;
+            text-align: left;
+            font-family: "Poppins", sans-serif;
+            font-size: 11px;
+            letter-spacing: .2px;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background: #FBFAFD;
+        }
+
+        td strong {
+            color: var(--indigo);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .tag-high {
+            background: #F4E7F0;
+            color: var(--plum);
+        }
+
+        .tag-medium {
+            background: #F8F0DC;
+            color: #8A691F;
+        }
+
+        .tag-low {
+            background: #E4F3F1;
+            color: #24766F;
+        }
+
+        /* TREATMENT CARDS */
+
+        .treatments {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .treatment {
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #FCFBFE;
+        }
+
+        .treatment-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .treatment-number {
+            min-width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: var(--indigo);
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .treatment h3 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .treatment p {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 9px;
+        }
+
+        .treatment ul {
+            padding-left: 18px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .treatment li {
+            margin-bottom: 4px;
+        }
+
+        /* HIGHLIGHT */
+
+        .highlight {
+            margin-top: 20px;
+            padding: 22px;
+            border-left: 4px solid var(--teal);
+            border-radius: 12px;
+            background: #EFF8F7;
+        }
+
+        .highlight strong {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .highlight p {
+            color: #5F6968;
+            font-size: 12px;
+        }
+
+        /* BEFORE AFTER */
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 15px;
+            margin-top: 22px;
+        }
+
+        .compare-box {
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            text-align: center;
+            background: #FBFAFD;
+        }
+
+        .compare-box.clean {
+            border-color: rgba(46, 156, 147, .35);
+            background: #F1F9F8;
+        }
+
+        .compare-label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .compare-number {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            font-size: 31px;
+            font-weight: 700;
+            color: var(--indigo);
+        }
+
+        .compare-description {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .compare-arrow {
+            color: var(--teal);
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        /* QUALITY FLAGS */
+
+        .flags {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .flag {
+            padding: 17px;
+            border-radius: 15px;
+            background: #F9F8FC;
+            border: 1px solid var(--border);
+        }
+
+        .flag code {
+            font-family: "Inter", sans-serif;
+            font-size: 10px;
+            color: var(--plum);
+            background: #F4EAF1;
+            padding: 4px 7px;
+            border-radius: 6px;
+        }
+
+        .flag p {
+            margin-top: 9px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* CONCLUSION */
+
+        .conclusion {
+            padding: 28px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #232A54, #30386C);
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .conclusion h2 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .conclusion p {
+            color: #E3E4EF;
+            font-size: 13px;
+        }
+
+        /* NAVIGATION */
+
+        .navigation-buttons {
+            max-width: 1050px;
+            margin: 45px auto 25px;
+            padding: 24px 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+            color: var(--indigo);
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .nav-button small {
+            display: block;
+            font-family: "Inter", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: #9998A8;
+            margin-bottom: 3px;
+        }
+
+        .nav-arrow {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--border);
+            font-size: 17px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-button:hover {
+            color: var(--plum);
+        }
+
+        .nav-button:hover .nav-arrow {
+            background: var(--indigo);
+            border-color: var(--indigo);
+            color: white;
+            transform: scale(1.08);
+        }
+
+        .nav-progress {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-progress span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #D9D7E2;
+        }
+
+        .nav-progress span.active {
+            width: 22px;
+            border-radius: 10px;
+            background: var(--teal);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .principles {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .flags {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .flow {
+                flex-wrap: wrap;
+            }
+
+            .flow-step {
+                min-width: calc(50% - 10px);
+            }
+
+            .flow-step::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 700px) {
+            main {
+                padding: 25px 14px 15px;
+            }
+
+            .hero {
+                padding: 35px 25px;
+                border-radius: 22px;
+            }
+
+            .section {
+                padding: 22px;
+            }
+
+            .treatments {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .compare-arrow {
+                transform: rotate(90deg);
+                text-align: center;
+            }
+
+            .navigation-buttons {
+                gap: 15px;
+            }
+
+            .nav-progress {
+                display: none;
+            }
+
+            .nav-button {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .principles {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .flags {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-step {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navigation-buttons {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .nav-arrow {
+                width: 34px;
+                height: 34px;
+            }
+
+            .nav-button small {
+                font-size: 7px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main>
+    <div class="container">
+
+        <!-- HEADER -->
+        <header class="hero">
+            <div class="eyebrow">Etapa 2 · Calidad de datos · 08</div>
+
+            <h1>Tratamiento de datos</h1>
+
+            <p>
+                Definición de las acciones necesarias para corregir, transformar,
+                estandarizar y preparar el conjunto de datos para su análisis,
+                manteniendo la trazabilidad y evitando la alteración injustificada
+                de la información original.
+            </p>
+        </header>
+
+
+        <!-- INTRODUCCIÓN -->
+        <section class="section">
+            <h2>¿Qué se busca con el tratamiento?</h2>
+
+            <p>
+                El tratamiento de datos consiste en aplicar acciones controladas
+                sobre una copia de trabajo del dataset para reducir los problemas
+                de calidad identificados durante el perfilamiento. El objetivo no
+                es modificar los datos de manera arbitraria, sino hacerlos más
+                completos, consistentes, válidos y adecuados para el análisis.
+            </p>
+
+            <p>
+                Para este proyecto se toma como fuente principal el conjunto
+                <strong>“Vehículos involucrados en un accidente de tránsito
+                Ley 2251-2022”</strong>, compuesto inicialmente por
+                <strong>406.540 registros y 9 variables</strong>.
+            </p>
+
+            <div class="highlight">
+                <strong>Principio fundamental</strong>
+
+                <p>
+                    El archivo original debe conservarse sin modificaciones.
+                    Todas las transformaciones se realizan sobre una copia
+                    denominada dataset de trabajo o dataset limpio, permitiendo
+                    comparar el estado inicial y final y recuperar el proceso
+                    cuando sea necesario.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- PRINCIPIOS -->
+        <section class="section">
+            <h2>Principios aplicados</h2>
+
+            <p>
+                Las decisiones de tratamiento se basan en criterios de calidad,
+                trazabilidad y mínima intervención.
+            </p>
+
+            <div class="principles">
+
+                <div class="principle">
+                    <strong>Preservación</strong>
+                    <span>El dataset original permanece intacto.</span>
+                </div>
+
+                <div class="principle">
+                    <strong>Trazabilidad</strong>
+                    <span>Cada transformación debe poder identificarse.</span>
+                </div>
+
+                <div class="principle">
+                    <strong>No inventar</strong>
+                    <span>No se generan valores sin fundamento.</span>
+                </div>
+
+                <div class="principle">
+                    <strong>Mínima intervención</strong>
+                    <span>Solo se corrige cuando existe justificación.</span>
+                </div>
+
+                <div class="principle">
+                    <strong>Validación</strong>
+                    <span>El resultado se revisa nuevamente.</span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- PROCESO -->
+        <section class="section">
+            <h2>Proceso general de tratamiento</h2>
+
+            <p>
+                El tratamiento se organiza como una secuencia de preparación,
+                limpieza, transformación y validación.
+            </p>
+
+            <div class="flow">
+
+                <div class="flow-step">
+                    <span class="number">1</span>
+                    <strong>Conservar original</strong>
+                    <small>Respaldar la fuente</small>
+                </div>
+
+                <div class="flow-step">
+                    <span class="number">2</span>
+                    <strong>Limpiar</strong>
+                    <small>Duplicados y valores faltantes</small>
+                </div>
+
+                <div class="flow-step">
+                    <span class="number">3</span>
+                    <strong>Estandarizar</strong>
+                    <small>Fechas y categorías</small>
+                </div>
+
+                <div class="flow-step">
+                    <span class="number">4</span>
+                    <strong>Validar</strong>
+                    <small>Rangos y relaciones</small>
+                </div>
+
+                <div class="flow-step">
+                    <span class="number">5</span>
+                    <strong>Verificar</strong>
+                    <small>Calidad posterior</small>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- MATRIZ -->
+        <section class="section">
+            <h2>Plan de tratamiento</h2>
+
+            <p>
+                Las siguientes acciones responden directamente a los problemas
+                identificados en las etapas anteriores.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Problema</th>
+                            <th>Acción</th>
+                            <th>Justificación</th>
+                            <th>Resultado esperado</th>
+                            <th>Riesgo</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>
+                                <strong>147.575 duplicados completos</strong>
+                            </td>
+
+                            <td>
+                                Eliminar registros completamente duplicados
+                                en la copia de trabajo.
+                            </td>
+
+                            <td>
+                                Evitar que un mismo registro sea contabilizado
+                                más de una vez.
+                            </td>
+
+                            <td>
+                                Dataset con registros únicos.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-high">Alto</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>44 marcas faltantes</strong>
+                            </td>
+
+                            <td>
+                                Sustituir el vacío por
+                                <strong>NO REGISTRADA</strong>.
+                            </td>
+
+                            <td>
+                                Mantener el registro sin inventar una marca.
+                            </td>
+
+                            <td>
+                                Mayor completitud del campo categórico.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-low">Bajo</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>20 edades faltantes</strong>
+                            </td>
+
+                            <td>
+                                Mantener el valor como faltante y generar una
+                                marca de calidad.
+                            </td>
+
+                            <td>
+                                No se recomienda imputar una edad sin una fuente
+                                confiable para determinarla.
+                            </td>
+
+                            <td>
+                                Se conserva la ausencia sin introducir
+                                información artificial.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-low">Bajo</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>Fecha almacenada como texto</strong>
+                            </td>
+
+                            <td>
+                                Convertir <strong>fecha_accidente</strong> al
+                                tipo fecha.
+                            </td>
+
+                            <td>
+                                Facilitar análisis temporales y validaciones.
+                            </td>
+
+                            <td>
+                                Fechas comparables y ordenables.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-medium">Medio</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>Valores atípicos de edad</strong>
+                            </td>
+
+                            <td>
+                                Identificar y marcar edades fuera del rango
+                                razonable antes de decidir su tratamiento.
+                            </td>
+
+                            <td>
+                                El máximo observado de 1.826 requiere
+                                verificación antes de eliminarlo.
+                            </td>
+
+                            <td>
+                                Valores sospechosos identificados sin pérdida
+                                automática de información.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-high">Alto</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>Modelo posterior al accidente</strong>
+                            </td>
+
+                            <td>
+                                Comparar <strong>modelo_vehiculo</strong> con
+                                el año de <strong>fecha_accidente</strong>.
+                            </td>
+
+                            <td>
+                                Un modelo posterior al año del accidente debe
+                                ser revisado antes de considerarse válido.
+                            </td>
+
+                            <td>
+                                Inconsistencias temporales identificadas.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-medium">Medio</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>Categorías textuales</strong>
+                            </td>
+
+                            <td>
+                                Normalizar mayúsculas, espacios, tildes,
+                                abreviaturas y denominaciones.
+                            </td>
+
+                            <td>
+                                Evitar que una misma categoría aparezca como
+                                valores diferentes.
+                            </td>
+
+                            <td>
+                                Categorías homogéneas y comparables.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-medium">Medio</span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <strong>Cobertura reciente parcial</strong>
+                            </td>
+
+                            <td>
+                                Identificar 2026 como periodo parcial sin
+                                completar artificialmente registros.
+                            </td>
+
+                            <td>
+                                La ausencia de información futura no constituye
+                                automáticamente un dato faltante.
+                            </td>
+
+                            <td>
+                                Interpretación temporal más adecuada.
+                            </td>
+
+                            <td>
+                                <span class="tag tag-medium">Medio</span>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </section>
+
+
+        <!-- TRATAMIENTOS -->
+        <section class="section">
+            <h2>Acciones de tratamiento</h2>
+
+            <p>
+                Las acciones se aplican de acuerdo con el tipo de problema
+                encontrado y con el riesgo que tendría modificar la información.
+            </p>
+
+            <div class="treatments">
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">01</div>
+                        <h3>Eliminación de duplicados</h3>
+                    </div>
+
+                    <p>
+                        Se eliminan únicamente los registros que son completamente
+                        iguales en todas sus variables.
+                    </p>
+
+                    <ul>
+                        <li>Registros iniciales: 406.540.</li>
+                        <li>Duplicados completos: 147.575.</li>
+                        <li>Registros posteriores: 258.965.</li>
+                        <li>La operación se realiza únicamente sobre la copia limpia.</li>
+                    </ul>
+                </div>
+
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">02</div>
+                        <h3>Valores faltantes</h3>
+                    </div>
+
+                    <p>
+                        Los valores faltantes se tratan dependiendo de la variable
+                        y de la posibilidad real de obtener información confiable.
+                    </p>
+
+                    <ul>
+                        <li>Marca faltante: usar NO REGISTRADA.</li>
+                        <li>Edad faltante: conservar como valor nulo.</li>
+                        <li>No se realiza imputación arbitraria.</li>
+                        <li>Se mantienen indicadores de calidad cuando sea necesario.</li>
+                    </ul>
+                </div>
+
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">03</div>
+                        <h3>Tratamiento de fechas</h3>
+                    </div>
+
+                    <p>
+                        La variable <strong>fecha_accidente</strong> debe convertirse
+                        desde texto a un formato de fecha estandarizado.
+                    </p>
+
+                    <ul>
+                        <li>Conversión a tipo fecha.</li>
+                        <li>Identificación de valores no convertibles.</li>
+                        <li>Extracción de año, mes y periodo cuando sea necesario.</li>
+                        <li>Validación de fechas futuras o inconsistentes.</li>
+                    </ul>
+                </div>
+
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">04</div>
+                        <h3>Normalización textual</h3>
+                    </div>
+
+                    <p>
+                        Las variables categóricas se preparan para evitar
+                        diferencias causadas únicamente por formato.
+                    </p>
+
+                    <ul>
+                        <li>Eliminar espacios innecesarios.</li>
+                        <li>Unificar mayúsculas y minúsculas.</li>
+                        <li>Revisar tildes y caracteres inconsistentes.</li>
+                        <li>Homologar nombres territoriales y categorías.</li>
+                    </ul>
+                </div>
+
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">05</div>
+                        <h3>Validación de edad</h3>
+                    </div>
+
+                    <p>
+                        Las edades extremadamente altas no se eliminan de manera
+                        automática: primero se identifican y se revisa su posible
+                        origen.
+                    </p>
+
+                    <ul>
+                        <li>Detectar valores fuera del rango definido.</li>
+                        <li>Conservar el valor original para trazabilidad.</li>
+                        <li>Crear una bandera de observación.</li>
+                        <li>Corregir o excluir solo con justificación.</li>
+                    </ul>
+                </div>
+
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">06</div>
+                        <h3>Validación del modelo</h3>
+                    </div>
+
+                    <p>
+                        El año del modelo se compara con el año del accidente
+                        para detectar posibles inconsistencias temporales.
+                    </p>
+
+                    <ul>
+                        <li>Comparar modelo y año del accidente.</li>
+                        <li>Detectar modelos posteriores al accidente.</li>
+                        <li>Generar una bandera de inconsistencia.</li>
+                        <li>No eliminar automáticamente sin verificar la fuente.</li>
+                    </ul>
+                </div>
+
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">07</div>
+                        <h3>Estandarización de categorías</h3>
+                    </div>
+
+                    <p>
+                        Se establecen categorías consistentes para facilitar
+                        agrupaciones, filtros y visualizaciones.
+                    </p>
+
+                    <ul>
+                        <li>Tipo de vehículo.</li>
+                        <li>Gravedad del accidente.</li>
+                        <li>Departamento y municipio.</li>
+                        <li>Autoridad de tránsito.</li>
+                    </ul>
+                </div>
+
+
+                <div class="treatment">
+                    <div class="treatment-header">
+                        <div class="treatment-number">08</div>
+                        <h3>Tratamiento temporal</h3>
+                    </div>
+
+                    <p>
+                        La cobertura temporal se conserva tal como fue reportada,
+                        pero se incorpora como criterio de interpretación.
+                    </p>
+
+                    <ul>
+                        <li>Periodo disponible: 2022–2026.</li>
+                        <li>2026 corresponde a información parcial.</li>
+                        <li>No se inventan registros faltantes.</li>
+                        <li>Se documenta la limitación para el análisis.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- BANDERAS -->
+        <section class="section">
+            <h2>Trazabilidad mediante indicadores</h2>
+
+            <p>
+                Para evitar perder información durante la limpieza, los registros
+                que presenten situaciones especiales pueden conservar una bandera
+                de calidad. Esto permite diferenciar un dato corregido de uno que
+                simplemente fue identificado para revisión.
+            </p>
+
+            <div class="flags">
+
+                <div class="flag">
+                    <code>flag_edad_atipica</code>
+                    <p>
+                        Identifica edades que se encuentran fuera del rango
+                        definido para revisión.
+                    </p>
+                </div>
+
+                <div class="flag">
+                    <code>flag_modelo_futuro</code>
+                    <p>
+                        Identifica modelos cuyo año es posterior al año del
+                        accidente registrado.
+                    </p>
+                </div>
+
+                <div class="flag">
+                    <code>flag_fecha_invalida</code>
+                    <p>
+                        Identifica registros cuya fecha no pudo convertirse
+                        correctamente.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="highlight">
+                <strong>¿Por qué utilizar banderas?</strong>
+
+                <p>
+                    Una bandera permite conservar el registro y, al mismo tiempo,
+                    informar al proceso analítico que existe una situación que
+                    requiere atención. De esta forma se evita eliminar información
+                    potencialmente útil sin una justificación suficiente.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- ANTES DESPUÉS -->
+        <section class="section">
+            <h2>Resultado esperado de la limpieza</h2>
+
+            <p>
+                El principal cambio cuantificable corresponde a la eliminación
+                de duplicados completos. Los demás tratamientos buscan mejorar
+                la estructura y consistencia sin reducir innecesariamente el
+                volumen de información.
+            </p>
+
+            <div class="comparison">
+
+                <div class="compare-box">
+                    <span class="compare-label">Dataset original</span>
+                    <span class="compare-number">406.540</span>
+                    <span class="compare-description">
+                        registros iniciales
+                    </span>
+                </div>
+
+                <div class="compare-arrow">→</div>
+
+                <div class="compare-box clean">
+                    <span class="compare-label">Dataset limpio</span>
+                    <span class="compare-number">258.965</span>
+                    <span class="compare-description">
+                        registros después de eliminar duplicados completos
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="highlight">
+                <strong>147.575 registros duplicados retirados</strong>
+
+                <p>
+                    La reducción corresponde exclusivamente a duplicados completos.
+                    No representa eliminación de accidentes individuales, ya que
+                    cada registro del dataset corresponde a un vehículo involucrado
+                    en un accidente y no necesariamente a un accidente único.
+                </p>
+            </div>
+        </section>
+
+
+        <!-- VALIDACIÓN FINAL -->
+        <section class="section">
+            <h2>Validación posterior al tratamiento</h2>
+
+            <p>
+                Después de aplicar las transformaciones, el dataset debe volver
+                a evaluarse para comprobar que las acciones realmente mejoraron
+                su calidad.
+            </p>
+
+            <div class="table-wrapper">
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Dimensión</th>
+                            <th>Validación posterior</th>
+                            <th>Indicador esperado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td><strong>Completitud</strong></td>
+                            <td>
+                                Revisar nuevamente los valores nulos por variable.
+                            </td>
+                            <td>
+                                Reducción de vacíos donde exista tratamiento
+                                justificado.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>Unicidad</strong></td>
+                            <td>
+                                Ejecutar nuevamente la detección de duplicados.
+                            </td>
+                            <td>
+                                Ausencia de duplicados completos en la copia limpia.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>Validez</strong></td>
+                            <td>
+                                Comprobar rangos, formatos y categorías.
+                            </td>
+                            <td>
+                                Menor cantidad de valores fuera de dominio.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>Consistencia</strong></td>
+                            <td>
+                                Comparar relaciones entre fecha, modelo y edad.
+                            </td>
+                            <td>
+                                Inconsistencias identificadas y documentadas.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>Oportunidad</strong></td>
+                            <td>
+                                Mantener identificada la cobertura temporal.
+                            </td>
+                            <td>
+                                Interpretación correcta de periodos parciales.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </section>
+
+
+        <!-- CONCLUSIÓN -->
+        <section class="conclusion">
+            <h2>Conclusión del tratamiento</h2>
+
+            <p>
+                El tratamiento propuesto permite construir una versión analítica
+                más confiable del dataset sin alterar la fuente original.
+                La principal intervención corresponde a la eliminación de
+                duplicados completos, mientras que los valores faltantes,
+                fechas, categorías y valores atípicos se manejan mediante reglas
+                explícitas y verificables. El enfoque prioriza la trazabilidad,
+                evita la generación de información artificial y permite que las
+                decisiones tomadas puedan ser evaluadas nuevamente en la etapa
+                de comparación antes y después.
+            </p>
+        </section>
+
+
+        <!-- NAVEGACIÓN -->
+        <div class="navigation-buttons">
+
+            <a href="{{ url_for('Etapa2_integracion') }}" class="nav-button">
+                <span class="nav-arrow">←</span>
+
+                <span>
+                    <small>ANTERIOR</small>
+                    Integración y homologación
+                </span>
+            </a>
+
+
+            <div class="nav-progress" aria-label="Progreso Etapa 2">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+            </div>
+
+
+            <a href="{{ url_for('Etapa2_comparacion') }}" class="nav-button">
+                <span>
+                    <small>SIGUIENTE</small>
+                    Comparación antes y después
+                </span>
+
+                <span class="nav-arrow">→</span>
+            </a>
+
+        </div>
+
+    </div>
+</main>
+
+</body>
+</html>
+
