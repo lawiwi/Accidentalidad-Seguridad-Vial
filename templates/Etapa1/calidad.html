@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
 
-<head>
+{% block title %}Calidad | Sistema de Reportes Viales{% endblock %}
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Calidad | Sistema de Reportes Viales</title>
+{% block head %}
 
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
@@ -55,11 +51,11 @@
 
             position: fixed;
 
-            top: 0;
+            top: var(--header-height);
             left: 0;
 
             width: 270px;
-            height: 100vh;
+            height: calc(100vh - var(--header-height));
 
             background: #ffffff;
 
@@ -291,7 +287,7 @@
 
             position: fixed;
 
-            top: 20px;
+            top: calc(var(--header-height) + 20px);
             left: 20px;
 
             width: 42px;
@@ -352,6 +348,15 @@
             padding: 40px;
 
             transition: margin-left 0.3s ease;
+        }
+
+        .etapa1-calidad-page {
+            color: var(--text-main);
+        }
+
+        .etapa1-calidad-page .main-content {
+            margin-left: 0;
+            padding-top: 40px;
         }
 
 
@@ -869,7 +874,7 @@
 
                 position: fixed;
 
-                top: 0;
+                top: var(--header-height);
                 left: 0;
 
                 width: 100%;
@@ -962,10 +967,10 @@
 
     </style>
 
-</head>
+{% endblock %}
 
-
-<body class="sidebar-hidden">
+{% block content %}
+<div class="etapa1-calidad-page">
 
 
     <!-- ==================================================
@@ -2164,10 +2169,15 @@
     </main>
 
 
+    </div>
+
     <!-- ==================================================
          JAVASCRIPT SIDEBAR
          ================================================== -->
 
+    {% endblock %}
+
+    {% block scripts %}
     <script>
 
 
@@ -2245,7 +2255,4 @@
 
 
     </script>
-
-</body>
-
-</html>
+{% endblock %}
