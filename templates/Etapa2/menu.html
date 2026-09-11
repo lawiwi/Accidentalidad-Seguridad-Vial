@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
 
-    <title>Etapa 2 - Calidad de Datos</title>
+{% block title %}Etapa 2 - Calidad de Datos{% endblock %}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
+{% block head %}
     <style>
         :root {
             --indigo: #232A54;
@@ -63,7 +57,7 @@
             margin: 50px auto 60px;
         }
 
-        header {
+        .stage-header {
             position: relative;
 
             background:
@@ -86,7 +80,7 @@
             overflow: hidden;
         }
 
-        header::after {
+        .stage-header::after {
             content: "";
 
             position: absolute;
@@ -106,7 +100,7 @@
                 );
         }
 
-        header::before {
+        .stage-header::before {
             content: "";
 
             position: absolute;
@@ -148,7 +142,7 @@
             font-size: 1.4rem;
         }
 
-        header h1 {
+        .stage-header h1 {
             position: relative;
 
             margin: 0 0 8px;
@@ -159,7 +153,7 @@
             font-size: 1.6rem;
         }
 
-        header p {
+        .stage-header p {
             position: relative;
 
             margin: 0;
@@ -345,18 +339,18 @@
                 grid-template-columns: 1fr;
             }
 
-            header h1 {
+            .stage-header h1 {
                 font-size: 1.35rem;
             }
         }
     </style>
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
 
 <div class="container">
 
-    <header>
+    <header class="stage-header">
 
         <div class="badge">📊</div>
 
@@ -573,5 +567,4 @@
 
 </div>
 
-</body>
-</html>
+{% endblock %}

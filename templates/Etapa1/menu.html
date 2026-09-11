@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Etapa 1 - Minería de Datos{% endblock %}
 
-    <title>Etapa 1 - Minería de Datos</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
+{% block head %}
     <style>
         :root {
             --indigo: #232A54;
@@ -51,7 +44,7 @@
             margin: 50px auto 60px;
         }
 
-        header {
+        .stage-header {
             position: relative;
             background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 55%, var(--plum) 130%);
             color: white;
@@ -62,7 +55,7 @@
             overflow: hidden;
         }
 
-        header::after {
+        .stage-header::after {
             content: "";
             position: absolute;
             width: 220px;
@@ -73,7 +66,7 @@
             background: radial-gradient(circle, rgba(217, 164, 65, 0.35), transparent 70%);
         }
 
-        header::before {
+        .stage-header::before {
             content: "";
             position: absolute;
             width: 160px;
@@ -98,7 +91,7 @@
             font-size: 1.4rem;
         }
 
-        header h1 {
+        .stage-header h1 {
             position: relative;
             margin: 0 0 8px;
             font-family: 'Poppins', sans-serif;
@@ -107,7 +100,7 @@
             letter-spacing: 0.2px;
         }
 
-        header p {
+        .stage-header p {
             position: relative;
             margin: 0;
             font-size: 0.95rem;
@@ -212,18 +205,18 @@
                 grid-template-columns: 1fr;
             }
 
-            header h1 {
+            .stage-header h1 {
                 font-size: 1.35rem;
             }
         }
     </style>
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
 
 <div class="container">
 
-    <header>
+    <header class="stage-header">
         <h1>Etapa 1</h1>
         <p>Formulación y contextualización del problema de investigación</p>
     </header>
@@ -294,5 +287,4 @@
 
 </div>
 
-</body>
-</html>
+{% endblock %}
