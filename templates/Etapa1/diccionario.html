@@ -940,7 +940,7 @@
 </head>
 
 
-<body>
+<body class="sidebar-hidden">
 
 
     <!-- ==================================================
@@ -948,7 +948,7 @@
          ================================================== -->
 
     <button
-        class="sidebar-toggle"
+        class="sidebar-toggle visible"
         id="sidebarToggle"
         aria-label="Abrir menú"
     >
@@ -961,7 +961,7 @@
          ================================================== -->
 
     <aside
-        class="sidebar"
+        class="sidebar hidden"
         id="sidebar"
     >
 
@@ -2438,40 +2438,6 @@
                 </p>
 
             </div>
-
-
-            <!-- ==================================================
-                 NAVEGACIÓN INFERIOR
-                 ================================================== -->
-
-            <div class="navigation-buttons">
-
-
-                <a
-                    href="{{ url_for('dataset') }}"
-                    class="back"
-                >
-                    ⬅ Punto anterior
-                </a>
-
-
-                <a
-                    href="{{ url_for('Etapa1') }}"
-                    class="back"
-                >
-                    Menú Etapa 1
-                </a>
-
-
-                <a
-                    href="{{ url_for('Etapa1_calidad') }}"
-                    class="back next"
-                >
-                    Siguiente punto ➡
-                </a>
-
-            </div>
-
 
         </div>
 

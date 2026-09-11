@@ -743,7 +743,7 @@
 </head>
 
 
-<body>
+<body class="sidebar-hidden">
 
 
     <!-- ==================================================
@@ -751,7 +751,7 @@
          ================================================== -->
 
     <button
-        class="sidebar-toggle"
+        class="sidebar-toggle visible"
         id="sidebarToggle"
         aria-label="Abrir menú"
     >
@@ -763,7 +763,7 @@
          MENÚ LATERAL
          ================================================== -->
 
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar hidden" id="sidebar">
 
         <div class="sidebar-header">
 
@@ -1429,39 +1429,6 @@
                 </p>
 
             </div>
-
-
-            <!-- ==================================================
-                 NAVEGACIÓN INFERIOR
-                 ================================================== -->
-
-            <div class="navigation-buttons">
-
-                <a
-                    href="{{ url_for('Etapa1_preguntas') }}"
-                    class="back"
-                >
-                    ⬅ Punto anterior
-                </a>
-
-
-                <a
-                    href="{{ url_for('Etapa1') }}"
-                    class="back"
-                >
-                    Menú Etapa 1
-                </a>
-
-
-                <a
-                    href="{{ url_for('Etapa1_fuentes') }}"
-                    class="back next"
-                >
-                    Siguiente punto ➡
-                </a>
-
-            </div>
-
 
         </div>
 
