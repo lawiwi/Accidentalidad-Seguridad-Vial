@@ -1,0 +1,1014 @@
+{% extends 'base.html' %}
+
+{% block title %}Conclusiones | Calidad de Datos{% endblock %}
+
+{% block head %}
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+            --muted: #777589;
+            --border: #E6E3ED;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+                        .stage-header {
+            background:
+                linear-gradient(
+                    var(--indigo-dark),
+                    var(--indigo)
+                );
+
+            color: white;
+
+            padding: 55px 25px 70px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stage-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            right: -130px;
+            top: -180px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .header-content {
+            max-width: 1050px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 7px 14px;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+        }
+
+        .stage-header h1 {
+            font-family: "Poppins", sans-serif;
+
+            font-size: clamp(32px, 5vw, 52px);
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        .stage-header p {
+            max-width: 760px;
+
+            color: rgba(255, 255, 255, 0.76);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+        .etapa2-conclusiones-page {
+            font-family: "Inter", sans-serif;
+            color: var(--ink);
+            line-height: 1.65;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .etapa2-conclusiones-page main {
+            width: 100%;
+            padding: 45px 20px 20px;
+            padding-bottom: 110px;
+        }
+
+        .etapa2-conclusiones-page .hero {
+            min-height: auto;
+            display: block;
+            align-items: initial;
+            justify-content: initial;
+            gap: normal;
+            padding: 52px 45px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(217, 164, 65, 0.24), transparent 25%),
+                radial-gradient(circle at 10% 90%, rgba(46, 156, 147, 0.20), transparent 30%),
+                linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        /* HERO */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 52px 45px;
+            border-radius: 28px;
+            color: white;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(217, 164, 65, 0.24), transparent 25%),
+                radial-gradient(circle at 10% 90%, rgba(46, 156, 147, 0.20), transparent 30%),
+                linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+            box-shadow: 0 18px 45px rgba(35, 42, 84, 0.16);
+            margin-bottom: 30px;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -90px;
+            top: -130px;
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            right: 50px;
+            bottom: -90px;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 50%;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #D7D7E6;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            position: relative;
+            z-index: 1;
+            font-family: "Poppins", sans-serif;
+            font-size: clamp(32px, 5vw, 50px);
+            line-height: 1.12;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            position: relative;
+            z-index: 1;
+            max-width: 790px;
+            color: #E4E4EE;
+            font-size: 15px;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: rgba(255,255,255,0.93);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 25px rgba(35, 42, 84, 0.05);
+        }
+
+        .section h2 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .section > p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        /* SUMMARY */
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .summary-card {
+            padding: 22px 18px;
+            border-radius: 17px;
+            background: #FBFAFD;
+            border: 1px solid var(--border);
+        }
+
+        .summary-card .number {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 27px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 7px;
+        }
+
+        .summary-card strong {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .summary-card span:last-child {
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* CONCLUSION GRID */
+
+        .conclusions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .conclusion-card {
+            padding: 23px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #FCFBFE;
+        }
+
+        .conclusion-card .index {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 31px;
+            height: 31px;
+            border-radius: 10px;
+            background: var(--indigo);
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 13px;
+        }
+
+        .conclusion-card h3 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .conclusion-card p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* FINDING */
+
+        .finding-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .finding {
+            padding: 24px;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            background: #FBFAFD;
+        }
+
+        .finding.primary {
+            background: #F0F8F7;
+            border-color: rgba(46, 156, 147, .28);
+        }
+
+        .finding h3 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .finding p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* LIMITATIONS */
+
+        .limitations {
+            margin-top: 20px;
+            padding: 23px;
+            border-radius: 17px;
+            background: #FBF8F1;
+            border: 1px solid rgba(217, 164, 65, .25);
+        }
+
+        .limitations h3 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .limitations ul {
+            padding-left: 19px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .limitations li {
+            margin-bottom: 6px;
+        }
+
+        /* NEXT */
+
+        .next-step {
+            position: relative;
+            overflow: hidden;
+            padding: 30px;
+            border-radius: 21px;
+            background: linear-gradient(135deg, #232A54, #30386C);
+            color: white;
+            margin-bottom: 22px;
+        }
+
+        .next-step::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -80px;
+            top: -90px;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 50%;
+        }
+
+        .next-step h2 {
+            position: relative;
+            z-index: 1;
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .next-step p {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            color: #E2E3EE;
+            font-size: 13px;
+        }
+
+        /* FINAL */
+
+        .final-box {
+            text-align: center;
+            padding: 35px 30px;
+            border-radius: 22px;
+            background: white;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 25px rgba(35, 42, 84, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .final-box .line {
+            width: 55px;
+            height: 4px;
+            border-radius: 10px;
+            background: var(--teal);
+            margin: 0 auto 18px;
+        }
+
+        .final-box h2 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .final-box p {
+            max-width: 790px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* =========================
+        NAVEGACIÓN — BARRA FIJA
+        ========================== */
+
+        .navigation-buttons {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+
+            padding: 12px 20px;
+
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 30px rgba(35, 42, 84, 0.10);
+        }
+
+        .navigation-buttons-inner {
+            max-width: 1050px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+            color: var(--indigo);
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-button small {
+            display: block;
+            font-family: "Inter", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: #9998A8;
+            margin-bottom: 3px;
+        }
+
+        .nav-arrow {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid var(--border);
+            font-size: 16px;
+            flex-shrink: 0;
+            transition: all 0.25s ease;
+        }
+
+        .nav-button:hover {
+            color: var(--plum);
+        }
+
+        .nav-button:hover .nav-arrow {
+            background: var(--indigo);
+            border-color: var(--indigo);
+            color: white;
+            transform: scale(1.08);
+        }
+
+        .nav-progress {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .nav-progress span {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #D9D7E2;
+        }
+
+        .nav-progress span.active {
+            width: 22px;
+            border-radius: 10px;
+            background: var(--teal);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .summary {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .conclusions-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            main {
+                padding: 25px 14px 15px;
+            }
+
+            .hero {
+                padding: 35px 25px;
+                border-radius: 22px;
+            }
+
+            .section {
+                padding: 22px;
+            }
+
+            .finding-box {
+                grid-template-columns: 1fr;
+            }
+
+            .conclusions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                gap: 15px;
+            }
+
+            .nav-progress {
+                display: none;
+            }
+
+            .nav-button {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .nav-arrow {
+                width: 34px;
+                height: 34px;
+            }
+
+            .nav-button small {
+                font-size: 7px;
+            }
+        }
+        </style>
+   {% endblock %}
+
+    {% block content %}
+    <div class="etapa2-integracion-page">
+
+<main>
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <header class="stage-header">
+
+        <div class="header-content">
+
+            <div class="badge">
+                Etapa 2 · Calidad de datos
+            </div>
+
+            <h1>
+                Conclusiones
+            </h1>
+
+            <p>
+                Definición de las acciones necesarias para corregir, transformar,
+                evaluación de calidad, las acciones de tratamiento aplicadas
+                y las condiciones que deben considerarse antes de utilizar
+                los datos en procesos de análisis y minería de datos.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <div class="container">
+        <!-- RESUMEN -->
+
+        <section class="section">
+
+            <h2>Resumen de la evaluación</h2>
+
+            <p>
+                El proceso permitió identificar problemas de calidad en
+                diferentes dimensiones y establecer acciones de tratamiento
+                acordes con el tipo de inconsistencia encontrada.
+            </p>
+
+            <div class="summary">
+
+                <div class="summary-card">
+                    <span class="number">406.540</span>
+                    <strong>Registros iniciales</strong>
+                    <span>Dataset de vehículos involucrados.</span>
+                </div>
+
+                <div class="summary-card">
+                    <span class="number">147.575</span>
+                    <strong>Duplicados completos</strong>
+                    <span>Principal problema de unicidad.</span>
+                </div>
+
+                <div class="summary-card">
+                    <span class="number">258.965</span>
+                    <strong>Registros de trabajo</strong>
+                    <span>Resultado después de deduplicar.</span>
+                </div>
+
+                <div class="summary-card">
+                    <span class="number">9</span>
+                    <strong>Variables analizadas</strong>
+                    <span>Perfilamiento del conjunto principal.</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONCLUSIONES -->
+
+        <section class="section">
+
+            <h2>Principales conclusiones</h2>
+
+            <div class="conclusions-grid">
+
+                <div class="conclusion-card">
+
+                    <div class="index">01</div>
+
+                    <h3>La unicidad era el principal problema</h3>
+
+                    <p>
+                        Se identificaron 147.575 registros completamente
+                        duplicados, equivalentes aproximadamente al 36,30 %
+                        del conjunto original. Su eliminación evita que los
+                        conteos y frecuencias del análisis sean afectados por
+                        repeticiones.
+                    </p>
+
+                </div>
+
+
+                <div class="conclusion-card">
+
+                    <div class="index">02</div>
+
+                    <h3>La completitud presenta pocos faltantes</h3>
+
+                    <p>
+                        Solo se identificaron 64 valores faltantes en las
+                        variables revisadas: 44 correspondientes a
+                        marca_vehiculo y 20 a edad_vehiculo. El impacto
+                        cuantitativo es bajo frente al tamaño total del
+                        conjunto.
+                    </p>
+
+                </div>
+
+
+                <div class="conclusion-card">
+
+                    <div class="index">03</div>
+
+                    <h3>Los valores atípicos requieren validación</h3>
+
+                    <p>
+                        La edad máxima registrada de 1.826 años constituye
+                        una observación claramente atípica. En lugar de
+                        eliminarla automáticamente, se recomienda marcarla
+                        y verificar su origen antes de tomar una decisión.
+                    </p>
+
+                </div>
+
+
+                <div class="conclusion-card">
+
+                    <div class="index">04</div>
+
+                    <h3>La consistencia puede mejorarse</h3>
+
+                    <p>
+                        La conversión de fechas, la normalización de textos y
+                        la homologación de categorías permiten obtener
+                        variables más uniformes para filtros, agrupaciones,
+                        visualizaciones y modelos analíticos.
+                    </p>
+
+                </div>
+
+
+                <div class="conclusion-card">
+
+                    <div class="index">05</div>
+
+                    <h3>La exactitud tiene una limitación metodológica</h3>
+
+                    <p>
+                        La limpieza permite detectar inconsistencias internas,
+                        pero no demuestra que cada valor represente exactamente
+                        la realidad. Para comprobar exactitud se requiere una
+                        fuente externa de referencia o un proceso de validación
+                        independiente.
+                    </p>
+
+                </div>
+
+
+                <div class="conclusion-card">
+
+                    <div class="index">06</div>
+
+                    <h3>La temporalidad debe interpretarse con cuidado</h3>
+
+                    <p>
+                        El conjunto contiene información entre 2022 y 2026,
+                        pero el periodo más reciente es parcial. Por ello,
+                        las diferencias temporales no deben interpretarse
+                        automáticamente como aumentos o disminuciones reales
+                        de la accidentalidad.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INTEGRACIÓN -->
+
+        <section class="section">
+
+            <h2>Conclusión sobre la integración de fuentes</h2>
+
+            <p>
+                La comparación con el conjunto de siniestros viales de la
+                ANSV permitió ampliar el contexto del análisis, pero no
+                resulta adecuado realizar una unión directa registro a
+                registro. Las fuentes presentan diferentes periodos,
+                estructuras y unidades de observación.
+            </p>
+
+            <div class="finding-box">
+
+                <div class="finding primary">
+
+                    <h3>Fuente principal</h3>
+
+                    <p>
+                        El dataset de vehículos se mantiene como fuente
+                        principal debido a que permite analizar características
+                        como marca, modelo, tipo de vehículo, edad, gravedad,
+                        ubicación y autoridad de tránsito.
+                    </p>
+
+                </div>
+
+
+                <div class="finding">
+
+                    <h3>Fuente complementaria</h3>
+
+                    <p>
+                        El conjunto de la ANSV se utiliza como referencia
+                        complementaria mediante homologación territorial,
+                        temporal y categórica, evitando interpretar registros
+                        de diferentes periodos como si fueran el mismo evento.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TRATAMIENTO -->
+
+        <section class="section">
+
+            <h2>Conclusión sobre el tratamiento</h2>
+
+            <p>
+                El tratamiento aplicado prioriza la mínima intervención y la
+                trazabilidad. Se eliminan únicamente duplicados completos,
+                mientras que los valores faltantes y las observaciones
+                sospechosas se conservan o se marcan cuando no existe evidencia
+                suficiente para determinar un valor correcto.
+            </p>
+
+            <p>
+                Este enfoque evita introducir información artificial y permite
+                mantener una relación clara entre el dataset original, las
+                transformaciones realizadas y el conjunto preparado para el
+                análisis.
+            </p>
+
+        </section>
+
+
+        <!-- LIMITACIONES -->
+
+        <section class="section">
+
+            <h2>Limitaciones que permanecen</h2>
+
+            <div class="limitations">
+
+                <h3>Aspectos que deben mantenerse documentados</h3>
+
+                <ul>
+
+                    <li>
+                        La exactitud de los valores no puede garantizarse
+                        completamente sin una fuente externa de referencia.
+                    </li>
+
+                    <li>
+                        El periodo 2026 presenta cobertura parcial y debe
+                        interpretarse con precaución.
+                    </li>
+
+                    <li>
+                        Los valores extremos de edad y las posibles
+                        inconsistencias de modelo requieren validación adicional.
+                    </li>
+
+                    <li>
+                        Las diferencias entre las fuentes utilizadas impiden
+                        realizar una integración directa registro a registro.
+                    </li>
+
+                    <li>
+                        La presencia de diferentes unidades de observación deben
+                        considerarse al comparar vehículos involucrados con
+                        siniestros registrados.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- SIGUIENTE ETAPA -->
+
+        <section class="next-step">
+
+            <h2>Preparación para el análisis</h2>
+
+            <p>
+                Después del proceso de evaluación y tratamiento, el conjunto
+                de datos cuenta con mejores condiciones estructurales para
+                continuar hacia las etapas de análisis exploratorio y minería
+                de datos. Las decisiones tomadas y sus limitaciones deben
+                permanecer documentadas para garantizar que los resultados
+                posteriores puedan ser interpretados correctamente.
+            </p>
+
+        </section>
+
+
+        <!-- CIERRE -->
+
+        <section class="final-box">
+
+            <div class="line"></div>
+
+            <h2>Cierre de la Etapa 2</h2>
+
+            <p>
+                La calidad de los datos no depende únicamente de la cantidad
+                de registros disponibles, sino de su capacidad para representar
+                de manera consistente, válida, completa y útil el fenómeno que
+                se desea estudiar. La evaluación realizada permitió transformar
+                un conjunto con problemas identificables en una base de trabajo
+                más controlada, documentada y adecuada para el análisis de
+                accidentalidad vial.
+            </p>
+
+        </section>
+
+    </div>
+</main>
+
+    <!-- =========================
+         NAVEGACIÓN — BARRA FIJA
+    ========================== -->
+
+    <div class="navigation-buttons">
+        <div class="navigation-buttons-inner">
+
+            <a href="{{ url_for('Etapa2_comparacion') }}" class="nav-button">
+
+                <span class="nav-arrow">←</span>
+
+                <span>
+                    <small>ANTERIOR</small>
+                    Comparación antes y después
+                </span>
+
+            </a>
+
+
+            <div class="nav-progress" aria-label="Progreso Etapa 2">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+
+            </div>
+
+
+            <a href="{{ url_for('Etapa2') }}" class="nav-button">
+
+                <span>
+                    <small>FINALIZAR</small>
+                    Menú Etapa 2
+                </span>
+
+                <span class="nav-arrow">→</span>
+
+            </a>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

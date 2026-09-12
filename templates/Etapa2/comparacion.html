@@ -1,0 +1,1368 @@
+{% extends 'base.html' %}
+
+{% block title %}Comparación antes y después | Calidad de Datos{% endblock %}
+
+{% block head %}
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+            --muted: #777589;
+            --border: #E6E3ED;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+                        .stage-header {
+            background:
+                linear-gradient(
+                    var(--indigo-dark),
+                    var(--indigo)
+                );
+
+            color: white;
+
+            padding: 55px 25px 70px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stage-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            right: -130px;
+            top: -180px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .header-content {
+            max-width: 1050px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 7px 14px;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+        }
+
+        .stage-header h1 {
+            font-family: "Poppins", sans-serif;
+
+            font-size: clamp(32px, 5vw, 52px);
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        .stage-header p {
+            max-width: 760px;
+
+            color: rgba(255, 255, 255, 0.76);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+        .etapa2-comparacion-page {
+            font-family: "Inter", sans-serif;
+            color: var(--ink);
+            line-height: 1.65;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .etapa2-comparacion-page main {
+            width: 100%;
+            padding: 45px 20px 20px;
+            padding-bottom: 110px;
+        }
+
+        
+        .etapa2-comparacion-page .hero {
+            min-height: auto;
+            display: block;
+            align-items: initial;
+            justify-content: initial;
+            gap: normal;
+            padding: 48px 45px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(217, 164, 65, 0.22), transparent 25%),
+                radial-gradient(circle at 10% 90%, rgba(46, 156, 147, 0.20), transparent 30%),
+                linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        /* HEADER */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 48px 45px;
+            border-radius: 28px;
+            color: white;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(217, 164, 65, 0.22), transparent 25%),
+                radial-gradient(circle at 10% 90%, rgba(46, 156, 147, 0.20), transparent 30%),
+                linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+            box-shadow: 0 18px 45px rgba(35, 42, 84, 0.16);
+            margin-bottom: 30px;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            right: -70px;
+            bottom: -90px;
+            border: 1px solid rgba(255,255,255,0.13);
+            border-radius: 50%;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #D7D7E6;
+            margin-bottom: 12px;
+        }
+
+        .hero h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.15;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            max-width: 780px;
+            color: #E4E4EE;
+            font-size: 15px;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: rgba(255,255,255,0.92);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 25px rgba(35, 42, 84, 0.05);
+        }
+
+        .section h2 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .section h3 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .section > p {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* MAIN COMPARISON */
+
+        .main-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: stretch;
+            gap: 18px;
+            margin-top: 25px;
+        }
+
+        .state-card {
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: #FBFAFD;
+        }
+
+        .state-card.after {
+            background: #F0F8F7;
+            border-color: rgba(46, 156, 147, 0.28);
+        }
+
+        .state-label {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--indigo);
+            background: #EAE8F1;
+            margin-bottom: 15px;
+        }
+
+        .after .state-label {
+            color: #24766F;
+            background: #DDEFEA;
+        }
+
+        .state-card h3 {
+            font-size: 19px;
+            margin-bottom: 15px;
+        }
+
+        .big-number {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            font-size: 38px;
+            line-height: 1;
+            color: var(--indigo);
+            margin-bottom: 6px;
+        }
+
+        .state-card p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .state-list {
+            list-style: none;
+            margin-top: 22px;
+        }
+
+        .state-list li {
+            padding: 9px 0;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .state-list strong {
+            color: var(--ink);
+        }
+
+        .comparison-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--teal);
+            font-weight: 700;
+        }
+
+        /* KPI */
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .kpi {
+            padding: 22px 18px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: #FCFBFE;
+        }
+
+        .kpi-label {
+            display: block;
+            color: var(--muted);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .kpi-description {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 820px;
+            background: white;
+        }
+
+        th {
+            padding: 14px 15px;
+            background: var(--indigo);
+            color: white;
+            text-align: left;
+            font-family: "Poppins", sans-serif;
+            font-size: 11px;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid var(--border);
+            font-size: 12px;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background: #FBFAFD;
+        }
+
+        td strong {
+            color: var(--indigo);
+        }
+
+        .improved {
+            color: #24766F;
+            font-weight: 700;
+        }
+
+        .maintained {
+            color: #8A691F;
+            font-weight: 700;
+        }
+
+        /* BARS */
+
+        .metric-bars {
+            margin-top: 25px;
+        }
+
+        .metric-row {
+            margin-bottom: 20px;
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+
+        .metric-name {
+            font-family: "Poppins", sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--indigo);
+        }
+
+        .metric-value {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .bar {
+            width: 100%;
+            height: 9px;
+            background: #E9E7EF;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: var(--teal);
+        }
+
+        .bar-fill.low {
+            background: var(--plum);
+        }
+
+        /* FINDINGS */
+
+        .findings {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 22px;
+        }
+
+        .finding {
+            padding: 20px;
+            border-radius: 17px;
+            border: 1px solid var(--border);
+            background: #FBFAFD;
+        }
+
+        .finding strong {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            color: var(--indigo);
+            margin-bottom: 7px;
+        }
+
+        .finding p {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        /* HIGHLIGHT */
+
+        .highlight {
+            margin-top: 20px;
+            padding: 22px;
+            border-left: 4px solid var(--teal);
+            border-radius: 12px;
+            background: #EFF8F7;
+        }
+
+        .highlight strong {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .highlight p {
+            color: #5F6968;
+            font-size: 12px;
+        }
+
+        /* CONCLUSION */
+
+        .conclusion {
+            padding: 28px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #232A54, #30386C);
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .conclusion h2 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .conclusion p {
+            color: #E3E4EF;
+            font-size: 13px;
+        }
+
+     
+
+    /* =========================
+    NAVEGACIÓN — BARRA FIJA
+    ========================== */
+
+.navigation-buttons {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+
+    padding: 12px 20px;
+
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -10px 30px rgba(35, 42, 84, 0.10);
+}
+
+.navigation-buttons-inner {
+    max-width: 1050px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    color: var(--indigo);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.nav-button small {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #9998A8;
+    margin-bottom: 3px;
+}
+
+.nav-arrow {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--border);
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+}
+
+.nav-button:hover {
+    color: var(--plum);
+}
+
+.nav-button:hover .nav-arrow {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: white;
+    transform: scale(1.08);
+}
+
+.nav-progress {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.nav-progress span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #D9D7E2;
+}
+
+.nav-progress span.active {
+    width: 22px;
+    border-radius: 10px;
+    background: var(--teal);
+}
+
+.nav-label {
+    display: block;
+}
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .findings {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            main {
+                padding: 25px 14px 15px;
+            }
+
+            .hero {
+                padding: 35px 25px;
+                border-radius: 22px;
+            }
+
+            .section {
+                padding: 22px;
+            }
+
+            .main-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-arrow {
+                transform: rotate(90deg);
+            }
+
+            .findings {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                gap: 15px;
+            }
+
+            .nav-progress {
+                display: none;
+            }
+
+            .nav-button {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .nav-arrow {
+                width: 34px;
+                height: 34px;
+            }
+
+            .nav-button small {
+                font-size: 7px;
+            }
+        }
+        </style>
+   {% endblock %}
+
+    {% block content %}
+    <div class="etapa2-integracion-page">
+
+<main>
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <header class="stage-header">
+
+        <div class="header-content">
+
+            <div class="badge">
+                Etapa 2 · Calidad de datos
+            </div>
+
+            <h1>
+                Comparación antes y después
+            </h1>
+
+            <p>
+                Evaluación de los cambios producidos por el tratamiento de datos,
+                comparando el estado original con la versión preparada para el
+                análisis y verificando los principales indicadores de calidad.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <div class="container">
+
+        <!-- INTRODUCCIÓN -->
+        <section class="section">
+            <h2>¿Por qué comparar?</h2>
+
+            <p>
+                La comparación permite verificar si las acciones de limpieza y
+                transformación realmente mejoraron la calidad del conjunto de
+                datos. Para ello se contrastan indicadores antes y después del
+                tratamiento, diferenciando entre cambios cuantitativos y
+                modificaciones estructurales.
+            </p>
+
+            <p>
+                El análisis parte de un dataset original de
+                <strong>406.540 registros</strong>. La principal intervención
+                cuantificable fue la eliminación de registros completamente
+                duplicados.
+            </p>
+        </section>
+
+
+        <!-- COMPARACIÓN PRINCIPAL -->
+        <section class="section">
+            <h2>Estado del conjunto de datos</h2>
+
+            <div class="main-comparison">
+
+                <div class="state-card">
+
+                    <span class="state-label">
+                        Antes
+                    </span>
+
+                    <h3>Dataset original</h3>
+
+                    <span class="big-number">406.540</span>
+
+                    <p>registros disponibles inicialmente</p>
+
+                    <ul class="state-list">
+                        <li>
+                            <strong>147.575</strong> duplicados completos
+                        </li>
+
+                        <li>
+                            <strong>44</strong> registros sin marca
+                        </li>
+
+                        <li>
+                            <strong>20</strong> registros sin edad
+                        </li>
+
+                        <li>
+                            Edad máxima registrada:
+                            <strong>1.826</strong>
+                        </li>
+
+                        <li>
+                            Fecha almacenada como texto
+                        </li>
+                    </ul>
+
+                </div>
+
+
+                <div class="comparison-arrow">
+                    →
+                </div>
+
+
+                <div class="state-card after">
+
+                    <span class="state-label">
+                        Después
+                    </span>
+
+                    <h3>Dataset de trabajo</h3>
+
+                    <span class="big-number">258.965</span>
+
+                    <p>registros después de eliminar duplicados completos</p>
+
+                    <ul class="state-list">
+                        <li>
+                            <strong>0</strong> duplicados completos esperados
+                        </li>
+
+                        <li>
+                            Marcas faltantes identificadas y tratadas
+                        </li>
+
+                        <li>
+                            Edades faltantes conservadas como nulas
+                        </li>
+
+                        <li>
+                            Valores atípicos identificados mediante banderas
+                        </li>
+
+                        <li>
+                            Fechas preparadas para análisis temporal
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- KPIs -->
+        <section class="section">
+            <h2>Indicadores del cambio</h2>
+
+            <p>
+                Los indicadores muestran el efecto directo de las principales
+                acciones aplicadas al conjunto de datos.
+            </p>
+
+            <div class="kpi-grid">
+
+                <div class="kpi">
+                    <span class="kpi-label">Duplicados retirados</span>
+                    <span class="kpi-value">147.575</span>
+                    <span class="kpi-description">
+                        registros completamente repetidos
+                    </span>
+                </div>
+
+                <div class="kpi">
+                    <span class="kpi-label">Reducción</span>
+                    <span class="kpi-value">36,30%</span>
+                    <span class="kpi-description">
+                        del volumen original
+                    </span>
+                </div>
+
+                <div class="kpi">
+                    <span class="kpi-label">Datos conservados</span>
+                    <span class="kpi-value">63,70%</span>
+                    <span class="kpi-description">
+                        del conjunto inicial
+                    </span>
+                </div>
+
+                <div class="kpi">
+                    <span class="kpi-label">Registros finales</span>
+                    <span class="kpi-value">258.965</span>
+                    <span class="kpi-description">
+                        después de deduplicar
+                    </span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- TABLE -->
+        <section class="section">
+            <h2>Comparación por dimensión de calidad</h2>
+
+            <p>
+                No todas las dimensiones se comportan de la misma manera.
+                Algunas presentan una mejora cuantificable, mientras que otras
+                se controlan mediante reglas, estandarización y trazabilidad.
+            </p>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Dimensión</th>
+                            <th>Antes</th>
+                            <th>Después</th>
+                            <th>Cambio</th>
+                            <th>Interpretación</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td><strong>Completitud</strong></td>
+
+                            <td>
+                                64 valores faltantes identificados
+                            </td>
+
+                            <td>
+                                Marca tratada; edad conservada como nula
+                            </td>
+
+                            <td class="improved">
+                                Mejora parcial
+                            </td>
+
+                            <td>
+                                Se evita perder información y se documentan
+                                los faltantes restantes.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td><strong>Unicidad</strong></td>
+
+                            <td>
+                                147.575 duplicados completos
+                            </td>
+
+                            <td>
+                                0 duplicados completos esperados
+                            </td>
+
+                            <td class="improved">
+                                Mejora alta
+                            </td>
+
+                            <td>
+                                Los registros repetidos dejan de afectar
+                                conteos y frecuencias.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td><strong>Validez</strong></td>
+
+                            <td>
+                                Edad máxima de 1.826
+                            </td>
+
+                            <td>
+                                Valores atípicos identificados y marcados
+                            </td>
+
+                            <td class="improved">
+                                Mejora en control
+                            </td>
+
+                            <td>
+                                Las observaciones sospechosas no se eliminan
+                                sin justificación.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td><strong>Consistencia</strong></td>
+
+                            <td>
+                                Fechas y categorías requieren normalización
+                            </td>
+
+                            <td>
+                                Reglas de estandarización aplicadas
+                            </td>
+
+                            <td class="improved">
+                                Mejora estructural
+                            </td>
+
+                            <td>
+                                Las variables son más comparables entre sí.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td><strong>Oportunidad</strong></td>
+
+                            <td>
+                                Cobertura 2022–2026
+                            </td>
+
+                            <td>
+                                2026 identificado como periodo parcial
+                            </td>
+
+                            <td class="maintained">
+                                Controlada
+                            </td>
+
+                            <td>
+                                No se generan datos para completar periodos
+                                que aún no están reportados.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td><strong>Exactitud</strong></td>
+
+                            <td>
+                                Sin fuente externa de verdad disponible
+                            </td>
+
+                            <td>
+                                Se mantienen controles internos
+                            </td>
+
+                            <td class="maintained">
+                                Limitación
+                            </td>
+
+                            <td>
+                                No puede garantizarse exactitud absoluta
+                                únicamente mediante limpieza.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </section>
+
+
+        <!-- QUALITY INDICATORS -->
+        <section class="section">
+            <h2>Indicadores visuales</h2>
+
+            <p>
+                El siguiente resumen representa el estado de las principales
+                dimensiones después de aplicar los controles definidos.
+            </p>
+
+            <div class="metric-bars">
+
+                <div class="metric-row">
+
+                    <div class="metric-header">
+                        <span class="metric-name">
+                            Unicidad
+                        </span>
+
+                        <span class="metric-value">
+                            100% sin duplicados completos
+                        </span>
+                    </div>
+
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 100%;"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="metric-row">
+
+                    <div class="metric-header">
+                        <span class="metric-name">
+                            Completitud
+                        </span>
+
+                        <span class="metric-value">
+                            99,98% sin faltantes en el conjunto de campos
+                        </span>
+                    </div>
+
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 99.98%;"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="metric-row">
+
+                    <div class="metric-header">
+                        <span class="metric-name">
+                            Validez
+                        </span>
+
+                        <span class="metric-value">
+                            Control mediante reglas
+                        </span>
+                    </div>
+
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 90%;"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="metric-row">
+
+                    <div class="metric-header">
+                        <span class="metric-name">
+                            Consistencia
+                        </span>
+
+                        <span class="metric-value">
+                            Estandarización aplicada
+                        </span>
+                    </div>
+
+                    <div class="bar">
+                        <div class="bar-fill" style="width: 90%;"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="metric-row">
+
+                    <div class="metric-header">
+                        <span class="metric-name">
+                            Exactitud
+                        </span>
+
+                        <span class="metric-value">
+                            No verificable completamente
+                        </span>
+                    </div>
+
+                    <div class="bar">
+                        <div class="bar-fill low" style="width: 60%;"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="highlight">
+
+                <strong>
+                    Importante sobre los porcentajes
+                </strong>
+
+                <p>
+                    Los porcentajes visuales de validez y consistencia representan
+                    niveles de control del proceso y no deben interpretarse como
+                    una medición absoluta de la calidad real del dato. La exactitud,
+                    en particular, requiere contrastar la información con una
+                    fuente externa confiable.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- FINDINGS -->
+        <section class="section">
+            <h2>Principales resultados</h2>
+
+            <div class="findings">
+
+                <div class="finding">
+
+                    <strong>Reducción de duplicidad</strong>
+
+                    <p>
+                        La eliminación de 147.575 registros completamente
+                        duplicados evita que las frecuencias y conteos del
+                        análisis sean inflados artificialmente.
+                    </p>
+
+                </div>
+
+
+                <div class="finding">
+
+                    <strong>Conservación de información</strong>
+
+                    <p>
+                        Los valores faltantes que no pueden recuperarse de forma
+                        confiable no se reemplazan con información inventada.
+                    </p>
+
+                </div>
+
+
+                <div class="finding">
+
+                    <strong>Mayor trazabilidad</strong>
+
+                    <p>
+                        Las banderas de calidad permiten identificar registros
+                        con comportamientos atípicos sin eliminarlos
+                        automáticamente.
+                    </p>
+
+                </div>
+
+
+                <div class="finding">
+
+                    <strong>Mejor estructura</strong>
+
+                    <p>
+                        La conversión de fechas y la normalización de categorías
+                        facilitan filtros, agrupaciones y análisis temporales.
+                    </p>
+
+                </div>
+
+
+                <div class="finding">
+
+                    <strong>Control de inconsistencias</strong>
+
+                    <p>
+                        Las relaciones entre año del modelo, fecha del accidente
+                        y edad del vehículo pueden ser verificadas mediante
+                        reglas explícitas.
+                    </p>
+
+                </div>
+
+
+                <div class="finding">
+
+                    <strong>Limitación documentada</strong>
+
+                    <p>
+                        La limpieza mejora la calidad estructural, pero no
+                        garantiza por sí sola que todos los valores sean
+                        exactamente correctos frente a la realidad.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INTERPRETATION -->
+        <section class="section">
+            <h2>Interpretación de la comparación</h2>
+
+            <p>
+                El resultado principal del tratamiento es una reducción
+                considerable del volumen de registros debido a la presencia de
+                duplicados completos. Esta reducción no debe interpretarse como
+                pérdida de información válida, sino como eliminación de
+                repeticiones identificadas mediante una condición objetiva.
+            </p>
+
+            <p>
+                En contraste, los valores faltantes y las observaciones atípicas
+                se manejan de manera conservadora. Cuando no existe evidencia
+                suficiente para determinar el valor correcto, se conserva la
+                ausencia o se genera una alerta de calidad.
+            </p>
+
+            <p>
+                De esta manera, el dataset final queda mejor preparado para las
+                etapas de análisis y minería de datos, manteniendo documentadas
+                las limitaciones que todavía deben considerarse al interpretar
+                los resultados.
+            </p>
+        </section>
+
+
+        <!-- CONCLUSION -->
+        <section class="conclusion">
+
+            <h2>Resultado general</h2>
+
+            <p>
+                La comparación evidencia una mejora importante en la calidad
+                estructural del conjunto de datos. La eliminación de duplicados
+                aumenta la unicidad, la estandarización mejora la consistencia y
+                las reglas de validación permiten controlar valores sospechosos.
+                Sin embargo, la exactitud absoluta no puede establecerse sin una
+                fuente externa de referencia. Por ello, el dataset tratado se
+                considera más adecuado para el análisis, pero sus limitaciones
+                deben mantenerse documentadas.
+            </p>
+
+        </section>
+
+    </div>
+</main>
+
+    <!-- =========================
+         NAVEGACIÓN — BARRA FIJA
+    ========================== -->
+
+    <div class="navigation-buttons">
+        <div class="navigation-buttons-inner">
+
+            <a href="{{ url_for('Etapa2_tratamiento') }}" class="nav-button">
+
+                <span class="nav-arrow">←</span>
+
+                <span>
+                    <small>ANTERIOR</small>
+                    Tratamiento de datos
+                </span>
+
+            </a>
+
+
+            <div class="nav-progress" aria-label="Progreso Etapa 2">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+                <span></span>
+
+            </div>
+
+
+            <a href="{{ url_for('Etapa2_conclusiones') }}" class="nav-button">
+
+                <span>
+                    <small>SIGUIENTE</small>
+                    Conclusiones
+                </span>
+
+                <span class="nav-arrow">→</span>
+
+            </a>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

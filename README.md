@@ -1,7 +1,6 @@
-⚙️ Instalación
+ ⚙️ Instalación
 
-Clonar el repositorio git clone https://github.com/lawiwi/Accidentalidad-Seguridad-Vial.git
-y Entrar a la carpeta: cd Accidentalidad-Seguridad-Vial
+Clonar el repositorio git clone https://github.com/lawiwi/Accidentalidad-Seguridad-Vial.git y Entrar a la carpeta: cd Accidentalidad-Seguridad-Vial
 
 Crear el entorno virtual Se recomienda utilizar un entorno virtual para mantener aisladas las dependencias del proyecto. python -m venv venv
 
@@ -11,8 +10,7 @@ Activar el entorno virtual Usamos el siguiente comando venv\Scripts\activate
 
 Cuando el entorno esté activo, aparecerá (venv) al inicio de la terminal: (venv) C:...\Comunicaciondedatos>
 
-Instalar las dependencias Con el entorno virtual activado: pip install -r requirements.txt
-Esto instalará automáticamente las librerías necesarias para ejecutar el proyecto.
+Instalar las dependencias Con el entorno virtual activado: pip install -r requirements.txt Esto instalará automáticamente las librerías necesarias para ejecutar el proyecto.
 
 ▶️ Ejecutar la aplicación
 

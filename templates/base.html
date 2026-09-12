@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Seguridad Vial Sabana Centro{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  {% block head %}{% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/app-shell.css') }}">
+</head>
+<body>
+  <div id="global-map" aria-hidden="true"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="{{ url_for('static', filename='js/app-shell.js') }}"></script>
+
+  <header class="site-header">
+    <a class="brand" href="/" data-spa-link aria-label="Inicio">
+      <span class="brand-mark">SV</span>
+      <span class="brand-name">Seguridad Vial<br>Sabana Centro</span>
+    </a>
+
+    <nav class="main-nav" aria-label="Navegación principal">
+      <a href="/lista" data-spa-link>Recursos</a>
+      <a href="/Etapa1" data-spa-link>Etapa 1</a>
+      <a href="/Etapa2" data-spa-link>Etapa 2</a>
+      <span class="nav-disabled" title="Contenido en construcción">Etapa 3</span>
+    </nav>
+
+    <div class="utility">
+      <a class="search" href="/lista" data-spa-link aria-label="Buscar en reportes"></a>
+      <a class="language" href="/" data-spa-link>Español⌄</a>
+      {% if session.get('usuario') %}
+        <a class="profile" href="/logout" aria-label="Cerrar sesión" title="Cerrar sesión">◯</a>
+      {% else %}
+        <a class="profile" href="/login" data-spa-link aria-label="Iniciar sesión" title="Iniciar sesión">◯</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <main id="view-content" class="view-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

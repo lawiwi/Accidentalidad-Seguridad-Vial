@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
 
-<head>
+{% block title %}Limitaciones y consideraciones{% endblock %}
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Limitaciones y consideraciones</title>
+{% block head %}
 
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
@@ -54,11 +50,11 @@
         .sidebar {
             position: fixed;
 
-            top: 0;
+            top: var(--header-height);
             left: 0;
 
             width: 270px;
-            height: 100vh;
+            height: calc(100vh - var(--header-height));
 
             background: #ffffff;
 
@@ -262,7 +258,7 @@
         .sidebar-toggle {
             position: fixed;
 
-            top: 20px;
+            top: calc(var(--header-height) + 20px);
             left: 20px;
 
             width: 42px;
@@ -317,6 +313,15 @@
             padding: 40px;
 
             transition: margin-left 0.3s ease;
+        }
+
+        .etapa1-limitaciones-page {
+            color: var(--text-main);
+        }
+
+        .etapa1-limitaciones-page .main-content {
+            margin-left: 0;
+            padding-top: 40px;
         }
 
         body.sidebar-hidden .main-content {
@@ -608,7 +613,7 @@
             .sidebar-overlay {
                 position: fixed;
 
-                top: 0;
+                top: var(--header-height);
                 left: 0;
 
                 width: 100%;
@@ -676,10 +681,10 @@
 
     </style>
 
-</head>
+{% endblock %}
 
-
-<body>
+{% block content %}
+<div class="etapa1-limitaciones-page">
 
 
     <!-- ==================================================
@@ -687,7 +692,7 @@
          ================================================== -->
 
     <button
-        class="sidebar-toggle"
+        class="sidebar-toggle visible"
         id="sidebarToggle"
         aria-label="Abrir menú"
     >
@@ -699,7 +704,7 @@
          MENÚ LATERAL
          ================================================== -->
 
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar hidden" id="sidebar">
 
         <div class="sidebar-header">
 
@@ -1386,40 +1391,20 @@
 
             </div>
 
-
-            <!-- ==================================================
-                 NAVEGACIÓN INFERIOR
-                 ================================================== -->
-
-            <div class="navigation-buttons">
-
-                <a
-                    href="{{ url_for('Etapa1_calidad') }}"
-                    class="back"
-                >
-                    ⬅ Punto anterior
-                </a>
-
-
-                <a
-                    href="{{ url_for('Etapa1') }}"
-                    class="back"
-                >
-                     Menú Etapa 1
-                </a>
-
-            </div>
-
-
         </div>
 
     </main>
 
 
+    </div>
+
     <!-- ==================================================
          JAVASCRIPT SIDEBAR
          ================================================== -->
 
+    {% endblock %}
+
+    {% block scripts %}
     <script>
 
         const sidebar =
@@ -1492,7 +1477,4 @@
         });
 
     </script>
-
-</body>
-
-</html>
+{% endblock %}
