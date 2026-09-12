@@ -121,7 +121,9 @@
 
         .etapa2-causas-page main {
             width: 100%;
-            padding-bottom: 40px;
+            /* Espacio extra al final para que el contenido no quede oculto
+               detrás de la barra de navegación fija */
+            padding-bottom: 110px;
         }
 
         .etapa2-causas-page .hero {
@@ -515,17 +517,34 @@
         }
 
         /* =========================
-           NAVEGACIÓN
+           NAVEGACIÓN — BARRA FIJA
         ========================== */
 
         .navigation-buttons {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+
+            padding: 12px 20px;
+
+            background: rgba(236, 236, 240, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 30px rgba(35, 42, 84, 0.10);
+        }
+
+        .navigation-buttons-inner {
             max-width: 1050px;
-            margin: 45px auto 25px;
-            padding: 24px 5px;
+            margin: 0 auto;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid var(--border);
+            gap: 16px;
         }
 
         .nav-button {
@@ -538,6 +557,7 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.25s ease;
+            flex-shrink: 0;
         }
 
         .nav-button small {
@@ -551,15 +571,16 @@
         }
 
         .nav-arrow {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
             background: white;
             border: 1px solid var(--border);
-            font-size: 17px;
+            font-size: 16px;
+            flex-shrink: 0;
             transition: all 0.25s ease;
         }
 
@@ -578,6 +599,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            flex-shrink: 0;
         }
 
         .nav-progress span {
@@ -591,6 +613,11 @@
             width: 22px;
             border-radius: 10px;
             background: var(--teal);
+        }
+
+        /* Texto del botón: se oculta en pantallas chicas, deja solo la flecha */
+        .nav-label {
+            display: block;
         }
 
         /* =========================
@@ -626,10 +653,6 @@
 
         @media (max-width: 700px) {
 
-            .navigation-buttons {
-                gap: 15px;
-            }
-
             .nav-progress {
                 display: none;
             }
@@ -658,18 +681,27 @@
                 border-radius: 17px;
             }
 
+            .etapa2-causas-page main {
+                padding-bottom: 95px;
+            }
+
             .navigation-buttons {
-                padding-left: 0;
-                padding-right: 0;
+                padding: 10px 14px;
             }
 
             .nav-arrow {
-                width: 34px;
-                height: 34px;
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
             }
 
             .nav-button small {
                 font-size: 7px;
+            }
+
+            /* En pantallas muy pequeñas dejamos solo la flecha para ganar espacio */
+            .nav-label {
+                display: none;
             }
         }
         </style>
@@ -1402,55 +1434,59 @@
 
     </div>
 
-
-    <!-- =========================
-         NAVEGACIÓN
-    ========================== -->
-
-    <div class="navigation-buttons">
-
-        <a href="{{ url_for('Etapa2_problemas') }}" class="nav-button">
-
-            <span class="nav-arrow">←</span>
-
-            <span>
-                <small>ANTERIOR</small>
-                Problemas encontrados
-            </span>
-
-        </a>
-
-
-        <div class="nav-progress">
-
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-
-        </div>
-
-
-        <a href="{{ url_for('Etapa2_integracion') }}" class="nav-button">
-
-            <span>
-                <small>SIGUIENTE</small>
-                Integración y homologación
-            </span>
-
-            <span class="nav-arrow">→</span>
-
-        </a>
-
-    </div>
-
 </main>
 
 </div>
+
+    <!-- =========================
+         NAVEGACIÓN — BARRA FIJA AL FONDO
+    ========================== -->
+
+    <nav class="navigation-buttons" aria-label="Navegación entre secciones">
+
+        <div class="navigation-buttons-inner">
+
+            <a href="{{ url_for('Etapa2_problemas') }}" class="nav-button">
+
+                <span class="nav-arrow">←</span>
+
+                <span class="nav-label">
+                    <small>ANTERIOR</small>
+                    Problemas encontrados
+                </span>
+
+            </a>
+
+
+            <div class="nav-progress">
+
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+
+            <a href="{{ url_for('Etapa2_integracion') }}" class="nav-button">
+
+                <span class="nav-label">
+                    <small>SIGUIENTE</small>
+                    Integración y homologación
+                </span>
+
+                <span class="nav-arrow">→</span>
+
+            </a>
+
+        </div>
+
+    </nav>
+
 {% endblock %}

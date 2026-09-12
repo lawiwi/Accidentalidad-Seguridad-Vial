@@ -4,460 +4,680 @@
 
 {% block head %}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <style>
-        :root {
-            --indigo: #232A54;
-            --indigo-dark: #171B3B;
-            --plum: #8C4E7E;
-            --gold: #D9A441;
-            --teal: #2E9C93;
-            --mist: #F6F4FA;
-            --ink: #2A2A38;
-            --white: #FFFFFF;
-            --gray: #686879;
-            --border: #E7E4EF;
-        }
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
 
-        .etapa2-proposito-page {
-            font-family: "Inter", sans-serif;
-            background:
-                radial-gradient(circle at 10% 10%, rgba(140, 78, 126, 0.10), transparent 28%),
-                radial-gradient(circle at 90% 85%, rgba(46, 156, 147, 0.10), transparent 30%);
-            color: var(--ink);
-            min-height: 100vh;
-        }
+:root {
+    --indigo: #232A54;
+    --indigo-dark: #171B3B;
+    --plum: #8C4E7E;
+    --gold: #D9A441;
+    --teal: #2E9C93;
+    --mist: #F6F4FA;
+    --ink: #2A2A38;
+    --white: #FFFFFF;
+    --gray: #686879;
+    --border: #E4E1EB;
+}
 
-        /* HEADER */
-        .stage-header {
-            background: linear-gradient(
-                135deg,
-                var(--indigo),
-                var(--indigo-dark),
-                var(--plum)
-            );
-            color: white;
-            padding: 55px 20px 70px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .stage-header::before {
-            content: "";
-            position: absolute;
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            top: -130px;
-            left: -80px;
-        }
+body {
+    margin: 0;
+    padding: 0;
+}
 
-        .stage-header::after {
-            content: "";
-            position: absolute;
-            width: 350px;
-            height: 350px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.04);
-            bottom: -200px;
-            right: -100px;
-        }
 
-        .header-content {
-            max-width: 1000px;
-            margin: auto;
-            position: relative;
-            z-index: 2;
-        }
+/* ==================================================
+   PÁGINA
+   ================================================== */
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.12);
-            border: 1px solid rgba(255,255,255,0.18);
-            padding: 9px 17px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 18px;
-            backdrop-filter: blur(8px);
-        }
+.etapa2-proposito-page {
+    font-family: "Inter", sans-serif;
 
-        h1 {
-            font-family: "Poppins", sans-serif;
-            font-size: clamp(30px, 5vw, 48px);
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(140, 78, 126, 0.10),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 85%,
+            rgba(46, 156, 147, 0.10),
+            transparent 30%
+        );
 
-        .subtitle {
-            max-width: 720px;
-            margin: auto;
-            color: rgba(255,255,255,0.82);
-            font-size: 16px;
-            line-height: 1.7;
-        }
+    color: var(--ink);
 
-        /* CONTENIDO */
-        .etapa2-proposito-page main {
-            max-width: 1050px;
-            margin: -35px auto 60px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 5;
-        }
+    min-height: 100vh;
 
-        .content-card {
-            background: var(--white);
-            border-radius: 24px;
-            padding: 38px;
-            margin-bottom: 24px;
-            box-shadow: 0 15px 45px rgba(35, 42, 84, 0.08);
-            border: 1px solid rgba(231, 228, 239, 0.8);
-        }
+    position: relative;
+    z-index: 1;
 
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 18px;
-        }
+    padding-bottom: 100px;
+}
 
-        .icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 23px;
-            background: rgba(46, 156, 147, 0.12);
-        }
 
-        h2 {
-            font-family: "Poppins", sans-serif;
-            color: var(--indigo);
-            font-size: 23px;
-            font-weight: 700;
-        }
+/* ==================================================
+   HEADER
+   ================================================== */
 
-        h3 {
-            font-family: "Poppins", sans-serif;
-            color: var(--indigo);
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
+.stage-header {
+    background:
+        linear-gradient(
+            135deg,
+            var(--indigo),
+            var(--indigo-dark),
+            var(--plum)
+        );
 
-        p {
-            color: var(--gray);
-            line-height: 1.8;
-            font-size: 15px;
-            margin-bottom: 15px;
-        }
+    color: white;
 
-        p:last-child {
-            margin-bottom: 0;
-        }
+    padding: 55px 20px 70px;
 
-        /* DESTACADO */
-        .highlight {
-            background: linear-gradient(
-                135deg,
-                rgba(46, 156, 147, 0.10),
-                rgba(46, 156, 147, 0.04)
-            );
-            border-left: 5px solid var(--teal);
-            border-radius: 14px;
-            padding: 20px 22px;
-            margin-top: 20px;
-        }
+    text-align: center;
 
-        .highlight p {
-            margin: 0;
-            color: var(--ink);
-        }
+    position: relative;
 
-        .highlight strong {
-            color: var(--indigo);
-        }
+    overflow: hidden;
+}
 
-        /* DATOS */
-        .data-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 25px;
-        }
+.stage-header::before {
+    content: "";
 
-        .data-box {
-            background: var(--mist);
-            border: 1px solid var(--border);
-            border-radius: 17px;
-            padding: 22px 15px;
-            text-align: center;
-            transition: 0.25s ease;
-        }
+    position: absolute;
 
-        .data-box:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 25px rgba(35, 42, 84, 0.08);
-        }
+    width: 280px;
+    height: 280px;
 
-        .data-number {
-            font-family: "Poppins", sans-serif;
-            font-size: 25px;
-            font-weight: 800;
-            color: var(--indigo);
-            margin-bottom: 5px;
-        }
+    border-radius: 50%;
 
-        .data-label {
-            font-size: 12px;
-            color: var(--gray);
-            font-weight: 600;
-        }
+    background: rgba(255, 255, 255, 0.05);
 
-        /* VARIABLES */
-        .variables {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 20px;
-        }
+    top: -130px;
+    left: -80px;
+}
 
-        .variable {
-            padding: 15px 17px;
-            border: 1px solid var(--border);
-            border-radius: 13px;
-            background: #fff;
-            font-size: 13px;
-            color: var(--gray);
-        }
+.stage-header::after {
+    content: "";
 
-        .variable strong {
-            display: block;
-            color: var(--indigo);
-            margin-bottom: 4px;
-        }
+    position: absolute;
 
-        /* OBJETIVOS */
-        .objective-list {
-            display: grid;
-            gap: 12px;
-            margin-top: 20px;
-        }
+    width: 350px;
+    height: 350px;
 
-        .objective {
-            display: flex;
-            gap: 13px;
-            align-items: flex-start;
-            padding: 16px;
-            background: var(--mist);
-            border-radius: 14px;
-        }
+    border-radius: 50%;
 
-        .check {
-            width: 28px;
-            height: 28px;
-            min-width: 28px;
-            border-radius: 50%;
-            background: rgba(217, 164, 65, 0.17);
-            color: var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-        }
+    background: rgba(255, 255, 255, 0.04);
 
-        .objective span {
-            color: var(--gray);
-            font-size: 14px;
-            line-height: 1.6;
-        }
+    bottom: -200px;
+    right: -100px;
+}
 
-        /* FUENTE */
-        .source {
-            background: linear-gradient(
-                135deg,
-                rgba(140, 78, 126, 0.10),
-                rgba(140, 78, 126, 0.04)
-            );
-            border-left: 5px solid var(--plum);
-            border-radius: 14px;
-            padding: 20px 22px;
-            margin-top: 20px;
-        }
+.header-content {
+    max-width: 1000px;
 
-        .source-title {
-            font-family: "Poppins", sans-serif;
-            font-weight: 700;
-            color: var(--indigo);
-            margin-bottom: 6px;
-        }
+    margin: auto;
 
-        .source p {
-            margin: 0;
-        }
+    position: relative;
 
-        /* BOTÓN */
-        .navigation {
-            text-align: center;
-            margin-top: 30px;
-        }
+    z-index: 2;
+}
 
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            text-decoration: none;
-            color: white;
-            background: linear-gradient(
-                135deg,
-                var(--indigo),
-                var(--plum)
-            );
-            padding: 13px 22px;
-            border-radius: 13px;
-            font-size: 14px;
-            font-weight: 600;
-            transition: 0.25s ease;
-            box-shadow: 0 8px 20px rgba(35, 42, 84, 0.16);
-        }
+.badge {
+    display: inline-flex;
 
-        .back-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(35, 42, 84, 0.22);
-        }
+    align-items: center;
 
-        /* RESPONSIVE */
-        @media (max-width: 800px) {
-            .data-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    gap: 8px;
 
-            .variables {
-                grid-template-columns: repeat(2, 1fr);
-            }
+    background: rgba(255, 255, 255, 0.12);
 
-            .content-card {
-                padding: 28px 22px;
-            }
-        }
+    border: 1px solid rgba(255, 255, 255, 0.18);
 
-        @media (max-width: 560px) {
-            .stage-header {
-                padding: 45px 18px 60px;
-            }
+    padding: 9px 17px;
 
-            .etapa2-proposito-page main {
-                padding: 0 13px;
-            }
+    border-radius: 30px;
 
-            .data-grid,
-            .variables {
-                grid-template-columns: 1fr;
-            }
+    font-size: 13px;
 
-            h2 {
-                font-size: 20px;
-            }
+    font-weight: 600;
 
-            .subtitle {
-                font-size: 14px;
-            }
-        }
+    margin-bottom: 18px;
 
-        /* ==================================================
-   NAVEGACIÓN ETAPA 2
+    backdrop-filter: blur(8px);
+}
+
+.stage-header h1 {
+    font-family: "Poppins", sans-serif;
+
+    font-size: clamp(30px, 5vw, 48px);
+
+    font-weight: 800;
+
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    max-width: 720px;
+
+    margin: auto;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    font-size: 16px;
+
+    line-height: 1.7;
+}
+
+
+/* ==================================================
+   CONTENIDO
+   ================================================== */
+
+.etapa2-proposito-page main {
+    max-width: 1050px;
+
+    margin: -35px auto 0;
+
+    padding: 0 20px 120px;
+
+    position: relative;
+
+    z-index: 5;
+}
+
+.content-card {
+    background: var(--white);
+
+    border-radius: 24px;
+
+    padding: 38px;
+
+    margin-bottom: 24px;
+
+    box-shadow:
+        0 15px 45px rgba(35, 42, 84, 0.08);
+
+    border: 1px solid rgba(231, 228, 239, 0.8);
+}
+
+.section-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.content-card h2 {
+    font-family: "Poppins", sans-serif;
+
+    color: var(--indigo);
+
+    font-size: 23px;
+
+    font-weight: 700;
+}
+
+.content-card h3 {
+    font-family: "Poppins", sans-serif;
+
+    color: var(--indigo);
+
+    font-size: 18px;
+
+    margin-bottom: 10px;
+}
+
+.content-card p {
+    color: var(--gray);
+
+    line-height: 1.8;
+
+    font-size: 15px;
+
+    margin-bottom: 15px;
+}
+
+.content-card p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==================================================
+   DESTACADO
+   ================================================== */
+
+.highlight {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(46, 156, 147, 0.10),
+            rgba(46, 156, 147, 0.04)
+        );
+
+    border-left: 5px solid var(--teal);
+
+    border-radius: 14px;
+
+    padding: 20px 22px;
+
+    margin-top: 20px;
+}
+
+.highlight p {
+    margin: 0;
+
+    color: var(--ink);
+}
+
+.highlight strong {
+    color: var(--indigo);
+}
+
+
+/* ==================================================
+   DATOS
+   ================================================== */
+
+.data-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+.data-box {
+    background: var(--mist);
+
+    border: 1px solid var(--border);
+
+    border-radius: 17px;
+
+    padding: 22px 15px;
+
+    text-align: center;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.data-box:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 10px 25px rgba(35, 42, 84, 0.08);
+}
+
+.data-number {
+    font-family: "Poppins", sans-serif;
+
+    font-size: 25px;
+
+    font-weight: 800;
+
+    color: var(--indigo);
+
+    margin-bottom: 5px;
+}
+
+.data-label {
+    font-size: 12px;
+
+    color: var(--gray);
+
+    font-weight: 600;
+}
+
+
+/* ==================================================
+   VARIABLES
+   ================================================== */
+
+.variables {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.variable {
+    padding: 15px 17px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    background: #fff;
+
+    font-size: 13px;
+
+    color: var(--gray);
+}
+
+.variable strong {
+    display: block;
+
+    color: var(--indigo);
+
+    margin-bottom: 4px;
+}
+
+
+/* ==================================================
+   OBJETIVOS
+   ================================================== */
+
+.objective-list {
+    display: grid;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+.objective {
+    display: flex;
+
+    gap: 13px;
+
+    align-items: flex-start;
+
+    padding: 16px;
+
+    background: var(--mist);
+
+    border-radius: 14px;
+}
+
+.check {
+    width: 28px;
+    height: 28px;
+
+    min-width: 28px;
+
+    border-radius: 50%;
+
+    background: rgba(217, 164, 65, 0.17);
+
+    color: var(--gold);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-weight: 800;
+}
+
+.objective span {
+    color: var(--gray);
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* ==================================================
+   FUENTE
+   ================================================== */
+
+.source {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(140, 78, 126, 0.10),
+            rgba(140, 78, 126, 0.04)
+        );
+
+    border-left: 5px solid var(--plum);
+
+    border-radius: 14px;
+
+    padding: 20px 22px;
+
+    margin-top: 20px;
+}
+
+.source-title {
+    font-family: "Poppins", sans-serif;
+
+    font-weight: 700;
+
+    color: var(--indigo);
+
+    margin-bottom: 6px;
+}
+
+.source p {
+    margin: 0;
+}
+
+
+/* ==================================================
+   NAVEGACIÓN — BARRA FIJA
    ================================================== */
 
 .navigation-buttons {
-    max-width: 1050px;
-    margin: 45px auto 25px;
-    padding: 24px 5px;
+    position: fixed;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    padding: 12px 20px;
+
+    background: rgba(236, 236, 240, 0.88);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 
     border-top: 1px solid var(--border);
+
+    box-shadow:
+        0 -10px 30px rgba(35, 42, 84, 0.10);
 }
+
+.navigation-buttons-inner {
+    max-width: 1050px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+}
+
+
+/* ==================================================
+   BOTÓN
+   ================================================== */
 
 .nav-button {
     display: flex;
+
     align-items: center;
+
     gap: 11px;
 
     text-decoration: none;
+
     color: var(--indigo);
 
     font-family: "Poppins", sans-serif;
+
     font-size: 13px;
+
     font-weight: 600;
 
-    transition: all 0.25s ease;
+    transition:
+        color 0.25s ease;
+
+    flex-shrink: 0;
+
+    cursor: pointer;
 }
 
 .nav-button small {
     display: block;
 
     font-family: "Inter", sans-serif;
+
     font-size: 8px;
+
     font-weight: 700;
 
     letter-spacing: 1.2px;
+
     color: #9998A8;
 
     margin-bottom: 3px;
+
+    transition:
+        color 0.25s ease;
 }
+
+
+/* ==================================================
+   CÍRCULO DE LA FLECHA
+   ================================================== */
 
 .nav-arrow {
     width: 38px;
     height: 38px;
 
+    min-width: 38px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     border-radius: 50%;
 
-    background: white;
+    background: #FFFFFF;
+
     border: 1px solid var(--border);
 
-    font-size: 17px;
+    color: var(--indigo);
 
-    transition: all 0.25s ease;
+    font-size: 18px;
+
+    line-height: 1;
+
+    box-shadow:
+        0 3px 10px rgba(35, 42, 84, 0.06);
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
+
+
+/* ==================================================
+   BOTÓN SIGUIENTE — ESTADO NORMAL
+   ================================================== */
+
+.nav-next .nav-arrow {
+    background: var(--indigo);
+
+    border-color: var(--indigo);
+
+    color: #FFFFFF;
+
+    box-shadow:
+        0 5px 14px rgba(35, 42, 84, 0.12);
+}
+
+
+/* ==================================================
+   HOVER GENERAL
+   ================================================== */
 
 .nav-button:hover {
     color: var(--plum);
 }
 
-.nav-button:hover .nav-arrow {
-    background: var(--indigo);
-    border-color: var(--indigo);
-    color: white;
-    transform: scale(1.08);
+.nav-button:hover small {
+    color: var(--plum);
 }
 
-/* PUNTOS DE PROGRESO */
+
+/* ==================================================
+   HOVER DE LA FLECHA
+   — CAMBIA A MORADO
+   ================================================== */
+
+.nav-button:hover .nav-arrow {
+    background: var(--plum);
+
+    border-color: var(--plum);
+
+    color: #FFFFFF;
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 7px 18px rgba(140, 78, 126, 0.28);
+}
+
+
+/* ==================================================
+   CLICK
+   ================================================== */
+
+.nav-button:active .nav-arrow {
+    transform: scale(0.94);
+}
+
+
+/* ==================================================
+   PROGRESO
+   ================================================== */
 
 .nav-progress {
     display: flex;
+
     align-items: center;
+
+    justify-content: center;
+
     gap: 5px;
+
+    flex-shrink: 0;
 }
 
 .nav-progress span {
@@ -467,21 +687,42 @@
     border-radius: 50%;
 
     background: #D9D7E2;
+
+    transition:
+        width 0.25s ease,
+        background 0.25s ease;
 }
 
 .nav-progress span.active {
     width: 22px;
+
     border-radius: 10px;
+
     background: var(--teal);
 }
 
-/* RESPONSIVE */
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 800px) {
+
+    .data-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .variables {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-card {
+        padding: 28px 22px;
+    }
+}
+
 
 @media (max-width: 700px) {
-
-    .navigation-buttons {
-        gap: 15px;
-    }
 
     .nav-progress {
         display: none;
@@ -490,38 +731,100 @@
     .nav-button {
         font-size: 12px;
     }
-}
-
-@media (max-width: 480px) {
 
     .navigation-buttons {
-        padding-left: 0;
-        padding-right: 0;
+        padding: 10px 15px;
+    }
+}
+
+
+@media (max-width: 560px) {
+
+    .stage-header {
+        padding: 45px 18px 60px;
+    }
+
+    .etapa2-proposito-page main {
+        padding-left: 13px;
+        padding-right: 13px;
+        padding-bottom: 105px;
+    }
+
+    .data-grid,
+    .variables {
+        grid-template-columns: 1fr;
+    }
+
+    .content-card h2 {
+        font-size: 20px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .navigation-buttons {
+        padding: 10px 14px;
     }
 
     .nav-arrow {
-        width: 34px;
-        height: 34px;
+        width: 35px;
+        height: 35px;
+
+        min-width: 35px;
+
+        font-size: 16px;
     }
 
     .nav-button small {
         font-size: 7px;
     }
 }
-    </style>
+
+
+@media (max-width: 430px) {
+
+    .nav-label {
+        display: none;
+    }
+
+    .nav-button {
+        gap: 0;
+    }
+
+    .nav-arrow {
+        width: 36px;
+        height: 36px;
+
+        min-width: 36px;
+    }
+
+    .navigation-buttons {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}
+
+</style>
+
 {% endblock %}
 
+
 {% block content %}
+
 <div class="etapa2-proposito-page">
 
 <header class="stage-header">
+
     <div class="header-content">
 
         <div class="badge">
-            📊 ETAPA 2 · CALIDAD DE DATOS
+            ETAPA 2 · CALIDAD DE DATOS
         </div>
 
-        <h1>Propósito de los datos</h1>
+        <h1>
+            Propósito de los datos
+        </h1>
 
         <p class="subtitle">
             Definición del propósito, alcance y utilidad de los datos
@@ -529,339 +832,357 @@
         </p>
 
     </div>
+
 </header>
+
 
 <main>
 
-    <!-- DESCRIPCIÓN GENERAL -->
-    <section class="content-card">
+<section class="content-card">
 
-        <div class="section-title">
-            
-            <h2>¿Para qué se utilizan estos datos?</h2>
-        </div>
-
-        <p>
-            Los datos seleccionados tienen como propósito apoyar el análisis
-            de los factores relacionados con la accidentalidad vial en
-            Colombia, permitiendo identificar patrones temporales,
-            características de los vehículos involucrados, niveles de
-            gravedad y distribución geográfica de los hechos registrados.
-        </p>
-
-        <p>
-            En esta segunda etapa, además de utilizar los datos para el
-            análisis, se evaluará su <strong>calidad</strong>, con el objetivo
-            de determinar si son suficientemente completos, válidos,
-            consistentes, únicos, oportunos y confiables para responder a
-            las preguntas planteadas en el proyecto.
-        </p>
-
-        <div class="highlight">
-            <p>
-                <strong>Propósito principal:</strong>
-                garantizar que los datos empleados en el proceso de minería
-                de datos tengan condiciones de calidad suficientes para
-                generar resultados interpretables y útiles para el análisis
-                de la seguridad vial.
-            </p>
-        </div>
-
-    </section>
-
-
-    <!-- DATASET PRINCIPAL -->
-    <section class="content-card">
-
-        <div class="section-title">
-            
-            <h2>Dataset principal</h2>
-        </div>
-
-        <p>
-            Para el proceso de evaluación de calidad se utilizará como fuente
-            principal el conjunto de datos
-            <strong>“VEHICULOS INVOLUCRADOS EN UN ACCIDENTE DE TRANSITO
-            LEY 2251-2022”</strong>, publicado mediante Datos Abiertos
-            Colombia y suministrado por el Ministerio de Transporte,
-            asociado al sistema RUNT.
-        </p>
-
-        <p>
-            Cada registro representa un <strong>vehículo involucrado</strong>
-            en un accidente de tránsito con personas heridas o fallecidas.
-            Por esta razón, el número de registros no debe interpretarse
-            directamente como el número de accidentes ocurridos.
-        </p>
-
-        <div class="data-grid">
-
-            <div class="data-box">
-                <div class="data-number">406.540</div>
-                <div class="data-label">REGISTROS</div>
-            </div>
-
-            <div class="data-box">
-                <div class="data-number">9</div>
-                <div class="data-label">VARIABLES</div>
-            </div>
-
-            <div class="data-box">
-                <div class="data-number">2022–2026</div>
-                <div class="data-label">PERÍODO</div>
-            </div>
-
-            <div class="data-box">
-                <div class="data-number">31</div>
-                <div class="data-label">DEPARTAMENTOS</div>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- VARIABLES -->
-    <section class="content-card">
-
-        <div class="section-title">
-            
-            <h2>Variables disponibles</h2>
-        </div>
-
-        <p>
-            Las variables permiten caracterizar tanto el vehículo como el
-            contexto básico del accidente registrado.
-        </p>
-
-        <div class="variables">
-
-            <div class="variable">
-                <strong>marca_vehiculo</strong>
-                Marca del vehículo involucrado.
-            </div>
-
-            <div class="variable">
-                <strong>modelo_vehiculo</strong>
-                Año o modelo registrado.
-            </div>
-
-            <div class="variable">
-                <strong>tipo_vehiculo</strong>
-                Tipo de vehículo involucrado.
-            </div>
-
-            <div class="variable">
-                <strong>edad_vehiculo</strong>
-                Edad registrada del vehículo.
-            </div>
-
-            <div class="variable">
-                <strong>fecha_accidente</strong>
-                Fecha del accidente registrado.
-            </div>
-
-            <div class="variable">
-                <strong>gravedad_accidente</strong>
-                Gravedad asociada al accidente.
-            </div>
-
-            <div class="variable">
-                <strong>departamento_accidente</strong>
-                Departamento donde ocurrió.
-            </div>
-
-            <div class="variable">
-                <strong>municipio_accidente</strong>
-                Municipio donde ocurrió.
-            </div>
-
-            <div class="variable">
-                <strong>autoridad_de_transito</strong>
-                Autoridad que registra o reporta.
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- UTILIDAD -->
-    <section class="content-card">
-
-        <div class="section-title">
-            
-            <h2>¿Qué se busca obtener?</h2>
-        </div>
-
-        <div class="objective-list">
-
-            <div class="objective">
-                <div class="check">✓</div>
-                <span>
-                    Identificar patrones relacionados con los tipos de
-                    vehículos involucrados en accidentes de tránsito.
-                </span>
-            </div>
-
-            <div class="objective">
-                <div class="check">✓</div>
-                <span>
-                    Analizar la relación entre la antigüedad del vehículo y
-                    los registros de accidentes.
-                </span>
-            </div>
-
-            <div class="objective">
-                <div class="check">✓</div>
-                <span>
-                    Analizar la distribución temporal y geográfica de los
-                    registros disponibles.
-                </span>
-            </div>
-
-            <div class="objective">
-                <div class="check">✓</div>
-                <span>
-                    Comparar los registros según la gravedad reportada.
-                </span>
-            </div>
-
-            <div class="objective">
-                <div class="check">✓</div>
-                <span>
-                    Determinar si la calidad de los datos permite utilizarlos
-                    de forma confiable en posteriores procesos de minería de
-                    datos.
-                </span>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- FUENTE COMPLEMENTARIA -->
-    <section class="content-card">
-
-        <div class="section-title">
-            
-            <h2>Fuente complementaria</h2>
-        </div>
-
-        <p>
-            Como fuente complementaria se conserva el dataset de
-            <strong>Siniestros Viales de la Agencia Nacional de Seguridad
-            Vial (ANSV)</strong>.
-        </p>
-
-        <p>
-            Esta fuente permite aportar contexto histórico y variables
-            adicionales relacionadas con los siniestros, como clasificación
-            del hecho, hipótesis, lugar, víctimas y ubicación geográfica.
-        </p>
-
-        <div class="source">
-
-            <div class="source-title">
-                 Criterio de integración
-            </div>
-
-            <p>
-                Debido a que las fuentes presentan períodos temporales
-                diferentes y no comparten identificadores de accidente que
-                permitan establecer una correspondencia registro a registro,
-                no se realizará una unión directa entre las filas.
-                Su utilización será <strong>complementaria y comparativa</strong>,
-                principalmente mediante análisis agregados.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- CALIDAD -->
-    <section class="content-card">
-
-        <div class="section-title">
-            
-            <h2>Propósito de la evaluación de calidad</h2>
-        </div>
-
-        <p>
-            La evaluación de calidad permitirá conocer las condiciones reales
-            del dataset antes de utilizarlo para análisis posteriores.
-            Para ello se realizará un proceso de perfilamiento que permita
-            detectar valores faltantes, registros duplicados, valores fuera
-            de rango, inconsistencias, problemas de formato y posibles
-            errores en las variables.
-        </p>
-
-        <p>
-            Los resultados de esta evaluación serán utilizados para definir
-            un plan de tratamiento y documentar las transformaciones
-            realizadas sobre una copia del dataset original, manteniendo
-            siempre la fuente sin modificar como respaldo.
-        </p>
-
-        <div class="highlight">
-            <p>
-                <strong>Principio aplicado:</strong>
-                primero se diagnostica la calidad de los datos y posteriormente
-                se decide qué transformaciones son justificadas. No se
-                eliminarán datos únicamente por parecer inusuales sin contar
-                con un criterio de validación.
-            </p>
-        </div>
-
-    </section>
-
-
-  <!-- ==================================================
-     NAVEGACIÓN ETAPA 2
-     ================================================== -->
-<div class="navigation-buttons">
-
-    <a
-        href="{{ url_for('Etapa2') }}"
-        class="nav-button nav-prev"
-    >
-        <span class="nav-arrow">←</span>
-        <span>
-            <small>VOLVER</small>
-            Menú Etapa 2
-        </span>
-    </a>
-
-    <div class="nav-progress">
-        <span class="active"></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+    <div class="section-title">
+        <h2>¿Para qué se utilizan estos datos?</h2>
     </div>
 
-    <a
-        href="{{ url_for('Etapa2_requisitos') }}"
-        class="nav-button nav-next"
-    >
-        <span>
-            <small>SIGUIENTE</small>
-            Requisitos de calidad
-        </span>
-        <span class="nav-arrow">→</span>
-    </a>
+    <p>
+        Los datos seleccionados tienen como propósito apoyar el análisis
+        de los factores relacionados con la accidentalidad vial en
+        Colombia, permitiendo identificar patrones temporales,
+        características de los vehículos involucrados, niveles de
+        gravedad y distribución geográfica de los hechos registrados.
+    </p>
 
-</div>
+    <p>
+        En esta segunda etapa, además de utilizar los datos para el
+        análisis, se evaluará su <strong>calidad</strong>, con el objetivo
+        de determinar si son suficientemente completos, válidos,
+        consistentes, únicos, oportunos y confiables para responder a
+        las preguntas planteadas en el proyecto.
+    </p>
+
+    <div class="highlight">
+        <p>
+            <strong>Propósito principal:</strong>
+            garantizar que los datos empleados en el proceso de minería
+            de datos tengan condiciones de calidad suficientes para
+            generar resultados interpretables y útiles para el análisis
+            de la seguridad vial.
+        </p>
+    </div>
+
+</section>
+
+
+<section class="content-card">
+
+    <div class="section-title">
+        <h2>Dataset principal</h2>
+    </div>
+
+    <p>
+        Para el proceso de evaluación de calidad se utilizará como fuente
+        principal el conjunto de datos
+        <strong>
+            “VEHICULOS INVOLUCRADOS EN UN ACCIDENTE DE TRANSITO
+            LEY 2251-2022”
+        </strong>,
+        publicado mediante Datos Abiertos Colombia y suministrado por
+        el Ministerio de Transporte, asociado al sistema RUNT.
+    </p>
+
+    <p>
+        Cada registro representa un <strong>vehículo involucrado</strong>
+        en un accidente de tránsito con personas heridas o fallecidas.
+        Por esta razón, el número de registros no debe interpretarse
+        directamente como el número de accidentes ocurridos.
+    </p>
+
+    <div class="data-grid">
+
+        <div class="data-box">
+            <div class="data-number">406.540</div>
+            <div class="data-label">REGISTROS</div>
+        </div>
+
+        <div class="data-box">
+            <div class="data-number">9</div>
+            <div class="data-label">VARIABLES</div>
+        </div>
+
+        <div class="data-box">
+            <div class="data-number">2022–2026</div>
+            <div class="data-label">PERÍODO</div>
+        </div>
+
+        <div class="data-box">
+            <div class="data-number">31</div>
+            <div class="data-label">DEPARTAMENTOS</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="content-card">
+
+    <div class="section-title">
+        <h2>Variables disponibles</h2>
+    </div>
+
+    <p>
+        Las variables permiten caracterizar tanto el vehículo como el
+        contexto básico del accidente registrado.
+    </p>
+
+    <div class="variables">
+
+        <div class="variable">
+            <strong>marca_vehiculo</strong>
+            Marca del vehículo involucrado.
+        </div>
+
+        <div class="variable">
+            <strong>modelo_vehiculo</strong>
+            Año o modelo registrado.
+        </div>
+
+        <div class="variable">
+            <strong>tipo_vehiculo</strong>
+            Tipo de vehículo involucrado.
+        </div>
+
+        <div class="variable">
+            <strong>edad_vehiculo</strong>
+            Edad registrada del vehículo.
+        </div>
+
+        <div class="variable">
+            <strong>fecha_accidente</strong>
+            Fecha del accidente registrado.
+        </div>
+
+        <div class="variable">
+            <strong>gravedad_accidente</strong>
+            Gravedad asociada al accidente.
+        </div>
+
+        <div class="variable">
+            <strong>departamento_accidente</strong>
+            Departamento donde ocurrió.
+        </div>
+
+        <div class="variable">
+            <strong>municipio_accidente</strong>
+            Municipio donde ocurrió.
+        </div>
+
+        <div class="variable">
+            <strong>autoridad_de_transito</strong>
+            Autoridad que registra o reporta.
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="content-card">
+
+    <div class="section-title">
+        <h2>¿Qué se busca obtener?</h2>
+    </div>
+
+    <div class="objective-list">
+
+        <div class="objective">
+            <div class="check">✓</div>
+            <span>
+                Identificar patrones relacionados con los tipos de
+                vehículos involucrados en accidentes de tránsito.
+            </span>
+        </div>
+
+        <div class="objective">
+            <div class="check">✓</div>
+            <span>
+                Analizar la relación entre la antigüedad del vehículo y
+                los registros de accidentes.
+            </span>
+        </div>
+
+        <div class="objective">
+            <div class="check">✓</div>
+            <span>
+                Analizar la distribución temporal y geográfica de los
+                registros disponibles.
+            </span>
+        </div>
+
+        <div class="objective">
+            <div class="check">✓</div>
+            <span>
+                Comparar los registros según la gravedad reportada.
+            </span>
+        </div>
+
+        <div class="objective">
+            <div class="check">✓</div>
+            <span>
+                Determinar si la calidad de los datos permite utilizarlos
+                de forma confiable en posteriores procesos de minería de
+                datos.
+            </span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="content-card">
+
+    <div class="section-title">
+        <h2>Fuente complementaria</h2>
+    </div>
+
+    <p>
+        Como fuente complementaria se conserva el dataset de
+        <strong>
+            Siniestros Viales de la Agencia Nacional de Seguridad
+            Vial (ANSV)
+        </strong>.
+    </p>
+
+    <p>
+        Esta fuente permite aportar contexto histórico y variables
+        adicionales relacionadas con los siniestros, como clasificación
+        del hecho, hipótesis, lugar, víctimas y ubicación geográfica.
+    </p>
+
+    <div class="source">
+
+        <div class="source-title">
+            Criterio de integración
+        </div>
+
+        <p>
+            Debido a que las fuentes presentan períodos temporales
+            diferentes y no comparten identificadores de accidente que
+            permitan establecer una correspondencia registro a registro,
+            no se realizará una unión directa entre las filas.
+            Su utilización será
+            <strong>complementaria y comparativa</strong>,
+            principalmente mediante análisis agregados.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="content-card">
+
+    <div class="section-title">
+        <h2>Propósito de la evaluación de calidad</h2>
+    </div>
+
+    <p>
+        La evaluación de calidad permitirá conocer las condiciones reales
+        del dataset antes de utilizarlo para análisis posteriores.
+        Para ello se realizará un proceso de perfilamiento que permita
+        detectar valores faltantes, registros duplicados, valores fuera
+        de rango, inconsistencias, problemas de formato y posibles
+        errores en las variables.
+    </p>
+
+    <p>
+        Los resultados de esta evaluación serán utilizados para definir
+        un plan de tratamiento y documentar las transformaciones
+        realizadas sobre una copia del dataset original, manteniendo
+        siempre la fuente sin modificar como respaldo.
+    </p>
+
+    <div class="highlight">
+
+        <p>
+            <strong>Principio aplicado:</strong>
+            primero se diagnostica la calidad de los datos y posteriormente
+            se decide qué transformaciones son justificadas. No se
+            eliminarán datos únicamente por parecer inusuales sin contar
+            con un criterio de validación.
+        </p>
+
+    </div>
+
+</section>
 
 </main>
 
 </div>
-{% endblock %}
 
+
+<!-- ==================================================
+     NAVEGACIÓN FIJA
+     ================================================== -->
+
+<nav class="navigation-buttons" aria-label="Navegación entre secciones">
+
+    <div class="navigation-buttons-inner">
+
+        <a
+            href="{{ url_for('Etapa2') }}"
+            class="nav-button nav-prev"
+            aria-label="Volver al menú de Etapa 2"
+        >
+
+            <span class="nav-arrow">
+                ←
+            </span>
+
+            <span class="nav-label">
+                <small>ANTERIOR</small>
+                Menú Etapa 2
+            </span>
+
+        </a>
+
+
+        <div class="nav-progress" aria-label="Progreso Etapa 2">
+
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('Etapa2_requisitos') }}"
+            class="nav-button nav-next"
+            aria-label="Ir a Requisitos de calidad"
+        >
+
+            <span class="nav-label">
+                <small>SIGUIENTE</small>
+                Requisitos de calidad
+            </span>
+
+            <span class="nav-arrow">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+</nav>
+
+{% endblock %}

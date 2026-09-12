@@ -120,8 +120,10 @@
         .etapa2-comparacion-page main {
             width: 100%;
             padding: 45px 20px 20px;
+            padding-bottom: 110px;
         }
 
+        
         .etapa2-comparacion-page .hero {
             min-height: auto;
             display: block;
@@ -519,82 +521,110 @@
             font-size: 13px;
         }
 
-        /* NAVIGATION */
+     
 
-        .navigation-buttons {
-            max-width: 1050px;
-            margin: 45px auto 25px;
-            padding: 24px 5px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid var(--border);
-        }
+    /* =========================
+    NAVEGACIÓN — BARRA FIJA
+    ========================== */
 
-        .nav-button {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            text-decoration: none;
-            color: var(--indigo);
-            font-family: "Poppins", sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.25s ease;
-        }
+.navigation-buttons {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
 
-        .nav-button small {
-            display: block;
-            font-family: "Inter", sans-serif;
-            font-size: 8px;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            color: #9998A8;
-            margin-bottom: 3px;
-        }
+    padding: 12px 20px;
 
-        .nav-arrow {
-            width: 38px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: white;
-            border: 1px solid var(--border);
-            font-size: 17px;
-            transition: all 0.25s ease;
-        }
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 
-        .nav-button:hover {
-            color: var(--plum);
-        }
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -10px 30px rgba(35, 42, 84, 0.10);
+}
 
-        .nav-button:hover .nav-arrow {
-            background: var(--indigo);
-            border-color: var(--indigo);
-            color: white;
-            transform: scale(1.08);
-        }
+.navigation-buttons-inner {
+    max-width: 1050px;
+    margin: 0 auto;
 
-        .nav-progress {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
 
-        .nav-progress span {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #D9D7E2;
-        }
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    text-decoration: none;
+    color: var(--indigo);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
 
-        .nav-progress span.active {
-            width: 22px;
-            border-radius: 10px;
-            background: var(--teal);
-        }
+.nav-button small {
+    display: block;
+    font-family: "Inter", sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: #9998A8;
+    margin-bottom: 3px;
+}
+
+.nav-arrow {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--border);
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+}
+
+.nav-button:hover {
+    color: var(--plum);
+}
+
+.nav-button:hover .nav-arrow {
+    background: var(--indigo);
+    border-color: var(--indigo);
+    color: white;
+    transform: scale(1.08);
+}
+
+.nav-progress {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.nav-progress span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #D9D7E2;
+}
+
+.nav-progress span.active {
+    width: 22px;
+    border-radius: 10px;
+    background: var(--teal);
+}
+
+.nav-label {
+    display: block;
+}
 
         /* RESPONSIVE */
 
@@ -1282,10 +1312,15 @@
 
         </section>
 
+    </div>
+</main>
 
-        <!-- NAVEGACIÓN -->
+    <!-- =========================
+         NAVEGACIÓN — BARRA FIJA
+    ========================== -->
 
-        <div class="navigation-buttons">
+    <div class="navigation-buttons">
+        <div class="navigation-buttons-inner">
 
             <a href="{{ url_for('Etapa2_tratamiento') }}" class="nav-button">
 
@@ -1327,9 +1362,7 @@
             </a>
 
         </div>
-
     </div>
-</main>
 
 </div>
 {% endblock %}

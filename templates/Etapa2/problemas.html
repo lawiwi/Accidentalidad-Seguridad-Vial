@@ -122,16 +122,7 @@
 
         .etapa2-problemas-page main {
             width: 100%;
-            padding-bottom: 40px;
-        }
-
-            background: linear-gradient(135deg, var(--indigo-dark), var(--indigo));
-            padding: 55px 25px 70px;
-            width: min(1050px, calc(100% - 40px));
-            margin: 0 auto;
-            min-height: auto;
-            display: block;
-            background: linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+            padding-bottom: 110px;
         }
 
         .hero {
@@ -465,38 +456,64 @@
             font-size: 12px;
         }
 
-        /* NAV */
+        /* ==================================================
+           NAVEGACIÓN - ESTILO DE CAUSAS / REFERENCIA
+           ================================================== */
 
         .navigation-buttons {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+            height: 72px;
+            padding: 0 28px;
+            background: rgba(242, 242, 246, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(35, 42, 84, 0.08);
+            box-shadow: 0 -5px 20px rgba(35, 42, 84, 0.06);
+        }
+
+        .navigation-buttons-inner {
             max-width: 1050px;
-            margin: 45px auto 25px;
-            padding: 24px 5px;
+            height: 100%;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid var(--border);
+            gap: 20px;
         }
 
         .nav-button {
             display: flex;
             align-items: center;
-            gap: 11px;
+            gap: 12px;
             text-decoration: none;
-            color: var(--indigo);
+            color: var(--plum);
             font-family: "Poppins", sans-serif;
             font-size: 13px;
             font-weight: 600;
-            transition: all 0.25s ease;
+            line-height: 1.2;
+            transition: color 0.25s ease, transform 0.25s ease;
+            flex-shrink: 0;
         }
 
         .nav-button small {
             display: block;
+            margin-bottom: 4px;
+            color: #9B99A8;
             font-family: "Inter", sans-serif;
             font-size: 8px;
             font-weight: 700;
-            letter-spacing: 1.2px;
-            color: #9998A8;
-            margin-bottom: 3px;
+            letter-spacing: 1.5px;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .nav-label {
+            display: block;
+            white-space: nowrap;
         }
 
         .nav-arrow {
@@ -505,39 +522,65 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
             border-radius: 50%;
-            background: white;
-            border: 1px solid var(--border);
-            font-size: 17px;
-            transition: all 0.25s ease;
+            background: #232A54;
+            color: #FFFFFF;
+            border: none;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .nav-prev .nav-arrow {
+            background: #FFFFFF;
+            color: #232A54;
+            border: 1px solid rgba(35, 42, 84, 0.10);
+            box-shadow: 0 3px 10px rgba(35, 42, 84, 0.08);
+        }
+
+        .nav-next .nav-arrow {
+            background: #232A54;
+            color: #FFFFFF;
+            border: none;
+            box-shadow: 0 4px 12px rgba(35, 42, 84, 0.16);
         }
 
         .nav-button:hover {
-            color: var(--plum);
+            color: #232A54;
+            transform: translateY(-1px);
         }
 
         .nav-button:hover .nav-arrow {
-            background: var(--indigo);
-            border-color: var(--indigo);
-            color: white;
+            background: var(--plum);
+            color: #FFFFFF;
+            border-color: var(--plum);
             transform: scale(1.08);
+            box-shadow: 0 5px 14px rgba(140, 78, 126, 0.22);
         }
 
         .nav-progress {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
+            flex-shrink: 0;
         }
 
         .nav-progress span {
             width: 6px;
             height: 6px;
+            display: block;
             border-radius: 50%;
             background: #D9D7E2;
+            transition: width 0.25s ease, background 0.25s ease;
         }
 
         .nav-progress span.active {
             width: 22px;
+            height: 6px;
             border-radius: 10px;
             background: var(--teal);
         }
@@ -557,16 +600,16 @@
         }
 
         @media (max-width: 700px) {
-            .navigation-buttons {
-                gap: 15px;
-            }
-
             .nav-progress {
                 display: none;
             }
 
             .nav-button {
                 font-size: 12px;
+            }
+
+            .card {
+                padding: 24px;
             }
         }
 
@@ -589,17 +632,21 @@
             }
 
             .navigation-buttons {
-                padding-left: 0;
-                padding-right: 0;
+                padding: 10px 14px;
             }
 
             .nav-arrow {
-                width: 34px;
-                height: 34px;
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
             }
 
             .nav-button small {
                 font-size: 7px;
+            }
+
+            .nav-label {
+                display: none;
             }
         }
         </style>
@@ -1302,42 +1349,38 @@
 
     <div class="navigation-buttons">
 
-        <a href="{{ url_for('Etapa2_metricas') }}" class="nav-button">
+        <div class="navigation-buttons-inner">
 
-            <span class="nav-arrow">←</span>
+            <a href="{{ url_for('Etapa2_metricas') }}" class="nav-button nav-prev">
+                <span class="nav-arrow">←</span>
+                <span class="nav-label">
+                    <small>ANTERIOR</small>
+                    Dimensiones y métricas
+                </span>
+            </a>
 
-            <span>
-                <small>ANTERIOR</small>
-                Dimensiones y métricas
-            </span>
+            <div class="nav-progress">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
 
-        </a>
+            <a href="{{ url_for('Etapa2_causas') }}" class="nav-button nav-next">
+                <span class="nav-label">
+                    <small>SIGUIENTE</small>
+                    Análisis de causas
+                </span>
+                <span class="nav-arrow">→</span>
+            </a>
 
-
-        <div class="nav-progress">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
         </div>
-
-
-        <a href="{{ url_for('Etapa2_causas') }}" class="nav-button">
-
-            <span>
-                <small>SIGUIENTE</small>
-                Análisis de causas
-            </span>
-
-            <span class="nav-arrow">→</span>
-
-        </a>
 
     </div>
 
@@ -1345,4 +1388,3 @@
 
 </div>
 {% endblock %}
-

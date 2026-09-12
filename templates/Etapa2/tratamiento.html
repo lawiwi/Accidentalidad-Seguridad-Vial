@@ -119,7 +119,7 @@
 
         .etapa2-tratamiento-page main {
             width: 100%;
-            padding: 45px 20px 20px;
+            padding: 45px 20px 120px;
         }
 
         .etapa2-tratamiento-page .hero {
@@ -568,16 +568,35 @@
             font-size: 13px;
         }
 
-        /* NAVIGATION */
+        /* =========================
+           NAVEGACIÓN — BARRA FIJA
+        ========================== */
 
         .navigation-buttons {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+
+            padding: 12px 20px;
+
+            background: rgba(236, 236, 240, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 30px rgba(35, 42, 84, 0.10);
+        }
+
+        .navigation-buttons-inner {
             max-width: 1050px;
-            margin: 45px auto 25px;
-            padding: 24px 5px;
+            margin: 0 auto;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid var(--border);
+            gap: 16px;
         }
 
         .nav-button {
@@ -590,6 +609,7 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.25s ease;
+            flex-shrink: 0;
         }
 
         .nav-button small {
@@ -612,6 +632,7 @@
             background: white;
             border: 1px solid var(--border);
             font-size: 17px;
+            flex-shrink: 0;
             transition: all 0.25s ease;
         }
 
@@ -626,10 +647,17 @@
             transform: scale(1.08);
         }
 
+        .nav-button:focus-visible {
+            outline: 3px solid rgba(46, 156, 147, 0.35);
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
         .nav-progress {
             display: flex;
             align-items: center;
             gap: 5px;
+            flex-shrink: 0;
         }
 
         .nav-progress span {
@@ -643,6 +671,10 @@
             width: 22px;
             border-radius: 10px;
             background: var(--teal);
+        }
+
+        .nav-label {
+            display: block;
         }
 
         /* RESPONSIVE */
@@ -697,6 +729,10 @@
             }
 
             .navigation-buttons {
+                padding: 10px 14px;
+            }
+
+            .navigation-buttons-inner {
                 gap: 15px;
             }
 
@@ -724,9 +760,26 @@
         }
 
         @media (max-width: 480px) {
+            .etapa2-tratamiento-page main {
+                padding-bottom: 95px;
+            }
+
             .navigation-buttons {
-                padding-left: 0;
-                padding-right: 0;
+                padding: 10px 14px;
+            }
+
+            .nav-arrow {
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
+            }
+
+            .nav-button small {
+                font-size: 7px;
+            }
+
+            .nav-label {
+                display: none;
             }
 
             .nav-arrow {
@@ -742,7 +795,7 @@
    {% endblock %}
 
     {% block content %}
-    <div class="etapa2-integracion-page">
+    <div class="etapa2-tratamiento-page">
 
 <main>
 
@@ -1489,47 +1542,59 @@
         </section>
 
 
-        <!-- NAVEGACIÓN -->
-        <div class="navigation-buttons">
+        <!-- =========================
+             NAVEGACIÓN — BARRA FIJA AL FONDO
+        ========================== -->
 
-            <a href="{{ url_for('Etapa2_integracion') }}" class="nav-button">
-                <span class="nav-arrow">←</span>
+        <nav class="navigation-buttons" aria-label="Navegación entre secciones">
 
-                <span>
-                    <small>ANTERIOR</small>
-                    Integración y homologación
-                </span>
-            </a>
+            <div class="navigation-buttons-inner">
+
+                <a href="{{ url_for('Etapa2_integracion') }}" class="nav-button">
+
+                    <span class="nav-arrow">←</span>
+
+                    <span class="nav-label">
+                        <small>ANTERIOR</small>
+                        Integración y homologación
+                    </span>
+
+                </a>
 
 
-            <div class="nav-progress" aria-label="Progreso Etapa 2">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span class="active"></span>
-                <span></span>
-                <span></span>
+                <div class="nav-progress" aria-label="Progreso Etapa 2">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+                <a href="{{ url_for('Etapa2_comparacion') }}" class="nav-button">
+
+                    <span class="nav-label">
+                        <small>SIGUIENTE</small>
+                        Comparación antes y después
+                    </span>
+
+                    <span class="nav-arrow">→</span>
+
+                </a>
+
             </div>
 
-
-            <a href="{{ url_for('Etapa2_comparacion') }}" class="nav-button">
-                <span>
-                    <small>SIGUIENTE</small>
-                    Comparación antes y después
-                </span>
-
-                <span class="nav-arrow">→</span>
-            </a>
-
-        </div>
+        </nav>
 
     </div>
 </main>
 
 </div>
 {% endblock %}
-

@@ -120,6 +120,7 @@
         .etapa2-conclusiones-page main {
             width: 100%;
             padding: 45px 20px 20px;
+            padding-bottom: 110px;
         }
 
         .etapa2-conclusiones-page .hero {
@@ -445,16 +446,35 @@
             font-size: 13px;
         }
 
-        /* NAVIGATION */
+        /* =========================
+        NAVEGACIÓN — BARRA FIJA
+        ========================== */
 
         .navigation-buttons {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+
+            padding: 12px 20px;
+
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 30px rgba(35, 42, 84, 0.10);
+        }
+
+        .navigation-buttons-inner {
             max-width: 1050px;
-            margin: 45px auto 25px;
-            padding: 24px 5px;
+            margin: 0 auto;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid var(--border);
+            gap: 16px;
         }
 
         .nav-button {
@@ -467,6 +487,7 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.25s ease;
+            flex-shrink: 0;
         }
 
         .nav-button small {
@@ -480,15 +501,16 @@
         }
 
         .nav-arrow {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
             background: white;
             border: 1px solid var(--border);
-            font-size: 17px;
+            font-size: 16px;
+            flex-shrink: 0;
             transition: all 0.25s ease;
         }
 
@@ -507,6 +529,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            flex-shrink: 0;
         }
 
         .nav-progress span {
@@ -885,7 +908,7 @@
                     </li>
 
                     <li>
-                        La presencia de diferentes unidades de observación debe
+                        La presencia de diferentes unidades de observación deben
                         considerarse al comparar vehículos involucrados con
                         siniestros registrados.
                     </li>
@@ -935,10 +958,15 @@
 
         </section>
 
+    </div>
+</main>
 
-        <!-- NAVEGACIÓN -->
+    <!-- =========================
+         NAVEGACIÓN — BARRA FIJA
+    ========================== -->
 
-        <div class="navigation-buttons">
+    <div class="navigation-buttons">
+        <div class="navigation-buttons-inner">
 
             <a href="{{ url_for('Etapa2_comparacion') }}" class="nav-button">
 
@@ -980,9 +1008,7 @@
             </a>
 
         </div>
-
     </div>
-</main>
 
 </div>
 {% endblock %}

@@ -3,1528 +3,1661 @@
 {% block title %}Requisitos de calidad | Etapa 2{% endblock %}
 
 {% block head %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Requisitos de calidad | Etapa 2</title>
 
-    <!-- Fuentes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
-        rel="stylesheet"
-    >
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <style>
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+>
 
-        /* ==================================================
-           VARIABLES
-           ================================================== */
+<style>
 
-        :root {
-            --indigo: #232A54;
-            --indigo-dark: #171B3B;
-            --plum: #8C4E7E;
-            --gold: #D9A441;
-            --teal: #2E9C93;
+:root {
+    --indigo: #232A54;
+    --indigo-dark: #171B3B;
+    --plum: #8C4E7E;
+    --gold: #D9A441;
+    --teal: #2E9C93;
 
-            --mist: #F6F4FA;
-            --ink: #2A2A38;
-            --muted: #777687;
-            --border: #E4E1EB;
-            --white: #FFFFFF;
-        }
+    --mist: #F6F4FA;
+    --ink: #2A2A38;
+    --muted: #777687;
+    --border: #E4E1EB;
+    --white: #FFFFFF;
+}
 
 
-        /* ==================================================
-           CONFIGURACIÓN GENERAL
-           ================================================== */
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+   ================================================== */
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        .etapa2-requisitos-page {
-            color: var(--ink);
+body {
+    margin: 0;
+    padding: 0;
+}
 
-            font-family: "Inter", sans-serif;
+.etapa2-requisitos-page {
+    color: var(--ink);
 
-            line-height: 1.7;
+    font-family: "Inter", sans-serif;
 
-            min-height: 100vh;
+    line-height: 1.7;
 
-            position: relative;
-            z-index: 2;
-        }
+    min-height: 100vh;
 
+    position: relative;
 
-        /* ==================================================
-           FONDO
-           ================================================== */
+    z-index: 2;
 
-        .etapa2-requisitos-page::before {
-            content: "";
+    padding-bottom: 100px;
+}
 
-            position: fixed;
-            inset: 0;
 
-            pointer-events: none;
+/* ==================================================
+   FONDO
+   ================================================== */
 
-            background:
-                radial-gradient(
-                    circle at 10% 10%,
-                    rgba(140, 78, 126, 0.07),
-                    transparent 28%
-                ),
-                radial-gradient(
-                    circle at 90% 20%,
-                    rgba(46, 156, 147, 0.07),
-                    transparent 25%
-                ),
-                radial-gradient(
-                    circle at 50% 100%,
-                    rgba(217, 164, 65, 0.05),
-                    transparent 30%
-                );
+.etapa2-requisitos-page::before {
+    content: "";
 
-            z-index: -1;
-        }
+    position: fixed;
 
+    inset: 0;
 
-        /* ==================================================
-           HEADER
-           ================================================== */
+    pointer-events: none;
 
-        .stage-header {
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--indigo-dark),
-                    var(--indigo)
-                );
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(140, 78, 126, 0.07),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(46, 156, 147, 0.07),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(217, 164, 65, 0.05),
+            transparent 30%
+        );
 
-            color: white;
+    z-index: -1;
+}
 
-            padding: 55px 25px 70px;
 
-            position: relative;
-            overflow: hidden;
-        }
+/* ==================================================
+   HEADER
+   ================================================== */
 
-        .stage-header::after {
-            content: "";
+.stage-header {
+    background:
+        linear-gradient(
+            135deg,
+            var(--indigo-dark),
+            var(--indigo)
+        );
 
-            position: absolute;
+    color: white;
 
-            width: 420px;
-            height: 420px;
+    padding: 55px 25px 70px;
 
-            right: -130px;
-            top: -180px;
+    position: relative;
 
-            border-radius: 50%;
+    overflow: hidden;
+}
 
-            background: rgba(255, 255, 255, 0.035);
-        }
+.stage-header::after {
+    content: "";
 
-        .header-content {
-            max-width: 1050px;
+    position: absolute;
 
-            margin: auto;
+    width: 420px;
+    height: 420px;
 
-            position: relative;
-            z-index: 2;
-        }
+    right: -130px;
+    top: -180px;
 
-        .badge {
-            display: inline-flex;
-            align-items: center;
+    border-radius: 50%;
 
-            padding: 7px 14px;
+    background: rgba(255, 255, 255, 0.035);
+}
 
-            border-radius: 30px;
+.header-content {
+    max-width: 1050px;
 
-            background: rgba(255, 255, 255, 0.09);
+    margin: auto;
 
-            border: 1px solid rgba(255, 255, 255, 0.12);
+    position: relative;
 
-            font-size: 11px;
-            font-weight: 700;
+    z-index: 2;
+}
 
-            letter-spacing: 1.3px;
+.badge {
+    display: inline-flex;
 
-            text-transform: uppercase;
+    align-items: center;
 
-            margin-bottom: 20px;
-        }
+    padding: 7px 14px;
 
-        .stage-header h1 {
-            font-family: "Poppins", sans-serif;
+    border-radius: 30px;
 
-            font-size: clamp(32px, 5vw, 52px);
+    background: rgba(255, 255, 255, 0.09);
 
-            line-height: 1.15;
+    border: 1px solid rgba(255, 255, 255, 0.12);
 
-            margin-bottom: 18px;
-        }
+    font-size: 11px;
 
-        .stage-header p {
-            max-width: 760px;
+    font-weight: 700;
 
-            color: rgba(255, 255, 255, 0.76);
+    letter-spacing: 1.3px;
 
-            font-size: 16px;
+    text-transform: uppercase;
 
-            line-height: 1.8;
-        }
+    margin-bottom: 20px;
+}
 
+.stage-header h1 {
+    font-family: "Poppins", sans-serif;
 
-        /* ==================================================
-           CONTENEDOR
-           ================================================== */
+    font-size: clamp(32px, 5vw, 52px);
 
-        .etapa2-requisitos-page main {
-            max-width: 1050px;
+    line-height: 1.15;
 
-            margin: -35px auto 0;
+    margin-bottom: 18px;
+}
 
-            padding: 0 20px 60px;
+.stage-header p {
+    max-width: 760px;
 
-            position: relative;
-            z-index: 3;
-        }
+    color: rgba(255, 255, 255, 0.76);
 
+    font-size: 16px;
 
-        /* ==================================================
-           TARJETAS
-           ================================================== */
+    line-height: 1.8;
+}
 
-        .section-card {
-            background: var(--white);
 
-            border: 1px solid var(--border);
+/* ==================================================
+   CONTENEDOR
+   ================================================== */
 
-            border-radius: 22px;
+.etapa2-requisitos-page main {
+    max-width: 1050px;
 
-            padding: 30px;
+    margin: -35px auto 0;
 
-            margin-bottom: 22px;
+    padding: 0 20px 120px;
 
-            box-shadow:
-                0 12px 35px rgba(35, 42, 84, 0.045);
-        }
+    position: relative;
 
-        .section-title {
-            display: flex;
-            align-items: center;
+    z-index: 3;
+}
 
-            gap: 13px;
 
-            margin-bottom: 18px;
-        }
+/* ==================================================
+   TARJETAS
+   ================================================== */
 
-        .section-number {
-            width: 34px;
-            height: 34px;
+.section-card {
+    background: var(--white);
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    border: 1px solid var(--border);
 
-            border-radius: 10px;
+    border-radius: 22px;
 
-            background: rgba(46, 156, 147, 0.10);
+    padding: 30px;
 
-            color: var(--teal);
+    margin-bottom: 22px;
 
-            font-family: "Poppins", sans-serif;
+    box-shadow:
+        0 12px 35px rgba(35, 42, 84, 0.045);
+}
 
-            font-size: 13px;
-            font-weight: 700;
+.section-title {
+    display: flex;
 
-            flex-shrink: 0;
-        }
+    align-items: center;
 
-        .section-title h2 {
-            font-family: "Poppins", sans-serif;
+    gap: 13px;
 
-            color: var(--indigo);
+    margin-bottom: 18px;
+}
 
-            font-size: 21px;
+.section-number {
+    width: 34px;
+    height: 34px;
 
-            line-height: 1.3;
-        }
+    display: flex;
 
-        .section-card p {
-            color: var(--muted);
+    align-items: center;
 
-            font-size: 14px;
+    justify-content: center;
 
-            margin-bottom: 12px;
-        }
+    border-radius: 10px;
 
-        .section-card p:last-child {
-            margin-bottom: 0;
-        }
+    background: rgba(46, 156, 147, 0.10);
 
+    color: var(--teal);
 
-        /* ==================================================
-           INTRODUCCIÓN
-           ================================================== */
+    font-family: "Poppins", sans-serif;
 
-        .intro-card {
-            border-left: 4px solid var(--teal);
-        }
+    font-size: 13px;
 
-        .intro-card p {
-            font-size: 15px;
-        }
+    font-weight: 700;
 
+    flex-shrink: 0;
+}
 
-        /* ==================================================
-           REQUISITOS
-           ================================================== */
+.section-title h2 {
+    font-family: "Poppins", sans-serif;
 
-        .requirements-grid {
-            display: grid;
+    color: var(--indigo);
 
-            grid-template-columns: repeat(2, 1fr);
+    font-size: 21px;
 
-            gap: 15px;
+    line-height: 1.3;
+}
 
-            margin-top: 20px;
-        }
+.section-card p {
+    color: var(--muted);
 
-        .requirement {
-            padding: 20px;
+    font-size: 14px;
 
-            border: 1px solid var(--border);
+    margin-bottom: 12px;
+}
 
-            border-radius: 16px;
+.section-card p:last-child {
+    margin-bottom: 0;
+}
 
-            background: #FCFBFD;
 
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
+/* ==================================================
+   INTRODUCCIÓN
+   ================================================== */
 
-        .requirement:hover {
-            transform: translateY(-2px);
+.intro-card {
+    border-left: 4px solid var(--teal);
+}
 
-            box-shadow:
-                0 8px 22px rgba(35, 42, 84, 0.07);
-        }
+.intro-card p {
+    font-size: 15px;
+}
 
-        .requirement h3 {
-            font-family: "Poppins", sans-serif;
 
-            color: var(--indigo);
+/* ==================================================
+   REQUISITOS
+   ================================================== */
 
-            font-size: 15px;
+.requirements-grid {
+    display: grid;
 
-            margin-bottom: 7px;
-        }
+    grid-template-columns: repeat(2, 1fr);
 
-        .requirement p {
-            font-size: 13px;
+    gap: 15px;
 
-            margin: 0;
-        }
+    margin-top: 20px;
+}
 
+.requirement {
+    padding: 20px;
 
-        /* ==================================================
-           DIMENSIÓN DESTACADA
-           ================================================== */
+    border: 1px solid var(--border);
 
-        .highlight {
-            margin-top: 20px;
+    border-radius: 16px;
 
-            padding: 22px;
+    background: #FCFBFD;
 
-            border-radius: 16px;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
 
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(46, 156, 147, 0.08),
-                    rgba(35, 42, 84, 0.035)
-                );
+.requirement:hover {
+    transform: translateY(-2px);
 
-            border: 1px solid rgba(46, 156, 147, 0.18);
-        }
+    box-shadow:
+        0 8px 22px rgba(35, 42, 84, 0.07);
+}
 
-        .highlight strong {
-            color: var(--indigo);
+.requirement h3 {
+    font-family: "Poppins", sans-serif;
 
-            font-family: "Poppins", sans-serif;
-        }
+    color: var(--indigo);
 
+    font-size: 15px;
 
-        /* ==================================================
-           TABLA
-           ================================================== */
+    margin-bottom: 7px;
+}
 
-        .table-wrapper {
-            overflow-x: auto;
+.requirement p {
+    font-size: 13px;
 
-            margin-top: 20px;
+    margin: 0;
+}
 
-            border: 1px solid var(--border);
 
-            border-radius: 16px;
-        }
+/* ==================================================
+   DIMENSIÓN DESTACADA
+   ================================================== */
 
-        table {
-            width: 100%;
+.highlight {
+    margin-top: 20px;
 
-            border-collapse: collapse;
+    padding: 22px;
 
-            min-width: 700px;
-        }
+    border-radius: 16px;
 
-        th {
-            padding: 15px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(46, 156, 147, 0.08),
+            rgba(35, 42, 84, 0.035)
+        );
 
-            text-align: left;
+    border: 1px solid rgba(46, 156, 147, 0.18);
+}
 
-            background: var(--indigo);
+.highlight strong {
+    color: var(--indigo);
 
-            color: white;
+    font-family: "Poppins", sans-serif;
+}
 
-            font-family: "Poppins", sans-serif;
 
-            font-size: 12px;
+/* ==================================================
+   TABLA
+   ================================================== */
 
-            font-weight: 600;
-        }
+.table-wrapper {
+    overflow-x: auto;
 
-        td {
-            padding: 15px;
+    margin-top: 20px;
 
-            border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
 
-            color: var(--muted);
+    border-radius: 16px;
+}
 
-            font-size: 13px;
+table {
+    width: 100%;
 
-            vertical-align: top;
-        }
+    border-collapse: collapse;
 
-        tr:last-child td {
-            border-bottom: none;
-        }
+    min-width: 700px;
+}
 
-        td:first-child {
-            color: var(--indigo);
+th {
+    padding: 15px;
 
-            font-weight: 700;
+    text-align: left;
 
-            white-space: nowrap;
-        }
+    background: var(--indigo);
 
+    color: white;
 
-        /* ==================================================
-           CRITERIOS
-           ================================================== */
+    font-family: "Poppins", sans-serif;
 
-        .criteria-list {
-            display: grid;
+    font-size: 12px;
 
-            gap: 12px;
+    font-weight: 600;
+}
 
-            margin-top: 20px;
-        }
+td {
+    padding: 15px;
 
-        .criteria-item {
-            display: flex;
+    border-bottom: 1px solid var(--border);
 
-            align-items: flex-start;
+    color: var(--muted);
 
-            gap: 14px;
+    font-size: 13px;
 
-            padding: 16px 18px;
+    vertical-align: top;
+}
 
-            border-radius: 14px;
+tr:last-child td {
+    border-bottom: none;
+}
 
-            background: #FCFBFD;
+td:first-child {
+    color: var(--indigo);
 
-            border: 1px solid var(--border);
-        }
+    font-weight: 700;
 
-        .criteria-marker {
-            width: 25px;
-            height: 25px;
+    white-space: nowrap;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
 
-            flex-shrink: 0;
+/* ==================================================
+   CRITERIOS
+   ================================================== */
 
-            border-radius: 50%;
+.criteria-list {
+    display: grid;
 
-            background: rgba(140, 78, 126, 0.10);
+    gap: 12px;
 
-            color: var(--plum);
+    margin-top: 20px;
+}
 
-            font-size: 12px;
-            font-weight: 700;
-        }
+.criteria-item {
+    display: flex;
 
-        .criteria-item p {
-            margin: 0;
+    align-items: flex-start;
 
-            font-size: 13px;
-        }
+    gap: 14px;
 
+    padding: 16px 18px;
 
-        /* ==================================================
-           CONCLUSIÓN
-           ================================================== */
+    border-radius: 14px;
 
-        .conclusion {
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--indigo),
-                    var(--indigo-dark)
-                );
+    background: #FCFBFD;
 
-            color: white;
+    border: 1px solid var(--border);
+}
 
-            border: none;
-        }
+.criteria-marker {
+    width: 25px;
+    height: 25px;
 
-        .conclusion .section-number {
-            background: rgba(255, 255, 255, 0.12);
+    display: flex;
 
-            color: #FFFFFF;
-        }
+    align-items: center;
 
-        .conclusion .section-title h2 {
-            color: white;
-        }
+    justify-content: center;
 
-        .conclusion p {
-            color: rgba(255, 255, 255, 0.75);
-        }
+    flex-shrink: 0;
 
+    border-radius: 50%;
 
-        /* ==================================================
-           NAVEGACIÓN ETAPA 2
-           ================================================== */
+    background: rgba(140, 78, 126, 0.10);
 
-        .navigation-buttons {
-            max-width: 1050px;
+    color: var(--plum);
 
-            margin: 45px auto 25px;
+    font-size: 12px;
 
-            padding: 24px 5px;
+    font-weight: 700;
+}
 
-            display: flex;
+.criteria-item p {
+    margin: 0;
 
-            align-items: center;
+    font-size: 13px;
+}
 
-            justify-content: space-between;
 
-            border-top: 1px solid var(--border);
-        }
+/* ==================================================
+   CONCLUSIÓN
+   ================================================== */
 
-        .nav-button {
-            display: flex;
+.conclusion {
+    background:
+        linear-gradient(
+            135deg,
+            var(--indigo),
+            var(--indigo-dark)
+        );
 
-            align-items: center;
+    color: white;
 
-            gap: 11px;
+    border: none;
+}
 
-            text-decoration: none;
+.conclusion .section-number {
+    background: rgba(255, 255, 255, 0.12);
 
-            color: var(--indigo);
+    color: #FFFFFF;
+}
 
-            font-family: "Poppins", sans-serif;
+.conclusion .section-title h2 {
+    color: white;
+}
 
-            font-size: 13px;
+.conclusion p {
+    color: rgba(255, 255, 255, 0.75);
+}
 
-            font-weight: 600;
 
-            transition: all 0.25s ease;
-        }
+/* ==================================================
+   NAVEGACIÓN — BARRA FIJA
+   ================================================== */
 
-        .nav-button small {
-            display: block;
+.navigation-buttons {
+    position: fixed;
 
-            font-family: "Inter", sans-serif;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
-            font-size: 8px;
+    z-index: 1000;
 
-            font-weight: 700;
+    padding: 12px 20px;
 
-            letter-spacing: 1.2px;
+    background: rgba(236, 236, 240, 0.88);
 
-            color: #9998A8;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 
-            margin-bottom: 3px;
-        }
+    border-top: 1px solid var(--border);
 
-        .nav-arrow {
-            width: 38px;
-            height: 38px;
+    box-shadow:
+        0 -10px 30px rgba(35, 42, 84, 0.10);
+}
 
-            display: flex;
+.navigation-buttons-inner {
+    max-width: 1050px;
 
-            align-items: center;
+    margin: 0 auto;
 
-            justify-content: center;
+    display: flex;
 
-            border-radius: 50%;
+    align-items: center;
 
-            background: white;
+    justify-content: space-between;
 
-            border: 1px solid var(--border);
+    gap: 16px;
+}
 
-            font-size: 17px;
 
-            transition: all 0.25s ease;
-        }
+/* ==================================================
+   BOTÓN
+   ================================================== */
 
-        .nav-button:hover {
-            color: var(--plum);
-        }
+.nav-button {
+    display: flex;
 
-        .nav-button:hover .nav-arrow {
-            background: var(--indigo);
+    align-items: center;
 
-            border-color: var(--indigo);
+    gap: 11px;
 
-            color: white;
+    text-decoration: none;
 
-            transform: scale(1.08);
-        }
+    color: var(--indigo);
 
-        .nav-progress {
-            display: flex;
+    font-family: "Poppins", sans-serif;
 
-            align-items: center;
+    font-size: 13px;
 
-            gap: 5px;
-        }
+    font-weight: 600;
 
-        .nav-progress span {
-            width: 6px;
-            height: 6px;
+    transition:
+        color 0.25s ease;
 
-            border-radius: 50%;
+    flex-shrink: 0;
 
-            background: #D9D7E2;
-        }
+    cursor: pointer;
+}
 
-        .nav-progress span.active {
-            width: 22px;
+.nav-button small {
+    display: block;
 
-            border-radius: 10px;
+    font-family: "Inter", sans-serif;
 
-            background: var(--teal);
-        }
+    font-size: 8px;
 
+    font-weight: 700;
 
-        /* ==================================================
-           RESPONSIVE
-           ================================================== */
+    letter-spacing: 1.2px;
 
-        @media (max-width: 760px) {
+    color: #9998A8;
 
-            .requirements-grid {
-                grid-template-columns: 1fr;
-            }
+    margin-bottom: 3px;
 
-            .section-card {
-                padding: 23px;
-            }
+    transition:
+        color 0.25s ease;
+}
 
-            .stage-header {
-                padding: 45px 20px 60px;
-            }
 
-            .etapa2-requisitos-page main {
-                padding-left: 14px;
-                padding-right: 14px;
-            }
+/* ==================================================
+   CÍRCULO DE LA FLECHA
+   ================================================== */
 
-            .navigation-buttons {
-                gap: 15px;
-            }
+.nav-arrow {
+    width: 38px;
+    height: 38px;
 
-            .nav-progress {
-                display: none;
-            }
+    min-width: 38px;
 
-            .nav-button {
-                font-size: 12px;
-            }
-        }
+    display: flex;
 
+    align-items: center;
 
-        @media (max-width: 480px) {
+    justify-content: center;
 
-            .stage-header h1 {
-                font-size: 31px;
-            }
+    border-radius: 50%;
 
-            .stage-header p {
-                font-size: 14px;
-            }
+    background: #FFFFFF;
 
-            .section-card {
-                padding: 20px;
-            }
+    border: 1px solid var(--border);
 
-            .section-title h2 {
-                font-size: 18px;
-            }
+    color: var(--indigo);
 
-            .navigation-buttons {
-                padding-left: 0;
-                padding-right: 0;
-            }
+    font-size: 18px;
 
-            .nav-arrow {
-                width: 34px;
-                height: 34px;
-            }
+    line-height: 1;
 
-            .nav-button small {
-                font-size: 7px;
-            }
-        }
+    box-shadow:
+        0 3px 10px rgba(35, 42, 84, 0.06);
 
-    </style>
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* ==================================================
+   SIGUIENTE — ESTADO NORMAL
+   ================================================== */
+
+.nav-next .nav-arrow {
+    background: var(--indigo);
+
+    border-color: var(--indigo);
+
+    color: #FFFFFF;
+
+    box-shadow:
+        0 5px 14px rgba(35, 42, 84, 0.12);
+}
+
+
+/* ==================================================
+   HOVER
+   ================================================== */
+
+.nav-button:hover {
+    color: var(--plum);
+}
+
+.nav-button:hover small {
+    color: var(--plum);
+}
+
+
+/* ==================================================
+   FLECHA MORADA AL PASAR EL CURSOR
+   ================================================== */
+
+.nav-button:hover .nav-arrow {
+    background: var(--plum);
+
+    border-color: var(--plum);
+
+    color: #FFFFFF;
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 7px 18px rgba(140, 78, 126, 0.28);
+}
+
+
+/* ==================================================
+   CLICK
+   ================================================== */
+
+.nav-button:active .nav-arrow {
+    transform: scale(0.94);
+}
+
+
+/* ==================================================
+   PROGRESO
+   ================================================== */
+
+.nav-progress {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    flex-shrink: 0;
+}
+
+.nav-progress span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #D9D7E2;
+
+    transition:
+        width 0.25s ease,
+        background 0.25s ease;
+}
+
+.nav-progress span.active {
+    width: 22px;
+
+    border-radius: 10px;
+
+    background: var(--teal);
+}
+
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 760px) {
+
+    .requirements-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-card {
+        padding: 23px;
+    }
+
+    .stage-header {
+        padding: 45px 20px 60px;
+    }
+
+    .etapa2-requisitos-page main {
+        padding-left: 14px;
+
+        padding-right: 14px;
+
+        padding-bottom: 110px;
+    }
+
+    .nav-progress {
+        display: none;
+    }
+
+    .nav-button {
+        font-size: 12px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .stage-header h1 {
+        font-size: 31px;
+    }
+
+    .stage-header p {
+        font-size: 14px;
+    }
+
+    .section-card {
+        padding: 20px;
+    }
+
+    .section-title h2 {
+        font-size: 18px;
+    }
+
+    .navigation-buttons {
+        padding: 10px 14px;
+    }
+
+    .nav-arrow {
+        width: 35px;
+        height: 35px;
+
+        min-width: 35px;
+
+        font-size: 16px;
+    }
+
+    .nav-button small {
+        font-size: 7px;
+    }
+}
+
+
+@media (max-width: 430px) {
+
+    .nav-label {
+        display: none;
+    }
+
+    .nav-button {
+        gap: 0;
+    }
+
+    .nav-arrow {
+        width: 36px;
+        height: 36px;
+
+        min-width: 36px;
+    }
+}
+
+</style>
 
 {% endblock %}
 
+
 {% block content %}
+
 <div class="etapa2-requisitos-page">
 
 
-    <!-- ==================================================
-         HEADER
-         ================================================== -->
+<header class="stage-header">
 
-    <header class="stage-header">
+    <div class="header-content">
 
-        <div class="header-content">
+        <div class="badge">
+            ETAPA 2 · CALIDAD DE DATOS
+        </div>
 
-            <div class="badge">
-                ETAPA 2 · CALIDAD DE DATOS
-            </div>
+        <h1>
+            Requisitos de calidad
+        </h1>
 
-            <h1>
-                Requisitos de calidad
-            </h1>
+        <p>
+            Definición de las condiciones que deben cumplir los datos
+            para que puedan ser utilizados de manera confiable en el
+            análisis de accidentalidad vial.
+        </p>
+
+    </div>
+
+</header>
+
+
+<main>
+
+
+<section class="section-card intro-card">
+
+    <div class="section-title">
+
+        <div class="section-number">
+            01
+        </div>
+
+        <h2>
+            ¿Qué se entiende por requisito de calidad?
+        </h2>
+
+    </div>
+
+    <p>
+        Un requisito de calidad establece una condición que los
+        datos deben cumplir para ser considerados adecuados para
+        el propósito del análisis.
+    </p>
+
+    <p>
+        Para este proyecto, los requisitos se definen a partir
+        de las características del dataset de vehículos
+        involucrados en accidentes de tránsito y de las
+        necesidades del análisis de accidentalidad vial.
+    </p>
+
+    <div class="highlight">
+
+        <strong>
+            Objetivo principal:
+        </strong>
+
+        garantizar que los registros utilizados en el análisis
+        sean completos, válidos, consistentes, únicos y
+        suficientemente actuales para producir resultados
+        confiables.
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <div class="section-number">
+            02
+        </div>
+
+        <h2>
+            Requisitos definidos para el dataset
+        </h2>
+
+    </div>
+
+    <p>
+        Se establecen seis dimensiones principales de calidad.
+        Cada una será evaluada posteriormente mediante
+        indicadores cuantificables.
+    </p>
+
+
+    <div class="requirements-grid">
+
+        <div class="requirement">
+
+            <h3>
+                Completitud
+            </h3>
 
             <p>
-                Definición de las condiciones que deben cumplir los datos
-                para que puedan ser utilizados de manera confiable en el
-                análisis de accidentalidad vial.
+                Las variables relevantes deben contener información
+                suficiente y los valores faltantes deben ser
+                identificados y cuantificados.
             </p>
 
         </div>
 
-    </header>
 
+        <div class="requirement">
 
-    <!-- ==================================================
-         CONTENIDO PRINCIPAL
-         ================================================== -->
-
-    <main>
-
-        <section class="section-card intro-card">
-
-            <div class="section-title">
-
-                <div class="section-number">
-                    01
-                </div>
-
-                <h2>
-                    ¿Qué se entiende por requisito de calidad?
-                </h2>
-
-            </div>
+            <h3>
+                Exactitud
+            </h3>
 
             <p>
-                Un requisito de calidad establece una condición que los
-                datos deben cumplir para ser considerados adecuados para
-                el propósito del análisis.
+                Los valores registrados deben representar de manera
+                adecuada la información correspondiente al vehículo
+                y al accidente.
             </p>
-
-            <p>
-                Para este proyecto, los requisitos se definen a partir
-                de las características del dataset de vehículos
-                involucrados en accidentes de tránsito y de las
-                necesidades del análisis de accidentalidad vial.
-            </p>
-
-            <div class="highlight">
-
-                <strong>
-                    Objetivo principal:
-                </strong>
-
-                garantizar que los registros utilizados en el análisis
-                sean completos, válidos, consistentes, únicos y
-                suficientemente actuales para producir resultados
-                confiables.
-
-            </div>
-
-        </section>
-
-
-        <!-- REQUISITOS GENERALES -->
-
-        <section class="section-card">
-
-            <div class="section-title">
-
-                <div class="section-number">
-                    02
-                </div>
-
-                <h2>
-                    Requisitos definidos para el dataset
-                </h2>
-
-            </div>
-
-            <p>
-                Se establecen seis dimensiones principales de calidad.
-                Cada una será evaluada posteriormente mediante
-                indicadores cuantificables.
-            </p>
-
-
-            <div class="requirements-grid">
-
-
-                <div class="requirement">
-
-                    <h3>
-                        Completitud
-                    </h3>
-
-                    <p>
-                        Las variables relevantes deben contener información
-                        suficiente y los valores faltantes deben ser
-                        identificados y cuantificados.
-                    </p>
-
-                </div>
-
-
-                <div class="requirement">
-
-                    <h3>
-                        Exactitud
-                    </h3>
-
-                    <p>
-                        Los valores registrados deben representar de manera
-                        adecuada la información correspondiente al vehículo
-                        y al accidente.
-                    </p>
-
-                </div>
-
-
-                <div class="requirement">
-
-                    <h3>
-                        Consistencia
-                    </h3>
-
-                    <p>
-                        Las variables relacionadas deben mantener relaciones
-                        lógicas entre sí y no presentar contradicciones.
-                    </p>
-
-                </div>
-
-
-                <div class="requirement">
-
-                    <h3>
-                        Unicidad
-                    </h3>
-
-                    <p>
-                        Los registros que representen exactamente la misma
-                        información no deben encontrarse duplicados.
-                    </p>
-
-                </div>
-
-
-                <div class="requirement">
-
-                    <h3>
-                        Validez
-                    </h3>
-
-                    <p>
-                        Los datos deben respetar los formatos, rangos,
-                        categorías y dominios definidos para cada variable.
-                    </p>
-
-                </div>
-
-
-                <div class="requirement">
-
-                    <h3>
-                        Oportunidad
-                    </h3>
-
-                    <p>
-                        Las fechas y períodos registrados deben permitir
-                        determinar cuándo ocurrió cada accidente y conocer
-                        las posibles limitaciones de actualización.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- REQUISITOS POR VARIABLE -->
-
-        <section class="section-card">
-
-            <div class="section-title">
-
-                <div class="section-number">
-                    03
-                </div>
-
-                <h2>
-                    Requisitos específicos por variable
-                </h2>
-
-            </div>
-
-            <p>
-                Además de evaluar la calidad general del dataset, cada
-                variable debe cumplir condiciones relacionadas con su
-                naturaleza y utilización dentro del análisis.
-            </p>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Variable
-                            </th>
-
-                            <th>
-                                Requisito
-                            </th>
-
-                            <th>
-                                Verificación
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-
-                        <tr>
-
-                            <td>
-                                marca_vehiculo
-                            </td>
-
-                            <td>
-                                Debe contener una marca identificable o
-                                quedar explícitamente marcada como no
-                                registrada.
-                            </td>
-
-                            <td>
-                                Valores nulos, vacíos y categorías.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                modelo_vehiculo
-                            </td>
-
-                            <td>
-                                Debe representar un año de modelo válido
-                                y razonablemente relacionado con la fecha
-                                del accidente.
-                            </td>
-
-                            <td>
-                                Rango, tipo de dato y consistencia temporal.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                tipo_vehiculo
-                            </td>
-
-                            <td>
-                                Debe pertenecer a una categoría reconocible
-                                de vehículo.
-                            </td>
-
-                            <td>
-                                Valores únicos y categorías.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                edad_vehiculo
-                            </td>
-
-                            <td>
-                                Debe corresponder a una edad razonable
-                                del vehículo y no presentar valores
-                                imposibles.
-                            </td>
-
-                            <td>
-                                Valores nulos, mínimos, máximos y
-                                posibles valores atípicos.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                fecha_accidente
-                            </td>
-
-                            <td>
-                                Debe utilizar un formato de fecha válido
-                                y permitir identificar el período del
-                                accidente.
-                            </td>
-
-                            <td>
-                                Conversión de fechas y valores no válidos.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                gravedad_accidente
-                            </td>
-
-                            <td>
-                                Debe corresponder a una categoría de
-                                gravedad definida por la fuente.
-                            </td>
-
-                            <td>
-                                Categorías y valores fuera de dominio.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                departamento_accidente
-                            </td>
-
-                            <td>
-                                Debe corresponder a una división territorial
-                                reconocible de Colombia.
-                            </td>
-
-                            <td>
-                                Valores únicos y homologación territorial.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                municipio_accidente
-                            </td>
-
-                            <td>
-                                Debe corresponder a un municipio asociado
-                                al departamento registrado.
-                            </td>
-
-                            <td>
-                                Consistencia entre municipio y departamento.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                autoridad_de_transito
-                            </td>
-
-                            <td>
-                                Debe mantener una denominación consistente
-                                para facilitar agrupaciones y análisis.
-                            </td>
-
-                            <td>
-                                Categorías, textos y valores inconsistentes.
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- CRITERIOS DE ACEPTACIÓN -->
-
-        <section class="section-card">
-
-            <div class="section-title">
-
-                <div class="section-number">
-                    04
-                </div>
-
-                <h2>
-                    Criterios de aceptación
-                </h2>
-
-            </div>
-
-            <p>
-                Los requisitos anteriores se convierten en criterios
-                verificables mediante el perfilamiento y las métricas
-                de calidad.
-            </p>
-
-
-            <div class="criteria-list">
-
-
-                <div class="criteria-item">
-
-                    <div class="criteria-marker">
-                        1
-                    </div>
-
-                    <p>
-                        Identificar y cuantificar todos los valores
-                        faltantes presentes en las variables.
-                    </p>
-
-                </div>
-
-
-                <div class="criteria-item">
-
-                    <div class="criteria-marker">
-                        2
-                    </div>
-
-                    <p>
-                        Detectar registros completamente duplicados y
-                        determinar qué proporción representan del dataset.
-                    </p>
-
-                </div>
-
-
-                <div class="criteria-item">
-
-                    <div class="criteria-marker">
-                        3
-                    </div>
-
-                    <p>
-                        Comprobar que las variables numéricas se encuentren
-                        dentro de rangos razonables.
-                    </p>
-
-                </div>
-
-
-                <div class="criteria-item">
-
-                    <div class="criteria-marker">
-                        4
-                    </div>
-
-                    <p>
-                        Verificar que las variables categóricas utilicen
-                        valores reconocibles y consistentes.
-                    </p>
-
-                </div>
-
-
-                <div class="criteria-item">
-
-                    <div class="criteria-marker">
-                        5
-                    </div>
-
-                    <p>
-                        Validar que las fechas puedan convertirse
-                        correctamente y que permitan establecer el período
-                        de cada accidente.
-                    </p>
-
-                </div>
-
-
-                <div class="criteria-item">
-
-                    <div class="criteria-marker">
-                        6
-                    </div>
-
-                    <p>
-                        Detectar inconsistencias entre variables relacionadas,
-                        especialmente entre año del modelo, edad del vehículo
-                        y fecha del accidente.
-                    </p>
-
-                </div>
-
-
-                <div class="criteria-item">
-
-                    <div class="criteria-marker">
-                        7
-                    </div>
-
-                    <p>
-                        Documentar las limitaciones de exactitud cuando no
-                        exista una fuente externa de referencia que permita
-                        comprobar directamente el valor registrado.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-        </section>
-
-
-        <!-- MÉTODO DE EVALUACIÓN -->
-
-        <section class="section-card">
-
-            <div class="section-title">
-
-                <div class="section-number">
-                    05
-                </div>
-
-                <h2>
-                    ¿Cómo se comprobarán los requisitos?
-                </h2>
-
-            </div>
-
-            <p>
-                La evaluación se realizará mediante un proceso de
-                perfilamiento y análisis estadístico del dataset.
-                Los resultados permitirán determinar qué requisitos
-                se cumplen y cuáles requieren tratamiento.
-            </p>
-
-
-            <div class="table-wrapper">
-
-                <table>
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Etapa
-                            </th>
-
-                            <th>
-                                Actividad
-                            </th>
-
-                            <th>
-                                Resultado esperado
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-
-                        <tr>
-
-                            <td>
-                                Perfilamiento
-                            </td>
-
-                            <td>
-                                Revisar estructura, tipos, valores únicos,
-                                nulos y estadísticas descriptivas.
-                            </td>
-
-                            <td>
-                                Diagnóstico inicial del dataset.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Medición
-                            </td>
-
-                            <td>
-                                Calcular indicadores para cada dimensión
-                                de calidad.
-                            </td>
-
-                            <td>
-                                Porcentajes y cantidades verificables.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Diagnóstico
-                            </td>
-
-                            <td>
-                                Identificar problemas, variables afectadas
-                                y posibles causas.
-                            </td>
-
-                            <td>
-                                Inventario de problemas de calidad.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Tratamiento
-                            </td>
-
-                            <td>
-                                Aplicar reglas justificadas de limpieza,
-                                normalización y validación.
-                            </td>
-
-                            <td>
-                                Dataset preparado para análisis.
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                Comparación
-                            </td>
-
-                            <td>
-                                Comparar los indicadores antes y después
-                                del tratamiento.
-                            </td>
-
-                            <td>
-                                Evidencia del mejoramiento de la calidad.
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
-        <!-- CONCLUSIÓN -->
-
-        <section class="section-card conclusion">
-
-            <div class="section-title">
-
-                <div class="section-number">
-                    06
-                </div>
-
-                <h2>
-                    Resultado esperado
-                </h2>
-
-            </div>
-
-            <p>
-                Los requisitos definidos servirán como referencia para
-                evaluar objetivamente la calidad del dataset durante las
-                siguientes etapas. De esta manera, los problemas detectados
-                podrán relacionarse con una dimensión específica y recibir
-                un tratamiento sustentado en evidencia.
-            </p>
-
-            <p>
-                El propósito no es modificar los datos arbitrariamente,
-                sino establecer reglas reproducibles que permitan mejorar
-                su utilidad para el análisis de accidentalidad vial.
-            </p>
-
-        </section>
-
-
-        <!-- ==================================================
-             NAVEGACIÓN ETAPA 2
-             ================================================== -->
-
-        <div class="navigation-buttons">
-
-
-            <a
-                href="{{ url_for('Etapa2_proposito') }}"
-                class="nav-button nav-prev"
-            >
-
-                <span class="nav-arrow">
-                    ←
-                </span>
-
-                <span>
-
-                    <small>
-                        ANTERIOR
-                    </small>
-
-                    Propósito de los datos
-
-                </span>
-
-            </a>
-
-
-            <div class="nav-progress">
-
-                <span></span>
-
-                <span class="active"></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-                <span></span>
-
-            </div>
-
-
-            <a
-                href="{{ url_for('Etapa2_perfilamiento') }}"
-                class="nav-button nav-next"
-            >
-
-                <span>
-
-                    <small>
-                        SIGUIENTE
-                    </small>
-
-                    Perfilamiento
-
-                </span>
-
-                <span class="nav-arrow">
-                    →
-                </span>
-
-            </a>
-
 
         </div>
 
 
-    </main>
+        <div class="requirement">
+
+            <h3>
+                Consistencia
+            </h3>
+
+            <p>
+                Las variables relacionadas deben mantener relaciones
+                lógicas entre sí y no presentar contradicciones.
+            </p>
+
+        </div>
+
+
+        <div class="requirement">
+
+            <h3>
+                Unicidad
+            </h3>
+
+            <p>
+                Los registros que representen exactamente la misma
+                información no deben encontrarse duplicados.
+            </p>
+
+        </div>
+
+
+        <div class="requirement">
+
+            <h3>
+                Validez
+            </h3>
+
+            <p>
+                Los datos deben respetar los formatos, rangos,
+                categorías y dominios definidos para cada variable.
+            </p>
+
+        </div>
+
+
+        <div class="requirement">
+
+            <h3>
+                Oportunidad
+            </h3>
+
+            <p>
+                Las fechas y períodos registrados deben permitir
+                determinar cuándo ocurrió cada accidente y conocer
+                las posibles limitaciones de actualización.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <div class="section-number">
+            03
+        </div>
+
+        <h2>
+            Requisitos específicos por variable
+        </h2>
+
+    </div>
+
+    <p>
+        Además de evaluar la calidad general del dataset, cada
+        variable debe cumplir condiciones relacionadas con su
+        naturaleza y utilización dentro del análisis.
+    </p>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Variable
+                    </th>
+
+                    <th>
+                        Requisito
+                    </th>
+
+                    <th>
+                        Verificación
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+
+                <tr>
+
+                    <td>
+                        marca_vehiculo
+                    </td>
+
+                    <td>
+                        Debe contener una marca identificable o
+                        quedar explícitamente marcada como no
+                        registrada.
+                    </td>
+
+                    <td>
+                        Valores nulos, vacíos y categorías.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        modelo_vehiculo
+                    </td>
+
+                    <td>
+                        Debe representar un año de modelo válido
+                        y razonablemente relacionado con la fecha
+                        del accidente.
+                    </td>
+
+                    <td>
+                        Rango, tipo de dato y consistencia temporal.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        tipo_vehiculo
+                    </td>
+
+                    <td>
+                        Debe pertenecer a una categoría reconocible
+                        de vehículo.
+                    </td>
+
+                    <td>
+                        Valores únicos y categorías.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        edad_vehiculo
+                    </td>
+
+                    <td>
+                        Debe corresponder a una edad razonable
+                        del vehículo y no presentar valores
+                        imposibles.
+                    </td>
+
+                    <td>
+                        Valores nulos, mínimos, máximos y
+                        posibles valores atípicos.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        fecha_accidente
+                    </td>
+
+                    <td>
+                        Debe utilizar un formato de fecha válido
+                        y permitir identificar el período del
+                        accidente.
+                    </td>
+
+                    <td>
+                        Conversión de fechas y valores no válidos.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        gravedad_accidente
+                    </td>
+
+                    <td>
+                        Debe corresponder a una categoría de
+                        gravedad definida por la fuente.
+                    </td>
+
+                    <td>
+                        Categorías y valores fuera de dominio.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        departamento_accidente
+                    </td>
+
+                    <td>
+                        Debe corresponder a una división territorial
+                        reconocible de Colombia.
+                    </td>
+
+                    <td>
+                        Valores únicos y homologación territorial.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        municipio_accidente
+                    </td>
+
+                    <td>
+                        Debe corresponder a un municipio asociado
+                        al departamento registrado.
+                    </td>
+
+                    <td>
+                        Consistencia entre municipio y departamento.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        autoridad_de_transito
+                    </td>
+
+                    <td>
+                        Debe mantener una denominación consistente
+                        para facilitar agrupaciones y análisis.
+                    </td>
+
+                    <td>
+                        Categorías, textos y valores inconsistentes.
+                    </td>
+
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <div class="section-number">
+            04
+        </div>
+
+        <h2>
+            Criterios de aceptación
+        </h2>
+
+    </div>
+
+    <p>
+        Los requisitos anteriores se convierten en criterios
+        verificables mediante el perfilamiento y las métricas
+        de calidad.
+    </p>
+
+
+    <div class="criteria-list">
+
+
+        <div class="criteria-item">
+
+            <div class="criteria-marker">
+                1
+            </div>
+
+            <p>
+                Identificar y cuantificar todos los valores
+                faltantes presentes en las variables.
+            </p>
+
+        </div>
+
+
+        <div class="criteria-item">
+
+            <div class="criteria-marker">
+                2
+            </div>
+
+            <p>
+                Detectar registros completamente duplicados y
+                determinar qué proporción representan del dataset.
+            </p>
+
+        </div>
+
+
+        <div class="criteria-item">
+
+            <div class="criteria-marker">
+                3
+            </div>
+
+            <p>
+                Comprobar que las variables numéricas se encuentren
+                dentro de rangos razonables.
+            </p>
+
+        </div>
+
+
+        <div class="criteria-item">
+
+            <div class="criteria-marker">
+                4
+            </div>
+
+            <p>
+                Verificar que las variables categóricas utilicen
+                valores reconocibles y consistentes.
+            </p>
+
+        </div>
+
+
+        <div class="criteria-item">
+
+            <div class="criteria-marker">
+                5
+            </div>
+
+            <p>
+                Validar que las fechas puedan convertirse
+                correctamente y que permitan establecer el período
+                de cada accidente.
+            </p>
+
+        </div>
+
+
+        <div class="criteria-item">
+
+            <div class="criteria-marker">
+                6
+            </div>
+
+            <p>
+                Detectar inconsistencias entre variables relacionadas,
+                especialmente entre año del modelo, edad del vehículo
+                y fecha del accidente.
+            </p>
+
+        </div>
+
+
+        <div class="criteria-item">
+
+            <div class="criteria-marker">
+                7
+            </div>
+
+            <p>
+                Documentar las limitaciones de exactitud cuando no
+                exista una fuente externa de referencia que permita
+                comprobar directamente el valor registrado.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<section class="section-card">
+
+    <div class="section-title">
+
+        <div class="section-number">
+            05
+        </div>
+
+        <h2>
+            ¿Cómo se comprobarán los requisitos?
+        </h2>
+
+    </div>
+
+    <p>
+        La evaluación se realizará mediante un proceso de
+        perfilamiento y análisis estadístico del dataset.
+        Los resultados permitirán determinar qué requisitos
+        se cumplen y cuáles requieren tratamiento.
+    </p>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Etapa
+                    </th>
+
+                    <th>
+                        Actividad
+                    </th>
+
+                    <th>
+                        Resultado esperado
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+
+                <tr>
+
+                    <td>
+                        Perfilamiento
+                    </td>
+
+                    <td>
+                        Revisar estructura, tipos, valores únicos,
+                        nulos y estadísticas descriptivas.
+                    </td>
+
+                    <td>
+                        Diagnóstico inicial del dataset.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Medición
+                    </td>
+
+                    <td>
+                        Calcular indicadores para cada dimensión
+                        de calidad.
+                    </td>
+
+                    <td>
+                        Porcentajes y cantidades verificables.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Diagnóstico
+                    </td>
+
+                    <td>
+                        Identificar problemas, variables afectadas
+                        y posibles causas.
+                    </td>
+
+                    <td>
+                        Inventario de problemas de calidad.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Tratamiento
+                    </td>
+
+                    <td>
+                        Aplicar reglas justificadas de limpieza,
+                        normalización y validación.
+                    </td>
+
+                    <td>
+                        Dataset preparado para análisis.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Comparación
+                    </td>
+
+                    <td>
+                        Comparar los indicadores antes y después
+                        del tratamiento.
+                    </td>
+
+                    <td>
+                        Evidencia del mejoramiento de la calidad.
+                    </td>
+
+                </tr>
+
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<section class="section-card conclusion">
+
+    <div class="section-title">
+
+        <div class="section-number">
+            06
+        </div>
+
+        <h2>
+            Resultado esperado
+        </h2>
+
+    </div>
+
+    <p>
+        Los requisitos definidos servirán como referencia para
+        evaluar objetivamente la calidad del dataset durante las
+        siguientes etapas. De esta manera, los problemas detectados
+        podrán relacionarse con una dimensión específica y recibir
+        un tratamiento sustentado en evidencia.
+    </p>
+
+    <p>
+        El propósito no es modificar los datos arbitrariamente,
+        sino establecer reglas reproducibles que permitan mejorar
+        su utilidad para el análisis de accidentalidad vial.
+    </p>
+
+</section>
+
+
+</main>
 
 </div>
-{% endblock %}
 
+
+<!-- ==================================================
+     NAVEGACIÓN FIJA
+     ================================================== -->
+
+<nav class="navigation-buttons" aria-label="Navegación entre secciones">
+
+    <div class="navigation-buttons-inner">
+
+        <a
+            href="{{ url_for('Etapa2_proposito') }}"
+            class="nav-button nav-prev"
+            aria-label="Volver a Propósito de los datos"
+        >
+
+            <span class="nav-arrow">
+                ←
+            </span>
+
+            <span class="nav-label">
+
+                <small>
+                    ANTERIOR
+                </small>
+
+                Propósito de los datos
+
+            </span>
+
+        </a>
+
+
+        <div
+            class="nav-progress"
+            aria-label="Progreso Etapa 2"
+        >
+
+            <span></span>
+
+            <span class="active"></span>
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+            <span></span>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('Etapa2_perfilamiento') }}"
+            class="nav-button nav-next"
+            aria-label="Ir a Perfilamiento"
+        >
+
+            <span class="nav-label">
+
+                <small>
+                    SIGUIENTE
+                </small>
+
+                Perfilamiento
+
+            </span>
+
+            <span class="nav-arrow">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+</nav>
+
+{% endblock %}

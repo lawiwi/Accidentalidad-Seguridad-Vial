@@ -180,7 +180,7 @@
 
             margin: -35px auto 0;
 
-            padding: 0 20px 60px;
+            padding: 0 20px 130px;
 
             position: relative;
             z-index: 3;
@@ -661,15 +661,29 @@
 
 
         /* ==================================================
-           NAVEGACIÓN ETAPA 2
+           NAVEGACIÓN — BARRA FIJA
            ================================================== */
 
         .navigation-buttons {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+
+            padding: 12px 20px;
+
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 30px rgba(35, 42, 84, 0.10);
+        }
+
+        .navigation-buttons-inner {
             max-width: 1050px;
-
-            margin: 45px auto 25px;
-
-            padding: 24px 5px;
+            margin: 0 auto;
 
             display: flex;
 
@@ -677,7 +691,7 @@
 
             justify-content: space-between;
 
-            border-top: 1px solid var(--border);
+            gap: 16px;
         }
 
         .nav-button {
@@ -698,6 +712,8 @@
             font-weight: 600;
 
             transition: all 0.25s ease;
+
+            flex-shrink: 0;
         }
 
         .nav-button small {
@@ -717,8 +733,8 @@
         }
 
         .nav-arrow {
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
 
             display: flex;
 
@@ -732,7 +748,9 @@
 
             border: 1px solid var(--border);
 
-            font-size: 17px;
+            font-size: 16px;
+
+            flex-shrink: 0;
 
             transition: all 0.25s ease;
         }
@@ -757,6 +775,8 @@
             align-items: center;
 
             gap: 5px;
+
+            flex-shrink: 0;
         }
 
         .nav-progress span {
@@ -1869,12 +1889,16 @@
 
         </section>
 
+    </main>
 
-        <!-- ==================================================
-             NAVEGACIÓN ETAPA 2
-             ================================================== -->
+</div>
 
-        <div class="navigation-buttons">
+    <!-- ==================================================
+         NAVEGACIÓN ETAPA 2 — BARRA FIJA
+         ================================================== -->
+
+    <div class="navigation-buttons">
+        <div class="navigation-buttons-inner">
 
 
             <a
@@ -1947,9 +1971,6 @@
 
 
         </div>
+    </div>
 
-
-    </main>
-
-</div>
 {% endblock %}
