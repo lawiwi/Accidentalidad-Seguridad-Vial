@@ -1,0 +1,702 @@
+{% extends 'base.html' %}
+
+{% block title %}Etapa 2 - Calidad de Datos{% endblock %}
+
+{% block head %}
+    <style>
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: var(--mist);
+            color: var(--ink);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(140, 78, 126, 0.10),
+                    transparent 40%
+                ),
+                radial-gradient(
+                    circle at 90% 30%,
+                    rgba(46, 156, 147, 0.10),
+                    transparent 40%
+                ),
+                radial-gradient(
+                    circle at 20% 90%,
+                    rgba(217, 164, 65, 0.08),
+                    transparent 40%
+                );
+        }
+
+        .container {
+            width: 90%;
+            max-width: 980px;
+            margin: 50px auto 60px;
+        }
+
+        /* ---- Banner Rediseñado ---- */
+        .stage-header {
+            position: relative;
+
+            background:
+                radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px) 0 0 / 24px 24px,
+                linear-gradient(
+                    135deg,
+                    var(--indigo) 0%,
+                    var(--indigo-dark) 55%,
+                    var(--plum) 130%
+                );
+
+            color: white;
+            padding: 44px 40px 38px;
+            border-radius: 28px;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 45px rgba(23, 27, 59, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(8px);
+        }
+
+        .stage-header::after {
+            content: "";
+
+            position: absolute;
+            width: 240px;
+            height: 240px;
+
+            right: -70px;
+            top: -100px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(217, 164, 65, 0.32),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+        .stage-header::before {
+            content: "";
+
+            position: absolute;
+            width: 180px;
+            height: 180px;
+
+            left: -60px;
+            bottom: -70px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(46, 156, 147, 0.28),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+        .stage-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 5px 16px 5px 12px;
+
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
+
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+
+            margin-bottom: 14px;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        .stage-tag::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 8px 1px rgba(217, 164, 65, 0.8);
+        }
+
+        .badge {
+            position: relative;
+            z-index: 1;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 54px;
+            height: 54px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.12);
+
+            border:
+                1.5px solid rgba(217, 164, 65, 0.55);
+
+            margin-bottom: 14px;
+
+            font-size: 1.4rem;
+        }
+
+        .stage-header h1 {
+            position: relative;
+            z-index: 1;
+
+            margin: 0 0 6px;
+
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+
+            font-size: clamp(1.9rem, 4vw, 2.5rem);
+            letter-spacing: -0.6px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .stage-header h1 span {
+            color: var(--gold);
+        }
+
+        .stage-divider {
+            position: relative;
+            z-index: 1;
+
+            width: 56px;
+            height: 3px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--gold), var(--teal));
+        }
+
+        .stage-header p {
+            position: relative;
+            z-index: 1;
+
+            margin: 0 auto;
+            max-width: 760px;
+
+            font-size: 0.98rem;
+            line-height: 1.75;
+            font-weight: 400;
+            letter-spacing: 0.1px;
+
+            color: rgba(255, 255, 255, 0.88);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        .stage-stats {
+            position: relative;
+            z-index: 1;
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .stage-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 16px;
+
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 999px;
+
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+
+            backdrop-filter: blur(4px);
+        }
+
+        .stage-stat strong {
+            font-family: 'Poppins', sans-serif;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ---- Tarjetas de puntos ---- */
+
+        .menu {
+            margin-top: 28px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .punto {
+            display: block;
+
+            text-decoration: none;
+            color: var(--ink);
+
+            background: #ffffff;
+
+            border-radius: 22px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 8px 22px rgba(35, 42, 84, 0.08);
+
+            border:
+                1.5px solid rgba(35, 42, 84, 0.06);
+
+            border-top:
+                4px solid var(--accent, var(--teal));
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+            position: relative;
+        }
+
+        .punto:hover,
+        .punto:focus-visible {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 14px 30px rgba(35, 42, 84, 0.18);
+
+            outline: none;
+        }
+
+        .punto-cabecera {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 8px;
+        }
+
+        .numero {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 36px;
+            height: 36px;
+
+            border-radius: 50%;
+
+            background:
+                color-mix(
+                    in srgb,
+                    var(--accent, var(--teal)) 12%,
+                    white
+                );
+
+            color: var(--accent, var(--teal));
+
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+
+            font-size: 0.85rem;
+        }
+
+        .punto-titulo {
+            font-family: 'Poppins', sans-serif;
+
+            font-weight: 600;
+
+            font-size: 0.98rem;
+
+            line-height: 1.3;
+        }
+
+        .punto-descripcion {
+            margin: 8px 0 0;
+
+            font-size: 0.82rem;
+
+            line-height: 1.5;
+
+            color: #6c6c7b;
+        }
+
+        .punto:nth-child(4n + 1) {
+            --accent: var(--teal);
+        }
+
+        .punto:nth-child(4n + 2) {
+            --accent: var(--plum);
+        }
+
+        .punto:nth-child(4n + 3) {
+            --accent: var(--gold);
+        }
+
+        .punto:nth-child(4n + 4) {
+            --accent: var(--indigo);
+        }
+
+        .volver-wrap {
+            text-align: center;
+        }
+
+        .volver {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin: 30px auto 0;
+
+            padding: 10px 22px;
+
+            border-radius: 999px;
+
+            background: #ffffff;
+
+            box-shadow:
+                0 4px 14px rgba(35, 42, 84, 0.1);
+
+            color: var(--indigo);
+
+            text-decoration: none;
+
+            font-weight: 500;
+
+            font-size: 0.9rem;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                transform 0.2s ease;
+        }
+
+        .volver:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--indigo),
+                    var(--plum)
+                );
+
+            color: white;
+
+            transform: translateY(-2px);
+        }
+
+        @media(max-width: 640px) {
+
+            .menu {
+                grid-template-columns: 1fr;
+            }
+
+            .stage-header {
+                padding: 32px 22px 30px;
+            }
+
+            .stage-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .stage-header p {
+                font-size: 0.88rem;
+            }
+
+            .stage-stats {
+                gap: 8px;
+            }
+
+            .stage-stat {
+                font-size: 0.72rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <header class="stage-header">
+
+        <span class="stage-tag">Fase de Calidad de Datos</span>
+
+        
+        <h1>Etapa <span>2</span></h1>
+
+        <div class="stage-divider"></div>
+
+        <p>
+            Diagnóstico y depuración del conjunto de datos de siniestros viales en Colombia. Consolida métricas de calidad de datos y su integración en Flask para asegurar una base sólida en los procesos de minería de datos.
+        </p>
+
+        <div class="stage-stats">
+            <span class="stage-stat">🔍 <strong>Perfilamiento</strong></span>
+            <span class="stage-stat">🧹 <strong>Depuración</strong></span>
+            <span class="stage-stat">🔗 <strong>Integración</strong> Flask</span>
+        </div>
+
+    </header>
+
+
+    <div class="menu">
+
+        <a href="/Etapa2/proposito" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">1</span>
+
+                <span class="punto-titulo">
+                    Propósito de los datos
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Uso de los datos, usuarios y finalidad dentro del proyecto.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/requisitos" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">2</span>
+
+                <span class="punto-titulo">
+                    Requisitos de calidad
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Criterios de calidad necesarios para el análisis.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/perfilamiento" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">3</span>
+
+                <span class="punto-titulo">
+                    Perfilamiento
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Estructura, tipos, nulos, duplicados, rangos y distribución.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/metricas" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">4</span>
+
+                <span class="punto-titulo">
+                    Dimensiones y métricas
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Indicadores cuantitativos de calidad de los datos.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/problemas" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">5</span>
+
+                <span class="punto-titulo">
+                    Problemas encontrados
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Inventario de errores, variables afectadas e impacto.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/causas" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">6</span>
+
+                <span class="punto-titulo">
+                    Análisis de causas
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Posibles causas y origen de los problemas identificados.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/integracion" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">7</span>
+
+                <span class="punto-titulo">
+                    Integración y homologación
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Comparación y homologación entre las fuentes utilizadas.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/tratamiento" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">8</span>
+
+                <span class="punto-titulo">
+                    Tratamiento de datos
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Limpieza, transformación y validación de los datos.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/comparacion" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">9</span>
+
+                <span class="punto-titulo">
+                    Comparación antes y después
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Evidencia de las mejoras obtenidas después del tratamiento.
+            </p>
+
+        </a>
+
+
+        <a href="/Etapa2/conclusiones" class="punto">
+
+            <div class="punto-cabecera">
+
+                <span class="numero">10</span>
+
+                <span class="punto-titulo">
+                    Conclusiones
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Resultados, hallazgos y conclusiones de la calidad de datos.
+            </p>
+
+        </a>
+
+    </div>
+
+
+    <div class="volver-wrap">
+
+        <a href="/" class="volver">
+            ← Volver al menú principal
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

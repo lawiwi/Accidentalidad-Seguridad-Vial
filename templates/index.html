@@ -1,290 +1,35 @@
-<!DOCTYPE html>
-<html lang="es">
-  <script src="https://t.contentsquare.net/uxa/2caa67f476ad3.js"></script>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menú Principal</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <style>
-    :root {
-      --indigo: #232A54;
-      --indigo-dark: #171B3B;
-      --plum: #8C4E7E;
-      --gold: #D9A441;
-      --teal: #2E9C93;
-      --mist: #F6F4FA;
-      --ink: #2A2A38;
-    }
+{% extends 'base.html' %}
 
-    * {
-      box-sizing: border-box;
-    }
+{% block title %}Menú Principal{% endblock %}
 
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: 'Inter', sans-serif;
-      overflow: hidden;
-      color: var(--ink);
-    }
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Accidentalidad y seguridad vial</p>
+    <h1>Tomar todas<br>las medidas</h1>
 
-    #map {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      z-index: -1;
-      opacity: 0.6;
-      filter: saturate(0.85);
-    }
+    {% if nombre %}
+      <p class="welcome">Bienvenido, {{ nombre }}</p>
+    {% else %}
+      <p>Consulta la información de accidentalidad de la Sabana Centro y participa en la construcción de vías más seguras.</p>
+    {% endif %}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      background:
-        radial-gradient(circle at 12% 15%, rgba(140, 78, 126, 0.16), transparent 45%),
-        radial-gradient(circle at 88% 85%, rgba(46, 156, 147, 0.16), transparent 45%);
-    }
-
-    .wrap {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-
-    .overlay {
-      background: rgba(255, 255, 255, 0.82);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-radius: 32px;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow:
-        0 20px 50px rgba(23, 27, 59, 0.25),
-        0 2px 8px rgba(23, 27, 59, 0.08);
-      max-width: 560px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      text-align: center;
-    }
-
-    header {
-      position: relative;
-      background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 55%, var(--plum) 130%);
-      color: white;
-      padding: 38px 28px 32px;
-      overflow: hidden;
-      border-radius: 32px 32px 0 0;
-    }
-
-    header::after {
-      content: "";
-      position: absolute;
-      width: 220px;
-      height: 220px;
-      right: -70px;
-      top: -90px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(217, 164, 65, 0.35), transparent 70%);
-    }
-
-    header::before {
-      content: "";
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      left: -50px;
-      bottom: -60px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(46, 156, 147, 0.3), transparent 70%);
-    }
-
-    .badge {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1.5px solid rgba(217, 164, 65, 0.55);
-      margin-bottom: 14px;
-      font-size: 1.4rem;
-    }
-
-    h1 {
-      position: relative;
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      font-size: 1.5rem;
-      line-height: 1.35;
-      letter-spacing: 0.2px;
-    }
-
-    header p {
-      position: relative;
-      margin-top: 12px;
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    header p strong {
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding: 28px 26px 30px;
-    }
-
-    .menu a {
-      position: relative;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: var(--mist);
-      color: var(--indigo-dark);
-      padding: 14px 22px;
-      border-radius: 999px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      border: 1.5px solid rgba(35, 42, 84, 0.08);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.25s ease, color 0.25s ease;
-    }
-
-    .menu a:hover {
-      background: linear-gradient(135deg, var(--indigo) 0%, var(--plum) 100%);
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(35, 42, 84, 0.28);
-      border-color: transparent;
-    }
-
-    .menu a:active {
-      transform: translateY(0);
-    }
-
-    /* Acciones principales resaltadas con acento teal/dorado */
-    .menu a.primary {
-      background: linear-gradient(135deg, var(--teal) 0%, var(--indigo) 100%);
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 8px 18px rgba(46, 156, 147, 0.28);
-    }
-
-    .menu a.primary:hover {
-      background: linear-gradient(135deg, var(--gold) 0%, var(--plum) 100%);
-      box-shadow: 0 10px 22px rgba(217, 164, 65, 0.3);
-    }
-
-    .menu a.admin {
-      background: rgba(217, 164, 65, 0.12);
-      color: #8a5f16;
-      border-color: rgba(217, 164, 65, 0.4);
-    }
-
-    .menu a.admin:hover {
-      background: linear-gradient(135deg, var(--gold) 0%, #b9791f 100%);
-      color: #fff;
-    }
-
-    .menu a.logout {
-      color: #9c3d5a;
-    }
-
-    .divider {
-      height: 1px;
-      margin: 4px 0 6px;
-      background: linear-gradient(90deg, transparent, rgba(35, 42, 84, 0.14), transparent);
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.2rem;
-      }
-
-      .overlay {
-        border-radius: 24px;
-      }
-
-      header {
-        padding: 30px 20px 26px;
-        border-radius: 24px 24px 0 0;
-      }
-
-      .menu {
-        padding: 22px 18px 24px;
-      }
-
-      .menu a {
-        font-size: 0.9rem;
-        padding: 13px 16px;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div id="map"></div>
-
-  <div class="wrap">
-    <div class="overlay">
-      <header>
-        
-        <h1>Sistema de Reportes Viales<br>Accidentalidad y Seguridad Vial</h1>
-        {% if nombre %}
-          <p>Bienvenido, <strong>{{ nombre }}</strong></p>
-        {% else %}
-          <p>Inicia sesión para acceder a todas las funciones</p>
+    <div class="quick-actions">
+      <a href="/lista" data-spa-link>Ver lista de reportes</a>
+      {% if nombre %}
+        <a href="/reportar" data-spa-link>Reportar incidente</a>
+        <a href="/dashboard" data-spa-link class="secondary">Dashboard</a>
+        {% if rol == "admin" %}
+          <a href="/admin/dashboard" data-spa-link class="secondary">Administración</a>
         {% endif %}
-      </header>
-
-      <div class="menu">
-        <a href="/lista" class="primary"> Ver lista de reportes</a>
-
-        {% if nombre %}
-          <a href="/reportar" class="primary"> Reportar incidente</a>
-          <a href="/dashboard"> Dashboard</a>
-          {% if rol == "admin" %}
-            <a href="/admin/dashboard" class="admin"> Panel de administración</a>
-          {% endif %}
-          <div class="divider"></div>
-          <a href="/logout" class="logout"> Cerrar sesión</a>
-        {% else %}
-          <a href="/login"> Iniciar sesión</a>
-          <a href="/register"> Crear cuenta</a>
-        {% endif %}
-
-        <!-- NUEVO -->
-        <a href="/Etapa1"> Etapa 1</a>
-      </div>
+      {% else %}
+        <a href="/login" data-spa-link class="secondary">Iniciar sesión</a>
+        <a href="/register" data-spa-link class="secondary">Crear cuenta</a>
+      {% endif %}
+      <a href="/Etapa1" data-spa-link class="secondary">Etapa 1</a>
+      <a href="/Etapa2" data-spa-link class="secondary">Etapa 2</a>
+      <span class="construction">Etapa 3 · En construcción</span>
     </div>
   </div>
-
-  <script>
-    const map = L.map('map', { zoomControl: false }).setView([4.916, -74.031], 10);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-  </script>
-</body>
-</html>
+</section>
+{% endblock %}

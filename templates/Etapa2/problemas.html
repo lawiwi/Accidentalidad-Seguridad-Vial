@@ -1,0 +1,1390 @@
+{% extends 'base.html' %}
+
+{% block title %}Problemas encontrados | Calidad de Datos{% endblock %}
+
+{% block head %}
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --indigo: #232A54;
+            --indigo-dark: #171B3B;  
+            --plum: #8C4E7E;
+            --gold: #D9A441;
+            --teal: #2E9C93;
+            --mist: #F6F4FA;
+            --ink: #2A2A38;
+            --muted: #777689;
+            --border: #E4E1EB;
+            --white: #FFFFFF;
+            --danger: #B85C5C;
+            --warning: #C58A35;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .stage-header {
+            background:
+                linear-gradient(
+                    var(--indigo-dark),
+                    var(--indigo)
+                );
+
+            color: white;
+
+            padding: 55px 25px 70px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stage-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            right: -130px;
+            top: -180px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .header-content {
+            max-width: 1050px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 7px 14px;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+        }
+
+        .stage-header h1 {
+            font-family: "Poppins", sans-serif;
+
+            font-size: clamp(32px, 5vw, 52px);
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        .stage-header p {
+            max-width: 760px;
+
+            color: rgba(255, 255, 255, 0.76);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+
+        .etapa2-problemas-page {
+            color: var(--ink);
+            font-family: "Inter", sans-serif;
+            line-height: 1.7;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .etapa2-problemas-page main {
+            width: 100%;
+            padding-bottom: 110px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+            color: white;
+            padding: 75px 25px 85px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .hero::before {
+            width: 340px;
+            height: 340px;
+            top: -180px;
+            right: -100px;
+        }
+
+        .hero::after {
+            width: 260px;
+            height: 260px;
+            bottom: -170px;
+            left: -80px;
+        }
+
+        .hero-content {
+            max-width: 1050px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #C9C7D8;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-family: "Poppins", sans-serif;
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: auto;
+            color: #E5E3ED;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: -35px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 12px 35px rgba(35, 42, 84, 0.06);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .section-number {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(46, 156, 147, 0.12);
+            color: var(--teal);
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        h2 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 23px;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-family: "Poppins", sans-serif;
+            color: var(--indigo);
+            font-size: 17px;
+            margin: 25px 0 10px;
+        }
+
+        p {
+            color: #555565;
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .intro-box {
+            border-left: 4px solid var(--plum);
+            background: #FAF7FB;
+            padding: 20px 22px;
+            border-radius: 0 14px 14px 0;
+            margin-top: 10px;
+        }
+
+        .intro-box p {
+            margin-bottom: 0;
+        }
+
+        /* RESUMEN */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-top: 25px;
+        }
+
+        .summary-item {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 16px;
+            background: #FCFBFD;
+            text-align: center;
+        }
+
+        .summary-value {
+            display: block;
+            font-family: "Poppins", sans-serif;
+            font-size: 27px;
+            font-weight: 700;
+            color: var(--indigo);
+            margin-bottom: 4px;
+        }
+
+        .summary-label {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* TABLA */
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 22px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+        }
+
+        table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th {
+            background: var(--indigo);
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            padding: 15px 13px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 13px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            color: #555565;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background: #FCFBFD;
+        }
+
+        .variable {
+            font-family: "Inter", sans-serif;
+            font-weight: 600;
+            color: var(--indigo);
+            white-space: nowrap;
+        }
+
+        .count {
+            font-family: "Poppins", sans-serif;
+            font-weight: 700;
+            color: var(--plum);
+            white-space: nowrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .badge-critical {
+            background: rgba(184, 92, 92, 0.11);
+            color: var(--danger);
+        }
+
+        .badge-medium {
+            background: rgba(197, 138, 53, 0.12);
+            color: var(--warning);
+        }
+
+        .badge-low {
+            background: rgba(46, 156, 147, 0.11);
+            color: var(--teal);
+        }
+
+        /* PROBLEMA DESTACADO */
+
+        .highlight {
+            background: linear-gradient(
+                135deg,
+                rgba(140, 78, 126, 0.08),
+                rgba(46, 156, 147, 0.07)
+            );
+            border: 1px solid rgba(140, 78, 126, 0.16);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 22px;
+        }
+
+        .highlight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+
+        .highlight-title {
+            font-family: "Poppins", sans-serif;
+            font-size: 18px;
+            color: var(--indigo);
+        }
+
+        .big-number {
+            font-family: "Poppins", sans-serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--plum);
+            white-space: nowrap;
+        }
+
+        /* LISTA */
+
+        .evidence-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .evidence-list li {
+            position: relative;
+            padding: 10px 0 10px 23px;
+            color: #5A5968;
+            font-size: 13px;
+            border-bottom: 1px solid #EEEAF2;
+        }
+
+        .evidence-list li:last-child {
+            border-bottom: none;
+        }
+
+        .evidence-list li::before {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 18px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+        }
+
+        /* NOTA METODOLOGICA */
+
+        .method-note {
+            background: #F8F7FC;
+            border: 1px dashed #CFC9DA;
+            border-radius: 15px;
+            padding: 20px 22px;
+            margin-top: 22px;
+        }
+
+        .method-note strong {
+            color: var(--indigo);
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+        }
+
+        .method-note p {
+            margin: 8px 0 0;
+            font-size: 12px;
+        }
+
+        /* ==================================================
+           NAVEGACIÓN - ESTILO DE CAUSAS / REFERENCIA
+           ================================================== */
+
+        .navigation-buttons {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 100;
+            height: 72px;
+            padding: 0 28px;
+            background: rgba(242, 242, 246, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-top: 1px solid rgba(35, 42, 84, 0.08);
+            box-shadow: 0 -5px 20px rgba(35, 42, 84, 0.06);
+        }
+
+        .navigation-buttons-inner {
+            max-width: 1050px;
+            height: 100%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--plum);
+            font-family: "Poppins", sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.2;
+            transition: color 0.25s ease, transform 0.25s ease;
+            flex-shrink: 0;
+        }
+
+        .nav-button small {
+            display: block;
+            margin-bottom: 4px;
+            color: #9B99A8;
+            font-family: "Inter", sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .nav-label {
+            display: block;
+            white-space: nowrap;
+        }
+
+        .nav-arrow {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #232A54;
+            color: #FFFFFF;
+            border: none;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1;
+            transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .nav-prev .nav-arrow {
+            background: #FFFFFF;
+            color: #232A54;
+            border: 1px solid rgba(35, 42, 84, 0.10);
+            box-shadow: 0 3px 10px rgba(35, 42, 84, 0.08);
+        }
+
+        .nav-next .nav-arrow {
+            background: #232A54;
+            color: #FFFFFF;
+            border: none;
+            box-shadow: 0 4px 12px rgba(35, 42, 84, 0.16);
+        }
+
+        .nav-button:hover {
+            color: #232A54;
+            transform: translateY(-1px);
+        }
+
+        .nav-button:hover .nav-arrow {
+            background: var(--plum);
+            color: #FFFFFF;
+            border-color: var(--plum);
+            transform: scale(1.08);
+            box-shadow: 0 5px 14px rgba(140, 78, 126, 0.22);
+        }
+
+        .nav-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .nav-progress span {
+            width: 6px;
+            height: 6px;
+            display: block;
+            border-radius: 50%;
+            background: #D9D7E2;
+            transition: width 0.25s ease, background 0.25s ease;
+        }
+
+        .nav-progress span.active {
+            width: 22px;
+            height: 6px;
+            border-radius: 10px;
+            background: var(--teal);
+        }
+
+        @media (max-width: 800px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .highlight-header {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-progress {
+                display: none;
+            }
+
+            .nav-button {
+                font-size: 12px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 55px 20px 70px;
+            }
+
+            .container {
+                padding: 0 12px;
+            }
+
+            .card {
+                padding: 20px;
+                border-radius: 17px;
+            }
+
+            .navigation-buttons {
+                padding: 10px 14px;
+            }
+
+            .nav-arrow {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            .nav-button small {
+                font-size: 7px;
+            }
+
+            .nav-label {
+                display: none;
+            }
+        }
+        </style>
+    {% endblock %}
+
+    {% block content %}
+    <div class="etapa2-problemas-page">
+
+<main>
+
+    <!-- =========================
+         ENCABEZADO
+    ========================== -->
+
+    <header class="stage-header">
+
+        <div class="header-content">
+
+            <div class="badge">
+                Etapa 2 · Calidad de datos
+            </div>
+
+            <h1>
+                Problemas encontrados
+            </h1>
+
+            <p>
+                Inventario de las principales situaciones que afectan la calidad
+                del conjunto de datos de vehículos involucrados en accidentes
+                de tránsito.
+
+        </div>
+
+    </header>
+
+
+    <div class="container">
+
+        <!-- =========================
+             CONTEXTO
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">01</div>
+                <h2>Identificación de problemas</h2>
+            </div>
+
+            <p>
+                A partir del perfilamiento y de las métricas de calidad
+                realizadas sobre el dataset, se identificaron problemas
+                relacionados principalmente con duplicidad, valores faltantes,
+                valores atípicos, estandarización y validación de variables.
+            </p>
+
+            <div class="intro-box">
+                <p>
+                    El objetivo no es únicamente señalar errores, sino
+                    determinar <strong>qué variable está afectada, cuántos
+                    registros presentan el problema, qué dimensión de calidad
+                    compromete y cuál puede ser su impacto en el análisis.</strong>
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             RESUMEN
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">02</div>
+                <h2>Resumen de hallazgos</h2>
+            </div>
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+                    <span class="summary-value">147.575</span>
+                    <span class="summary-label">
+                        registros completamente duplicados
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <span class="summary-value">44</span>
+                    <span class="summary-label">
+                        registros sin marca del vehículo
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <span class="summary-value">20</span>
+                    <span class="summary-label">
+                        registros sin edad del vehículo
+                    </span>
+                </div>
+
+                <div class="summary-item">
+                    <span class="summary-value">1.826</span>
+                    <span class="summary-label">
+                        valor máximo detectado en edad del vehículo
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             INVENTARIO
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">03</div>
+                <h2>Inventario de problemas</h2>
+            </div>
+
+            <p>
+                La siguiente matriz consolida los problemas encontrados durante
+                el análisis de calidad. Los porcentajes se calculan tomando
+                como referencia los <strong>406.540 registros</strong> del
+                dataset original.
+            </p>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Variable / elemento</th>
+                            <th>Problema identificado</th>
+                            <th>Afectados</th>
+                            <th>%</th>
+                            <th>Dimensión</th>
+                            <th>Impacto</th>
+                            <th>Evidencia</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td class="variable">Registros completos</td>
+
+                            <td>
+                                Existen filas completamente iguales dentro
+                                del conjunto de datos.
+                            </td>
+
+                            <td class="count">147.575</td>
+
+                            <td>36,30%</td>
+
+                            <td>
+                                <span class="badge badge-critical">
+                                    Unicidad
+                                </span>
+                            </td>
+
+                            <td>
+                                Puede sobreestimar la frecuencia de vehículos
+                                y distorsionar los análisis estadísticos.
+                            </td>
+
+                            <td>
+                                Comparación mediante
+                                <strong>drop_duplicates()</strong>.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="variable">marca_vehiculo</td>
+
+                            <td>
+                                Se encontraron registros sin información
+                                sobre la marca del vehículo.
+                            </td>
+
+                            <td class="count">44</td>
+
+                            <td>0,0108%</td>
+
+                            <td>
+                                <span class="badge badge-low">
+                                    Completitud
+                                </span>
+                            </td>
+
+                            <td>
+                                Reduce la capacidad de caracterizar los
+                                vehículos por fabricante.
+                            </td>
+
+                            <td>
+                                Valores nulos o ausentes detectados durante
+                                el perfilamiento.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="variable">edad_vehiculo</td>
+
+                            <td>
+                                Existen registros sin edad registrada.
+                            </td>
+
+                            <td class="count">20</td>
+
+                            <td>0,0049%</td>
+
+                            <td>
+                                <span class="badge badge-low">
+                                    Completitud
+                                </span>
+                            </td>
+
+                            <td>
+                                Limita algunos análisis relacionados con la
+                                antigüedad del vehículo.
+                            </td>
+
+                            <td>
+                                Valores ausentes identificados en el
+                                perfilamiento.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="variable">edad_vehiculo</td>
+
+                            <td>
+                                Se detectó un valor máximo de 1.826 años,
+                                claramente alejado del comportamiento esperado
+                                para un vehículo.
+                            </td>
+
+                            <td class="count">1 o más</td>
+
+                            <td>Por validar</td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Validez
+                                </span>
+                            </td>
+
+                            <td>
+                                Puede alterar promedios, dispersiones,
+                                distribuciones y modelos predictivos.
+                            </td>
+
+                            <td>
+                                Mínimo: 0 · Mediana: 9 · Máximo: 1.826.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="variable">modelo_vehiculo</td>
+
+                            <td>
+                                Se identificaron años de modelo que requieren
+                                validación respecto a la fecha del accidente.
+                            </td>
+
+                            <td class="count">Por validar</td>
+
+                            <td>Por validar</td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Consistencia
+                                </span>
+                            </td>
+
+                            <td>
+                                Una relación temporal incorrecta puede generar
+                                inconsistencias en el cálculo de antigüedad.
+                            </td>
+
+                            <td>
+                                Se observó un máximo de modelo de 2027,
+                                mientras que la cobertura del dataset llega
+                                hasta 2026.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="variable">fecha_accidente</td>
+
+                            <td>
+                                La fecha se encuentra almacenada originalmente
+                                como texto y necesita conversión a un tipo
+                                temporal estandarizado.
+                            </td>
+
+                            <td class="count">Por validar</td>
+
+                            <td>Por validar</td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Validez
+                                </span>
+                            </td>
+
+                            <td>
+                                Dificulta operaciones temporales si no se
+                                realiza previamente la conversión.
+                            </td>
+
+                            <td>
+                                Requiere parsing mediante formato de fecha y
+                                validación de valores no convertibles.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="variable">
+                                Variables categóricas
+                            </td>
+
+                            <td>
+                                Las variables de texto requieren revisión de
+                                escritura, espacios, mayúsculas, abreviaturas
+                                y categorías equivalentes.
+                            </td>
+
+                            <td class="count">
+                                Por validar
+                            </td>
+
+                            <td>
+                                Por validar
+                            </td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Consistencia
+                                </span>
+                            </td>
+
+                            <td>
+                                Puede fragmentar categorías que representan
+                                el mismo valor y afectar agrupaciones.
+                            </td>
+
+                            <td>
+                                Aplicable a marca, tipo de vehículo,
+                                departamento, municipio y autoridad.
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="variable">
+                                Cobertura temporal
+                            </td>
+
+                            <td>
+                                Los años 2025 y 2026 presentan una cantidad
+                                de registros inferior a los años anteriores,
+                                además de que 2026 solo contiene información
+                                hasta febrero.
+                            </td>
+
+                            <td class="count">
+                                60.111
+                            </td>
+
+                            <td>
+                                14,79%
+                            </td>
+
+                            <td>
+                                <span class="badge badge-medium">
+                                    Oportunidad
+                                </span>
+                            </td>
+
+                            <td>
+                                Las comparaciones anuales pueden interpretarse
+                                incorrectamente si no se considera que el
+                                período más reciente está incompleto.
+                            </td>
+
+                            <td>
+                                2025: 57.867 registros.
+                                2026: 2.244 registros.
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             DUPLICIDAD
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">04</div>
+                <h2>Problema principal: duplicidad</h2>
+            </div>
+
+            <div class="highlight">
+
+                <div class="highlight-header">
+
+                    <div>
+                        <div class="highlight-title">
+                            Registros completamente duplicados
+                        </div>
+
+                        <p>
+                            La duplicidad representa el hallazgo de mayor
+                            impacto cuantitativo encontrado durante el
+                            perfilamiento.
+                        </p>
+                    </div>
+
+                    <div class="big-number">
+                        36,30%
+                    </div>
+
+                </div>
+
+                <p>
+                    De los 406.540 registros originales, 147.575 corresponden
+                    a filas completamente repetidas. Al eliminar duplicados
+                    exactos mediante una copia de trabajo, el dataset pasa a
+                    aproximadamente <strong>258.965 registros únicos</strong>.
+                </p>
+
+                <ul class="evidence-list">
+
+                    <li>
+                        Dataset original: 406.540 registros.
+                    </li>
+
+                    <li>
+                        Registros duplicados completos: 147.575.
+                    </li>
+
+                    <li>
+                        Proporción aproximada de duplicados: 36,30%.
+                    </li>
+
+                    <li>
+                        Registros posteriores a la eliminación de duplicados:
+                        258.965.
+                    </li>
+
+                    <li>
+                        El tratamiento debe conservar el dataset original y
+                        generar una versión limpia para evitar pérdida de
+                        trazabilidad.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ATIPICOS
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">05</div>
+                <h2>Valores atípicos e inconsistencias</h2>
+            </div>
+
+            <p>
+                Los valores atípicos no deben eliminarse automáticamente.
+                Primero es necesario determinar si corresponden a errores de
+                digitación, problemas de codificación o casos reales.
+            </p>
+
+            <h3>Edad del vehículo</h3>
+
+            <p>
+                La variable <strong>edad_vehiculo</strong> presenta una
+                distribución que requiere validación. Su mediana es de
+                aproximadamente 9 años, mientras que el máximo registrado es
+                de 1.826 años. Esta diferencia evidencia un valor extremo que
+                no resulta razonable bajo una interpretación convencional de
+                la edad de un vehículo.
+            </p>
+
+            <h3>Año del modelo</h3>
+
+            <p>
+                La variable <strong>modelo_vehiculo</strong> presenta valores
+                entre 1937 y 2027. El valor 2027 debe revisarse en conjunto
+                con la fecha del accidente antes de considerarlo un error,
+                debido a que un modelo posterior al año del accidente puede
+                corresponder a una particularidad de registro o a un dato
+                incorrecto.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             FECHAS Y CATEGORIAS
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">06</div>
+                <h2>Problemas de estandarización</h2>
+            </div>
+
+            <p>
+                Además de los problemas cuantificados directamente, existen
+                variables que requieren procesos de estandarización para
+                mejorar la consistencia del análisis.
+            </p>
+
+            <ul class="evidence-list">
+
+                <li>
+                    <strong>Fecha:</strong> convertir
+                    <em>fecha_accidente</em> desde texto a un tipo de fecha
+                    estandarizado.
+                </li>
+
+                <li>
+                    <strong>Marcas:</strong> revisar diferencias de escritura,
+                    espacios, mayúsculas y posibles categorías equivalentes.
+                </li>
+
+                <li>
+                    <strong>Tipos de vehículo:</strong> verificar que las
+                    categorías representen valores consistentes.
+                </li>
+
+                <li>
+                    <strong>Departamentos y municipios:</strong> homologar
+                    nombres para facilitar agrupaciones y comparaciones.
+                </li>
+
+                <li>
+                    <strong>Autoridad de tránsito:</strong> revisar nombres,
+                    abreviaturas y posibles variantes de una misma entidad.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =========================
+             LIMITACION EXACTITUD
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">07</div>
+                <h2>Limitación para evaluar exactitud</h2>
+            </div>
+
+            <div class="method-note">
+
+                <strong>Consideración metodológica</strong>
+
+                <p>
+                    La exactitud no puede determinarse completamente únicamente
+                    con este dataset, debido a que no se dispone de una fuente
+                    externa de verdad de referencia que permita comprobar cada
+                    registro. Por esta razón, la evaluación de exactitud se
+                    plantea mediante indicadores indirectos y reglas de
+                    plausibilidad, como la relación entre edad del vehículo,
+                    año del modelo y fecha del accidente.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             IMPACTO GENERAL
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">08</div>
+                <h2>Impacto sobre el análisis</h2>
+            </div>
+
+            <p>
+                Los problemas identificados pueden afectar de diferentes
+                maneras los resultados obtenidos a partir del dataset:
+            </p>
+
+            <ul class="evidence-list">
+
+                <li>
+                    Los duplicados pueden incrementar artificialmente la
+                    frecuencia de determinados vehículos, marcas o ubicaciones.
+                </li>
+
+                <li>
+                    Los valores faltantes reducen la capacidad de realizar
+                    análisis completos sobre determinadas variables.
+                </li>
+
+                <li>
+                    Los valores extremos pueden modificar medidas como la
+                    media y la desviación estándar.
+                </li>
+
+                <li>
+                    Las categorías no estandarizadas pueden dividir un mismo
+                    concepto en varios grupos.
+                </li>
+
+                <li>
+                    Las fechas no convertidas pueden impedir análisis
+                    temporales correctos.
+                </li>
+
+                <li>
+                    La cobertura temporal parcial de 2026 debe considerarse
+                    antes de comparar ese año con períodos completos.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =========================
+             CONCLUSION
+        ========================== -->
+
+        <section class="card">
+
+            <div class="section-title">
+                <div class="section-number">09</div>
+                <h2>Conclusión del inventario</h2>
+            </div>
+
+            <p>
+                El principal problema de calidad identificado corresponde a la
+                <strong>duplicidad de registros</strong>, debido a que afecta
+                aproximadamente el 36,30% del dataset original. También se
+                encontraron valores faltantes, valores extremos que requieren
+                validación y necesidades de estandarización de fechas y
+                variables categóricas.
+            </p>
+
+            <p>
+                Estos hallazgos justifican la aplicación de un tratamiento de
+                calidad antes de utilizar los datos para análisis estadístico,
+                visualización o modelamiento. El siguiente paso consiste en
+                analizar las posibles causas que originan cada problema y
+                determinar cuáles pueden corregirse directamente y cuáles
+                deben conservarse como casos pendientes de validación.
+            </p>
+
+        </section>
+
+    </div>
+
+
+    <!-- =========================
+         NAVEGACIÓN
+    ========================== -->
+
+    <div class="navigation-buttons">
+
+        <div class="navigation-buttons-inner">
+
+            <a href="{{ url_for('Etapa2_metricas') }}" class="nav-button nav-prev">
+                <span class="nav-arrow">←</span>
+                <span class="nav-label">
+                    <small>ANTERIOR</small>
+                    Dimensiones y métricas
+                </span>
+            </a>
+
+            <div class="nav-progress">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="active"></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <a href="{{ url_for('Etapa2_causas') }}" class="nav-button nav-next">
+                <span class="nav-label">
+                    <small>SIGUIENTE</small>
+                    Análisis de causas
+                </span>
+                <span class="nav-arrow">→</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+</div>
+{% endblock %}

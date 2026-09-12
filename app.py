@@ -322,6 +322,64 @@ def internal_error(e):
     app.logger.exception("Internal server error")
     return jsonify({"error": "Internal server error"}), 500
 
+# =========================
+# ETAPA 2 - CALIDAD DE DATOS
+# =========================
+
+@app.route("/Etapa2")
+def Etapa2():
+    return render_template("Etapa2/menu.html")
+
+
+@app.route("/Etapa2/proposito")
+def Etapa2_proposito():
+    return render_template("Etapa2/proposito.html")
+
+
+@app.route("/Etapa2/requisitos")
+def Etapa2_requisitos():
+    return render_template("Etapa2/requisitos.html")
+
+
+@app.route("/Etapa2/perfilamiento")
+def Etapa2_perfilamiento():
+    return render_template("Etapa2/perfilamiento.html")
+
+
+@app.route("/Etapa2/metricas")
+def Etapa2_metricas():
+    return render_template("Etapa2/metricas.html")
+
+
+@app.route("/Etapa2/problemas")
+def Etapa2_problemas():
+    return render_template("Etapa2/problemas.html")
+
+
+@app.route("/Etapa2/causas")
+def Etapa2_causas():
+    return render_template("Etapa2/causas.html")
+
+
+@app.route("/Etapa2/integracion")
+def Etapa2_integracion():
+    return render_template("Etapa2/integracion.html")
+
+
+@app.route("/Etapa2/tratamiento")
+def Etapa2_tratamiento():
+    return render_template("Etapa2/tratamiento.html")
+
+
+@app.route("/Etapa2/comparacion")
+def Etapa2_comparacion():
+    return render_template("Etapa2/comparacion.html")
+
+
+@app.route("/Etapa2/conclusiones")
+def Etapa2_conclusiones():
+    return render_template("Etapa2/conclusiones.html")
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     debug_mode = os.environ.get("FLASK_ENV") != "production"
