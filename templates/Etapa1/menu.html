@@ -44,67 +44,140 @@
             margin: 50px auto 60px;
         }
 
+        /* ---- Banner Rediseñado ---- */
         .stage-header {
             position: relative;
-            background: linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 55%, var(--plum) 130%);
-            color: white;
-            padding: 40px 30px 34px;
+            background:
+                radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px) 0 0 / 24px 24px,
+                linear-gradient(135deg, var(--indigo) 0%, var(--indigo-dark) 55%, var(--plum) 130%);
+            color: #ffffff;
+            padding: 44px 48px 38px;
             border-radius: 28px;
             text-align: center;
-            box-shadow: 0 20px 45px rgba(23, 27, 59, 0.25);
+            box-shadow: 0 20px 45px rgba(23, 27, 59, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(8px);
         }
 
         .stage-header::after {
             content: "";
             position: absolute;
-            width: 220px;
-            height: 220px;
+            width: 260px;
+            height: 260px;
             right: -70px;
             top: -100px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(217, 164, 65, 0.35), transparent 70%);
+            background: radial-gradient(circle, rgba(217, 164, 65, 0.28), transparent 70%);
+            pointer-events: none;
         }
 
         .stage-header::before {
             content: "";
             position: absolute;
-            width: 160px;
-            height: 160px;
-            left: -60px;
+            width: 200px;
+            height: 200px;
+            left: -55px;
             bottom: -70px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(46, 156, 147, 0.3), transparent 70%);
+            background: radial-gradient(circle, rgba(46, 156, 147, 0.25), transparent 70%);
+            pointer-events: none;
         }
 
-        .badge {
-            position: relative;
+        .stage-tag {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            width: 54px;
-            height: 54px;
+            gap: 8px;
+            padding: 5px 16px 5px 12px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stage-tag::before {
+            content: "";
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1.5px solid rgba(217, 164, 65, 0.55);
-            margin-bottom: 12px;
-            font-size: 1.4rem;
+            background: var(--gold);
+            box-shadow: 0 0 8px 1px rgba(217, 164, 65, 0.8);
         }
 
         .stage-header h1 {
             position: relative;
-            margin: 0 0 8px;
+            z-index: 1;
+            margin: 0 0 6px;
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.6rem;
-            letter-spacing: 0.2px;
+            font-weight: 700;
+            font-size: clamp(1.9rem, 4vw, 2.5rem);
+            letter-spacing: -0.6px;
+            color: #ffffff;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .stage-header h1 span {
+            color: var(--gold);
+        }
+
+        .stage-divider {
+            position: relative;
+            z-index: 1;
+            width: 56px;
+            height: 3px;
+            margin: 0 auto 18px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--gold), var(--teal));
         }
 
         .stage-header p {
             position: relative;
-            margin: 0;
-            font-size: 0.95rem;
+            z-index: 1;
+            margin: 0 auto;
+            max-width: 760px;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            font-weight: 400;
+            letter-spacing: 0.1px;
+            color: rgba(255, 255, 255, 0.88);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        .stage-stats {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .stage-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 16px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 500;
             color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+        }
+
+        .stage-stat strong {
+            font-family: 'Poppins', sans-serif;
+            color: var(--gold);
+            font-weight: 600;
         }
 
         /* ---- Tarjetas de puntos ---- */
@@ -152,7 +225,6 @@
             line-height: 1.3;
         }
 
-        /* Recuadro de imagen: mismo tamaño para las 8 tarjetas */
         .punto-imagen {
             display: block;
             margin-top: 4px;
@@ -205,8 +277,25 @@
                 grid-template-columns: 1fr;
             }
 
+            .stage-header {
+                padding: 32px 22px 30px;
+            }
+
             .stage-header h1 {
-                font-size: 1.35rem;
+                font-size: 1.6rem;
+            }
+
+            .stage-header p {
+                font-size: 0.88rem;
+            }
+
+            .stage-stats {
+                gap: 8px;
+            }
+
+            .stage-stat {
+                font-size: 0.72rem;
+                padding: 6px 12px;
             }
         }
     </style>
@@ -217,68 +306,67 @@
 <div class="container">
 
     <header class="stage-header">
-        <h1>Etapa 1</h1>
-        <p>Formulación y contextualización del problema de investigación</p>
+        <span class="stage-tag">Fase de Investigación</span>
+        <h1>Etapa <span>1</span></h1>
+        <div class="stage-divider"></div>
+        <p>Análisis de la accidentalidad vial en Sabana Centro para identificar épocas críticas y factores de riesgo. Combina datos de la ANSV y Datos Abiertos para orientar la prevención regional.</p>
+        <div class="stage-stats">
+            <span class="stage-stat">📍 <strong>Sabana Centro</strong></span>
+            <span class="stage-stat">📅 <strong>2019 – 2026</strong></span>
+            <span class="stage-stat">📊 <strong>+400.000</strong> registros</span>
+        </div>
     </header>
 
+    <!-- Resto del HTML se mantiene exacto a tu código original -->
     <div class="menu">
-
         <a href="/Etapa1/problema" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">1. Problema y contexto</span>
             </div>
             <img src="{{ url_for('static', filename='img/problemaycontexto.jpg') }}" alt="Problema y contexto" class="punto-imagen">
         </a>
-
         <a href="/Etapa1/preguntas" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">2. Pregunta principal y preguntas secundarias</span>
             </div>
             <img src="{{ url_for('static', filename='img/pregu.jpg') }}" alt="Preguntas de investigación" class="punto-imagen">
         </a>
-
         <a href="/Etapa1/necesidades" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">3. Necesidades de información</span>
             </div>
             <img src="{{ url_for('static', filename='img/informacion.jpg') }}" alt="Necesidades de información" class="punto-imagen">
         </a>
-
         <a href="/Etapa1/fuentes" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">4. Fuentes de datos</span>
             </div>
             <img src="{{ url_for('static', filename='img/datos.jpg') }}" alt="Fuentes de datos" class="punto-imagen">
         </a>
-
         <a href="/Etapa1/dataset" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">5. Dataset</span>
             </div>
             <img src="{{ url_for('static', filename='img/datset.jpg') }}" alt="Vista del dataset" class="punto-imagen">
         </a>
-
         <a href="/Etapa1/diccionario" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">6. Diccionario de datos</span>
             </div>
             <img src="{{ url_for('static', filename='img/diccionario.jpg') }}" alt="Diccionario de datos" class="punto-imagen">
         </a>
-
         <a href="/Etapa1/calidad" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">7. Calidad inicial de los datos</span>
             </div>
             <img src="{{ url_for('static', filename='img/calidad.jpg') }}" alt="Calidad de los datos" class="punto-imagen">
         </a>
-
         <a href="/Etapa1/limitaciones" class="punto">
             <div class="punto-cabecera">
                 <span class="punto-titulo">8. Limitaciones y consideraciones</span>
             </div>
             <img src="{{ url_for('static', filename='img/limitaciones.jpg') }}" alt="Limitaciones" class="punto-imagen">
         </a>
-
     </div>
 
     <div class="volver-wrap">

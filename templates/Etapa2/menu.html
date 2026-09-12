@@ -57,10 +57,12 @@
             margin: 50px auto 60px;
         }
 
+        /* ---- Banner Rediseñado ---- */
         .stage-header {
             position: relative;
 
             background:
+                radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px) 0 0 / 24px 24px,
                 linear-gradient(
                     135deg,
                     var(--indigo) 0%,
@@ -69,23 +71,26 @@
                 );
 
             color: white;
-            padding: 40px 30px 34px;
+            padding: 44px 40px 38px;
             border-radius: 28px;
 
             text-align: center;
 
             box-shadow:
-                0 20px 45px rgba(23, 27, 59, 0.25);
+                0 20px 45px rgba(23, 27, 59, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(8px);
         }
 
         .stage-header::after {
             content: "";
 
             position: absolute;
-            width: 220px;
-            height: 220px;
+            width: 240px;
+            height: 240px;
 
             right: -70px;
             top: -100px;
@@ -95,17 +100,19 @@
             background:
                 radial-gradient(
                     circle,
-                    rgba(217, 164, 65, 0.35),
+                    rgba(217, 164, 65, 0.32),
                     transparent 70%
                 );
+
+            pointer-events: none;
         }
 
         .stage-header::before {
             content: "";
 
             position: absolute;
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 180px;
 
             left: -60px;
             bottom: -70px;
@@ -115,13 +122,48 @@
             background:
                 radial-gradient(
                     circle,
-                    rgba(46, 156, 147, 0.3),
+                    rgba(46, 156, 147, 0.28),
                     transparent 70%
                 );
+
+            pointer-events: none;
+        }
+
+        .stage-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 5px 16px 5px 12px;
+
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 999px;
+
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+
+            margin-bottom: 14px;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        .stage-tag::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 8px 1px rgba(217, 164, 65, 0.8);
         }
 
         .badge {
             position: relative;
+            z-index: 1;
 
             display: inline-flex;
             align-items: center;
@@ -137,31 +179,95 @@
             border:
                 1.5px solid rgba(217, 164, 65, 0.55);
 
-            margin-bottom: 12px;
+            margin-bottom: 14px;
 
             font-size: 1.4rem;
         }
 
         .stage-header h1 {
             position: relative;
+            z-index: 1;
 
-            margin: 0 0 8px;
+            margin: 0 0 6px;
 
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
 
-            font-size: 1.6rem;
+            font-size: clamp(1.9rem, 4vw, 2.5rem);
+            letter-spacing: -0.6px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .stage-header h1 span {
+            color: var(--gold);
+        }
+
+        .stage-divider {
+            position: relative;
+            z-index: 1;
+
+            width: 56px;
+            height: 3px;
+
+            margin: 0 auto 18px;
+
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--gold), var(--teal));
         }
 
         .stage-header p {
             position: relative;
+            z-index: 1;
 
-            margin: 0;
+            margin: 0 auto;
+            max-width: 760px;
 
-            font-size: 0.95rem;
+            font-size: 0.98rem;
+            line-height: 1.75;
+            font-weight: 400;
+            letter-spacing: 0.1px;
 
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.88);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
         }
+
+        .stage-stats {
+            position: relative;
+            z-index: 1;
+
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .stage-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 16px;
+
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 999px;
+
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+
+            backdrop-filter: blur(4px);
+        }
+
+        .stage-stat strong {
+            font-family: 'Poppins', sans-serif;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* ---- Tarjetas de puntos ---- */
 
         .menu {
             margin-top: 28px;
@@ -339,8 +445,25 @@
                 grid-template-columns: 1fr;
             }
 
+            .stage-header {
+                padding: 32px 22px 30px;
+            }
+
             .stage-header h1 {
-                font-size: 1.35rem;
+                font-size: 1.6rem;
+            }
+
+            .stage-header p {
+                font-size: 0.88rem;
+            }
+
+            .stage-stats {
+                gap: 8px;
+            }
+
+            .stage-stat {
+                font-size: 0.72rem;
+                padding: 6px 12px;
             }
         }
     </style>
@@ -352,13 +475,22 @@
 
     <header class="stage-header">
 
-        <div class="badge">📊</div>
+        <span class="stage-tag">Fase de Calidad de Datos</span>
 
-        <h1>Etapa 2</h1>
+        
+        <h1>Etapa <span>2</span></h1>
+
+        <div class="stage-divider"></div>
 
         <p>
-            Perfilamiento, evaluación y tratamiento de la calidad de los datos
+            Diagnóstico y depuración del conjunto de datos de siniestros viales en Colombia. Consolida métricas de calidad de datos y su integración en Flask para asegurar una base sólida en los procesos de minería de datos.
         </p>
+
+        <div class="stage-stats">
+            <span class="stage-stat">🔍 <strong>Perfilamiento</strong></span>
+            <span class="stage-stat">🧹 <strong>Depuración</strong></span>
+            <span class="stage-stat">🔗 <strong>Integración</strong> Flask</span>
+        </div>
 
     </header>
 
