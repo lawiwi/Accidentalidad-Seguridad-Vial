@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
 
-    <title>Tratamiento de datos | Calidad de Datos</title>
+{% block title %}Tratamiento de datos | Calidad de Datos{% endblock %}
+
+{% block head %}
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
 
@@ -28,19 +26,114 @@
             padding: 0;
         }
 
-        body {
-            font-family: "Inter", sans-serif;
-            color: var(--ink);
+                .stage-header {
             background:
-                radial-gradient(circle at 10% 10%, rgba(140, 78, 126, 0.08), transparent 28%),
-                radial-gradient(circle at 90% 20%, rgba(46, 156, 147, 0.08), transparent 25%),
-                var(--mist);
-            line-height: 1.65;
+                linear-gradient(
+                    var(--indigo-dark),
+                    var(--indigo)
+                );
+
+            color: white;
+
+            padding: 55px 25px 70px;
+
+            position: relative;
+            overflow: hidden;
         }
 
-        main {
+        .stage-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            right: -130px;
+            top: -180px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .header-content {
+            max-width: 1050px;
+
+            margin: auto;
+
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+
+            padding: 7px 14px;
+
+            border-radius: 30px;
+
+            background: rgba(255, 255, 255, 0.09);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 20px;
+        }
+
+        .stage-header h1 {
+            font-family: "Poppins", sans-serif;
+
+            font-size: clamp(32px, 5vw, 52px);
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        .stage-header p {
+            max-width: 760px;
+
+            color: rgba(255, 255, 255, 0.76);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+        .etapa2-tratamiento-page {
+            font-family: "Inter", sans-serif;
+            color: var(--ink);
+            line-height: 1.65;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+
+        .etapa2-tratamiento-page main {
             width: 100%;
             padding: 45px 20px 20px;
+        }
+
+        .etapa2-tratamiento-page .hero {
+            min-height: auto;
+            display: block;
+            align-items: initial;
+            justify-content: initial;
+            gap: normal;
+            padding: 48px 45px;
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(217, 164, 65, 0.22), transparent 25%),
+                radial-gradient(circle at 10% 90%, rgba(46, 156, 147, 0.20), transparent 30%),
+                linear-gradient(135deg, var(--indigo-dark), var(--indigo));
         }
 
         .container {
@@ -645,19 +738,29 @@
                 font-size: 7px;
             }
         }
-    </style>
-</head>
+        </style>
+   {% endblock %}
 
-<body>
+    {% block content %}
+    <div class="etapa2-integracion-page">
 
 <main>
-    <div class="container">
 
-        <!-- HEADER -->
-        <header class="hero">
-            <div class="eyebrow">Etapa 2 · Calidad de datos · 08</div>
+    <!-- =========================
+         HERO
+    ========================== -->
 
-            <h1>Tratamiento de datos</h1>
+    <header class="stage-header">
+
+        <div class="header-content">
+
+            <div class="badge">
+                Etapa 2 · Calidad de datos
+            </div>
+
+            <h1>
+                Tratamiento de datos
+            </h1>
 
             <p>
                 Definición de las acciones necesarias para corregir, transformar,
@@ -665,8 +768,13 @@
                 manteniendo la trazabilidad y evitando la alteración injustificada
                 de la información original.
             </p>
-        </header>
 
+        </div>
+
+    </header>
+
+
+    <div class="container">
 
         <!-- INTRODUCCIÓN -->
         <section class="section">
@@ -1422,6 +1530,6 @@
     </div>
 </main>
 
-</body>
-</html>
+</div>
+{% endblock %}
 

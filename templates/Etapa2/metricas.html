@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
 
-<head>
+{% block title %}Dimensiones y métricas | Etapa 2{% endblock %}
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+{% block head %}
     <title>Dimensiones y métricas | Etapa 2</title>
 
     <!-- Fuentes -->
@@ -15,14 +12,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
         rel="stylesheet"
-    >
+    >  
 
     <style>
-
-        /* ==================================================
-           VARIABLES
-           ================================================== */
-
         :root {
             --indigo: #232A54;
             --indigo-dark: #171B3B;
@@ -48,8 +40,7 @@
             padding: 0;
         }
 
-        body {
-            background: var(--mist);
+        .etapa2-metricas-page {
             color: var(--ink);
 
             font-family: "Inter", sans-serif;
@@ -64,7 +55,7 @@
            FONDO
            ================================================== */
 
-        body::before {
+        .etapa2-metricas-page::before {
             content: "";
 
             position: fixed;
@@ -97,10 +88,9 @@
            HEADER
            ================================================== */
 
-        header {
+        .stage-header {
             background:
                 linear-gradient(
-                    135deg,
                     var(--indigo-dark),
                     var(--indigo)
                 );
@@ -113,7 +103,7 @@
             overflow: hidden;
         }
 
-        header::after {
+        .stage-header::after {
             content: "";
 
             position: absolute;
@@ -160,7 +150,7 @@
             margin-bottom: 20px;
         }
 
-        header h1 {
+        .stage-header h1 {
             font-family: "Poppins", sans-serif;
 
             font-size: clamp(32px, 5vw, 52px);
@@ -170,7 +160,7 @@
             margin-bottom: 18px;
         }
 
-        header p {
+        .stage-header p {
             max-width: 760px;
 
             color: rgba(255, 255, 255, 0.76);
@@ -185,7 +175,7 @@
            CONTENEDOR
            ================================================== */
 
-        main {
+        .etapa2-metricas-page main {
             max-width: 1050px;
 
             margin: -35px auto 0;
@@ -805,11 +795,11 @@
                 padding: 23px;
             }
 
-            header {
+            .stage-header {
                 padding: 45px 20px 60px;
             }
 
-            main {
+            .etapa2-metricas-page main {
                 padding-left: 14px;
                 padding-right: 14px;
             }
@@ -830,11 +820,11 @@
 
         @media (max-width: 480px) {
 
-            header h1 {
+            .stage-header h1 {
                 font-size: 31px;
             }
 
-            header p {
+            .stage-header p {
                 font-size: 14px;
             }
 
@@ -863,17 +853,17 @@
 
     </style>
 
-</head>
+{% endblock %}
 
-
-<body>
+{% block content %}
+<div class="etapa2-metricas-page">
 
 
     <!-- ==================================================
          HEADER
          ================================================== -->
 
-    <header>
+    <header class="stage-header">
 
         <div class="header-content">
 
@@ -901,9 +891,6 @@
          ================================================== -->
 
     <main>
-
-
-        <!-- INTRODUCCIÓN -->
 
         <section class="section-card intro-card">
 
@@ -1964,7 +1951,5 @@
 
     </main>
 
-
-</body>
-
-</html>
+</div>
+{% endblock %}

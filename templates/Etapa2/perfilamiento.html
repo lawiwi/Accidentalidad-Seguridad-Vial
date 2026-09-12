@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
 
-<head>
+{% block title %}Perfilamiento de datos | Etapa 2{% endblock %}
+
+{% block head %}
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,8 +49,7 @@
             padding: 0;
         }
 
-        body {
-            background: var(--mist);
+        .etapa2-perfilamiento-page {
             color: var(--ink);
 
             font-family: "Inter", sans-serif;
@@ -57,6 +57,9 @@
             line-height: 1.7;
 
             min-height: 100vh;
+
+            position: relative;
+            z-index: 2;
         }
 
 
@@ -64,7 +67,7 @@
            FONDO
            ================================================== */
 
-        body::before {
+        .etapa2-perfilamiento-page::before {
             content: "";
 
             position: fixed;
@@ -97,7 +100,7 @@
            HEADER
            ================================================== */
 
-        header {
+        .stage-header {
             background:
                 linear-gradient(
                     135deg,
@@ -113,7 +116,7 @@
             overflow: hidden;
         }
 
-        header::after {
+        .stage-header::after {
             content: "";
 
             position: absolute;
@@ -160,7 +163,7 @@
             margin-bottom: 20px;
         }
 
-        header h1 {
+        .stage-header h1 {
             font-family: "Poppins", sans-serif;
 
             font-size: clamp(32px, 5vw, 52px);
@@ -170,7 +173,7 @@
             margin-bottom: 18px;
         }
 
-        header p {
+        .stage-header p {
             max-width: 760px;
 
             color: rgba(255, 255, 255, 0.76);
@@ -185,10 +188,10 @@
            CONTENEDOR
            ================================================== */
 
-        main {
+        .etapa2-perfilamiento-page main {
             max-width: 1050px;
 
-            margin: -35px auto 0;
+            margin: 24px auto 0;
 
             padding: 0 20px 60px;
 
@@ -729,11 +732,11 @@
                 padding: 23px;
             }
 
-            header {
+            .stage-header {
                 padding: 45px 20px 60px;
             }
 
-            main {
+            .etapa2-perfilamiento-page main {
                 padding-left: 14px;
                 padding-right: 14px;
             }
@@ -754,11 +757,11 @@
 
         @media (max-width: 480px) {
 
-            header h1 {
+            .stage-header h1 {
                 font-size: 31px;
             }
 
-            header p {
+            .stage-header p {
                 font-size: 14px;
             }
 
@@ -791,17 +794,17 @@
 
     </style>
 
-</head>
+{% endblock %}
 
-
-<body>
+{% block content %}
+<div class="etapa2-perfilamiento-page">
 
 
     <!-- ==================================================
          HEADER
          ================================================== -->
 
-    <header>
+    <header class="stage-header">
 
         <div class="header-content">
 
@@ -2019,8 +2022,6 @@
 
     </main>
 
-
-</body>
-
-</html>
+</div>
+{% endblock %}
 

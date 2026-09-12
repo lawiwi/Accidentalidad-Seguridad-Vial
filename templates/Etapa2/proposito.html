@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
 
-    <title>Etapa 2 | Propósito de los datos</title>
+{% block title %}Etapa 2 | Propósito de los datos{% endblock %}
+
+{% block head %}
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,18 +28,17 @@
             padding: 0;
         }
 
-        body {
+        .etapa2-proposito-page {
             font-family: "Inter", sans-serif;
             background:
                 radial-gradient(circle at 10% 10%, rgba(140, 78, 126, 0.10), transparent 28%),
-                radial-gradient(circle at 90% 85%, rgba(46, 156, 147, 0.10), transparent 30%),
-                var(--mist);
+                radial-gradient(circle at 90% 85%, rgba(46, 156, 147, 0.10), transparent 30%);
             color: var(--ink);
             min-height: 100vh;
         }
 
         /* HEADER */
-        header {
+        .stage-header {
             background: linear-gradient(
                 135deg,
                 var(--indigo),
@@ -55,7 +52,7 @@
             overflow: hidden;
         }
 
-        header::before {
+        .stage-header::before {
             content: "";
             position: absolute;
             width: 280px;
@@ -66,7 +63,7 @@
             left: -80px;
         }
 
-        header::after {
+        .stage-header::after {
             content: "";
             position: absolute;
             width: 350px;
@@ -114,7 +111,7 @@
         }
 
         /* CONTENIDO */
-        main {
+        .etapa2-proposito-page main {
             max-width: 1050px;
             margin: -35px auto 60px;
             padding: 0 20px;
@@ -360,11 +357,11 @@
         }
 
         @media (max-width: 560px) {
-            header {
+            .stage-header {
                 padding: 45px 18px 60px;
             }
 
-            main {
+            .etapa2-proposito-page main {
                 padding: 0 13px;
             }
 
@@ -512,11 +509,12 @@
     }
 }
     </style>
-</head>
+{% endblock %}
 
-<body>
+{% block content %}
+<div class="etapa2-proposito-page">
 
-<header>
+<header class="stage-header">
     <div class="header-content">
 
         <div class="badge">
@@ -864,6 +862,6 @@
 
 </main>
 
-</body>
-</html>
+</div>
+{% endblock %}
 
