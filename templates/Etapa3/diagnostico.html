@@ -1,0 +1,1460 @@
+{% extends "base.html" %}
+
+{% block title %}Etapa 3 - Diagnóstico{% endblock %}
+
+{% block content %}
+
+
+<style>
+    :root {
+        --indigo: #232A54;
+        --indigo-dark: #171B3B;
+        --plum: #8C4E7E;
+        --gold: #695f4d;
+        --teal: #2E9C93;
+        --mist: #F6F4FA;
+        --ink: #2A2A38;
+        --muted: #6F7080;
+        --white: #FFFFFF;
+        --border: #E6E4EC;
+    }
+
+    .diagnostico-page {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 30px 20px 50px;
+        color: var(--ink);
+
+        
+    }
+
+    
+    /* ENCABEZADO */
+
+    .hero {
+        position: relative;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 85% 20%, rgba(140, 78, 126, .25), transparent 28%),
+            radial-gradient(circle at 10% 90%, rgba(46, 156, 147, .18), transparent 30%),
+            linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+        border-radius: 24px;
+        padding: 38px;
+        color: white;
+        margin-bottom: 28px;
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: .08;
+        background-image: radial-gradient(#fff 1px, transparent 1px);
+        background-size: 18px 18px;
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .stage-tag {
+        display: inline-block;
+        padding: 7px 14px;
+        border-radius: 30px;
+        background: rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.2);
+        font-size: .78rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+    }
+
+    .hero h1 {
+        margin: 0 0 10px;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.1;
+    }
+
+    .hero p {
+        max-width: 850px;
+        margin: 0;
+        color: rgba(255,255,255,.82);
+        line-height: 1.7;
+        font-size: 1rem;
+    }
+
+    .hero-number {
+        position: absolute;
+        right: 35px;
+        top: 25px;
+        font-size: 7rem;
+        line-height: 1;
+        font-weight: 900;
+        color: rgba(255,255,255,.06);
+        user-select: none;
+    }
+
+    /* NAVEGACIÓN */
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--indigo);
+        text-decoration: none;
+        font-weight: 700;
+        margin-bottom: 22px;
+    }
+
+    .back-link:hover {
+        color: var(--plum);
+    }
+
+    /* SECCIONES */
+
+    .section {
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 8px 25px rgba(35,42,84,.05);
+    }
+
+    .section-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .section-number {
+        min-width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 13px;
+        background: var(--mist);
+        color: var(--indigo);
+        font-weight: 800;
+        font-size: .95rem;
+    }
+
+    .section-header h2 {
+        margin: 0 0 5px;
+        color: var(--indigo);
+        font-size: 1.35rem;
+    }
+
+    .section-header p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+    }
+
+    .section-text {
+        color: #464756;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    /* DATASETS */
+
+    .dataset-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .dataset-card {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    .dataset-title {
+        padding: 18px 20px;
+        color: white;
+    }
+
+    .dataset-title.siniestros {
+        background: linear-gradient(135deg, var(--indigo), #343C78);
+    }
+
+    .dataset-title.vehiculos {
+        background: linear-gradient(135deg, var(--plum), #A56898);
+    }
+
+    .dataset-title h3 {
+        margin: 0 0 5px;
+        font-size: 1.05rem;
+    }
+
+    .dataset-title span {
+        font-size: .82rem;
+        opacity: .82;
+    }
+
+    .dataset-body {
+        padding: 20px;
+    }
+
+    .dataset-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .stat {
+        background: var(--mist);
+        border-radius: 12px;
+        padding: 13px;
+    }
+
+    .stat strong {
+        display: block;
+        color: var(--indigo);
+        font-size: 1.15rem;
+    }
+
+    .stat span {
+        color: var(--muted);
+        font-size: .78rem;
+    }
+
+    .dataset-body p {
+        color: #555665;
+        line-height: 1.6;
+        font-size: .92rem;
+        margin: 0 0 12px;
+    }
+
+    .columns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+    }
+
+    .column {
+        background: #f1eff6;
+        color: var(--indigo);
+        padding: 5px 9px;
+        border-radius: 7px;
+        font-size: .72rem;
+        font-family: Consolas, monospace;
+    }
+
+    /* MÉTRICAS */
+
+    .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+    }
+
+    .metric {
+        text-align: center;
+        padding: 20px 12px;
+        border-radius: 16px;
+        background: var(--mist);
+        border-top: 4px solid var(--teal);
+    }
+
+    .metric:nth-child(2) {
+        border-top-color: var(--plum);
+    }
+
+    .metric:nth-child(3) {
+        border-top-color: var(--gold);
+    }
+
+    .metric:nth-child(4) {
+        border-top-color: var(--indigo);
+    }
+
+    .metric .value {
+        display: block;
+        font-size: 1.7rem;
+        font-weight: 900;
+        color: var(--indigo);
+        margin-bottom: 4px;
+    }
+
+    .metric .label {
+        font-size: .8rem;
+        color: var(--muted);
+    }
+
+    /* COMPATIBILIDAD */
+
+    .comparison {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border-radius: 14px;
+    }
+
+    .comparison th {
+        background: var(--indigo);
+        color: white;
+        padding: 14px;
+        text-align: left;
+        font-size: .85rem;
+    }
+
+    .comparison td {
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+        font-size: .88rem;
+        vertical-align: top;
+    }
+
+    .comparison tr:last-child td {
+        border-bottom: none;
+    }
+
+    .comparison tr:nth-child(even) {
+        background: #faf9fc;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: .72rem;
+        font-weight: 700;
+    }
+
+    .status.ok {
+        background: #e6f5f2;
+        color: #23776f;
+    }
+
+    .status.warning {
+        background: #fff5dc;
+        color: #916c18;
+    }
+
+    .status.problem {
+        background: #f7e8f1;
+        color: #81416f;
+    }
+
+    /* PROBLEMAS */
+
+    .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+
+    .problem-card {
+        padding: 20px;
+        border-radius: 16px;
+        background: #faf9fc;
+        border-left: 4px solid var(--plum);
+    }
+
+    .problem-card h3 {
+        margin: 0 0 9px;
+        font-size: 1rem;
+        color: var(--indigo);
+    }
+
+    .problem-card p {
+        margin: 0;
+        font-size: .87rem;
+        line-height: 1.6;
+        color: #5c5d6c;
+    }
+
+    /* DECISIÓN */
+
+    .decision {
+        background: linear-gradient(135deg, #f7f5fa, #f2f8f7);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 24px;
+    }
+
+    .decision h3 {
+        margin: 0 0 12px;
+        color: var(--indigo);
+    }
+
+    .decision p {
+        margin: 0 0 15px;
+        color: #4f5060;
+        line-height: 1.7;
+    }
+
+    .criteria {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .criterion {
+        background: white;
+        border-radius: 13px;
+        padding: 15px;
+        border: 1px solid var(--border);
+    }
+
+    .criterion strong {
+        display: block;
+        color: var(--teal);
+        margin-bottom: 5px;
+        font-size: .88rem;
+    }
+
+    .criterion span {
+        color: var(--muted);
+        font-size: .78rem;
+        line-height: 1.4;
+    }
+
+    /* MODELO ER */
+
+    .er-model {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .entity {
+        border: 2px solid var(--indigo);
+        border-radius: 16px;
+        overflow: hidden;
+        background: white;
+    }
+
+    .entity.associative {
+        border-color: var(--teal);
+    }
+
+    .entity.vehicle {
+        border-color: var(--plum);
+    }
+
+    .entity-header {
+        padding: 13px;
+        background: var(--indigo);
+        color: white;
+        font-weight: 800;
+        text-align: center;
+        font-size: .9rem;
+    }
+
+    .entity.associative .entity-header {
+        background: var(--teal);
+    }
+
+    .entity.vehicle .entity-header {
+        background: var(--plum);
+    }
+
+    .entity-body {
+        padding: 14px;
+    }
+
+    .field {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 7px 0;
+        border-bottom: 1px solid #eeeef2;
+        font-size: .76rem;
+    }
+
+    .field:last-child {
+        border-bottom: none;
+    }
+
+    .pk {
+        color: var(--gold);
+        font-weight: 800;
+    }
+
+    .fk {
+        color: var(--teal);
+        font-weight: 800;
+    }
+
+    .connector {
+        text-align: center;
+        color: var(--muted);
+        font-size: .75rem;
+        font-weight: 700;
+    }
+
+    .connector-line {
+        height: 2px;
+        width: 50px;
+        background: var(--border);
+        margin: 0 auto 6px;
+    }
+
+    /* RESULTADO */
+
+    .result-box {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 18px;
+        align-items: center;
+        background: var(--indigo);
+        color: white;
+        border-radius: 20px;
+        padding: 25px;
+    }
+
+    .result-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 16px;
+        background: rgba(255,255,255,.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        font-weight: 900;
+    }
+
+    .result-box h3 {
+        margin: 0 0 6px;
+    }
+
+    .result-box p {
+        margin: 0;
+        color: rgba(255,255,255,.78);
+        line-height: 1.6;
+        font-size: .9rem;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+        .dataset-grid,
+        .problem-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .metrics {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .criteria {
+            grid-template-columns: 1fr;
+        }
+
+        .er-model {
+            grid-template-columns: 1fr;
+        }
+
+        .connector-line {
+            width: 2px;
+            height: 30px;
+            margin: 0 auto;
+        }
+
+        .hero-number {
+            display: none;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .diagnostico-page {
+            padding: 20px 12px 40px;
+        }
+
+        .hero,
+        .section {
+            padding: 22px;
+        }
+
+        .metrics {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .dataset-stats {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .comparison {
+            display: block;
+            overflow-x: auto;
+        }
+    }
+    
+   /* =========================================
+   NAVEGACIÓN LATERAL
+   ========================================= */
+
+.side-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
+
+.side-nav.left {
+    left: 18px;
+}
+
+.side-nav.right {
+    right: 18px;
+}
+
+.side-nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 700;
+
+    background: white;
+    color: var(--indigo);
+
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(35, 42, 84, .12);
+
+    transition: all .25s ease;
+}
+
+.side-nav a:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 28px rgba(35, 42, 84, .18);
+}
+
+.side-nav.left a:hover {
+    color: var(--plum);
+    border-color: var(--plum);
+}
+
+.side-nav.right a {
+    background: var(--indigo);
+    color: white;
+    border-color: var(--indigo);
+}
+
+.side-nav.right a:hover {
+    background: var(--indigo-dark);
+}
+
+
+/* =========================================
+   NAVEGACIÓN INFERIOR
+   ========================================= */
+
+.etapa-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 10px;
+}
+
+.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 18px;
+
+    border-radius: 12px;
+    text-decoration: none;
+
+    font-size: .88rem;
+    font-weight: 700;
+
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--indigo);
+
+    box-shadow: 0 5px 15px rgba(35, 42, 84, .06);
+
+    transition: all .25s ease;
+}
+
+.nav-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(35, 42, 84, .10);
+}
+
+.nav-btn.previous:hover {
+    border-color: var(--plum);
+    color: var(--plum);
+}
+
+.nav-btn.next {
+    background: var(--indigo);
+    color: white;
+    border-color: var(--indigo);
+}
+
+.nav-btn.next:hover {
+    background: var(--indigo-dark);
+}
+
+.nav-center {
+    color: var(--muted);
+    font-size: .78rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.nav-center strong {
+    display: block;
+    color: var(--indigo);
+    font-size: .85rem;
+    margin-bottom: 3px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1100px) {
+
+    .side-nav.left {
+        left: 8px;
+    }
+
+    .side-nav.right {
+        right: 8px;
+    }
+
+    .side-nav a {
+        width: 42px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .side-nav {
+        display: none;
+    }
+
+    .etapa-nav {
+        gap: 8px;
+    }
+
+    .nav-btn {
+        padding: 10px 13px;
+        font-size: .78rem;
+    }
+
+    .nav-center {
+        display: none;
+    }
+}
+
+</style>
+
+
+<div class="diagnostico-page">
+<!-- BOTÓN LATERAL ANTERIOR -->
+<div class="side-nav left">
+    <a href="{{ url_for('etapa3') }}" title="Volver a Etapa 3">
+        ←
+    </a>
+</div>
+
+<!-- BOTÓN LATERAL SIGUIENTE -->
+<div class="side-nav right">
+    <a href="{{ url_for('reglas') }}" title="Ir a Reglas">
+        →
+    </a>
+</div>
+    <a href="{{ url_for('etapa3') }}" class="back-link">
+        ← Volver a Etapa 3
+    </a>
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="stage-tag">Etapa 3 · Diagnóstico</span>
+
+            <h1>Diagnóstico de las fuentes de datos</h1>
+
+            <p>
+                Análisis del estado inicial de los datasets utilizados en el proyecto,
+                identificando sus características, diferencias, campos compatibles,
+                limitaciones y condiciones necesarias para realizar el proceso de
+                integración de la información de accidentalidad vial.
+            </p>
+        </div>
+
+        <div class="hero-number">01</div>
+    </section>
+
+
+    <!-- 1. PROPÓSITO -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">01</div>
+
+            <div>
+                <h2>Propósito del diagnóstico</h2>
+                <p>Comprender el estado inicial de las fuentes antes de realizar la integración.</p>
+            </div>
+        </div>
+
+        <p class="section-text">
+            El diagnóstico tiene como propósito identificar las características y
+            condiciones de las fuentes de datos utilizadas para el análisis de
+            accidentalidad vial. Para ello se revisaron los archivos
+            <strong>siniestros_viales.csv</strong> y
+            <strong>vehiculos_accidentes.csv</strong>, determinando su estructura,
+            cantidad de registros, variables disponibles, cobertura temporal y
+            atributos que pueden ser utilizados durante el proceso de integración.
+        </p>
+
+    </section>
+
+
+    <!-- 2. FUENTES -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">02</div>
+
+            <div>
+                <h2>Fuentes de datos analizadas</h2>
+                <p>Características principales de los datasets utilizados por el equipo.</p>
+            </div>
+        </div>
+
+        <div class="dataset-grid">
+
+            <!-- SINIESTROS -->
+
+            <div class="dataset-card">
+
+                <div class="dataset-title siniestros">
+                    <h3>siniestros_viales.csv</h3>
+                    <span>Fuente: ANSV</span>
+                </div>
+
+                <div class="dataset-body">
+
+                    <div class="dataset-stats">
+
+                        <div class="stat">
+                            <strong>19.015</strong>
+                            <span>Registros</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>16</strong>
+                            <span>Variables</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>2019</strong>
+                            <span>Año inicial</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>14 ago.</strong>
+                            <span>Fecha final</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Contiene información general de los siniestros viales,
+                        incluyendo ubicación, fecha, clasificación, hipótesis,
+                        víctimas y departamento o municipio donde ocurrió el hecho.
+                    </p>
+
+                    <div class="columns">
+                        <span class="column">fid</span>
+                        <span class="column">hechos_id</span>
+                        <span class="column">latitud</span>
+                        <span class="column">longitud</span>
+                        <span class="column">fecha_hech</span>
+                        <span class="column">depto_hech</span>
+                        <span class="column">municipio_</span>
+                        <span class="column">lugaro</span>
+                        <span class="column">hipotesis_</span>
+                        <span class="column">smuertos</span>
+                        <span class="column">slesionado</span>
+                        <span class="column">tvictimas</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- VEHICULOS -->
+
+            <div class="dataset-card">
+
+                <div class="dataset-title vehiculos">
+                    <h3>vehiculos_accidentes.csv</h3>
+                    <span>Fuente: Datos Abiertos Colombia</span>
+                </div>
+
+                <div class="dataset-body">
+
+                    <div class="dataset-stats">
+
+                        <div class="stat">
+                            <strong>406.540</strong>
+                            <span>Registros</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>9</strong>
+                            <span>Variables</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>2022</strong>
+                            <span>Año inicial</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>2026</strong>
+                            <span>Fecha final</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Contiene información relacionada con los vehículos
+                        involucrados en accidentes de tránsito, incluyendo marca,
+                        modelo, tipo, edad, gravedad y ubicación del accidente.
+                    </p>
+
+                    <div class="columns">
+                        <span class="column">marca_vehiculo</span>
+                        <span class="column">modelo_vehiculo</span>
+                        <span class="column">tipo_vehiculo</span>
+                        <span class="column">edad_vehiculo</span>
+                        <span class="column">fecha_accidente</span>
+                        <span class="column">gravedad_accidente</span>
+                        <span class="column">departamento_accidente</span>
+                        <span class="column">municipio_accidente</span>
+                        <span class="column">autoridad_de_transito</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 3. RESUMEN -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">03</div>
+
+            <div>
+                <h2>Resumen del diagnóstico</h2>
+                <p>Magnitud y características principales encontradas.</p>
+            </div>
+        </div>
+
+        <div class="metrics">
+
+            <div class="metric">
+                <span class="value">19.015</span>
+                <span class="label">Siniestros registrados</span>
+            </div>
+
+            <div class="metric">
+                <span class="value">406.540</span>
+                <span class="label">Vehículos registrados</span>
+            </div>
+
+            <div class="metric">
+                <span class="value">27</span>
+                <span class="label">Departamentos comunes</span>
+            </div>
+
+            <div class="metric">
+                <span class="value">2</span>
+                <span class="label">Fuentes analizadas</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 4. COMPATIBILIDAD -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">04</div>
+
+            <div>
+                <h2>Compatibilidad entre las fuentes</h2>
+                <p>Identificación de atributos que pueden apoyar el proceso de correspondencia.</p>
+            </div>
+        </div>
+
+        <table class="comparison">
+
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Siniestros</th>
+                    <th>Vehículos</th>
+                    <th>Diagnóstico</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td><strong>Fecha</strong></td>
+                    <td>fecha_hech</td>
+                    <td>fecha_accidente</td>
+                    <td>
+                        <span class="status ok">Compatible</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Departamento</strong></td>
+                    <td>depto_hech</td>
+                    <td>departamento_accidente</td>
+                    <td>
+                        <span class="status warning">Requiere homologación</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Municipio</strong></td>
+                    <td>municipio_</td>
+                    <td>municipio_accidente</td>
+                    <td>
+                        <span class="status warning">Requiere homologación</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Identificador de accidente</strong></td>
+                    <td>hechos_id</td>
+                    <td>No disponible</td>
+                    <td>
+                        <span class="status problem">No existe clave común</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Cobertura temporal</strong></td>
+                    <td>2019-01-01 a 2019-08-14</td>
+                    <td>2022-01-01 a 2026-02-01</td>
+                    <td>
+                        <span class="status problem">Periodos diferentes</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- 5. PROBLEMAS -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">05</div>
+
+            <div>
+                <h2>Problemas y limitaciones identificadas</h2>
+                <p>Situaciones que deben ser consideradas antes de integrar los datos.</p>
+            </div>
+        </div>
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <h3>Ausencia de una clave compartida</h3>
+                <p>
+                    Las dos fuentes no contienen un identificador único común que
+                    permita relacionar directamente un siniestro con sus vehículos.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Diferencia temporal</h3>
+                <p>
+                    El dataset de siniestros corresponde principalmente al año 2019,
+                    mientras que el dataset de vehículos comienza en 2022.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Diferencias geográficas</h3>
+                <p>
+                    Se encontraron 32 departamentos en la fuente de siniestros y
+                    31 en la fuente de vehículos, con 27 departamentos comunes.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Nomenclaturas diferentes</h3>
+                <p>
+                    Los nombres de los campos y posiblemente sus valores presentan
+                    estructuras diferentes, por lo que requieren homologación.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Riesgo de correspondencias incorrectas</h3>
+                <p>
+                    Una coincidencia únicamente por fecha o ubicación no garantiza
+                    que los registros correspondan al mismo accidente.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Fuentes con diferentes niveles de detalle</h3>
+                <p>
+                    Siniestros describe el hecho general, mientras que vehículos
+                    proporciona información específica de los vehículos involucrados.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 6. DECISIÓN DE INTEGRACIÓN -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">06</div>
+
+            <div>
+                <h2>Decisión tomada para la integración</h2>
+                <p>Definición de los criterios utilizados para establecer correspondencias.</p>
+            </div>
+        </div>
+
+        <div class="decision">
+
+            <h3>Correspondencia mediante atributos comunes</h3>
+
+            <p>
+                Debido a que las fuentes originales no poseen una clave primaria
+                compartida, se definió utilizar atributos comunes como criterios
+                de correspondencia. La estrategia considera principalmente la
+                <strong>fecha del accidente, el departamento y el municipio</strong>.
+            </p>
+
+            <div class="criteria">
+
+                <div class="criterion">
+                    <strong>Coincidencia fuerte</strong>
+                    <span>
+                        Fecha + departamento + municipio coincidentes.
+                    </span>
+                </div>
+
+                <div class="criterion">
+                    <strong>Coincidencia parcial</strong>
+                    <span>
+                        Fecha y departamento o fecha y municipio coincidentes.
+                    </span>
+                </div>
+
+                <div class="criterion">
+                    <strong>Sin coincidencia</strong>
+                    <span>
+                        No se encuentran suficientes atributos comunes para
+                        establecer una correspondencia.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 7. MODELO ER -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">07</div>
+
+            <div>
+                <h2>Modelo de integración</h2>
+                <p>Representación de las entidades y relaciones definidas a partir del diagnóstico.</p>
+            </div>
+        </div>
+
+        <p class="section-text">
+            Como resultado del diagnóstico se definió una estructura relacional
+            que permite representar la relación entre los siniestros y los
+            vehículos sin asumir que el identificador de una fuente corresponde
+            directamente con el de la otra.
+        </p>
+
+
+        <div class="er-model">
+
+            <!-- SINIESTRO -->
+
+            <div class="entity">
+
+                <div class="entity-header">
+                    SINIESTRO
+                </div>
+
+                <div class="entity-body">
+
+                    <div class="field">
+                        <span class="pk">PK · id_siniestro</span>
+                    </div>
+
+                    <div class="field">
+                        <span>fecha</span>
+                    </div>
+
+                    <div class="field">
+                        <span>departamento</span>
+                    </div>
+
+                    <div class="field">
+                        <span>municipio</span>
+                    </div>
+
+                    <div class="field">
+                        <span>latitud / longitud</span>
+                    </div>
+
+                    <div class="field">
+                        <span>hipótesis</span>
+                    </div>
+
+                    <div class="field">
+                        <span>víctimas</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONECTOR -->
+
+            <div class="connector">
+                <div class="connector-line"></div>
+                1 : N
+            </div>
+
+
+            <!-- ASOCIATIVA -->
+
+            <div class="entity associative">
+
+                <div class="entity-header">
+                    SINIESTRO_VEHICULO
+                </div>
+
+                <div class="entity-body">
+
+                    <div class="field">
+                        <span class="pk">PK · id_relacion</span>
+                    </div>
+
+                    <div class="field">
+                        <span class="fk">FK · id_siniestro</span>
+                    </div>
+
+                    <div class="field">
+                        <span class="fk">FK · id_vehiculo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>nivel_coincidencia</span>
+                    </div>
+
+                    <div class="field">
+                        <span>criterios_coincidentes</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONECTOR -->
+
+            <div class="connector">
+                <div class="connector-line"></div>
+                N : 1
+            </div>
+
+
+            <!-- VEHICULO -->
+
+            <div class="entity vehicle">
+
+                <div class="entity-header">
+                    VEHICULO
+                </div>
+
+                <div class="entity-body">
+
+                    <div class="field">
+                        <span class="pk">PK · id_vehiculo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>marca</span>
+                    </div>
+
+                    <div class="field">
+                        <span>modelo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>tipo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>edad</span>
+                    </div>
+
+                    <div class="field">
+                        <span>gravedad</span>
+                    </div>
+
+                    <div class="field">
+                        <span>autoridad tránsito</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 8. REGLAS QUE PASAN A LA SIGUIENTE FASE -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">08</div>
+
+            <div>
+                <h2>Aspectos definidos para la siguiente fase</h2>
+                <p>Elementos que serán utilizados en la construcción de las reglas de integración.</p>
+            </div>
+        </div>
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <h3>Homologación</h3>
+                <p>
+                    Normalizar nombres y valores de departamento y municipio
+                    para facilitar las comparaciones entre fuentes.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Validación de fechas</h3>
+                <p>
+                    Estandarizar los campos de fecha y verificar que los registros
+                    cumplan las condiciones temporales definidas.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Nivel de coincidencia</h3>
+                <p>
+                    Registrar si una correspondencia es fuerte, parcial o no
+                    identificada según los criterios establecidos.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULTADO -->
+
+    <section class="result-box">
+
+        <div class="result-icon">
+            ✓
+        </div>
+
+        <div>
+            <h3>Resultado del diagnóstico</h3>
+
+            <p>
+                Se caracterizaron las dos fuentes de datos, se identificaron sus
+                diferencias estructurales y temporales, se determinaron los
+                atributos comunes y se estableció una estrategia de integración
+                basada en fecha, departamento y municipio. A partir de este
+                diagnóstico se definieron las condiciones necesarias para avanzar
+                hacia la construcción de las reglas de homologación y el proceso ETL.
+            </p>
+        </div>
+
+    </section>
+<!-- NAVEGACIÓN ENTRE ETAPAS -->
+
+<div class="etapa-nav">
+
+    <a href="{{ url_for('etapa3') }}" class="nav-btn previous">
+        ← Etapa 3
+    </a>
+
+    <div class="nav-center">
+        <strong>Diagnóstico</strong>
+        1 de 8
+    </div>
+
+    <a href="{{ url_for('reglas') }}" class="nav-btn next">
+        Reglas →
+    </a>
+
+</div>
+</div>
+
+{% endblock %}

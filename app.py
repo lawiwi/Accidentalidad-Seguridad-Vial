@@ -380,6 +380,51 @@ def Etapa2_comparacion():
 def Etapa2_conclusiones():
     return render_template("Etapa2/conclusiones.html")
 
+# =========================
+# ETAPA 3 - LIMPIEZA DE DATOS
+# =========================
+
+@app.route("/Etapa3")
+def etapa3():
+    return render_template("Etapa3/menu.html")
+
+@app.route("/Etapa3/diagnostico")
+def etapa3_diagnostico():
+    return render_template("Etapa3/diagnostico.html")
+
+@app.route("/Etapa3/reglas")
+def reglas():
+    return render_template("Etapa3/reglas.html")
+
+@app.route("/Etapa3/ssis")
+def ssis():
+    return render_template("Etapa3/ssis.html")
+
+
+@app.route("/Etapa3/iteracion1")
+def iteracion1():
+    return render_template("Etapa3/iteracion1.html")
+
+
+@app.route("/Etapa3/iteracion2")
+def iteracion2():
+    return render_template("Etapa3/iteracion2.html")
+
+
+@app.route("/Etapa3/iteracion3")
+def iteracion3():
+    return render_template("Etapa3/iteracion3.html")
+
+
+@app.route("/Etapa3/comparacion")
+def comparacion():
+    return render_template("Etapa3/comparacion.html")
+
+
+@app.route("/Etapa3/video")
+def video():
+    return render_template("Etapa3/video.html")
+
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     debug_mode = os.environ.get("FLASK_ENV") != "production"

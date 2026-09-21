@@ -1,0 +1,1415 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    :root {
+        --indigo: #232A54;
+        --indigo-dark: #171B3B;
+        --plum: #8C4E7E;
+        --gold: #D9A441;
+        --teal: #2E9C93;
+        --mist: #F6F4FA;
+        --ink: #2A2A38;
+        --muted: #72758A;
+        --border: #E5E3EC;
+    }
+
+    .reglas-page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 30px 24px 50px;
+        color: var(--ink);
+    }
+
+    /* =========================================
+       HERO
+       ========================================= */
+
+    .hero {
+        position: relative;
+        overflow: hidden;
+        background:
+            radial-gradient(
+                circle at 85% 20%,
+                rgba(140, 78, 126, .25),
+                transparent 25%
+            ),
+            radial-gradient(
+                circle at 10% 90%,
+                rgba(46, 156, 147, .18),
+                transparent 25%
+            ),
+            linear-gradient(
+                135deg,
+                var(--indigo-dark),
+                var(--indigo)
+            );
+
+        border-radius: 24px;
+        padding: 42px;
+        color: white;
+        margin-bottom: 28px;
+        box-shadow: 0 15px 35px rgba(35, 42, 84, .14);
+    }
+
+    .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: .08;
+        background-image: radial-gradient(
+            white 1px,
+            transparent 1px
+        );
+        background-size: 18px 18px;
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 850px;
+    }
+
+    .stage-tag {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 30px;
+        background: rgba(255,255,255,.10);
+        border: 1px solid rgba(255,255,255,.18);
+        font-size: .76rem;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+    }
+
+    .hero h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.1;
+    }
+
+    .hero p {
+        margin: 0;
+        color: rgba(255,255,255,.82);
+        line-height: 1.7;
+        font-size: .98rem;
+    }
+
+    .stage-number {
+        position: absolute;
+        right: 40px;
+        top: 25px;
+        font-size: 5rem;
+        font-weight: 900;
+        color: rgba(255,255,255,.07);
+        z-index: 1;
+    }
+
+
+    /* =========================================
+       SECCIONES
+       ========================================= */
+
+    .section {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 7px 22px rgba(35,42,84,.05);
+    }
+
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-bottom: 20px;
+    }
+
+    .section-number {
+        min-width: 38px;
+        height: 38px;
+        border-radius: 11px;
+        background: var(--mist);
+        color: var(--indigo);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: .82rem;
+        font-weight: 800;
+    }
+
+    .section-title h2 {
+        margin: 0;
+        color: var(--indigo);
+        font-size: 1.3rem;
+    }
+
+    .section p {
+        line-height: 1.7;
+        color: #55586B;
+        margin: 0 0 12px;
+    }
+
+
+    /* =========================================
+       TARJETAS DE REGLAS
+       ========================================= */
+
+    .rules-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    .rule-card {
+        position: relative;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 22px;
+        transition: all .25s ease;
+    }
+
+    .rule-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(35,42,84,.08);
+    }
+
+    .rule-card.indigo {
+        border-top: 4px solid var(--indigo);
+    }
+
+    .rule-card.plum {
+        border-top: 4px solid var(--plum);
+    }
+
+    .rule-card.gold {
+        border-top: 4px solid var(--gold);
+    }
+
+    .rule-card.teal {
+        border-top: 4px solid var(--teal);
+    }
+
+    .rule-code {
+        display: inline-block;
+        font-size: .72rem;
+        font-weight: 800;
+        color: var(--muted);
+        margin-bottom: 8px;
+        letter-spacing: .05em;
+    }
+
+    .rule-card h3 {
+        color: var(--indigo);
+        margin: 0 0 10px;
+        font-size: 1rem;
+    }
+
+    .rule-card p {
+        font-size: .9rem;
+        margin: 0;
+    }
+
+
+    /* =========================================
+       TABLAS
+       ========================================= */
+
+    .table-wrapper {
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 700px;
+    }
+
+    th {
+        background: var(--indigo);
+        color: white;
+        padding: 13px 15px;
+        text-align: left;
+        font-size: .82rem;
+    }
+
+    td {
+        padding: 13px 15px;
+        border-bottom: 1px solid var(--border);
+        font-size: .86rem;
+        color: #55586B;
+        vertical-align: top;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover td {
+        background: var(--mist);
+    }
+
+
+    /* =========================================
+       CRITERIOS DE COINCIDENCIA
+       ========================================= */
+
+    .match-box {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .match-card {
+        padding: 20px;
+        border-radius: 15px;
+        text-align: center;
+        border: 1px solid var(--border);
+    }
+
+    .match-card strong {
+        display: block;
+        color: var(--indigo);
+        margin-bottom: 9px;
+    }
+
+    .match-card p {
+        font-size: .82rem;
+        margin: 0;
+    }
+
+    .match-card.strong-match {
+        border-top: 4px solid var(--teal);
+    }
+
+    .match-card.partial-match {
+        border-top: 4px solid var(--gold);
+    }
+
+    .match-card.no-match {
+        border-top: 4px solid var(--plum);
+    }
+
+
+    /* =========================================
+       FLUJO
+       ========================================= */
+
+    .flow {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .flow-step {
+        flex: 1;
+        min-width: 150px;
+        max-width: 220px;
+        background: var(--mist);
+        border-radius: 14px;
+        padding: 18px 15px;
+        text-align: center;
+        border: 1px solid var(--border);
+    }
+
+    .flow-step strong {
+        display: block;
+        color: var(--indigo);
+        font-size: .88rem;
+        margin-bottom: 6px;
+    }
+
+    .flow-step span {
+        display: block;
+        color: var(--muted);
+        font-size: .75rem;
+        line-height: 1.5;
+    }
+
+    .flow-arrow {
+        align-self: center;
+        color: var(--plum);
+        font-size: 1.3rem;
+        font-weight: 800;
+    }
+
+
+    /* =========================================
+       RESULTADO
+       ========================================= */
+
+    .result-box {
+        background: linear-gradient(
+            135deg,
+            rgba(46,156,147,.09),
+            rgba(35,42,84,.04)
+        );
+        border: 1px solid rgba(46,156,147,.25);
+        border-radius: 18px;
+        padding: 24px;
+        margin-top: 22px;
+    }
+
+    .result-box h3 {
+        color: var(--teal);
+        margin: 0 0 9px;
+    }
+
+    .result-box p {
+        margin: 0;
+    }
+
+
+    /* =========================================
+       NAVEGACIÓN LATERAL
+       ========================================= */
+
+    .side-nav {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1000;
+    }
+
+    .side-nav.left {
+        left: 18px;
+    }
+
+    .side-nav.right {
+        right: 18px;
+    }
+
+    .side-nav a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 46px;
+        height: 46px;
+
+        border-radius: 50%;
+        text-decoration: none;
+
+        font-size: 1.25rem;
+        font-weight: 700;
+
+        background: white;
+        color: var(--indigo);
+
+        border: 1px solid var(--border);
+
+        box-shadow:
+            0 8px 24px rgba(35,42,84,.12);
+
+        transition: all .25s ease;
+    }
+
+    .side-nav a:hover {
+        transform: scale(1.08);
+    }
+
+    .side-nav.left a:hover {
+        color: var(--plum);
+        border-color: var(--plum);
+    }
+
+    .side-nav.right a {
+        background: var(--indigo);
+        color: white;
+        border-color: var(--indigo);
+    }
+
+    .side-nav.right a:hover {
+        background: var(--indigo-dark);
+    }
+
+
+    /* =========================================
+       NAVEGACIÓN INFERIOR
+       ========================================= */
+
+    .etapa-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+
+        margin-top: 30px;
+        padding-top: 10px;
+    }
+
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+
+        padding: 12px 18px;
+
+        border-radius: 12px;
+        text-decoration: none;
+
+        font-size: .88rem;
+        font-weight: 700;
+
+        border: 1px solid var(--border);
+        background: white;
+        color: var(--indigo);
+
+        box-shadow:
+            0 5px 15px rgba(35,42,84,.06);
+
+        transition: all .25s ease;
+    }
+
+    .nav-btn:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 8px 20px rgba(35,42,84,.10);
+    }
+
+    .nav-btn.previous:hover {
+        border-color: var(--plum);
+        color: var(--plum);
+    }
+
+    .nav-btn.next {
+        background: var(--indigo);
+        color: white;
+        border-color: var(--indigo);
+    }
+
+    .nav-btn.next:hover {
+        background: var(--indigo-dark);
+    }
+
+    .nav-center {
+        color: var(--muted);
+        font-size: .78rem;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .nav-center strong {
+        display: block;
+        color: var(--indigo);
+        font-size: .85rem;
+        margin-bottom: 3px;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+       ========================================= */
+
+    @media (max-width: 900px) {
+
+        .rules-grid,
+        .match-box {
+            grid-template-columns: 1fr;
+        }
+
+        .hero {
+            padding: 30px;
+        }
+
+        .stage-number {
+            display: none;
+        }
+    }
+
+    @media (max-width: 700px) {
+
+        .reglas-page {
+            padding: 20px 14px 40px;
+        }
+
+        .section {
+            padding: 21px;
+        }
+
+        .side-nav {
+            display: none;
+        }
+
+        .etapa-nav {
+            gap: 8px;
+        }
+
+        .nav-btn {
+            padding: 10px 13px;
+            font-size: .78rem;
+        }
+
+        .nav-center {
+            display: none;
+        }
+
+        .flow {
+            flex-direction: column;
+        }
+
+        .flow-arrow {
+            transform: rotate(90deg);
+        }
+    }
+</style>
+
+
+<!-- =========================================
+     NAVEGACIÓN LATERAL
+     ========================================= -->
+
+<div class="side-nav left">
+    <a
+        href="{{ url_for('etapa3_diagnostico') }}"
+        title="Volver a Diagnóstico"
+    >
+        ←
+    </a>
+</div>
+
+<div class="side-nav right">
+    <a
+        href="{{ url_for('ssis') }}"
+        title="Ir a SSIS"
+    >
+        →
+    </a>
+</div>
+
+
+<div class="reglas-page">
+
+    <!-- =========================================
+         HERO
+         ========================================= -->
+
+    <section class="hero">
+
+        <div class="stage-number">02</div>
+
+        <div class="hero-content">
+
+            <span class="stage-tag">
+                Etapa 3 · Reglas de integración
+            </span>
+
+            <h1>Reglas de homologación y correspondencia</h1>
+
+            <p>
+                Definición de las reglas utilizadas para estandarizar,
+                validar y establecer correspondencias entre los datos de
+                siniestros viales y los vehículos involucrados.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         01. PROPÓSITO
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <div class="section-number">01</div>
+
+            <h2>Propósito de las reglas</h2>
+        </div>
+
+        <p>
+            Las reglas de integración establecen las condiciones que deben
+            cumplir los registros antes de ser relacionados entre las dos
+            fuentes de datos.
+        </p>
+
+        <p>
+            Su finalidad es reducir correspondencias incorrectas, establecer
+            criterios uniformes para los campos geográficos y temporales y
+            definir cómo se deben tratar los registros que no presentan una
+            coincidencia suficiente.
+        </p>
+
+    </section>
+
+
+    <!-- =========================================
+         02. REGLAS GENERALES
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <div class="section-number">02</div>
+
+            <h2>Reglas generales de integración</h2>
+        </div>
+
+        <div class="rules-grid">
+
+            <div class="rule-card indigo">
+
+                <span class="rule-code">R-01</span>
+
+                <h3>Identificación de fuentes</h3>
+
+                <p>
+                    Cada registro debe conservar su procedencia para poder
+                    identificar si proviene del dataset de siniestros o del
+                    dataset de vehículos.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card plum">
+
+                <span class="rule-code">R-02</span>
+
+                <h3>Conservación de identificadores</h3>
+
+                <p>
+                    Los identificadores originales de cada fuente deben
+                    conservarse como referencia y no deben utilizarse
+                    directamente como claves foráneas entre datasets.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card gold">
+
+                <span class="rule-code">R-03</span>
+
+                <h3>Homologación geográfica</h3>
+
+                <p>
+                    Los nombres de departamento y municipio deben
+                    normalizarse para evitar diferencias de escritura,
+                    mayúsculas, espacios y otras variaciones.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card teal">
+
+                <span class="rule-code">R-04</span>
+
+                <h3>Normalización de fechas</h3>
+
+                <p>
+                    Los campos de fecha deben convertirse a un formato
+                    uniforme antes de realizar cualquier comparación entre
+                    registros.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         03. HOMOLOGACIÓN DE CAMPOS
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <div class="section-number">03</div>
+
+            <h2>Reglas de homologación de campos</h2>
+        </div>
+
+        <p>
+            Durante el diagnóstico se identificaron campos equivalentes entre
+            las fuentes, aunque presentan nombres y estructuras diferentes.
+            Por esta razón, se establece la siguiente correspondencia:
+        </p>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Concepto</th>
+                        <th>Siniestros</th>
+                        <th>Vehículos</th>
+                        <th>Regla aplicada</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <strong>Fecha</strong>
+                        </td>
+
+                        <td>
+                            fecha_hech
+                        </td>
+
+                        <td>
+                            fecha_accidente
+                        </td>
+
+                        <td>
+                            Convertir ambos campos al mismo tipo de fecha
+                            antes de realizar la comparación.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Departamento</strong>
+                        </td>
+
+                        <td>
+                            depto_hech
+                        </td>
+
+                        <td>
+                            departamento_accidente
+                        </td>
+
+                        <td>
+                            Normalizar texto y comparar utilizando una
+                            nomenclatura geográfica uniforme.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Municipio</strong>
+                        </td>
+
+                        <td>
+                            municipio_
+                        </td>
+
+                        <td>
+                            municipio_accidente
+                        </td>
+
+                        <td>
+                            Eliminar diferencias de formato y homologar
+                            nombres antes de comparar.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Identificador</strong>
+                        </td>
+
+                        <td>
+                            hechos_id
+                        </td>
+
+                        <td>
+                            No existe equivalente directo
+                        </td>
+
+                        <td>
+                            No establecer una relación directa mediante
+                            este campo.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         04. LIMPIEZA Y ESTANDARIZACIÓN
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">04</div>
+
+            <h2>Reglas de limpieza y estandarización</h2>
+
+        </div>
+
+
+        <div class="rules-grid">
+
+            <div class="rule-card indigo">
+
+                <span class="rule-code">
+                    L-01 · TEXTO
+                </span>
+
+                <h3>Campos textuales</h3>
+
+                <p>
+                    Aplicar eliminación de espacios innecesarios, conversión
+                    a una representación uniforme y revisión de valores
+                    vacíos antes de realizar comparaciones.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card plum">
+
+                <span class="rule-code">
+                    L-02 · FECHA
+                </span>
+
+                <h3>Campos temporales</h3>
+
+                <p>
+                    Validar que los valores correspondan a fechas válidas y
+                    utilizar una representación temporal común.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card gold">
+
+                <span class="rule-code">
+                    L-03 · GEOGRAFÍA
+                </span>
+
+                <h3>Departamento y municipio</h3>
+
+                <p>
+                    Homologar los nombres geográficos para evitar que
+                    diferencias de escritura generen falsos registros sin
+                    coincidencia.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card teal">
+
+                <span class="rule-code">
+                    L-04 · NULOS
+                </span>
+
+                <h3>Valores faltantes</h3>
+
+                <p>
+                    Los valores faltantes en los atributos utilizados para
+                    establecer correspondencias deben identificarse y evitar
+                    que sean utilizados como coincidencias válidas.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         05. CRITERIOS DE COINCIDENCIA
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">05</div>
+
+            <h2>Criterios de coincidencia entre fuentes</h2>
+
+        </div>
+
+        <p>
+            Debido a que las fuentes no comparten una clave primaria común,
+            la integración se basa en atributos disponibles en ambos
+            datasets.
+        </p>
+
+
+        <div class="match-box">
+
+            <div class="match-card strong-match">
+
+                <strong>
+                    Coincidencia fuerte
+                </strong>
+
+                <p>
+                    Fecha + departamento + municipio coinciden después de
+                    aplicar la homologación correspondiente.
+                </p>
+
+            </div>
+
+
+            <div class="match-card partial-match">
+
+                <strong>
+                    Coincidencia parcial
+                </strong>
+
+                <p>
+                    Coincide la fecha junto con departamento o municipio,
+                    pero no se dispone de los tres criterios simultáneamente.
+                </p>
+
+            </div>
+
+
+            <div class="match-card no-match">
+
+                <strong>
+                    Sin coincidencia
+                </strong>
+
+                <p>
+                    No se encuentra una correspondencia suficiente entre los
+                    atributos disponibles de ambas fuentes.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         06. VALIDACIÓN
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">06</div>
+
+            <h2>Regla de validación de correspondencias</h2>
+
+        </div>
+
+        <p>
+            Una coincidencia encontrada mediante fecha, departamento y
+            municipio no debe interpretarse automáticamente como la
+            identificación inequívoca del mismo accidente.
+        </p>
+
+        <p>
+            Estos atributos permiten establecer una correspondencia
+            candidata, pero debido a la ausencia de una clave compartida,
+            los resultados deben conservar el nivel de coincidencia para
+            diferenciar las relaciones fuertes de las parciales.
+        </p>
+
+
+        <div class="result-box">
+
+            <h3>Criterio establecido</h3>
+
+            <p>
+                La integración debe conservar información suficiente para
+                identificar cómo se obtuvo cada correspondencia y evitar
+                presentar como relación exacta una coincidencia que solamente
+                cumple criterios parciales.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         07. FLUJO
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">07</div>
+
+            <h2>Flujo de aplicación de las reglas</h2>
+
+        </div>
+
+
+        <div class="flow">
+
+            <div class="flow-step">
+
+                <strong>
+                    1. Cargar fuentes
+                </strong>
+
+                <span>
+                    Lectura de los archivos de siniestros y vehículos.
+                </span>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div class="flow-step">
+
+                <strong>
+                    2. Estandarizar
+                </strong>
+
+                <span>
+                    Normalización de fechas y atributos geográficos.
+                </span>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div class="flow-step">
+
+                <strong>
+                    3. Comparar
+                </strong>
+
+                <span>
+                    Evaluación de los atributos comunes entre registros.
+                </span>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div class="flow-step">
+
+                <strong>
+                    4. Clasificar
+                </strong>
+
+                <span>
+                    Coincidencia fuerte, parcial o sin coincidencia.
+                </span>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <div class="flow-step">
+
+                <strong>
+                    5. Integrar
+                </strong>
+
+                <span>
+                    Preparación de los registros para el proceso ETL.
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         08. MODELO DE INTEGRACIÓN
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">08</div>
+
+            <h2>Relación con el modelo de datos</h2>
+
+        </div>
+
+        <p>
+            Las reglas definidas permiten preparar la información necesaria
+            para implementar el modelo de integración establecido durante el
+            diagnóstico.
+        </p>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Entidad</th>
+                        <th>Función</th>
+                        <th>Identificador</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <strong>SINIESTRO</strong>
+                        </td>
+
+                        <td>
+                            Representa los hechos registrados en la fuente
+                            de siniestros viales.
+                        </td>
+
+                        <td>
+                            id_siniestro · PK
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>VEHICULO</strong>
+                        </td>
+
+                        <td>
+                            Representa los vehículos registrados en la fuente
+                            de vehículos involucrados.
+                        </td>
+
+                        <td>
+                            id_vehiculo · PK
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>SINIESTRO_VEHICULO</strong>
+                        </td>
+
+                        <td>
+                            Entidad asociativa que permite registrar la
+                            correspondencia entre un siniestro y un vehículo.
+                        </td>
+
+                        <td>
+                            id_relacion · PK<br>
+                            id_siniestro · FK<br>
+                            id_vehiculo · FK
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         09. PREPARACIÓN PARA SSIS
+         ========================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">09</div>
+
+            <h2>Reglas preparadas para el proceso SSIS</h2>
+
+        </div>
+
+        <p>
+            Las reglas definidas en esta sección sirven como especificación
+            para la siguiente fase del proceso de integración, donde serán
+            implementadas mediante un flujo ETL.
+        </p>
+
+
+        <div class="rules-grid">
+
+            <div class="rule-card indigo">
+
+                <span class="rule-code">
+                    ENTRADA
+                </span>
+
+                <h3>Fuentes originales</h3>
+
+                <p>
+                    Los archivos CSV de siniestros y vehículos constituyen
+                    las fuentes de entrada del proceso.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card plum">
+
+                <span class="rule-code">
+                    TRANSFORMACIÓN
+                </span>
+
+                <h3>Homologación</h3>
+
+                <p>
+                    Se transforman fechas, departamentos y municipios a
+                    estructuras comparables.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card gold">
+
+                <span class="rule-code">
+                    VALIDACIÓN
+                </span>
+
+                <h3>Correspondencias</h3>
+
+                <p>
+                    Se aplican los criterios de coincidencia y se clasifica
+                    cada posible relación.
+                </p>
+
+            </div>
+
+
+            <div class="rule-card teal">
+
+                <span class="rule-code">
+                    SALIDA
+                </span>
+
+                <h3>Modelo integrado</h3>
+
+                <p>
+                    Los datos preparados pueden ser utilizados por el modelo
+                    relacional definido para la integración.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         RESULTADO
+         ========================================= -->
+
+    <div class="result-box">
+
+        <h3>
+            Resultado de la etapa de reglas
+        </h3>
+
+        <p>
+            Se establecieron las condiciones necesarias para homologar los
+            campos comunes, validar fechas y atributos geográficos,
+            clasificar las correspondencias y preparar la integración de los
+            dos datasets sin asumir la existencia de una clave compartida
+            que no está presente en las fuentes originales.
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         NAVEGACIÓN INFERIOR
+         ========================================= -->
+
+    <div class="etapa-nav">
+
+        <a
+            href="{{ url_for('etapa3_diagnostico') }}"
+            class="nav-btn previous"
+        >
+            ← Diagnóstico
+        </a>
+
+
+        <div class="nav-center">
+
+            <strong>
+                Reglas
+            </strong>
+
+            2 de 8
+
+        </div>
+
+
+        <a
+            href="{{ url_for('ssis') }}"
+            class="nav-btn next"
+        >
+            SSIS →
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
