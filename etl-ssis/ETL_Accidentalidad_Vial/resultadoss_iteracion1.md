@@ -10,11 +10,11 @@
 - Enviados a revisión (VehiculosRevision): 8.666 (8.646 por edad atípica/modelo inconsistente + 20 por edad faltante)
 
 ## Reglas aplicadas
-- Marca vacía → "NO REGISTRADA"
-- Edad faltante → conservada como nula, registro enviado a revisión
+- Marca vacía = "NO REGISTRADA"
+- Edad faltante  = conservada como nula, registro enviado a revisión
 - Fecha convertida de texto a tipo fecha
-- Edad > 40 años → marcada como atípica, enviada a revisión
-- Modelo del vehículo posterior al año del accidente → marcado como inconsistente, enviado a revisión
+- Edad > 50 años = marcada como atípica, enviada a revisión
+- Modelo del vehículo posterior al año del accidente 0 marcado como inconsistente, enviado a revisión
 - Texto normalizado (mayúsculas, sin espacios) en marca, tipo, departamento, municipio, autoridad
 - Duplicados completos eliminados con Sort
 
