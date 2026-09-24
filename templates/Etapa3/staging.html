@@ -1,0 +1,2665 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet"
+>
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================================
+     CONTENEDOR PRINCIPAL
+     ========================================================= -->
+
+<div class="etapa3-page modelo-staging-page">
+
+<!-- BOTÓN LATERAL ANTERIOR -->
+<div class="side-nav left">
+    <a href="{{ url_for('reglas') }}" title="Volver a Reglas">
+        ←
+    </a>
+</div>
+
+<!-- BOTÓN LATERAL SIGUIENTE -->
+<div class="side-nav right">
+    <a href="{{ url_for('ssis') }}" title="Ir a Ssis">
+        →
+    </a>
+</div>
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="hero">
+
+        <div class="stage-number">03</div>
+
+        <div class="hero-content">
+
+            <span class="stage-tag">
+                Etapa 3 · Modelo de datos y Staging
+            </span>
+
+            <h1>
+                Creación del modelo relacional y proceso de Staging
+            </h1>
+
+            <p>
+                Construcción de la base de datos en SQL Server, definición
+                del modelo entidad-relación y preparación de las fuentes
+                de datos mediante SQL Server Integration Services (SSIS)
+                para las posteriores iteraciones de tratamiento de calidad.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         01. INTRODUCCIÓN
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                01
+            </div>
+
+            <h2>
+                Construcción de la estructura de datos
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Como primera actividad de esta etapa se construyó la base de
+            datos <strong>IntegracionSiniestrosVehiculos</strong> utilizando
+            SQL Server Management Studio (SSMS). Sobre esta base se definió
+            el modelo relacional que permitirá organizar la información
+            proveniente de los archivos <strong>siniestros.csv</strong> y
+            <strong>vehiculos.csv</strong>.
+
+        </p>
+
+
+        <p class="section-text">
+
+            El diseño se realizó considerando las características de las
+            fuentes originales y los problemas de calidad identificados
+            previamente. Por esta razón, las entidades fueron separadas
+            según su naturaleza y se establecieron claves primarias,
+            claves foráneas y restricciones de integridad para controlar
+            la estructura de los datos.
+
+        </p>
+
+
+        <p class="section-text">
+
+            El modelo está compuesto por entidades geográficas, una
+            dimensión temporal y entidades específicas para los registros
+            de siniestros y vehículos. Esta organización permite separar
+            información descriptiva repetitiva de los registros principales
+            y proporciona una estructura adecuada para las posteriores
+            transformaciones del proceso ETL.
+
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         EVIDENCIA - SCRIPT BASE DE DATOS
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                02
+            </div>
+
+            <h2>
+                Creación de la base de datos en SQL Server
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            La primera instrucción ejecutada corresponde a la creación de
+            la base de datos que centraliza las estructuras utilizadas
+            durante el proceso de integración.
+
+        </p>
+
+
+        <div class="code-box">
+
+<pre><code>CREATE DATABASE IntegracionSiniestrosVehiculos;
+GO
+
+USE IntegracionSiniestrosVehiculos;
+GO</code></pre>
+
+        </div>
+
+
+        <p class="section-text">
+
+            La creación de una base de datos independiente permite
+            mantener separadas las estructuras propias del proyecto y
+            facilita la administración de las tablas utilizadas durante
+            las diferentes fases del proceso de integración.
+
+        </p>
+
+
+        <!-- EVIDENCIA -->
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/modelo/01_creacion_bd.png'
+                    ) }}"
+                    alt="Creación de la base de datos en SQL Server"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 01</span>
+
+                    <strong>
+                        Creación de la base de datos
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura de SSMS donde se evidencie
+                        la creación de IntegracionSiniestrosVehiculos.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 1. Creación de la base de datos
+                <em>IntegracionSiniestrosVehiculos</em> en SQL Server.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         03. MODELO ENTIDAD RELACIÓN
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                03
+            </div>
+
+            <h2>
+                Modelo entidad-relación
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Una vez creada la base de datos se construyó el modelo
+            entidad-relación a partir de las variables disponibles en
+            ambas fuentes. El propósito del modelo es representar de
+            manera estructurada las entidades que participan en el
+            proceso de integración y establecer las relaciones que
+            pueden ser sustentadas por los datos originales.
+
+        </p>
+
+
+        <p class="section-text">
+
+            El modelo está conformado por las entidades
+            <strong>Departamento</strong>, <strong>Municipio</strong>,
+            <strong>DepartamentoMunicipio</strong>,
+            <strong>Fecha</strong>, <strong>Siniestro</strong>,
+            <strong>ClasificacionSiniestro</strong>,
+            <strong>Hipotesis</strong>, <strong>MedioConocimiento</strong>,
+            <strong>Vehiculo</strong>, <strong>Marca</strong>,
+            <strong>TipoVehiculo</strong>,
+            <strong>GravedadAccidente</strong> y
+            <strong>AutoridadTransito</strong>.
+
+        </p>
+
+
+        <p class="section-text">
+
+            La estructura utiliza claves primarias para identificar
+            individualmente los registros y claves foráneas para
+            establecer las relaciones entre las entidades. También se
+            incorporaron restricciones <strong>UNIQUE</strong> y
+            <strong>CHECK</strong> con el propósito de controlar
+            duplicidades y valores que no cumplen las condiciones
+            definidas para determinados atributos.
+
+        </p>
+
+
+        <!-- DIAGRAMA PRINCIPAL -->
+
+        <figure class="evidence evidence-large">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/modelo/02_modelo_er.png'
+                    ) }}"
+                    alt="Modelo entidad-relación de la base de datos"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>DIAGRAMA ER</span>
+
+                    <strong>
+                        Modelo entidad-relación
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura completa del diagrama
+                        generado en SQL Server.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 2. Modelo entidad-relación implementado para la
+                integración de las fuentes de siniestros y vehículos.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         04. ESTRUCTURA GEOGRÁFICA
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                04
+            </div>
+
+            <h2>
+                Estructura geográfica y jerarquía Departamento–Municipio
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            La información geográfica presente en ambas fuentes se
+            estructuró mediante las entidades
+            <strong>Departamento</strong>, <strong>Municipio</strong> y
+            <strong>DepartamentoMunicipio</strong>. Esta separación
+            permite representar la jerarquía geográfica sin repetir
+            continuamente los nombres de los departamentos y municipios
+            dentro de los registros principales.
+
+        </p>
+
+
+        <p class="section-text">
+
+            La tabla <strong>Departamento</strong> contiene el
+            identificador y nombre de cada departamento. La tabla
+            <strong>Municipio</strong> contiene los municipios
+            identificados en las fuentes. Finalmente,
+            <strong>DepartamentoMunicipio</strong> funciona como entidad
+            asociativa y almacena la combinación entre ambos niveles
+            geográficos mediante las claves foráneas
+            <strong>IdDepartamento</strong> e
+            <strong>IdMunicipio</strong>.
+
+        </p>
+
+
+        <p class="section-text">
+
+            De esta manera se representa la jerarquía
+            <strong>Departamento → Municipio</strong>. La restricción
+            de unicidad establecida sobre la combinación de ambas claves
+            evita registrar repetidamente una misma relación geográfica.
+
+        </p>
+
+
+        <!-- JERARQUÍA VISUAL -->
+
+        <div class="hierarchy-flow">
+
+            <div class="hierarchy-card">
+
+                <span class="hierarchy-code">
+                    NIVEL 01
+                </span>
+
+                <strong>
+                    Departamento
+                </strong>
+
+                <small>
+                    Identifica el departamento geográfico.
+                </small>
+
+            </div>
+
+
+            <div class="hierarchy-arrow">
+                →
+            </div>
+
+
+            <div class="hierarchy-card associative">
+
+                <span class="hierarchy-code">
+                    RELACIÓN
+                </span>
+
+                <strong>
+                    DepartamentoMunicipio
+                </strong>
+
+                <small>
+                    Establece la correspondencia geográfica.
+                </small>
+
+            </div>
+
+
+            <div class="hierarchy-arrow">
+                →
+            </div>
+
+
+            <div class="hierarchy-card vehicle">
+
+                <span class="hierarchy-code">
+                    NIVEL 02
+                </span>
+
+                <strong>
+                    Municipio
+                </strong>
+
+                <small>
+                    Identifica el municipio asociado.
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/modelo/03_jerarquia_geografica.png'
+                    ) }}"
+                    alt="Jerarquía Departamento Municipio"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 03</span>
+
+                    <strong>
+                        Jerarquía geográfica
+                    </strong>
+
+                    <small>
+                        Subir aquí una captura donde se observen
+                        Departamento, Municipio y DepartamentoMunicipio.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 3. Representación de la jerarquía geográfica
+                Departamento–Municipio.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         05. DIMENSIÓN FECHA
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                05
+            </div>
+
+            <h2>
+                Dimensión temporal
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Para centralizar la información temporal se creó la entidad
+            <strong>Fecha</strong>. Esta tabla contiene la fecha completa
+            y diferentes atributos derivados como año, trimestre, número
+            y nombre del mes, número de día y día de la semana.
+
+        </p>
+
+
+        <p class="section-text">
+
+            La dimensión temporal es compartida por las dos fuentes,
+            pero cada entidad mantiene su propia referencia. En
+            <strong>Siniestro</strong> se utiliza
+            <strong>IdFechaHecho</strong>, correspondiente a la fecha
+            del hecho registrado, mientras que en
+            <strong>Vehiculo</strong> se utiliza
+            <strong>IdFechaAccidente</strong>, correspondiente a la fecha
+            registrada para el vehículo.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Esta diferencia es importante para el modelo, debido a que
+            compartir una dimensión de fecha no implica que un registro
+            de siniestro y un registro de vehículo representen
+            necesariamente el mismo evento.
+
+        </p>
+
+
+        <div class="technical-note">
+
+            <div class="technical-note-icon">
+                i
+            </div>
+
+            <div>
+
+                <strong>
+                    Consideración de diseño
+                </strong>
+
+                <p>
+                    La dimensión Fecha permite realizar análisis temporales
+                    conjuntos, pero no constituye por sí misma una clave
+                    suficiente para establecer una relación directa entre
+                    Siniestro y Vehiculo.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         06. ENTIDAD SINIESTRO
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                06
+            </div>
+
+            <h2>
+                Entidad Siniestro
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            La entidad <strong>Siniestro</strong> representa la
+            información procedente del archivo <strong>siniestros.csv</strong>.
+            En esta tabla se almacenan los identificadores del siniestro
+            y del hecho, las coordenadas geográficas, los valores
+            relacionados con muertos, víctimas y lesionados, la fecha
+            del hecho, el tipo de lugar y el código del caso.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Adicionalmente, la entidad contiene referencias hacia
+            <strong>DepartamentoMunicipio</strong>,
+            <strong>Fecha</strong>,
+            <strong>ClasificacionSiniestro</strong>,
+            <strong>Hipotesis</strong> y
+            <strong>MedioConocimiento</strong>. De esta manera, los
+            valores descriptivos se mantienen separados de los registros
+            principales.
+
+        </p>
+
+
+        <div class="entity-detail">
+
+            <div class="entity-detail-header">
+                Siniestro
+            </div>
+
+            <div class="entity-detail-body">
+
+                <div class="field-row">
+                    <span>IdSiniestro</span>
+                    <strong class="pk">PK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdHecho</span>
+                    <strong>INT</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>Latitud / Longitud</span>
+                    <strong>DECIMAL</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>TotalMuertos</span>
+                    <strong>INT</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>TotalVictimas</span>
+                    <strong>INT</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>TotalLesionados</span>
+                    <strong>INT</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdFechaHecho</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdDepartamentoMunicipio</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdClasificacionSiniestro</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdHipotesis</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdMedioConocimiento</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         07. ENTIDAD VEHICULO
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                07
+            </div>
+
+            <h2>
+                Entidad Vehiculo
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            La entidad <strong>Vehiculo</strong> representa los registros
+            provenientes del archivo <strong>vehiculos.csv</strong>.
+            Contiene información relacionada con el año del modelo,
+            edad del vehículo, fecha del accidente y ubicación
+            geográfica.
+
+        </p>
+
+
+        <p class="section-text">
+
+            La entidad también mantiene referencias hacia
+            <strong>Marca</strong>, <strong>TipoVehiculo</strong>,
+            <strong>GravedadAccidente</strong> y
+            <strong>AutoridadTransito</strong>. Esta separación permite
+            evitar la repetición de información descriptiva y mantener
+            una estructura normalizada.
+
+        </p>
+
+
+        <div class="entity-detail vehicle-detail">
+
+            <div class="entity-detail-header">
+                Vehiculo
+            </div>
+
+            <div class="entity-detail-body">
+
+                <div class="field-row">
+                    <span>IdVehiculo</span>
+                    <strong class="pk">PK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>AnioModelo</span>
+                    <strong>INT</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>EdadVehiculo</span>
+                    <strong>INT</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdFechaAccidente</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdDepartamentoMunicipio</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdMarca</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdTipoVehiculo</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdGravedadAccidente</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+                <div class="field-row">
+                    <span>IdAutoridadTransito</span>
+                    <strong class="fk">FK</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         08. NO RELACIÓN SINIESTRO VEHICULO
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                08
+            </div>
+
+            <h2>
+                Ausencia de relación directa entre Siniestro y Vehiculo
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Una decisión fundamental del modelo consiste en mantener
+            independientes las entidades <strong>Siniestro</strong> y
+            <strong>Vehiculo</strong>. No se creó una clave foránea
+            <strong>IdSiniestro</strong> dentro de la tabla
+            <strong>Vehiculo</strong> ni una relación directa entre
+            ambas entidades.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Esta decisión se debe a que las fuentes utilizadas no
+            proporcionan un identificador común que permita establecer
+            de manera inequívoca qué vehículo corresponde a un
+            determinado siniestro. Los identificadores disponibles
+            tienen naturalezas diferentes: la fuente de siniestros
+            utiliza <strong>IdSiniestro</strong> e
+            <strong>IdHecho</strong>, mientras que la fuente de
+            vehículos utiliza <strong>IdVehiculo</strong>.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Aunque ambas fuentes contienen información temporal y
+            geográfica, compartir una fecha, departamento o municipio
+            no es suficiente para afirmar que dos registros representan
+            exactamente el mismo evento. Utilizar estos atributos como
+            una relación directa podría generar asociaciones incorrectas.
+
+        </p>
+
+
+        <div class="independence-box">
+
+            <div class="independence-side siniestro">
+
+                <span>
+                    FUENTE 01
+                </span>
+
+                <strong>
+                    SINIESTRO
+                </strong>
+
+                <small>
+                    IdSiniestro<br>
+                    IdHecho<br>
+                    IdFechaHecho
+                </small>
+
+            </div>
+
+
+            <div class="independence-center">
+
+                <div class="no-relation">
+                    ×
+                </div>
+
+                <span>
+                    SIN FK DIRECTA
+                </span>
+
+            </div>
+
+
+            <div class="independence-side vehiculo">
+
+                <span>
+                    FUENTE 02
+                </span>
+
+                <strong>
+                    VEHICULO
+                </strong>
+
+                <small>
+                    IdVehiculo<br>
+                    IdFechaAccidente<br>
+                    IdDepartamentoMunicipio
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="technical-note warning">
+
+            <div class="technical-note-icon">
+                !
+            </div>
+
+            <div>
+
+                <strong>
+                    Criterio de integridad
+                </strong>
+
+                <p>
+                    La ausencia de una relación directa evita crear
+                    asociaciones que no pueden ser sustentadas por una
+                    clave común presente en las fuentes originales.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/modelo/04_siniestro_vehiculo.png'
+                    ) }}"
+                    alt="Ausencia de relación directa entre Siniestro y Vehiculo"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 04</span>
+
+                    <strong>
+                        Independencia entre entidades
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura del modelo donde se observe
+                        que Siniestro y Vehiculo no están conectados.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 4. Ausencia de una relación directa entre
+                <em>Siniestro</em> y <em>Vehiculo</em>.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         09. TABLA DE ENTIDADES
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                09
+            </div>
+
+            <h2>
+                Resumen de las entidades del modelo
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            La siguiente tabla resume la función de las entidades
+            implementadas en la base de datos y su participación dentro
+            del proceso de integración.
+
+        </p>
+
+
+        <div class="table-wrapper">
+
+            <table class="technical-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Entidad
+                        </th>
+
+                        <th>
+                            Función
+                        </th>
+
+                        <th>
+                            Fuente
+                        </th>
+
+                        <th>
+                            Tipo
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <strong>Departamento</strong>
+                        </td>
+
+                        <td>
+                            Almacena los departamentos geográficos.
+                        </td>
+
+                        <td>
+                            Siniestros / Vehículos
+                        </td>
+
+                        <td>
+                            Dimensión geográfica
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Municipio</strong>
+                        </td>
+
+                        <td>
+                            Almacena los municipios identificados.
+                        </td>
+
+                        <td>
+                            Siniestros / Vehículos
+                        </td>
+
+                        <td>
+                            Dimensión geográfica
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>DepartamentoMunicipio</strong>
+                        </td>
+
+                        <td>
+                            Establece la correspondencia entre
+                            departamento y municipio.
+                        </td>
+
+                        <td>
+                            Ambas fuentes
+                        </td>
+
+                        <td>
+                            Entidad asociativa
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Fecha</strong>
+                        </td>
+
+                        <td>
+                            Centraliza la información temporal.
+                        </td>
+
+                        <td>
+                            Ambas fuentes
+                        </td>
+
+                        <td>
+                            Dimensión temporal
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Siniestro</strong>
+                        </td>
+
+                        <td>
+                            Representa los hechos registrados en la
+                            fuente de siniestros.
+                        </td>
+
+                        <td>
+                            siniestros.csv
+                        </td>
+
+                        <td>
+                            Entidad principal
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Vehiculo</strong>
+                        </td>
+
+                        <td>
+                            Representa los vehículos registrados.
+                        </td>
+
+                        <td>
+                            vehiculos.csv
+                        </td>
+
+                        <td>
+                            Entidad principal
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Marca</strong>
+                        </td>
+
+                        <td>
+                            Catálogo de marcas de vehículos.
+                        </td>
+
+                        <td>
+                            vehiculos.csv
+                        </td>
+
+                        <td>
+                            Dimensión descriptiva
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>TipoVehiculo</strong>
+                        </td>
+
+                        <td>
+                            Clasificación del tipo de vehículo.
+                        </td>
+
+                        <td>
+                            vehiculos.csv
+                        </td>
+
+                        <td>
+                            Dimensión descriptiva
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>GravedadAccidente</strong>
+                        </td>
+
+                        <td>
+                            Clasificación de la gravedad registrada.
+                        </td>
+
+                        <td>
+                            vehiculos.csv
+                        </td>
+
+                        <td>
+                            Dimensión descriptiva
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>AutoridadTransito</strong>
+                        </td>
+
+                        <td>
+                            Autoridad asociada al registro.
+                        </td>
+
+                        <td>
+                            vehiculos.csv
+                        </td>
+
+                        <td>
+                            Dimensión descriptiva
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>ClasificacionSiniestro</strong>
+                        </td>
+
+                        <td>
+                            Clasificación del siniestro.
+                        </td>
+
+                        <td>
+                            siniestros.csv
+                        </td>
+
+                        <td>
+                            Dimensión descriptiva
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Hipotesis</strong>
+                        </td>
+
+                        <td>
+                            Hipótesis asociada al siniestro.
+                        </td>
+
+                        <td>
+                            siniestros.csv
+                        </td>
+
+                        <td>
+                            Dimensión descriptiva
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>MedioConocimiento</strong>
+                        </td>
+
+                        <td>
+                            Medio mediante el cual se registra la
+                            información.
+                        </td>
+
+                        <td>
+                            siniestros.csv
+                        </td>
+
+                        <td>
+                            Dimensión descriptiva
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         10. STAGING
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                10
+            </div>
+
+            <h2>
+                Creación de la zona de Staging
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Una vez definido el modelo relacional se creó una zona
+            intermedia de almacenamiento denominada
+            <strong>Staging</strong>. Esta capa permite recibir los
+            registros directamente desde las fuentes originales antes
+            de aplicar las transformaciones correspondientes al proceso
+            de calidad de datos.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Se crearon las tablas
+            <strong>StagingSiniestros</strong> y
+            <strong>StagingVehiculos</strong>. Cada una conserva las
+            variables provenientes de su respectivo archivo CSV y
+            constituye el punto de partida para las transformaciones
+            que serán realizadas posteriormente mediante SSIS.
+
+        </p>
+
+
+        <div class="staging-grid">
+
+            <div class="staging-card siniestros">
+
+                <div class="staging-card-header">
+
+                    <span>
+                        FUENTE 01
+                    </span>
+
+                    <strong>
+                        StagingSiniestros
+                    </strong>
+
+                </div>
+
+                <div class="staging-card-body">
+
+                    <p>
+                        Recibe los registros provenientes de
+                        <strong>siniestros.csv</strong>.
+                    </p>
+
+                    <code>
+                        Fid · HechosId · Latitud · MesLargo ·
+                        SieviClas · Hipotesis · MedioConocimiento ·
+                        SMuertos · DeptoHecho · Lugar · TVictimas ·
+                        Longitud · FechaHecho · Municipio ·
+                        SLesionado · Cid
+                    </code>
+
+                </div>
+
+            </div>
+
+
+            <div class="staging-card vehiculos">
+
+                <div class="staging-card-header">
+
+                    <span>
+                        FUENTE 02
+                    </span>
+
+                    <strong>
+                        StagingVehiculos
+                    </strong>
+
+                </div>
+
+                <div class="staging-card-body">
+
+                    <p>
+                        Recibe los registros provenientes de
+                        <strong>vehiculos.csv</strong>.
+                    </p>
+
+                    <code>
+                        MarcaVehiculo · ModeloVehiculo ·
+                        TipoVehiculo · EdadVehiculo · FechaAccidente ·
+                        GravedadAccidente · DepartamentoAccidente ·
+                        MunicipioAccidente · AutoridadTransito
+                    </code>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="technical-note">
+
+            <div class="technical-note-icon">
+                i
+            </div>
+
+            <div>
+
+                <strong>
+                    Función del Staging
+                </strong>
+
+                <p>
+                    La zona de Staging permite separar la extracción de
+                    las transformaciones, facilitando la trazabilidad,
+                    validación y repetición del proceso durante las
+                    diferentes iteraciones de tratamiento de calidad.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/staging/05_tablas_staging.png'
+                    ) }}"
+                    alt="Tablas de staging en SQL Server"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 05</span>
+
+                    <strong>
+                        Tablas de Staging
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura de las tablas
+                        StagingSiniestros y StagingVehiculos.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 5. Tablas utilizadas como zona de Staging.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         11. PROPÓSITO DEL STAGING
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                11
+            </div>
+
+            <h2>
+                Justificación de la zona de Staging
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            El Staging funciona como una capa intermedia entre las
+            fuentes originales y el modelo relacional final. Su
+            implementación permite que los datos sean recibidos desde
+            los archivos CSV sin modificar inmediatamente su estructura
+            definitiva.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Esta separación facilita la <strong>trazabilidad</strong>,
+            debido a que permite conservar los registros obtenidos
+            desde las fuentes antes de ejecutar las transformaciones.
+            También facilita la <strong>repetibilidad</strong>, ya que
+            las operaciones de limpieza y transformación pueden
+            ejecutarse nuevamente a partir de los datos almacenados en
+            Staging.
+
+        </p>
+
+
+        <p class="section-text">
+
+            En el contexto de este proyecto, esta característica es
+            especialmente importante porque el tratamiento de calidad
+            se desarrolla mediante diferentes iteraciones. El Staging
+            proporciona un punto de partida controlado para comparar
+            los resultados obtenidos después de cada transformación.
+
+        </p>
+
+
+        <div class="architecture-flow">
+
+            <div class="architecture-step source">
+
+                <span>
+                    01
+                </span>
+
+                <strong>
+                    Fuentes
+                </strong>
+
+                <small>
+                    Archivos CSV originales
+                </small>
+
+            </div>
+
+
+            <div class="architecture-arrow">
+                →
+            </div>
+
+
+            <div class="architecture-step staging">
+
+                <span>
+                    02
+                </span>
+
+                <strong>
+                    Staging
+                </strong>
+
+                <small>
+                    Datos extraídos sin transformación definitiva
+                </small>
+
+            </div>
+
+
+            <div class="architecture-arrow">
+                →
+            </div>
+
+
+            <div class="architecture-step transform">
+
+                <span>
+                    03
+                </span>
+
+                <strong>
+                    Transformación
+                </strong>
+
+                <small>
+                    Limpieza y tratamiento mediante SSIS
+                </small>
+
+            </div>
+
+
+            <div class="architecture-arrow">
+                →
+            </div>
+
+
+            <div class="architecture-step model">
+
+                <span>
+                    04
+                </span>
+
+                <strong>
+                    Modelo relacional
+                </strong>
+
+                <small>
+                    Estructura final integrada
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         12. CREACIÓN DEL PAQUETE SSIS
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                12
+            </div>
+
+            <h2>
+                Implementación del Staging mediante SSIS
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Después de crear las estructuras de la base de datos se
+            desarrolló el paquete de integración utilizando
+            <strong>SQL Server Integration Services (SSIS)</strong>
+            dentro de Visual Studio.
+
+        </p>
+
+
+        <p class="section-text">
+
+            El paquete se configuró mediante un
+            <strong>Control Flow</strong> que contiene dos tareas de
+            tipo <strong>Data Flow Task</strong>. La primera corresponde
+            a la carga de los registros de siniestros y la segunda a
+            la carga de los registros de vehículos.
+
+        </p>
+
+
+        <div class="ssis-flow">
+
+            <div class="ssis-node">
+
+                <span>
+                    DATA FLOW 01
+                </span>
+
+                <strong>
+                    Staging Siniestros
+                </strong>
+
+                <small>
+                    siniestros.csv → StagingSiniestros
+                </small>
+
+            </div>
+
+
+            <div class="ssis-node">
+
+                <span>
+                    DATA FLOW 02
+                </span>
+
+                <strong>
+                    Staging Vehiculos
+                </strong>
+
+                <small>
+                    vehiculos.csv → StagingVehiculos
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <figure class="evidence evidence-large">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/06_control_flow.png'
+                    ) }}"
+                    alt="Control Flow del paquete SSIS"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 06</span>
+
+                    <strong>
+                        Control Flow
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura del paquete SSIS donde
+                        aparecen Staging Siniestros y Staging Vehiculos.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 6. Control Flow del paquete SSIS utilizado para
+                realizar la carga inicial de las fuentes.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         13. STAGING SINIESTROS
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                13
+            </div>
+
+            <h2>
+                Flujo de datos de Siniestros
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Dentro del Data Flow
+            <strong>Staging Siniestros</strong> se configuró un
+            componente <strong>Flat File Source</strong> encargado de
+            establecer la conexión con el archivo
+            <strong>siniestros.csv</strong>.
+
+        </p>
+
+
+        <p class="section-text">
+
+            En la configuración de la fuente se verificaron las
+            características del archivo, incluyendo su delimitador,
+            separación de columnas, nombres de variables y tipos de
+            datos. Los campos de texto fueron configurados como
+            cadenas y los campos numéricos se configuraron utilizando
+            tipos enteros cuando correspondía.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Esta configuración permite que SSIS interprete correctamente
+            la estructura del archivo antes de enviarla al componente
+            de destino. La revisión es necesaria debido a que una
+            configuración incorrecta podría provocar errores de
+            conversión, desplazamiento de columnas o incompatibilidad
+            con la tabla de destino.
+
+        </p>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/07_flat_file_siniestros.png'
+                    ) }}"
+                    alt="Configuración del Flat File Source de Siniestros"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 07</span>
+
+                    <strong>
+                        Flat File Source — Siniestros
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura de la configuración del
+                        archivo siniestros.csv.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 7. Configuración del Flat File Source correspondiente
+                a <em>siniestros.csv</em>.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         14. OLE DB SINIESTROS
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                14
+            </div>
+
+            <h2>
+                Destino OLE DB y mapeo de Siniestros
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Después de configurar la fuente se incorporó un componente
+            <strong>OLE DB Destination</strong>. Este componente
+            establece la conexión entre el flujo de datos de SSIS y
+            SQL Server, permitiendo seleccionar la base de datos
+            <strong>IntegracionSiniestrosVehiculos</strong> y la tabla
+            de destino <strong>StagingSiniestros</strong>.
+
+        </p>
+
+
+        <p class="section-text">
+
+            En la sección de mapeo se estableció la correspondencia
+            entre las columnas provenientes del archivo CSV y las
+            columnas de la tabla de Staging. Durante este proceso fue
+            necesario revisar manualmente algunas asignaciones debido
+            a modificaciones realizadas previamente en los nombres de
+            las variables.
+
+        </p>
+
+
+        <p class="section-text">
+
+            La revisión del mapeo garantiza que cada variable de la
+            fuente sea almacenada en la columna correspondiente y
+            permite detectar posibles errores antes de ejecutar la
+            carga.
+
+        </p>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/08_mapping_siniestros.png'
+                    ) }}"
+                    alt="Mapping de Siniestros"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 08</span>
+
+                    <strong>
+                        Mapping — StagingSiniestros
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura de la pestaña Mappings
+                        del OLE DB Destination.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 8. Correspondencia entre las columnas de
+                <em>siniestros.csv</em> y <em>StagingSiniestros</em>.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         15. STAGING VEHICULOS
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                15
+            </div>
+
+            <h2>
+                Flujo de datos de Vehículos
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Para la segunda fuente se implementó un flujo equivalente
+            mediante el Data Flow <strong>Staging Vehiculos</strong>.
+            El proceso inicia con un <strong>Flat File Source</strong>
+            configurado para utilizar el archivo
+            <strong>vehiculos.csv</strong>.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Se verificó nuevamente la estructura del archivo, incluyendo
+            delimitadores, columnas y tipos de datos. Posteriormente,
+            los registros fueron dirigidos hacia un componente
+            <strong>OLE DB Destination</strong> configurado para cargar
+            la información en la tabla
+            <strong>StagingVehiculos</strong>.
+
+        </p>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/09_flat_file_vehiculos.png'
+                    ) }}"
+                    alt="Configuración del Flat File Source de Vehículos"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 09</span>
+
+                    <strong>
+                        Flat File Source — Vehículos
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura de la configuración del
+                        archivo vehiculos.csv.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 9. Configuración del Flat File Source correspondiente
+                a <em>vehiculos.csv</em>.
+            </figcaption>
+
+        </figure>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/10_mapping_vehiculos.png'
+                    ) }}"
+                    alt="Mapping de Vehículos"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 10</span>
+
+                    <strong>
+                        Mapping — StagingVehiculos
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura de la pestaña Mappings
+                        del OLE DB Destination.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 10. Correspondencia entre las columnas de
+                <em>vehiculos.csv</em> y <em>StagingVehiculos</em>.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         16. EJECUCIÓN
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                16
+            </div>
+
+            <h2>
+                Ejecución del Control Flow
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Una vez configurados los dos flujos de datos se ejecutó el
+            Control Flow del paquete SSIS. Durante esta ejecución,
+            cada archivo CSV fue leído por su respectivo Flat File Source
+            y posteriormente los registros fueron enviados mediante
+            OLE DB Destination hacia las tablas de Staging.
+
+        </p>
+
+
+        <p class="section-text">
+
+            En esta primera ejecución no se aplicaron transformaciones
+            de calidad sobre los registros. El objetivo de esta fase
+            consiste en realizar únicamente la extracción y carga
+            inicial, dejando los datos disponibles en Staging para
+            las transformaciones que serán implementadas durante las
+            siguientes iteraciones.
+
+        </p>
+
+
+        <div class="execution-result">
+
+            <div class="execution-item">
+
+                <span class="execution-status">
+                    ✓
+                </span>
+
+                <div>
+
+                    <strong>
+                        Staging Siniestros
+                    </strong>
+
+                    <small>
+                        Carga ejecutada correctamente
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="execution-item">
+
+                <span class="execution-status">
+                    ✓
+                </span>
+
+                <div>
+
+                    <strong>
+                        Staging Vehiculos
+                    </strong>
+
+                    <small>
+                        Carga ejecutada correctamente
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <figure class="evidence evidence-large">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/11_ejecucion_control_flow.png'
+                    ) }}"
+                    alt="Ejecución del Control Flow"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 11</span>
+
+                    <strong>
+                        Ejecución del Control Flow
+                    </strong>
+
+                    <small>
+                        Subir aquí la captura donde los dos Data Flow
+                        aparezcan ejecutados correctamente.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 11. Ejecución satisfactoria del Control Flow
+                correspondiente a la carga inicial de Staging.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         17. VERIFICACIÓN
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                17
+            </div>
+
+            <h2>
+                Verificación de los datos cargados
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Después de ejecutar el paquete SSIS se realizó una
+            verificación directamente en SQL Server con el propósito
+            de comprobar que los registros fueran almacenados
+            correctamente en las tablas de Staging.
+
+        </p>
+
+
+        <div class="code-box">
+
+<pre><code>SELECT *
+FROM StagingSiniestros;
+
+SELECT *
+FROM StagingVehiculos;</code></pre>
+
+        </div>
+
+
+        <p class="section-text">
+
+            También se puede verificar la cantidad de registros
+            almacenados mediante la función <strong>COUNT(*)</strong>.
+            Esta comprobación permite contrastar los registros
+            procesados por SSIS con los registros disponibles en las
+            fuentes originales.
+
+        </p>
+
+
+        <div class="code-box">
+
+<pre><code>SELECT COUNT(*) AS TotalRegistros
+FROM StagingSiniestros;
+
+SELECT COUNT(*) AS TotalRegistros
+FROM StagingVehiculos;</code></pre>
+
+        </div>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/staging/12_resultado_siniestros.png'
+                    ) }}"
+                    alt="Registros cargados en StagingSiniestros"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 12</span>
+
+                    <strong>
+                        StagingSiniestros
+                    </strong>
+
+                    <small>
+                        Subir aquí la consulta que muestre los registros
+                        cargados en la tabla.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 12. Registros cargados en
+                <em>StagingSiniestros</em>.
+            </figcaption>
+
+        </figure>
+
+
+        <figure class="evidence">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/staging/13_resultado_vehiculos.png'
+                    ) }}"
+                    alt="Registros cargados en StagingVehiculos"
+                >
+
+                <div class="evidence-fallback">
+
+                    <span>CAPTURA 13</span>
+
+                    <strong>
+                        StagingVehiculos
+                    </strong>
+
+                    <small>
+                        Subir aquí la consulta que muestre los registros
+                        cargados en la tabla.
+                    </small>
+
+                </div>
+
+            </div>
+
+            <figcaption>
+                Figura 13. Registros cargados en
+                <em>StagingVehiculos</em>.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         18. ARQUITECTURA RESULTANTE
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                18
+            </div>
+
+            <h2>
+                Arquitectura resultante del proceso
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Como resultado de esta etapa se estableció una arquitectura
+            que separa las fuentes originales, la zona de Staging, el
+            proceso de transformación y el modelo relacional. Esta
+            separación permite controlar cada fase del proceso y
+            facilita la identificación de los cambios realizados sobre
+            los datos.
+
+        </p>
+
+
+        <div class="full-architecture">
+
+            <div class="architecture-column">
+
+                <span class="architecture-label">
+                    FUENTES
+                </span>
+
+                <div class="architecture-box">
+                    siniestros.csv
+                </div>
+
+                <div class="architecture-box">
+                    vehiculos.csv
+                </div>
+
+            </div>
+
+
+            <div class="big-arrow">
+                →
+            </div>
+
+
+            <div class="architecture-column">
+
+                <span class="architecture-label">
+                    STAGING
+                </span>
+
+                <div class="architecture-box staging-box">
+                    StagingSiniestros
+                </div>
+
+                <div class="architecture-box staging-box">
+                    StagingVehiculos
+                </div>
+
+            </div>
+
+
+            <div class="big-arrow">
+                →
+            </div>
+
+
+            <div class="architecture-column">
+
+                <span class="architecture-label">
+                    ETL
+                </span>
+
+                <div class="architecture-box transform-box">
+                    Limpieza
+                </div>
+
+                <div class="architecture-box transform-box">
+                    Transformación
+                </div>
+
+            </div>
+
+
+            <div class="big-arrow">
+                →
+            </div>
+
+
+            <div class="architecture-column">
+
+                <span class="architecture-label">
+                    MODELO
+                </span>
+
+                <div class="architecture-box model-box">
+                    Modelo relacional
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         19. RESULTADO
+         ===================================================== -->
+
+    <section class="result-box">
+
+        <div class="result-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                Resultado de la implementación
+            </h3>
+
+            <p>
+
+                Se construyó la base de datos
+                <strong>IntegracionSiniestrosVehiculos</strong> y se
+                implementó el modelo entidad-relación correspondiente
+                a las fuentes de siniestros y vehículos. Posteriormente
+                se creó la zona de Staging y se configuró un paquete
+                SSIS para extraer los registros de ambos archivos CSV
+                y cargarlos en sus respectivas tablas intermedias.
+
+                Esta estructura proporciona un punto de partida
+                controlado, trazable y repetible para ejecutar las
+                transformaciones correspondientes a las iteraciones
+                posteriores del tratamiento de calidad de datos.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         NAVEGACIÓN
+         ===================================================== -->
+
+    <div class="etapa-nav">
+
+        <a
+            href="{{ url_for('etapa3_diagnostico') }}"
+            class="nav-btn previous"
+        >
+            ← Diagnóstico
+        </a>
+
+
+        <div class="nav-center">
+
+            <strong>
+                Modelo y Staging
+            </strong>
+
+            3 de 8
+
+        </div>
+
+
+        <a
+            href="{{ url_for('ssis') }}"
+            class="nav-btn next"
+        >
+            SSIS →
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     SCRIPT — INTERACCIÓN DE IMÁGENES Y TABLAS
+     ========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+    /* =====================================================
+       IMÁGENES DE EVIDENCIA
+       ===================================================== */
+
+    const evidenceFrames =
+        document.querySelectorAll(".evidence-frame");
+
+
+    evidenceFrames.forEach(function (frame) {
+
+        const image =
+            frame.querySelector("img");
+
+        const fallback =
+            frame.querySelector(".evidence-fallback");
+
+
+        if (!image) return;
+
+
+        image.addEventListener("load", function () {
+
+            frame.classList.add("image-loaded");
+
+            if (fallback) {
+                fallback.style.display = "none";
+            }
+
+        });
+
+
+        image.addEventListener("error", function () {
+
+            frame.classList.remove("image-loaded");
+
+            if (fallback) {
+                fallback.style.display = "flex";
+            }
+
+        });
+
+
+        if (image.complete && image.naturalWidth > 0) {
+
+            frame.classList.add("image-loaded");
+
+            if (fallback) {
+                fallback.style.display = "none";
+            }
+
+        }
+
+    });
+
+
+    /* =====================================================
+       RESALTADO DE COLUMNAS EN TABLAS
+       ===================================================== */
+
+    const tables =
+        document.querySelectorAll(
+            ".modelo-staging-page table"
+        );
+
+
+    tables.forEach(function (table) {
+
+        const cells =
+            table.querySelectorAll("th, td");
+
+
+        cells.forEach(function (cell) {
+
+            cell.addEventListener("mouseenter", function () {
+
+                const row =
+                    cell.parentElement;
+
+                const columnIndex =
+                    Array.from(row.children)
+                    .indexOf(cell);
+
+
+                table
+                    .querySelectorAll("tr")
+                    .forEach(function (tableRow) {
+
+                        const target =
+                            tableRow.children[columnIndex];
+
+                        if (target) {
+                            target.classList.add(
+                                "column-hover"
+                            );
+                        }
+
+                    });
+
+            });
+
+
+            cell.addEventListener("mouseleave", function () {
+
+                table
+                    .querySelectorAll(
+                        ".column-hover"
+                    )
+                    .forEach(function (element) {
+
+                        element.classList.remove(
+                            "column-hover"
+                        );
+
+                    });
+
+            });
+
+        });
+
+    });
+
+
+    /* =====================================================
+       REVEAL DE SECCIONES AL HACER SCROLL
+       ===================================================== */
+
+    const sections =
+        document.querySelectorAll(
+            ".modelo-staging-page .section"
+        );
+
+
+    const observer =
+        new IntersectionObserver(
+            function (entries) {
+
+                entries.forEach(function (entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add(
+                            "section-visible"
+                        );
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.08
+            }
+        );
+
+
+    sections.forEach(function (section) {
+
+        observer.observe(section);
+
+    });
+
+
+});
+
+</script>
+
+
+{% endblock %}

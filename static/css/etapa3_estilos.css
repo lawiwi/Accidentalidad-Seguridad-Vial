@@ -1,6 +1,6 @@
 /* =========================================================
    ETAPA 3
-   DIAGNÓSTICO · REGLAS · INTEGRACIÓN
+   DIAGNÓSTICO · REGLAS · MODELO Y STAGING
    ========================================================= */
 
 
@@ -10,7 +10,8 @@
 
 .etapa3-page,
 .diagnostico-page,
-.reglas-page {
+.reglas-page,
+.modelo-staging-page {
 
     --indigo: #232A54;
     --indigo-dark: #171B3B;
@@ -34,11 +35,29 @@
 
 
 /* =========================================================
-   CONTENEDOR
+   CONTENEDOR PRINCIPAL
    ========================================================= */
 
+/*
+ * IMPORTANTE:
+ * Todas las páginas de Etapa 3 utilizan ahora el mismo
+ * ancho máximo.
+ *
+ * El fondo de base.html continúa ocupando toda la pantalla,
+ * pero el contenido queda centrado.
+ */
+
 .etapa3-page {
-    width: 100%;
+
+    width: min(1200px, calc(100% - 80px));
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 30px 0 50px;
+
+    box-sizing: border-box;
 
     color: var(--ink);
 
@@ -46,31 +65,41 @@
 }
 
 
+/*
+ * Las clases específicas mantienen el mismo comportamiento.
+ * No necesitan volver a definir width o max-width.
+ */
+
 .diagnostico-page,
-.reglas-page {
-    max-width: 1200px;
-
-    margin: 0 auto;
-
-    padding: 30px 20px 50px;
+.reglas-page,
+.modelo-staging-page {
 
     color: var(--ink);
 }
 
 
 /* =========================================================
-   HERO ETAPA 3
+   HERO
+   Compartido por todas las páginas
    ========================================================= */
 
-.etapa3-page .hero,
-.diagnostico-page .hero,
-.reglas-page .hero {
+.etapa3-page .hero {
 
     position: relative;
 
+    width: 100%;
+
+    /* IMPORTANTE:
+       El hero debe crecer únicamente según su contenido */
+    height: auto;
+    min-height: 0;
+
     overflow: hidden;
 
+    box-sizing: border-box;
+
     background:
+
         radial-gradient(
             circle at 85% 20%,
             rgba(140, 78, 126, .25),
@@ -91,17 +120,41 @@
 
     border-radius: 24px;
 
-    padding: 38px;
+    /*
+     * Menos espacio vertical.
+     * El horizontal se mantiene cómodo.
+     */
+    padding: 30px 38px;
 
     color: white;
 
     margin-bottom: 28px;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
 }
 
 
-.etapa3-page .hero::after,
-.diagnostico-page .hero::after,
-.reglas-page .hero::after {
+/* =========================================================
+   ANIMACIÓN DEL HERO
+   ========================================================= */
+
+.etapa3-page .hero:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 16px 36px
+        rgba(35, 42, 84, .14);
+}
+
+
+/* =========================================================
+   DECORACIÓN DEL HERO
+   ========================================================= */
+
+.etapa3-page .hero::after {
 
     content: "";
 
@@ -112,6 +165,7 @@
     opacity: .08;
 
     background-image:
+
         radial-gradient(
             #fff 1px,
             transparent 1px
@@ -127,19 +181,25 @@
    HERO CONTENT
    ========================================================= */
 
-.etapa3-page .hero-content,
-.diagnostico-page .hero-content,
-.reglas-page .hero-content {
+.etapa3-page .hero-content {
 
     position: relative;
 
     z-index: 1;
+
+    /*
+     * Evita que algún estilo externo
+     * fuerce una altura innecesaria.
+     */
+    height: auto;
 }
 
 
-.etapa3-page .stage-tag,
-.diagnostico-page .stage-tag,
-.reglas-page .stage-tag {
+/* =========================================================
+   STAGE TAG
+   ========================================================= */
+
+.etapa3-page .stage-tag {
 
     display: inline-block;
 
@@ -161,13 +221,15 @@
 
     text-transform: uppercase;
 
-    margin-bottom: 16px;
+    margin-bottom: 14px;
 }
 
 
-.etapa3-page .hero h1,
-.diagnostico-page .hero h1,
-.reglas-page .hero h1 {
+/* =========================================================
+   HERO TITLE
+   ========================================================= */
+
+.etapa3-page .hero h1 {
 
     margin: 0 0 10px;
 
@@ -182,9 +244,11 @@
 }
 
 
-.etapa3-page .hero p,
-.diagnostico-page .hero p,
-.reglas-page .hero p {
+/* =========================================================
+   HERO DESCRIPTION
+   ========================================================= */
+
+.etapa3-page .hero p {
 
     max-width: 850px;
 
@@ -193,7 +257,7 @@
     color:
         rgba(255,255,255,.82);
 
-    line-height: 1.7;
+    line-height: 1.6;
 
     font-size: 1rem;
 }
@@ -231,9 +295,7 @@
    NAVEGACIÓN LATERAL
    ========================================================= */
 
-.etapa3-page .side-nav,
-.diagnostico-page .side-nav,
-.reglas-page .side-nav {
+.etapa3-page .side-nav {
 
     position: fixed;
 
@@ -242,21 +304,27 @@
     transform:
         translateY(-50%);
 
-    z-index: 1000;
+    z-index: 9999;
 }
 
 
-.side-nav.left {
-    left: 18px;
+.etapa3-page .side-nav.left {
+
+    left: 24px;
 }
 
 
-.side-nav.right {
-    right: 18px;
+.etapa3-page .side-nav.right {
+
+    right: 24px;
 }
 
 
-.side-nav a {
+.etapa3-page .side-nav a {
+
+    width: 48px;
+
+    height: 48px;
 
     display: flex;
 
@@ -264,64 +332,50 @@
 
     justify-content: center;
 
-    width: 46px;
-
-    height: 46px;
-
     border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.94);
+
+    color:
+        var(--indigo);
 
     text-decoration: none;
 
-    font-size: 1.25rem;
+    font-size: 25px;
 
-    font-weight: 700;
-
-    background: white;
-
-    color: var(--indigo);
+    font-weight: 600;
 
     border:
-        1px solid var(--border);
+        1px solid
+        rgba(35,42,84,.12);
 
     box-shadow:
         0 8px 24px
-        rgba(35, 42, 84, .12);
+        rgba(23,27,59,.16);
 
-    transition: all .25s ease;
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease,
+        color .25s ease;
 }
 
 
-.side-nav a:hover {
+.etapa3-page .side-nav a:hover {
 
-    transform: scale(1.08);
+    transform:
+        scale(1.08);
+
+    background:
+        var(--indigo);
+
+    color:
+        var(--white);
 
     box-shadow:
         0 12px 28px
-        rgba(35, 42, 84, .18);
-}
-
-
-.side-nav.left a:hover {
-
-    color: var(--plum);
-
-    border-color: var(--plum);
-}
-
-
-.side-nav.right a {
-
-    background: var(--indigo);
-
-    color: white;
-
-    border-color: var(--indigo);
-}
-
-
-.side-nav.right a:hover {
-
-    background: var(--indigo-dark);
+        rgba(35,42,84,.25);
 }
 
 
@@ -337,34 +391,48 @@
 
     gap: 8px;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     text-decoration: none;
 
     font-weight: 700;
 
     margin-bottom: 22px;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
 }
 
 
 .back-link:hover {
 
-    color: var(--plum);
+    color:
+        var(--plum);
+
+    transform:
+        translateX(-2px);
 }
 
 
 /* =========================================================
    SECCIONES
+   Compartidas por Diagnóstico, Reglas y Staging
    ========================================================= */
 
-.etapa3-page .section,
-.diagnostico-page .section,
-.reglas-page .section {
+.etapa3-page .section {
 
-    background: var(--white);
+    width: 100%;
+
+    box-sizing: border-box;
+
+    background:
+        var(--white);
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     border-radius: 20px;
 
@@ -375,11 +443,90 @@
     box-shadow:
         0 8px 25px
         rgba(35,42,84,.05);
+
+    transition:
+        transform .28s ease,
+        box-shadow .28s ease,
+        border-color .28s ease;
+}
+
+
+/*
+ * Animación compartida.
+ *
+ * Esto lleva a Diagnóstico y Reglas el mismo efecto
+ * que tenía Staging.
+ */
+
+.etapa3-page .section:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 14px 34px
+        rgba(35,42,84,.08);
+
+    border-color:
+        rgba(140,78,126,.25);
 }
 
 
 /* =========================================================
-   TÍTULOS DIAGNÓSTICO
+   ANIMACIÓN DE TARJETAS
+   Compartida por todas las páginas
+   ========================================================= */
+
+.etapa3-page .dataset-card,
+.etapa3-page .problem-card,
+.etapa3-page .rule-card,
+.etapa3-page .match-card,
+.etapa3-page .criterion,
+.etapa3-page .entity,
+.etapa3-page .hierarchy-card,
+.etapa3-page .entity-detail,
+.etapa3-page .staging-card,
+.etapa3-page .ssis-node,
+.etapa3-page .execution-item,
+.etapa3-page .architecture-step,
+.etapa3-page .architecture-box,
+.etapa3-page .independence-side,
+.etapa3-page .technical-note {
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+
+.etapa3-page .dataset-card:hover,
+.etapa3-page .problem-card:hover,
+.etapa3-page .rule-card:hover,
+.etapa3-page .match-card:hover,
+.etapa3-page .criterion:hover,
+.etapa3-page .entity:hover,
+.etapa3-page .hierarchy-card:hover,
+.etapa3-page .entity-detail:hover,
+.etapa3-page .staging-card:hover,
+.etapa3-page .ssis-node:hover,
+.etapa3-page .execution-item:hover,
+.etapa3-page .architecture-step:hover,
+.etapa3-page .architecture-box:hover,
+.etapa3-page .independence-side:hover,
+.etapa3-page .technical-note:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(35,42,84,.09);
+}
+
+
+/* =========================================================
+   TÍTULOS DE SECCIÓN — DIAGNÓSTICO
    ========================================================= */
 
 .diagnostico-page .section-header {
@@ -394,7 +541,8 @@
 }
 
 
-.diagnostico-page .section-number {
+.diagnostico-page .section-number,
+.reglas-page .section-number {
 
     min-width: 42px;
 
@@ -408,9 +556,11 @@
 
     border-radius: 13px;
 
-    background: var(--mist);
+    background:
+        var(--mist);
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-weight: 800;
 
@@ -422,7 +572,8 @@
 
     margin: 0 0 5px;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-size: 1.35rem;
 }
@@ -432,7 +583,8 @@
 
     margin: 0;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     line-height: 1.5;
 }
@@ -440,7 +592,8 @@
 
 .diagnostico-page .section-text {
 
-    color: #464756;
+    color:
+        #464756;
 
     line-height: 1.7;
 
@@ -466,13 +619,15 @@
 .dataset-card {
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     border-radius: 18px;
 
     overflow: hidden;
 
-    background: #fff;
+    background:
+        #fff;
 }
 
 
@@ -543,7 +698,8 @@
 
 .diagnostico-page .stat {
 
-    background: var(--mist);
+    background:
+        var(--mist);
 
     border-radius: 12px;
 
@@ -555,7 +711,8 @@
 
     display: block;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-size: 1.15rem;
 }
@@ -563,7 +720,8 @@
 
 .diagnostico-page .stat span {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .78rem;
 }
@@ -571,7 +729,8 @@
 
 .dataset-body p {
 
-    color: #555665;
+    color:
+        #555665;
 
     line-height: 1.6;
 
@@ -593,9 +752,11 @@
 
 .column {
 
-    background: #f1eff6;
+    background:
+        #f1eff6;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     padding: 5px 9px;
 
@@ -603,12 +764,14 @@
 
     font-size: .72rem;
 
-    font-family: Consolas, monospace;
+    font-family:
+        Consolas,
+        monospace;
 }
 
 
 /* =========================================================
-   MÉTRICAS — DIAGNÓSTICO
+   MÉTRICAS
    ========================================================= */
 
 .metrics {
@@ -630,10 +793,12 @@
 
     border-radius: 16px;
 
-    background: var(--mist);
+    background:
+        var(--mist);
 
     border-top:
-        4px solid var(--teal);
+        4px solid
+        var(--teal);
 }
 
 
@@ -666,7 +831,8 @@
 
     font-weight: 900;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     margin-bottom: 4px;
 }
@@ -676,12 +842,13 @@
 
     font-size: .8rem;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 }
 
 
 /* =========================================================
-   COMPARACIÓN — DIAGNÓSTICO
+   TABLA DE COMPARACIÓN
    ========================================================= */
 
 .comparison {
@@ -698,7 +865,8 @@
 
 .comparison th {
 
-    background: var(--indigo);
+    background:
+        var(--indigo);
 
     color: white;
 
@@ -715,7 +883,8 @@
     padding: 14px;
 
     border-bottom:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     font-size: .88rem;
 
@@ -731,7 +900,8 @@
 
 .comparison tr:nth-child(even) {
 
-    background: #faf9fc;
+    background:
+        #faf9fc;
 }
 
 
@@ -755,30 +925,36 @@
 
 .status.ok {
 
-    background: #e6f5f2;
+    background:
+        #e6f5f2;
 
-    color: #23776f;
+    color:
+        #23776f;
 }
 
 
 .status.warning {
 
-    background: #fff5dc;
+    background:
+        #fff5dc;
 
-    color: #916c18;
+    color:
+        #916c18;
 }
 
 
 .status.problem {
 
-    background: #f7e8f1;
+    background:
+        #f7e8f1;
 
-    color: #81416f;
+    color:
+        #81416f;
 }
 
 
 /* =========================================================
-   PROBLEMAS — DIAGNÓSTICO
+   PROBLEMAS
    ========================================================= */
 
 .problem-grid {
@@ -798,10 +974,12 @@
 
     border-radius: 16px;
 
-    background: #faf9fc;
+    background:
+        #faf9fc;
 
     border-left:
-        4px solid var(--plum);
+        4px solid
+        var(--plum);
 }
 
 
@@ -811,7 +989,8 @@
 
     font-size: 1rem;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 }
 
 
@@ -823,12 +1002,13 @@
 
     line-height: 1.6;
 
-    color: #5c5d6c;
+    color:
+        #5c5d6c;
 }
 
 
 /* =========================================================
-   DECISIÓN — DIAGNÓSTICO
+   DECISIÓN
    ========================================================= */
 
 .decision {
@@ -841,7 +1021,8 @@
         );
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     border-radius: 18px;
 
@@ -853,7 +1034,8 @@
 
     margin: 0 0 12px;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 }
 
 
@@ -861,7 +1043,8 @@
 
     margin: 0 0 15px;
 
-    color: #4f5060;
+    color:
+        #4f5060;
 
     line-height: 1.7;
 }
@@ -880,14 +1063,16 @@
 
 .criterion {
 
-    background: white;
+    background:
+        white;
 
     border-radius: 13px;
 
     padding: 15px;
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 }
 
 
@@ -895,7 +1080,8 @@
 
     display: block;
 
-    color: var(--teal);
+    color:
+        var(--teal);
 
     margin-bottom: 5px;
 
@@ -905,7 +1091,8 @@
 
 .criterion span {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .78rem;
 
@@ -914,7 +1101,7 @@
 
 
 /* =========================================================
-   MODELO ER — DIAGNÓSTICO
+   MODELO ER
    ========================================================= */
 
 .er-model {
@@ -935,13 +1122,15 @@
 .entity {
 
     border:
-        2px solid var(--indigo);
+        2px solid
+        var(--indigo);
 
     border-radius: 16px;
 
     overflow: hidden;
 
-    background: white;
+    background:
+        white;
 }
 
 
@@ -963,9 +1152,11 @@
 
     padding: 13px;
 
-    background: var(--indigo);
+    background:
+        var(--indigo);
 
-    color: white;
+    color:
+        white;
 
     font-weight: 800;
 
@@ -1006,7 +1197,8 @@
     padding: 7px 0;
 
     border-bottom:
-        1px solid #eeeef2;
+        1px solid
+        #eeeef2;
 
     font-size: .76rem;
 }
@@ -1020,7 +1212,8 @@
 
 .pk {
 
-    color: var(--gold);
+    color:
+        var(--gold);
 
     font-weight: 800;
 }
@@ -1028,7 +1221,8 @@
 
 .fk {
 
-    color: var(--teal);
+    color:
+        var(--teal);
 
     font-weight: 800;
 }
@@ -1038,7 +1232,8 @@
 
     text-align: center;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .75rem;
 
@@ -1052,7 +1247,8 @@
 
     width: 50px;
 
-    background: var(--border);
+    background:
+        var(--border);
 
     margin:
         0 auto 6px;
@@ -1077,11 +1273,27 @@
     background:
         var(--indigo);
 
-    color: white;
+    color:
+        white;
 
     border-radius: 20px;
 
     padding: 25px;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+
+.result-box:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 32px
+        rgba(35,42,84,.14);
 }
 
 
@@ -1128,7 +1340,7 @@
 
 
 /* =========================================================
-   REGLAS — SECCIONES
+   REGLAS
    ========================================================= */
 
 .reglas-page .section-title {
@@ -1143,35 +1355,12 @@
 }
 
 
-.reglas-page .section-number {
-
-    min-width: 42px;
-
-    height: 42px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 13px;
-
-    background: var(--mist);
-
-    color: var(--indigo);
-
-    font-weight: 800;
-
-    font-size: .95rem;
-}
-
-
 .reglas-page .section-title h2 {
 
     margin: 0;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-size: 1.35rem;
 }
@@ -1179,7 +1368,8 @@
 
 .reglas-page .section > p {
 
-    color: #464756;
+    color:
+        #464756;
 
     line-height: 1.7;
 
@@ -1209,9 +1399,11 @@
     border-radius: 16px;
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
-    background: #faf9fc;
+    background:
+        #faf9fc;
 }
 
 
@@ -1219,7 +1411,8 @@
 
     margin: 8px 0 8px;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-size: 1rem;
 }
@@ -1229,7 +1422,8 @@
 
     margin: 0;
 
-    color: #5c5d6c;
+    color:
+        #5c5d6c;
 
     line-height: 1.6;
 
@@ -1237,14 +1431,11 @@
 }
 
 
-/* =========================================================
-   COLORES ORIGINALES DE REGLAS
-   ========================================================= */
-
 .rule-card.indigo {
 
     border-top:
-        4px solid var(--indigo);
+        4px solid
+        var(--indigo);
 
     background:
         linear-gradient(
@@ -1258,7 +1449,8 @@
 .rule-card.plum {
 
     border-top:
-        4px solid var(--plum);
+        4px solid
+        var(--plum);
 
     background:
         linear-gradient(
@@ -1272,7 +1464,8 @@
 .rule-card.gold {
 
     border-top:
-        4px solid var(--gold);
+        4px solid
+        var(--gold);
 
     background:
         linear-gradient(
@@ -1286,7 +1479,8 @@
 .rule-card.teal {
 
     border-top:
-        4px solid var(--teal);
+        4px solid
+        var(--teal);
 
     background:
         linear-gradient(
@@ -1309,9 +1503,11 @@
 
     border-radius: 6px;
 
-    background: var(--mist);
+    background:
+        var(--mist);
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-size: .7rem;
 
@@ -1372,7 +1568,8 @@
     overflow-x: auto;
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     border-radius: 14px;
 }
@@ -1384,7 +1581,8 @@
 
     border-collapse: collapse;
 
-    background: white;
+    background:
+        white;
 }
 
 
@@ -1393,7 +1591,8 @@
     background:
         var(--indigo);
 
-    color: white;
+    color:
+        white;
 
     padding: 14px;
 
@@ -1408,9 +1607,11 @@
     padding: 14px;
 
     border-bottom:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
-    color: #4f5060;
+    color:
+        #4f5060;
 
     line-height: 1.55;
 
@@ -1456,10 +1657,12 @@
 
     border-radius: 16px;
 
-    background: #faf9fc;
+    background:
+        #faf9fc;
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 }
 
 
@@ -1477,7 +1680,8 @@
 
     margin: 0;
 
-    color: #5c5d6c;
+    color:
+        #5c5d6c;
 
     line-height: 1.6;
 
@@ -1488,7 +1692,8 @@
 .match-card.strong-match {
 
     border-top:
-        4px solid var(--teal);
+        4px solid
+        var(--teal);
 }
 
 
@@ -1502,7 +1707,8 @@
 .match-card.partial-match {
 
     border-top:
-        4px solid var(--gold);
+        4px solid
+        var(--gold);
 }
 
 
@@ -1516,7 +1722,8 @@
 .match-card.no-match {
 
     border-top:
-        4px solid var(--plum);
+        4px solid
+        var(--plum);
 }
 
 
@@ -1551,10 +1758,12 @@
 
     padding: 17px;
 
-    background: var(--mist);
+    background:
+        var(--mist);
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
     border-radius: 14px;
 
@@ -1568,7 +1777,8 @@
 
 .reglas-page .flow-step strong {
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-size: .88rem;
 
@@ -1578,7 +1788,8 @@
 
 .reglas-page .flow-step span {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .77rem;
 
@@ -1588,7 +1799,8 @@
 
 .reglas-page .flow-arrow {
 
-    color: var(--plum);
+    color:
+        var(--plum);
 
     font-size: 1.3rem;
 
@@ -1636,17 +1848,21 @@
     font-weight: 700;
 
     border:
-        1px solid var(--border);
+        1px solid
+        var(--border);
 
-    background: white;
+    background:
+        white;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     box-shadow:
         0 5px 15px
-        rgba(35, 42, 84, .06);
+        rgba(35,42,84,.06);
 
-    transition: all .25s ease;
+    transition:
+        all .25s ease;
 }
 
 
@@ -1657,7 +1873,7 @@
 
     box-shadow:
         0 8px 20px
-        rgba(35, 42, 84, .10);
+        rgba(35,42,84,.10);
 }
 
 
@@ -1676,7 +1892,8 @@
     background:
         var(--indigo);
 
-    color: white;
+    color:
+        white;
 
     border-color:
         var(--indigo);
@@ -1692,7 +1909,8 @@
 
 .nav-center {
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .78rem;
 
@@ -1706,11 +1924,1472 @@
 
     display: block;
 
-    color: var(--indigo);
+    color:
+        var(--indigo);
 
     font-size: .85rem;
 
     margin-bottom: 3px;
+}
+
+
+/* =========================================================
+   MODELO Y STAGING
+   ========================================================= */
+
+/*
+ * IMPORTANTE:
+ * Ya NO se define width, max-width ni margin aquí.
+ *
+ * modelo-staging-page utiliza directamente el mismo
+ * contenedor .etapa3-page que Diagnóstico y Reglas.
+ */
+
+.modelo-staging-page .section-text {
+
+    color:
+        #464756;
+
+    line-height: 1.78;
+
+    margin:
+        0 0 16px;
+
+    font-size: .94rem;
+}
+
+
+.modelo-staging-page .section-text:last-child {
+
+    margin-bottom: 0;
+}
+
+
+.modelo-staging-page strong {
+
+    color:
+        var(--indigo);
+}
+
+
+/* =========================================================
+   ANIMACIÓN DE ENTRADA DE STAGING
+   ========================================================= */
+
+.modelo-staging-page .section.section-visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/*
+ * Si JavaScript no agrega section-visible,
+ * las secciones siguen siendo visibles.
+ */
+
+.modelo-staging-page .section {
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   BLOQUES DE CÓDIGO
+   ========================================================= */
+
+.modelo-staging-page .code-box {
+
+    margin:
+        20px 0;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background:
+        #191c2e;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    box-shadow:
+        0 8px 22px
+        rgba(23,27,59,.12);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.modelo-staging-page .code-box:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 13px 28px
+        rgba(23,27,59,.16);
+}
+
+
+.modelo-staging-page .code-box pre {
+
+    margin: 0;
+
+    padding:
+        20px 22px;
+
+    overflow-x: auto;
+
+    color:
+        #e9e9f1;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size: .82rem;
+
+    line-height: 1.7;
+}
+
+
+.modelo-staging-page .code-box code {
+
+    color:
+        inherit;
+}
+
+
+/* =========================================================
+   EVIDENCIAS / CAPTURAS
+   ========================================================= */
+
+.modelo-staging-page .evidence {
+
+    margin:
+        28px 0 4px;
+}
+
+
+.modelo-staging-page .evidence-frame {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 260px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f6f4fa,
+            #f0f8f7
+        );
+
+    box-shadow:
+        0 8px 24px
+        rgba(35,42,84,.06);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+
+.modelo-staging-page .evidence-frame:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 32px
+        rgba(35,42,84,.12);
+}
+
+
+.modelo-staging-page .evidence-frame img {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 650px;
+
+    object-fit: contain;
+
+    padding: 12px;
+
+    border-radius: 18px;
+
+    opacity: 0;
+
+    transform:
+        scale(.985);
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+}
+
+
+.modelo-staging-page .evidence-frame.image-loaded img {
+
+    opacity: 1;
+
+    transform:
+        scale(1);
+}
+
+
+.modelo-staging-page .evidence-large .evidence-frame {
+
+    min-height: 380px;
+}
+
+
+.modelo-staging-page .evidence-fallback {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    color:
+        var(--muted);
+}
+
+
+.modelo-staging-page .evidence-fallback span {
+
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    padding:
+        6px 11px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(35,42,84,.08);
+
+    color:
+        var(--indigo);
+
+    font-size: .7rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .evidence-fallback strong {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1rem;
+}
+
+
+.modelo-staging-page .evidence-fallback small {
+
+    max-width: 480px;
+
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+
+    font-size: .8rem;
+}
+
+
+.modelo-staging-page .evidence figcaption {
+
+    margin-top: 10px;
+
+    color:
+        var(--muted);
+
+    font-size: .76rem;
+
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   JERARQUÍA GEOGRÁFICA
+   ========================================================= */
+
+.modelo-staging-page .hierarchy-flow {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1.2fr auto 1fr;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin:
+        28px 0 10px;
+}
+
+
+.modelo-staging-page .hierarchy-card {
+
+    padding: 20px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-top:
+        4px solid
+        var(--indigo);
+
+    border-radius: 16px;
+
+    background:
+        #faf9fc;
+}
+
+
+.modelo-staging-page .hierarchy-card.associative {
+
+    border-top-color:
+        var(--teal);
+}
+
+
+.modelo-staging-page .hierarchy-card.vehicle {
+
+    border-top-color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .hierarchy-code {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--muted);
+
+    font-size: .68rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .hierarchy-card strong {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: .95rem;
+}
+
+
+.modelo-staging-page .hierarchy-card small {
+
+    display: block;
+
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+
+    font-size: .77rem;
+}
+
+
+.modelo-staging-page .hierarchy-arrow {
+
+    color:
+        var(--plum);
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   NOTAS TÉCNICAS
+   ========================================================= */
+
+.modelo-staging-page .technical-note {
+
+    display: grid;
+
+    grid-template-columns:
+        42px 1fr;
+
+    gap: 14px;
+
+    align-items: start;
+
+    margin-top: 22px;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f4fa,
+            #f1f8f7
+        );
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.modelo-staging-page .technical-note-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        rgba(46,156,147,.12);
+
+    color:
+        var(--teal);
+
+    font-weight: 900;
+}
+
+
+.modelo-staging-page .technical-note strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--indigo);
+
+    font-size: .9rem;
+}
+
+
+.modelo-staging-page .technical-note p {
+
+    margin: 0;
+
+    color:
+        #555665;
+
+    line-height: 1.6;
+
+    font-size: .84rem;
+}
+
+
+.modelo-staging-page .technical-note.warning {
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf6ef,
+            #faf3f8
+        );
+}
+
+
+.modelo-staging-page .technical-note.warning
+.technical-note-icon {
+
+    background:
+        rgba(140,78,126,.10);
+
+    color:
+        var(--plum);
+}
+
+
+/* =========================================================
+   DETALLE DE ENTIDADES
+   ========================================================= */
+
+.modelo-staging-page .entity-detail {
+
+    margin-top: 24px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 18px;
+
+    background:
+        white;
+
+    box-shadow:
+        0 7px 22px
+        rgba(35,42,84,.05);
+}
+
+
+.modelo-staging-page .entity-detail-header {
+
+    padding:
+        15px 20px;
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    font-family:
+        'Poppins',
+        sans-serif;
+
+    font-weight: 700;
+}
+
+
+.modelo-staging-page .vehicle-detail
+.entity-detail-header {
+
+    background:
+        var(--plum);
+}
+
+
+.modelo-staging-page .entity-detail-body {
+
+    padding:
+        8px 20px;
+}
+
+
+.modelo-staging-page .field-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        11px 0;
+
+    border-bottom:
+        1px solid
+        #eeeeF2;
+
+    color:
+        #555665;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: .78rem;
+}
+
+
+.modelo-staging-page .field-row:last-child {
+
+    border-bottom: none;
+}
+
+
+.modelo-staging-page .field-row .pk {
+
+    color:
+        var(--gold);
+}
+
+
+.modelo-staging-page .field-row .fk {
+
+    color:
+        var(--teal);
+}
+
+
+/* =========================================================
+   INDEPENDENCIA SINIESTRO / VEHÍCULO
+   ========================================================= */
+
+.modelo-staging-page .independence-box {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 160px 1fr;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin:
+        28px 0;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        #faf9fc;
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.modelo-staging-page .independence-side {
+
+    padding: 22px;
+
+    text-align: center;
+
+    border:
+        2px solid
+        var(--indigo);
+
+    border-radius: 16px;
+
+    background:
+        white;
+}
+
+
+.modelo-staging-page .independence-side.vehiculo {
+
+    border-color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .independence-side span {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--muted);
+
+    font-size: .66rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .independence-side strong {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1.05rem;
+}
+
+
+.modelo-staging-page .independence-side.vehiculo strong {
+
+    color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .independence-side small {
+
+    color:
+        var(--muted);
+
+    line-height: 1.7;
+
+    font-size: .73rem;
+
+    font-family:
+        Consolas,
+        monospace;
+}
+
+
+.modelo-staging-page .independence-center {
+
+    text-align: center;
+}
+
+
+.modelo-staging-page .no-relation {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin:
+        0 auto 8px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(140,78,126,.10);
+
+    color:
+        var(--plum);
+
+    font-size: 1.6rem;
+
+    font-weight: 900;
+}
+
+
+.modelo-staging-page .independence-center span {
+
+    color:
+        var(--muted);
+
+    font-size: .63rem;
+
+    font-weight: 800;
+
+    letter-spacing: .05em;
+}
+
+
+/* =========================================================
+   TABLAS TÉCNICAS
+   ========================================================= */
+
+.modelo-staging-page .table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    margin-top: 20px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(35,42,84,.04);
+}
+
+
+.modelo-staging-page .technical-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background:
+        white;
+}
+
+
+.modelo-staging-page .technical-table th {
+
+    padding: 14px;
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    text-align: left;
+
+    font-size: .82rem;
+
+    white-space: nowrap;
+}
+
+
+.modelo-staging-page .technical-table td {
+
+    padding:
+        13px 14px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    color:
+        #555665;
+
+    line-height: 1.5;
+
+    font-size: .82rem;
+
+    vertical-align: top;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        text-decoration .2s ease;
+}
+
+
+.modelo-staging-page .technical-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+.modelo-staging-page .technical-table tbody tr:nth-child(even) {
+
+    background:
+        #faf9fc;
+}
+
+
+/*
+ * Clase utilizada por JavaScript para resaltar
+ * la columna completa.
+ */
+
+.modelo-staging-page .technical-table
+.column-hover {
+
+    background:
+        rgba(140,78,126,.08) !important;
+
+    color:
+        var(--indigo) !important;
+
+    text-decoration:
+        underline;
+
+    text-decoration-color:
+        var(--plum);
+
+    text-decoration-thickness:
+        2px;
+
+    text-underline-offset:
+        4px;
+}
+
+
+/* =========================================================
+   STAGING CARDS
+   ========================================================= */
+
+.modelo-staging-page .staging-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin-top: 22px;
+}
+
+
+.modelo-staging-page .staging-card {
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 18px;
+
+    background:
+        white;
+}
+
+
+.modelo-staging-page .staging-card-header {
+
+    padding:
+        17px 20px;
+
+    color:
+        white;
+
+    background:
+        var(--indigo);
+}
+
+
+.modelo-staging-page .staging-card.vehiculos
+.staging-card-header {
+
+    background:
+        var(--plum);
+}
+
+
+.modelo-staging-page .staging-card-header span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+
+    opacity: .75;
+}
+
+
+.modelo-staging-page .staging-card-header strong {
+
+    color:
+        white;
+
+    font-size: 1rem;
+}
+
+
+.modelo-staging-page .staging-card-body {
+
+    padding: 20px;
+}
+
+
+.modelo-staging-page .staging-card-body p {
+
+    margin:
+        0 0 15px;
+
+    color:
+        #555665;
+
+    line-height: 1.6;
+
+    font-size: .86rem;
+}
+
+
+.modelo-staging-page .staging-card-body code {
+
+    display: block;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background:
+        var(--mist);
+
+    color:
+        var(--indigo);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: .69rem;
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ARQUITECTURA
+   ========================================================= */
+
+.modelo-staging-page .architecture-flow {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr auto 1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 28px;
+}
+
+
+.modelo-staging-page .architecture-step {
+
+    min-height: 125px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-top:
+        4px solid
+        var(--indigo);
+
+    border-radius: 16px;
+
+    background:
+        var(--mist);
+}
+
+
+.modelo-staging-page .architecture-step.staging {
+
+    border-top-color:
+        var(--teal);
+}
+
+
+.modelo-staging-page .architecture-step.transform {
+
+    border-top-color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .architecture-step.model {
+
+    border-top-color:
+        var(--gold);
+}
+
+
+.modelo-staging-page .architecture-step span {
+
+    color:
+        var(--muted);
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    margin-bottom: 7px;
+}
+
+
+.modelo-staging-page .architecture-step strong {
+
+    color:
+        var(--indigo);
+
+    margin-bottom: 7px;
+
+    font-size: .92rem;
+}
+
+
+.modelo-staging-page .architecture-step small {
+
+    color:
+        var(--muted);
+
+    line-height: 1.45;
+
+    font-size: .72rem;
+}
+
+
+.modelo-staging-page .architecture-arrow {
+
+    color:
+        var(--plum);
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   SSIS
+   ========================================================= */
+
+.modelo-staging-page .ssis-flow {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin:
+        25px 0 5px;
+}
+
+
+.modelo-staging-page .ssis-node {
+
+    padding: 22px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f4fa,
+            #faf9fc
+        );
+
+    border-left:
+        4px solid
+        var(--indigo);
+}
+
+
+.modelo-staging-page .ssis-node:nth-child(2) {
+
+    border-left-color:
+        var(--plum);
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf3f8,
+            #faf9fc
+        );
+}
+
+
+.modelo-staging-page .ssis-node span {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--muted);
+
+    font-size: .66rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .ssis-node strong {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1rem;
+}
+
+
+.modelo-staging-page .ssis-node small {
+
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+
+    font-size: .76rem;
+}
+
+
+/* =========================================================
+   EJECUCIÓN
+   ========================================================= */
+
+.modelo-staging-page .execution-result {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+
+    margin-top: 22px;
+}
+
+
+.modelo-staging-page .execution-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 17px;
+
+    border:
+        1px solid
+        #dfece9;
+
+    border-radius: 15px;
+
+    background:
+        #f3faf8;
+}
+
+
+.modelo-staging-page .execution-status {
+
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background:
+        rgba(46,156,147,.13);
+
+    color:
+        var(--teal);
+
+    font-weight: 900;
+}
+
+
+.modelo-staging-page .execution-item strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color:
+        var(--indigo);
+
+    font-size: .87rem;
+}
+
+
+.modelo-staging-page .execution-item small {
+
+    color:
+        var(--muted);
+
+    font-size: .73rem;
+}
+
+
+/* =========================================================
+   ARQUITECTURA COMPLETA
+   ========================================================= */
+
+.modelo-staging-page .full-architecture {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr auto 1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding: 22px;
+
+    border-radius: 20px;
+
+    background:
+        #faf9fc;
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.modelo-staging-page .architecture-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+
+.modelo-staging-page .architecture-label {
+
+    margin-bottom: 2px;
+
+    color:
+        var(--muted);
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .architecture-box {
+
+    padding: 13px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 11px;
+
+    background:
+        white;
+
+    color:
+        var(--indigo);
+
+    font-size: .75rem;
+
+    font-weight: 700;
+
+    text-align: center;
+}
+
+
+.modelo-staging-page .architecture-box.staging-box {
+
+    border-color:
+        rgba(46,156,147,.25);
+
+    color:
+        var(--teal);
+}
+
+
+.modelo-staging-page .architecture-box.transform-box {
+
+    border-color:
+        rgba(140,78,126,.25);
+
+    color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .architecture-box.model-box {
+
+    border-color:
+        rgba(105,95,77,.25);
+
+    color:
+        var(--gold);
+}
+
+
+.modelo-staging-page .big-arrow {
+
+    color:
+        var(--plum);
+
+    font-size:
+        1.4rem;
+
+    font-weight:
+        900;
 }
 
 
@@ -1720,21 +3399,88 @@
 
 @media (max-width: 1100px) {
 
-    .side-nav.left {
-        left: 8px;
+    .etapa3-page {
+
+        width:
+            calc(100% - 100px);
     }
 
-    .side-nav.right {
-        right: 8px;
+    .etapa3-page .side-nav.left {
+
+        left:
+            8px;
     }
 
-    .side-nav a {
+    .etapa3-page .side-nav.right {
 
-        width: 42px;
+        right:
+            8px;
+    }
 
-        height: 42px;
+    .etapa3-page .side-nav a {
 
-        font-size: 1.1rem;
+        width:
+            42px;
+
+        height:
+            42px;
+
+        font-size:
+            1.1rem;
+    }
+}
+
+
+@media (max-width: 950px) {
+
+    .modelo-staging-page .hierarchy-flow,
+    .modelo-staging-page .architecture-flow {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .hierarchy-arrow,
+    .modelo-staging-page .architecture-arrow {
+
+        transform:
+            rotate(90deg);
+
+        text-align:
+            center;
+    }
+
+    .modelo-staging-page .independence-box {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .independence-center {
+
+        order:
+            2;
+    }
+
+    .modelo-staging-page .independence-side.vehiculo {
+
+        order:
+            3;
+    }
+
+    .modelo-staging-page .full-architecture {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .big-arrow {
+
+        transform:
+            rotate(90deg);
+
+        text-align:
+            center;
     }
 }
 
@@ -1744,9 +3490,9 @@
     .dataset-grid,
     .problem-grid {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
-
 
     .metrics {
 
@@ -1754,111 +3500,174 @@
             repeat(2, 1fr);
     }
 
-
     .criteria {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
-
 
     .er-model {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
-
 
     .connector-line {
 
-        width: 2px;
+        width:
+            2px;
 
-        height: 30px;
+        height:
+            30px;
 
         margin:
             0 auto;
     }
 
-
     .hero-number,
     .stage-number {
 
-        display: none;
+        display:
+            none;
     }
-
 
     .match-box {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
-
 
     .reglas-page .flow {
 
-        flex-direction: column;
+        flex-direction:
+            column;
     }
-
 
     .reglas-page .flow-step {
 
-        width: 100%;
+        width:
+            100%;
     }
-
 
     .reglas-page .flow-arrow {
 
         transform:
             rotate(90deg);
     }
+
+    .modelo-staging-page .staging-grid,
+    .modelo-staging-page .ssis-flow,
+    .modelo-staging-page .execution-result {
+
+        grid-template-columns:
+            1fr;
+    }
 }
 
 
 @media (max-width: 700px) {
 
-    .side-nav {
+    .etapa3-page {
 
-        display: none;
+        width:
+            calc(100% - 32px);
+
+        padding:
+            20px 0 40px;
     }
 
+    /*
+     * En móvil se mantienen ocultas las flechas,
+     * igual que en la versión anterior.
+     */
+
+    .etapa3-page .side-nav {
+
+        display:
+            none;
+    }
 
     .etapa-nav {
 
-        gap: 8px;
+        gap:
+            8px;
     }
-
 
     .nav-btn {
 
         padding:
             10px 13px;
 
-        font-size: .78rem;
+        font-size:
+            .78rem;
     }
-
 
     .nav-center {
 
-        display: none;
+        display:
+            none;
     }
-
 
     .rules-grid {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
-
-    .diagnostico-page,
-    .reglas-page {
+    .etapa3-page .hero {
 
         padding:
-            20px 12px 40px;
+            28px 22px;
     }
 
+    .etapa3-page .section {
 
-    .etapa3-page .hero,
-    .diagnostico-page .hero,
-    .reglas-page .hero {
+        padding:
+            24px 22px;
+    }
+}
 
-        padding: 28px 22px;
+
+@media (max-width: 650px) {
+
+    .modelo-staging-page .evidence-frame {
+
+        min-height:
+            220px;
+    }
+
+    .modelo-staging-page .evidence-large
+    .evidence-frame {
+
+        min-height:
+            250px;
+    }
+
+    .modelo-staging-page .technical-note {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .technical-note-icon {
+
+        width:
+            38px;
+
+        height:
+            38px;
+    }
+
+    .modelo-staging-page .entity-detail-body {
+
+        padding:
+            8px 15px;
+    }
+
+    .modelo-staging-page .field-row {
+
+        font-size:
+            .7rem;
     }
 }
 
@@ -1871,25 +3680,25 @@
             1fr 1fr;
     }
 
-
     .dataset-stats {
 
         grid-template-columns:
             1fr 1fr;
     }
 
-
     .comparison {
 
-        display: block;
+        display:
+            block;
 
-        overflow-x: auto;
+        overflow-x:
+            auto;
     }
 
+    .etapa3-page .section {
 
-    .section {
-
-        padding: 22px;
+        padding:
+            22px;
     }
 }
 
@@ -1899,31 +3708,32 @@
     .metrics,
     .dataset-stats {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 
+    .etapa3-page .hero {
 
-    .etapa3-page .hero,
-    .diagnostico-page .hero,
-    .reglas-page .hero {
+        padding:
+            24px 18px;
 
-        padding: 24px 18px;
-
-        border-radius: 18px;
+        border-radius:
+            18px;
     }
 
-
-    .etapa3-page .hero h1,
-    .diagnostico-page .hero h1,
-    .reglas-page .hero h1 {
+    .etapa3-page .hero h1 {
 
         font-size:
-            clamp(1.8rem, 8vw, 2.5rem);
+            clamp(
+                1.8rem,
+                8vw,
+                2.5rem
+            );
     }
-
 
     .result-box {
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
 }

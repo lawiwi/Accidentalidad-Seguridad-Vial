@@ -15,30 +15,22 @@
 {% endblock %}
 
 {% block content %}
-<!-- =========================================
-     NAVEGACIÓN LATERAL
-     ========================================= -->
 
+
+<div class="etapa3-page reglas-page">
+<!-- BOTÓN LATERAL ANTERIOR -->
 <div class="side-nav left">
-    <a
-        href="{{ url_for('etapa3_diagnostico') }}"
-        title="Volver a Diagnóstico"
-    >
+    <a href="{{ url_for('etapa3_diagnostico') }}" title="Volver a Diagnóstico">
         ←
     </a>
 </div>
 
+<!-- BOTÓN LATERAL SIGUIENTE -->
 <div class="side-nav right">
-    <a
-        href="{{ url_for('ssis') }}"
-        title="Ir a SSIS"
-    >
+    <a href="{{ url_for('staging') }}" title="Ir a Staging">
         →
     </a>
 </div>
-
-
-<div class="etapa3-page reglas-page">
 
     <!-- =========================================
          HERO

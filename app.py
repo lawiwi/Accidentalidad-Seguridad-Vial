@@ -401,14 +401,14 @@ def ssis():
     return render_template("Etapa3/ssis.html")
 
 
-@app.route("/Etapa3/iteracion1")
-def iteracion1():
-    return render_template("Etapa3/iteracion1.html")
+@app.route("/Etapa3/staging")
+def staging():
+    return render_template("Etapa3/staging.html")
 
 
-@app.route("/Etapa3/iteracion2")
-def iteracion2():
-    return render_template("Etapa3/iteracion2.html")
+@app.route("/Etapa3/iteracion1y2")
+def iteracion1y2():
+    return render_template("Etapa3/iteracion1y2.html")
 
 
 @app.route("/Etapa3/iteracion3")
