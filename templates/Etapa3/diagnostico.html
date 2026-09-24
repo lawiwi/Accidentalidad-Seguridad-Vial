@@ -1,0 +1,705 @@
+{% extends "base.html" %}
+
+{% block title %}Etapa 3 - Diagnóstico{% endblock %}
+
+{% block head %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="etapa3-page diagnostico-page">
+<!-- BOTÓN LATERAL ANTERIOR -->
+<div class="side-nav left">
+    <a href="{{ url_for('etapa3') }}" title="Volver a Etapa 3">
+        ←
+    </a>
+</div>
+
+<!-- BOTÓN LATERAL SIGUIENTE -->
+<div class="side-nav right">
+    <a href="{{ url_for('reglas') }}" title="Ir a Reglas">
+        →
+    </a>
+</div>
+    <a href="{{ url_for('etapa3') }}" class="back-link">
+        ← Volver a Etapa 3
+    </a>
+
+    <!-- HERO -->
+
+    <section class="hero">
+        <div class="hero-content">
+            <span class="stage-tag">Etapa 3 · Diagnóstico</span>
+
+            <h1>Diagnóstico de las fuentes de datos</h1>
+
+            <p>
+                Análisis del estado inicial de los datasets utilizados en el proyecto,
+                identificando sus características, diferencias, campos compatibles,
+                limitaciones y condiciones necesarias para realizar el proceso de
+                integración de la información de accidentalidad vial.
+            </p>
+        </div>
+
+        <div class="hero-number">01</div>
+    </section>
+
+
+    <!-- 1. PROPÓSITO -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">01</div>
+
+            <div>
+                <h2>Propósito del diagnóstico</h2>
+                <p>Comprender el estado inicial de las fuentes antes de realizar la integración.</p>
+            </div>
+        </div>
+
+        <p class="section-text">
+            El diagnóstico tiene como propósito identificar las características y
+            condiciones de las fuentes de datos utilizadas para el análisis de
+            accidentalidad vial. Para ello se revisaron los archivos
+            <strong>siniestros_viales.csv</strong> y
+            <strong>vehiculos_accidentes.csv</strong>, determinando su estructura,
+            cantidad de registros, variables disponibles, cobertura temporal y
+            atributos que pueden ser utilizados durante el proceso de integración.
+        </p>
+
+    </section>
+
+
+    <!-- 2. FUENTES -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">02</div>
+
+            <div>
+                <h2>Fuentes de datos analizadas</h2>
+                <p>Características principales de los datasets utilizados por el equipo.</p>
+            </div>
+        </div>
+
+        <div class="dataset-grid">
+
+            <!-- SINIESTROS -->
+
+            <div class="dataset-card">
+
+                <div class="dataset-title siniestros">
+                    <h3>siniestros_viales.csv</h3>
+                    <span>Fuente: ANSV</span>
+                </div>
+
+                <div class="dataset-body">
+
+                    <div class="dataset-stats">
+
+                        <div class="stat">
+                            <strong>19.015</strong>
+                            <span>Registros</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>16</strong>
+                            <span>Variables</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>2019</strong>
+                            <span>Año inicial</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>14 ago.</strong>
+                            <span>Fecha final</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Contiene información general de los siniestros viales,
+                        incluyendo ubicación, fecha, clasificación, hipótesis,
+                        víctimas y departamento o municipio donde ocurrió el hecho.
+                    </p>
+
+                    <div class="columns">
+                        <span class="column">fid</span>
+                        <span class="column">hechos_id</span>
+                        <span class="column">latitud</span>
+                        <span class="column">longitud</span>
+                        <span class="column">fecha_hech</span>
+                        <span class="column">depto_hech</span>
+                        <span class="column">municipio_</span>
+                        <span class="column">lugaro</span>
+                        <span class="column">hipotesis_</span>
+                        <span class="column">smuertos</span>
+                        <span class="column">slesionado</span>
+                        <span class="column">tvictimas</span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- VEHICULOS -->
+
+            <div class="dataset-card">
+
+                <div class="dataset-title vehiculos">
+                    <h3>vehiculos_accidentes.csv</h3>
+                    <span>Fuente: Datos Abiertos Colombia</span>
+                </div>
+
+                <div class="dataset-body">
+
+                    <div class="dataset-stats">
+
+                        <div class="stat">
+                            <strong>406.540</strong>
+                            <span>Registros</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>9</strong>
+                            <span>Variables</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>2022</strong>
+                            <span>Año inicial</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>2026</strong>
+                            <span>Fecha final</span>
+                        </div>
+
+                    </div>
+
+                    <p>
+                        Contiene información relacionada con los vehículos
+                        involucrados en accidentes de tránsito, incluyendo marca,
+                        modelo, tipo, edad, gravedad y ubicación del accidente.
+                    </p>
+
+                    <div class="columns">
+                        <span class="column">marca_vehiculo</span>
+                        <span class="column">modelo_vehiculo</span>
+                        <span class="column">tipo_vehiculo</span>
+                        <span class="column">edad_vehiculo</span>
+                        <span class="column">fecha_accidente</span>
+                        <span class="column">gravedad_accidente</span>
+                        <span class="column">departamento_accidente</span>
+                        <span class="column">municipio_accidente</span>
+                        <span class="column">autoridad_de_transito</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- 3. RESUMEN -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">03</div>
+
+            <div>
+                <h2>Resumen del diagnóstico</h2>
+                <p>Magnitud y características principales encontradas.</p>
+            </div>
+        </div>
+
+        <div class="metrics">
+
+            <div class="metric">
+                <span class="value">19.015</span>
+                <span class="label">Siniestros registrados</span>
+            </div>
+
+            <div class="metric">
+                <span class="value">406.540</span>
+                <span class="label">Vehículos registrados</span>
+            </div>
+
+            <div class="metric">
+                <span class="value">27</span>
+                <span class="label">Departamentos comunes</span>
+            </div>
+
+            <div class="metric">
+                <span class="value">2</span>
+                <span class="label">Fuentes analizadas</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 4. COMPATIBILIDAD -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">04</div>
+
+            <div>
+                <h2>Compatibilidad entre las fuentes</h2>
+                <p>Identificación de atributos que pueden apoyar el proceso de correspondencia.</p>
+            </div>
+        </div>
+
+        <table class="comparison">
+
+            <thead>
+                <tr>
+                    <th>Elemento</th>
+                    <th>Siniestros</th>
+                    <th>Vehículos</th>
+                    <th>Diagnóstico</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td><strong>Fecha</strong></td>
+                    <td>fecha_hech</td>
+                    <td>fecha_accidente</td>
+                    <td>
+                        <span class="status ok">Compatible</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Departamento</strong></td>
+                    <td>depto_hech</td>
+                    <td>departamento_accidente</td>
+                    <td>
+                        <span class="status warning">Requiere homologación</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Municipio</strong></td>
+                    <td>municipio_</td>
+                    <td>municipio_accidente</td>
+                    <td>
+                        <span class="status warning">Requiere homologación</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Identificador de accidente</strong></td>
+                    <td>hechos_id</td>
+                    <td>No disponible</td>
+                    <td>
+                        <span class="status problem">No existe clave común</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><strong>Cobertura temporal</strong></td>
+                    <td>2019-01-01 a 2019-08-14</td>
+                    <td>2022-01-01 a 2026-02-01</td>
+                    <td>
+                        <span class="status problem">Periodos diferentes</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- 5. PROBLEMAS -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">05</div>
+
+            <div>
+                <h2>Problemas y limitaciones identificadas</h2>
+                <p>Situaciones que deben ser consideradas antes de integrar los datos.</p>
+            </div>
+        </div>
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <h3>Ausencia de una clave compartida</h3>
+                <p>
+                    Las dos fuentes no contienen un identificador único común que
+                    permita relacionar directamente un siniestro con sus vehículos.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Diferencia temporal</h3>
+                <p>
+                    El dataset de siniestros corresponde principalmente al año 2019,
+                    mientras que el dataset de vehículos comienza en 2022.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Diferencias geográficas</h3>
+                <p>
+                    Se encontraron 32 departamentos en la fuente de siniestros y
+                    31 en la fuente de vehículos, con 27 departamentos comunes.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Nomenclaturas diferentes</h3>
+                <p>
+                    Los nombres de los campos y posiblemente sus valores presentan
+                    estructuras diferentes, por lo que requieren homologación.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Riesgo de correspondencias incorrectas</h3>
+                <p>
+                    Una coincidencia únicamente por fecha o ubicación no garantiza
+                    que los registros correspondan al mismo accidente.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Fuentes con diferentes niveles de detalle</h3>
+                <p>
+                    Siniestros describe el hecho general, mientras que vehículos
+                    proporciona información específica de los vehículos involucrados.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 6. DECISIÓN DE INTEGRACIÓN -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">06</div>
+
+            <div>
+                <h2>Decisión tomada para la integración</h2>
+                <p>Definición de los criterios utilizados para establecer correspondencias.</p>
+            </div>
+        </div>
+
+        <div class="decision">
+
+            <h3>Correspondencia mediante atributos comunes</h3>
+
+            <p>
+                Debido a que las fuentes originales no poseen una clave primaria
+                compartida, se definió utilizar atributos comunes como criterios
+                de correspondencia. La estrategia considera principalmente la
+                <strong>fecha del accidente, el departamento y el municipio</strong>.
+            </p>
+
+            <div class="criteria">
+
+                <div class="criterion">
+                    <strong>Coincidencia fuerte</strong>
+                    <span>
+                        Fecha + departamento + municipio coincidentes.
+                    </span>
+                </div>
+
+                <div class="criterion">
+                    <strong>Coincidencia parcial</strong>
+                    <span>
+                        Fecha y departamento o fecha y municipio coincidentes.
+                    </span>
+                </div>
+
+                <div class="criterion">
+                    <strong>Sin coincidencia</strong>
+                    <span>
+                        No se encuentran suficientes atributos comunes para
+                        establecer una correspondencia.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 7. MODELO ER -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">07</div>
+
+            <div>
+                <h2>Modelo de integración</h2>
+                <p>Representación de las entidades y relaciones definidas a partir del diagnóstico.</p>
+            </div>
+        </div>
+
+        <p class="section-text">
+            Como resultado del diagnóstico se definió una estructura relacional
+            que permite representar la relación entre los siniestros y los
+            vehículos sin asumir que el identificador de una fuente corresponde
+            directamente con el de la otra.
+        </p>
+
+
+        <div class="er-model">
+
+            <!-- SINIESTRO -->
+
+            <div class="entity">
+
+                <div class="entity-header">
+                    SINIESTRO
+                </div>
+
+                <div class="entity-body">
+
+                    <div class="field">
+                        <span class="pk">PK · id_siniestro</span>
+                    </div>
+
+                    <div class="field">
+                        <span>fecha</span>
+                    </div>
+
+                    <div class="field">
+                        <span>departamento</span>
+                    </div>
+
+                    <div class="field">
+                        <span>municipio</span>
+                    </div>
+
+                    <div class="field">
+                        <span>latitud / longitud</span>
+                    </div>
+
+                    <div class="field">
+                        <span>hipótesis</span>
+                    </div>
+
+                    <div class="field">
+                        <span>víctimas</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONECTOR -->
+
+            <div class="connector">
+                <div class="connector-line"></div>
+                1 : N
+            </div>
+
+
+            <!-- ASOCIATIVA -->
+
+            <div class="entity associative">
+
+                <div class="entity-header">
+                    SINIESTRO_VEHICULO
+                </div>
+
+                <div class="entity-body">
+
+                    <div class="field">
+                        <span class="pk">PK · id_relacion</span>
+                    </div>
+
+                    <div class="field">
+                        <span class="fk">FK · id_siniestro</span>
+                    </div>
+
+                    <div class="field">
+                        <span class="fk">FK · id_vehiculo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>nivel_coincidencia</span>
+                    </div>
+
+                    <div class="field">
+                        <span>criterios_coincidentes</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONECTOR -->
+
+            <div class="connector">
+                <div class="connector-line"></div>
+                N : 1
+            </div>
+
+
+            <!-- VEHICULO -->
+
+            <div class="entity vehicle">
+
+                <div class="entity-header">
+                    VEHICULO
+                </div>
+
+                <div class="entity-body">
+
+                    <div class="field">
+                        <span class="pk">PK · id_vehiculo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>marca</span>
+                    </div>
+
+                    <div class="field">
+                        <span>modelo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>tipo</span>
+                    </div>
+
+                    <div class="field">
+                        <span>edad</span>
+                    </div>
+
+                    <div class="field">
+                        <span>gravedad</span>
+                    </div>
+
+                    <div class="field">
+                        <span>autoridad tránsito</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- 8. REGLAS QUE PASAN A LA SIGUIENTE FASE -->
+
+    <section class="section">
+
+        <div class="section-header">
+            <div class="section-number">08</div>
+
+            <div>
+                <h2>Aspectos definidos para la siguiente fase</h2>
+                <p>Elementos que serán utilizados en la construcción de las reglas de integración.</p>
+            </div>
+        </div>
+
+        <div class="problem-grid">
+
+            <div class="problem-card">
+                <h3>Homologación</h3>
+                <p>
+                    Normalizar nombres y valores de departamento y municipio
+                    para facilitar las comparaciones entre fuentes.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Validación de fechas</h3>
+                <p>
+                    Estandarizar los campos de fecha y verificar que los registros
+                    cumplan las condiciones temporales definidas.
+                </p>
+            </div>
+
+            <div class="problem-card">
+                <h3>Nivel de coincidencia</h3>
+                <p>
+                    Registrar si una correspondencia es fuerte, parcial o no
+                    identificada según los criterios establecidos.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULTADO -->
+
+    <section class="result-box">
+
+        <div class="result-icon">
+            ✓
+        </div>
+
+        <div>
+            <h3>Resultado del diagnóstico</h3>
+
+            <p>
+                Se caracterizaron las dos fuentes de datos, se identificaron sus
+                diferencias estructurales y temporales, se determinaron los
+                atributos comunes y se estableció una estrategia de integración
+                basada en fecha, departamento y municipio. A partir de este
+                diagnóstico se definieron las condiciones necesarias para avanzar
+                hacia la construcción de las reglas de homologación y el proceso ETL.
+            </p>
+        </div>
+
+    </section>
+<!-- NAVEGACIÓN ENTRE ETAPAS -->
+
+<div class="etapa-nav">
+
+    <a href="{{ url_for('etapa3') }}" class="nav-btn previous">
+        ← Etapa 3
+    </a>
+
+    <div class="nav-center">
+        <strong>Diagnóstico</strong>
+        1 de 8
+    </div>
+
+    <a href="{{ url_for('reglas') }}" class="nav-btn next">
+        Reglas →
+    </a>
+
+</div>
+</div>
+
+{% endblock %}

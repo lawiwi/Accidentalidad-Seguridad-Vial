@@ -1,0 +1,101 @@
+digraph Modelo_ER_Accidentalidad_Vial {
+	bgcolor=white fontname=Arial fontsize=22 label="MODELO ENTIDAD-RELACIÓN — ACCIDENTALIDAD VIAL" labelloc=t rankdir=LR
+	node [fontname=Arial shape=plain]
+	Siniestro [label=<
+<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7">
+    <TR>
+        <TD BGCOLOR="#2F5597">
+            <FONT COLOR="white" POINT-SIZE="15">
+                <B>SINIESTRO</B>
+            </FONT>
+        </TD>
+    </TR>
+
+    <TR>
+        <TD ALIGN="LEFT">
+            <FONT COLOR="#B8860B"><B>🔑 PK</B></FONT>
+            <B> id_siniestro</B>
+        </TD>
+    </TR>
+
+    <TR><TD ALIGN="LEFT">fecha_hecho</TD></TR>
+    <TR><TD ALIGN="LEFT">mes</TD></TR>
+    <TR><TD ALIGN="LEFT">departamento</TD></TR>
+    <TR><TD ALIGN="LEFT">municipio</TD></TR>
+    <TR><TD ALIGN="LEFT">ubicacion</TD></TR>
+    <TR><TD ALIGN="LEFT">latitud</TD></TR>
+    <TR><TD ALIGN="LEFT">longitud</TD></TR>
+    <TR><TD ALIGN="LEFT">hipotesis</TD></TR>
+    <TR><TD ALIGN="LEFT">medio_conocimiento</TD></TR>
+    <TR><TD ALIGN="LEFT">muertos</TD></TR>
+    <TR><TD ALIGN="LEFT">lesionados</TD></TR>
+    <TR><TD ALIGN="LEFT">total_victimas</TD></TR>
+    <TR><TD ALIGN="LEFT">clasificacion</TD></TR>
+</TABLE>
+>]
+	Relacion [label=<
+<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7">
+    <TR>
+        <TD BGCOLOR="#C55A11">
+            <FONT COLOR="white" POINT-SIZE="14">
+                <B>SINIESTRO_VEHICULO</B>
+            </FONT>
+        </TD>
+    </TR>
+
+    <TR>
+        <TD ALIGN="LEFT">
+            <FONT COLOR="#B8860B"><B>🔑 PK</B></FONT>
+            <B> id_relacion</B>
+        </TD>
+    </TR>
+
+    <TR>
+        <TD ALIGN="LEFT">
+            <FONT COLOR="#7030A0"><B>🔗 FK</B></FONT>
+            <B> id_siniestro</B>
+        </TD>
+    </TR>
+
+    <TR>
+        <TD ALIGN="LEFT">
+            <FONT COLOR="#7030A0"><B>🔗 FK</B></FONT>
+            <B> id_vehiculo</B>
+        </TD>
+    </TR>
+
+    <TR><TD ALIGN="LEFT">nivel_coincidencia</TD></TR>
+    <TR><TD ALIGN="LEFT">criterios_coincidentes</TD></TR>
+</TABLE>
+>]
+	Vehiculo [label=<
+<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="7">
+    <TR>
+        <TD BGCOLOR="#548235">
+            <FONT COLOR="white" POINT-SIZE="15">
+                <B>VEHICULO</B>
+            </FONT>
+        </TD>
+    </TR>
+
+    <TR>
+        <TD ALIGN="LEFT">
+            <FONT COLOR="#B8860B"><B>🔑 PK</B></FONT>
+            <B> id_vehiculo</B>
+        </TD>
+    </TR>
+
+    <TR><TD ALIGN="LEFT">marca</TD></TR>
+    <TR><TD ALIGN="LEFT">modelo</TD></TR>
+    <TR><TD ALIGN="LEFT">tipo_vehiculo</TD></TR>
+    <TR><TD ALIGN="LEFT">edad_vehiculo</TD></TR>
+    <TR><TD ALIGN="LEFT">fecha_accidente</TD></TR>
+    <TR><TD ALIGN="LEFT">gravedad</TD></TR>
+    <TR><TD ALIGN="LEFT">departamento</TD></TR>
+    <TR><TD ALIGN="LEFT">municipio</TD></TR>
+    <TR><TD ALIGN="LEFT">autoridad_transito</TD></TR>
+</TABLE>
+>]
+	Siniestro -> Relacion [label="  1        N  " fontname=Arial fontsize=13]
+	Relacion -> Vehiculo [label="  N        1  " fontname=Arial fontsize=13]
+}

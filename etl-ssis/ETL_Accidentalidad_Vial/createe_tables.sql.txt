@@ -1,0 +1,50 @@
+-- ============================================================
+-- ETAPA 3: ETL con SSIS - Creación de tablas
+-- Proyecto: Accidentalidad-Seguridad-Vial
+-- Persona 3: Data Flow de extracción y transformación
+-- ============================================================
+
+-- 1. Zona de staging: copia cruda, sin transformar, para trazabilidad
+CREATE TABLE dbo.StagingVehiculos (
+    MarcaVehiculo         NVARCHAR(100),
+    ModeloVehiculo        NVARCHAR(50),
+    TipoVehiculo          NVARCHAR(100),
+    EdadVehiculo          NVARCHAR(50),
+    FechaAccidente        NVARCHAR(50),
+    GravedadAccidente     NVARCHAR(100),
+    DepartamentoAccidente NVARCHAR(100),
+    MunicipioAccidente    NVARCHAR(100),
+    AutoridadTransito     NVARCHAR(200),
+    FechaCarga            DATETIME DEFAULT GETDATE()
+);
+
+-- 2. Tabla de destino: registros limpios/aceptados
+CREATE TABLE dbo.VehiculosLimpios (
+    Id                     INT IDENTITY(1,1) PRIMARY KEY,
+    MarcaVehiculo          NVARCHAR(100),
+    ModeloVehiculo         INT,
+    TipoVehiculo           NVARCHAR(100),
+    EdadVehiculo           INT NULL,
+    FechaAccidente         DATE,
+    GravedadAccidente      NVARCHAR(100),
+    DepartamentoAccidente  NVARCHAR(100),
+    MunicipioAccidente     NVARCHAR(100),
+    AutoridadTransito      NVARCHAR(200),
+    FechaProceso           DATETIME DEFAULT GETDATE()
+);
+
+-- 3. Tabla de revisión: registros con banderas, valor original conservado
+CREATE TABLE dbo.VehiculosRevision (
+    Id                     INT IDENTITY(1,1) PRIMARY KEY,
+    MarcaVehiculo          NVARCHAR(100),
+    ModeloVehiculo         NVARCHAR(50),
+    TipoVehiculo           NVARCHAR(100),
+    EdadVehiculo           NVARCHAR(50),
+    FechaAccidente         NVARCHAR(50),
+    GravedadAccidente      NVARCHAR(100),
+    DepartamentoAccidente  NVARCHAR(100),
+    MunicipioAccidente     NVARCHAR(100),
+    AutoridadTransito      NVARCHAR(200),
+    MotivoRevision         NVARCHAR(300),
+    FechaProceso           DATETIME DEFAULT GETDATE()
+);

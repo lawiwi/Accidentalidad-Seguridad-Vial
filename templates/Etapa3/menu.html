@@ -1,0 +1,1209 @@
+{% extends 'base.html' %}
+
+{% block title %}Etapa 3 - Integración y Desarrollo{% endblock %}
+
+{% block head %}
+
+<style>
+
+    :root {
+        --indigo: #232A54;
+        --indigo-dark: #171B3B;
+        --plum: #8C4E7E;
+        --gold: #D9A441;
+        --teal: #2E9C93;
+        --mist: #F6F4FA;
+        --ink: #2A2A38;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Inter', sans-serif;
+        background: var(--mist);
+        color: var(--ink);
+    }
+
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(140, 78, 126, 0.10),
+                transparent 40%
+            ),
+            radial-gradient(
+                circle at 90% 30%,
+                rgba(46, 156, 147, 0.10),
+                transparent 40%
+            ),
+            radial-gradient(
+                circle at 20% 90%,
+                rgba(217, 164, 65, 0.08),
+                transparent 40%
+            );
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1100px;
+        margin: 50px auto 60px;
+    }
+
+    /* ============================
+       ENCABEZADO
+    ============================ */
+
+    .stage-header {
+        position: relative;
+
+        background:
+            radial-gradient(
+                circle,
+                rgba(255, 255, 255, 0.055) 1px,
+                transparent 1px
+            ) 0 0 / 24px 24px,
+            linear-gradient(
+                135deg,
+                var(--indigo) 0%,
+                var(--indigo-dark) 55%,
+                var(--plum) 130%
+            );
+
+        color: white;
+
+        padding: 44px 40px 38px;
+
+        border-radius: 28px;
+
+        text-align: center;
+
+        box-shadow:
+            0 20px 45px rgba(23, 27, 59, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+        overflow: hidden;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.14);
+
+        backdrop-filter: blur(8px);
+    }
+
+    .stage-header::after {
+        content: "";
+
+        position: absolute;
+
+        width: 240px;
+        height: 240px;
+
+        right: -70px;
+        top: -100px;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle,
+                rgba(217, 164, 65, 0.32),
+                transparent 70%
+            );
+
+        pointer-events: none;
+    }
+
+    .stage-header::before {
+        content: "";
+
+        position: absolute;
+
+        width: 180px;
+        height: 180px;
+
+        left: -60px;
+        bottom: -70px;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle,
+                rgba(46, 156, 147, 0.28),
+                transparent 70%
+            );
+
+        pointer-events: none;
+    }
+
+    .stage-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        padding: 5px 16px 5px 12px;
+
+        background: rgba(255, 255, 255, 0.10);
+
+        border:
+            1px solid rgba(255, 255, 255, 0.25);
+
+        border-radius: 999px;
+
+        font-size: 0.72rem;
+        font-weight: 600;
+
+        letter-spacing: 1.5px;
+
+        text-transform: uppercase;
+
+        color: var(--gold);
+
+        margin-bottom: 14px;
+
+        position: relative;
+        z-index: 1;
+    }
+
+    .stage-tag::before {
+        content: "";
+
+        width: 6px;
+        height: 6px;
+
+        border-radius: 50%;
+
+        background: var(--gold);
+
+        box-shadow:
+            0 0 8px 1px rgba(217, 164, 65, 0.8);
+    }
+
+    .badge {
+        position: relative;
+        z-index: 1;
+
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 54px;
+        height: 54px;
+
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        border:
+            1.5px solid rgba(217, 164, 65, 0.55);
+
+        margin-bottom: 14px;
+
+        font-size: 1.4rem;
+    }
+
+    .stage-header h1 {
+        position: relative;
+        z-index: 1;
+
+        margin: 0 0 6px;
+
+        font-family: 'Poppins', sans-serif;
+
+        font-weight: 700;
+
+        font-size:
+            clamp(1.9rem, 4vw, 2.5rem);
+
+        letter-spacing: -0.6px;
+
+        text-shadow:
+            0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .stage-header h1 span {
+        color: var(--gold);
+    }
+
+    .stage-divider {
+        position: relative;
+        z-index: 1;
+
+        width: 56px;
+        height: 3px;
+
+        margin: 0 auto 18px;
+
+        border-radius: 999px;
+
+        background:
+            linear-gradient(
+                90deg,
+                var(--gold),
+                var(--teal)
+            );
+    }
+
+    .stage-header p {
+        position: relative;
+        z-index: 1;
+
+        margin: 0 auto;
+
+        max-width: 760px;
+
+        font-size: 0.98rem;
+
+        line-height: 1.75;
+
+        color:
+            rgba(255, 255, 255, 0.88);
+    }
+
+    .stage-stats {
+        position: relative;
+        z-index: 1;
+
+        display: flex;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+        margin-top: 22px;
+    }
+
+    .stage-stat {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        padding: 7px 16px;
+
+        background:
+            rgba(255, 255, 255, 0.07);
+
+        border:
+            1px solid rgba(255, 255, 255, 0.16);
+
+        border-radius: 999px;
+
+        font-size: 0.78rem;
+
+        color:
+            rgba(255, 255, 255, 0.85);
+
+        backdrop-filter: blur(4px);
+    }
+
+    .stage-stat strong {
+        font-family: 'Poppins', sans-serif;
+
+        color: var(--gold);
+
+        font-weight: 600;
+    }
+
+
+    /* ============================
+       FLUJO CIRCULAR
+    ============================ */
+
+    .flujo-container {
+        position: relative;
+
+        width: 900px;
+        height: 900px;
+
+        max-width: 100%;
+
+        margin: 50px auto 30px;
+    }
+
+    /* Círculo visual */
+
+    .circulo {
+        position: absolute;
+
+        width: 570px;
+        height: 570px;
+
+        left: 50%;
+        top: 50%;
+
+        transform:
+            translate(-50%, -50%);
+
+        border-radius: 50%;
+
+        border:
+            2px dashed
+            rgba(35, 42, 84, 0.16);
+    }
+
+    .circulo::before {
+        content: "";
+
+        position: absolute;
+
+        inset: 25px;
+
+        border-radius: 50%;
+
+        border:
+            1px solid
+            rgba(46, 156, 147, 0.10);
+    }
+
+
+    /* ============================
+       CENTRO
+    ============================ */
+
+    .centro {
+        position: absolute;
+
+        width: 245px;
+        height: 245px;
+
+        left: 50%;
+        top: 50%;
+
+        transform:
+            translate(-50%, -50%);
+
+        border-radius: 50%;
+
+        background:
+            linear-gradient(
+                145deg,
+                var(--indigo),
+                var(--indigo-dark)
+            );
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 35px;
+
+        color: white;
+
+        box-shadow:
+            0 18px 40px
+            rgba(35, 42, 84, 0.25);
+
+        border:
+            5px solid
+            rgba(255, 255, 255, 0.8);
+
+        z-index: 5;
+    }
+
+    .centro-contenido h2 {
+        margin: 0 0 8px;
+
+        font-family: 'Poppins', sans-serif;
+
+        font-size: 1.2rem;
+
+        font-weight: 700;
+    }
+
+    .centro-contenido p {
+        margin: 0;
+
+        font-size: 0.75rem;
+
+        line-height: 1.55;
+
+        color:
+            rgba(255, 255, 255, 0.75);
+    }
+
+    .centro-linea {
+        width: 35px;
+        height: 2px;
+
+        margin: 12px auto;
+
+        background: var(--gold);
+    }
+
+
+    /* ============================
+       CONECTORES
+    ============================ */
+
+    .conector {
+        position: absolute;
+
+        left: 50%;
+        top: 50%;
+
+        width: 2px;
+
+        height: 285px;
+
+        transform-origin:
+            50% 0;
+
+        background:
+            linear-gradient(
+                to bottom,
+                rgba(46, 156, 147, 0.15),
+                rgba(46, 156, 147, 0.45)
+            );
+
+        z-index: 1;
+    }
+
+    .conector::after {
+        content: "";
+
+        position: absolute;
+
+        bottom: -5px;
+        left: -4px;
+
+        width: 0;
+        height: 0;
+
+        border-left:
+            5px solid transparent;
+
+        border-right:
+            5px solid transparent;
+
+        border-top:
+            8px solid var(--teal);
+    }
+
+    .c1 {
+        transform:
+            translate(-50%, 0)
+            rotate(0deg);
+    }
+
+    .c2 {
+        transform:
+            translate(-50%, 0)
+            rotate(45deg);
+    }
+
+    .c3 {
+        transform:
+            translate(-50%, 0)
+            rotate(90deg);
+    }
+
+    .c4 {
+        transform:
+            translate(-50%, 0)
+            rotate(135deg);
+    }
+
+    .c5 {
+        transform:
+            translate(-50%, 0)
+            rotate(180deg);
+    }
+
+    .c6 {
+        transform:
+            translate(-50%, 0)
+            rotate(225deg);
+    }
+
+    .c7 {
+        transform:
+            translate(-50%, 0)
+            rotate(270deg);
+    }
+
+    .c8 {
+        transform:
+            translate(-50%, 0)
+            rotate(315deg);
+    }
+
+
+    /* ============================
+       TARJETAS
+    ============================ */
+
+    .punto {
+        position: absolute;
+
+        width: 245px;
+
+        min-height: 125px;
+
+        padding: 17px;
+
+        background: white;
+
+        border-radius: 20px;
+
+        text-decoration: none;
+
+        color: var(--ink);
+
+        border:
+            1.5px solid
+            rgba(35, 42, 84, 0.07);
+
+        border-top:
+            4px solid
+            var(--accent);
+
+        box-shadow:
+            0 10px 28px
+            rgba(35, 42, 84, 0.10);
+
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+
+        z-index: 4;
+    }
+
+    .punto:hover,
+    .punto:focus-visible {
+        transform:
+            translateY(-6px);
+
+        box-shadow:
+            0 18px 35px
+            rgba(35, 42, 84, 0.20);
+
+        outline: none;
+    }
+
+    .punto-cabecera {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-bottom: 7px;
+    }
+
+    .numero {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        min-width: 34px;
+        height: 34px;
+
+        border-radius: 50%;
+
+        background:
+            color-mix(
+                in srgb,
+                var(--accent) 12%,
+                white
+            );
+
+        color: var(--accent);
+
+        font-family: 'Poppins', sans-serif;
+
+        font-weight: 700;
+
+        font-size: 0.72rem;
+    }
+
+    .punto-titulo {
+        font-family: 'Poppins', sans-serif;
+
+        font-weight: 600;
+
+        font-size: 0.9rem;
+    }
+
+    .punto-descripcion {
+        margin: 0;
+
+        font-size: 0.73rem;
+
+        line-height: 1.5;
+
+        color: #6c6c7b;
+    }
+
+    /* Posiciones */
+
+    .p1 {
+        --accent: var(--teal);
+
+        top: 20px;
+        left: 50%;
+
+        transform:
+            translateX(-50%);
+    }
+
+    .p2 {
+        --accent: var(--plum);
+
+        top: 145px;
+        right: 25px;
+    }
+
+    .p3 {
+        --accent: var(--gold);
+
+        top: 390px;
+        right: 5px;
+    }
+
+    .p4 {
+        --accent: var(--indigo);
+
+        bottom: 145px;
+        right: 25px;
+    }
+
+    .p5 {
+        --accent: var(--teal);
+
+        bottom: 20px;
+        left: 50%;
+
+        transform:
+            translateX(-50%);
+    }
+
+    .p6 {
+        --accent: var(--plum);
+
+        bottom: 145px;
+        left: 25px;
+    }
+
+    .p7 {
+        --accent: var(--gold);
+
+        top: 390px;
+        left: 5px;
+    }
+
+    .p8 {
+        --accent: var(--indigo);
+
+        top: 145px;
+        left: 25px;
+    }
+
+    .p1:hover,
+    .p5:hover {
+        transform:
+            translateX(-50%)
+            translateY(-6px);
+    }
+
+
+    /* ============================
+       VOLVER
+    ============================ */
+
+    .volver-wrap {
+        text-align: center;
+    }
+
+    .volver {
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        margin: 20px auto 0;
+
+        padding: 10px 22px;
+
+        border-radius: 999px;
+
+        background: white;
+
+        box-shadow:
+            0 4px 14px
+            rgba(35, 42, 84, 0.10);
+
+        color: var(--indigo);
+
+        text-decoration: none;
+
+        font-weight: 500;
+
+        font-size: 0.9rem;
+
+        transition:
+            background 0.25s ease,
+            color 0.25s ease,
+            transform 0.2s ease;
+    }
+
+    .volver:hover {
+        background:
+            linear-gradient(
+                135deg,
+                var(--indigo),
+                var(--plum)
+            );
+
+        color: white;
+
+        transform:
+            translateY(-2px);
+    }
+
+
+    /* ============================
+       RESPONSIVE
+    ============================ */
+
+    @media(max-width: 950px) {
+
+        .flujo-container {
+            width: 100%;
+            height: auto;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+        .circulo,
+        .centro,
+        .conector {
+            display: none;
+        }
+
+        .punto {
+            position: relative;
+
+            top: auto !important;
+            right: auto !important;
+            bottom: auto !important;
+            left: auto !important;
+
+            width: 100%;
+
+            transform: none !important;
+        }
+
+        .punto::after {
+            content: "↓";
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 10px;
+
+            color: var(--teal);
+
+            font-size: 1.1rem;
+        }
+
+        .punto:last-child::after {
+            display: none;
+        }
+    }
+
+    @media(max-width: 640px) {
+
+        .container {
+            width: 92%;
+
+            margin-top: 30px;
+        }
+
+        .stage-header {
+            padding:
+                32px 22px 30px;
+        }
+
+        .stage-header h1 {
+            font-size: 1.6rem;
+        }
+
+        .stage-header p {
+            font-size: 0.88rem;
+        }
+
+        .stage-stats {
+            gap: 8px;
+        }
+
+        .stage-stat {
+            font-size: 0.72rem;
+
+            padding:
+                6px 12px;
+        }
+    }
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+
+    <!-- ============================
+         ENCABEZADO
+    ============================= -->
+
+    <header class="stage-header">
+
+        <span class="stage-tag">
+            Fase de Integración y Desarrollo
+        </span>
+
+        <div class="badge">
+            03
+        </div>
+
+        <h1>
+            Etapa <span>3</span>
+        </h1>
+
+        <div class="stage-divider"></div>
+
+        <p>
+            Desarrollo progresivo del proceso de integración y
+            transformación de los datos de accidentalidad vial.
+            En esta etapa se documentan las decisiones tomadas,
+            las reglas definidas, las iteraciones realizadas y
+            los resultados obtenidos durante el proceso.
+        </p>
+
+        <div class="stage-stats">
+
+            <span class="stage-stat">
+                <strong>Diagnóstico</strong>
+            </span>
+
+            <span class="stage-stat">
+                <strong>Reglas</strong>
+            </span>
+
+            <span class="stage-stat">
+                <strong>SSIS</strong>
+            </span>
+
+            <span class="stage-stat">
+                <strong>Iteraciones</strong>
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- ============================
+         FLUJO CIRCULAR
+    ============================= -->
+
+    <div class="flujo-container">
+
+        <div class="circulo"></div>
+
+
+        <!-- CONECTORES -->
+
+        <div class="conector c1"></div>
+        <div class="conector c2"></div>
+        <div class="conector c3"></div>
+        <div class="conector c4"></div>
+        <div class="conector c5"></div>
+        <div class="conector c6"></div>
+        <div class="conector c7"></div>
+        <div class="conector c8"></div>
+
+
+        <!-- CENTRO -->
+
+        <div class="centro">
+
+            <div class="centro-contenido">
+
+                <h2>
+                    Proceso de integración
+                </h2>
+
+                <div class="centro-linea"></div>
+
+                <p>
+                    Construcción progresiva,
+                    validación y refinamiento
+                    de la solución.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- 01 -->
+
+        <a
+            href="/Etapa3/diagnostico"
+            class="punto p1"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    01
+                </span>
+
+                <span class="punto-titulo">
+                    Diagnóstico
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Análisis inicial de las fuentes, diferencias,
+                problemas y condiciones de los datos antes
+                de iniciar la integración.
+            </p>
+
+        </a>
+
+
+        <!-- 02 -->
+
+        <a
+            href="/Etapa3/reglas"
+            class="punto p2"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    02
+                </span>
+
+                <span class="punto-titulo">
+                    Reglas
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Definición de criterios para homologar,
+                validar y establecer correspondencias
+                entre las fuentes.
+            </p>
+
+        </a>
+
+
+        <!-- 03 -->
+
+        <a
+            href="/Etapa3/ssis"
+            class="punto p3"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    03
+                </span>
+
+                <span class="punto-titulo">
+                    SSIS
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Construcción del proceso ETL para cargar,
+                transformar y preparar los datos.
+            </p>
+
+        </a>
+
+
+        <!-- 04 -->
+
+        <a
+            href="/Etapa3/iteracion1"
+            class="punto p4"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    04
+                </span>
+
+                <span class="punto-titulo">
+                    Iteración 1
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Primera implementación de las reglas
+                y evaluación de los resultados obtenidos.
+            </p>
+
+        </a>
+
+
+        <!-- 05 -->
+
+        <a
+            href="/Etapa3/iteracion2"
+            class="punto p5"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    05
+                </span>
+
+                <span class="punto-titulo">
+                    Iteración 2
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Ajuste del proceso a partir de los hallazgos
+                identificados durante la primera iteración.
+            </p>
+
+        </a>
+
+
+        <!-- 06 -->
+
+        <a
+            href="/Etapa3/iteracion3"
+            class="punto p6"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    06
+                </span>
+
+                <span class="punto-titulo">
+                    Iteración 3
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Refinamiento final del proceso después
+                de aplicar los ajustes identificados.
+            </p>
+
+        </a>
+
+
+        <!-- 07 -->
+
+        <a
+            href="/Etapa3/comparacion"
+            class="punto p7"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    07
+                </span>
+
+                <span class="punto-titulo">
+                    Comparación
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Comparación de las iteraciones para
+                evidenciar la evolución del proceso.
+            </p>
+
+        </a>
+
+
+        <!-- 08 -->
+
+        <a
+            href="/Etapa3/video"
+            class="punto p8"
+        >
+
+            <div class="punto-cabecera">
+
+                <span class="numero">
+                    08
+                </span>
+
+                <span class="punto-titulo">
+                    Video
+                </span>
+
+            </div>
+
+            <p class="punto-descripcion">
+                Evidencia audiovisual de la implementación
+                y funcionamiento de la solución.
+            </p>
+
+        </a>
+
+    </div>
+
+
+    <!-- ============================
+         VOLVER
+    ============================= -->
+
+    <div class="volver-wrap">
+
+        <a href="/" class="volver">
+            ← Volver al menú principal
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
