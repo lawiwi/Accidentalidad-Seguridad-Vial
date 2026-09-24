@@ -612,107 +612,6 @@
 
 
     <!-- =========================================
-         08. MODELO DE INTEGRACIÓN
-         ========================================= -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">08</div>
-
-            <h2>Relación con el modelo de datos</h2>
-
-        </div>
-
-        <p>
-            Las reglas definidas permiten preparar la información necesaria
-            para implementar el modelo de integración establecido durante el
-            diagnóstico.
-        </p>
-
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Entidad</th>
-                        <th>Función</th>
-                        <th>Identificador</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>
-                            <strong>SINIESTRO</strong>
-                        </td>
-
-                        <td>
-                            Representa los hechos registrados en la fuente
-                            de siniestros viales.
-                        </td>
-
-                        <td>
-                            id_siniestro · PK
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <strong>VEHICULO</strong>
-                        </td>
-
-                        <td>
-                            Representa los vehículos registrados en la fuente
-                            de vehículos involucrados.
-                        </td>
-
-                        <td>
-                            id_vehiculo · PK
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <strong>SINIESTRO_VEHICULO</strong>
-                        </td>
-
-                        <td>
-                            Entidad asociativa que permite registrar la
-                            correspondencia entre un siniestro y un vehículo.
-                        </td>
-
-                        <td>
-                            id_relacion · PK<br>
-                            id_siniestro · FK<br>
-                            id_vehiculo · FK
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================
          09. PREPARACIÓN PARA SSIS
          ========================================= -->
 
@@ -720,7 +619,7 @@
 
         <div class="section-title">
 
-            <div class="section-number">09</div>
+            <div class="section-number">08</div>
 
             <h2>Reglas preparadas para el proceso SSIS</h2>
 
