@@ -1,4 +1,4 @@
-# Iteración 1 — Data Flow de Extracción y Transformación (Persona 3)
+# Data Flow de Extracción y Transformación 
 
 ## Conteos
 - Registros originales (CSV): 406.540
