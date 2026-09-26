@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}Etapa 3 - Reproceso de Iteración 1{% endblock %}
+
+{% block head %}
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+<div class="etapa3-page resultados-etapa3-page comparacion-ejecuciones-page">
+	<div class="side-nav left">
+		<a href="{{ url_for('iteracion1y2') }}" title="Volver a resultados de Iteración 1">←</a>
+	</div>
+	<div class="side-nav right">
+		<a href="{{ url_for('iteracion3') }}" title="Ir a Iteración 3">→</a>
+	</div>
+
+	<a href="{{ url_for('etapa3') }}" class="back-link">← Volver a Etapa 3</a>
+
+	<section class="hero">
+		<div class="hero-content">
+			<span class="stage-tag">Etapa 3 · Reprocesamiento</span>
+			<h1>Repetición del lote</h1>
+			<p>
+				Comparación entre dos ejecuciones de la Iteración 1 con el mismo
+				archivo de entrada. Los conteos agregados disponibles se repiten;
+				esto documenta la recarga completa del paquete.
+			</p>
+		</div>
+		<div class="hero-number">07</div>
+	</section>
+
+	<section class="section">
+		<div class="results-section-title">
+			<span class="results-index">01</span>
+			<div>
+				<h2>Comparación de conteos</h2>
+				<p>Fuente: CSV agregados de las carpetas Ejecucion_uno y Ejecucion_dos.</p>
+			</div>
+		</div>
+
+		<div class="results-table-wrap">
+			<table class="results-table">
+				<caption>Resultados agregados disponibles para ambas ejecuciones</caption>
+				<thead>
+					<tr>
+						<th scope="col">Indicador</th>
+						<th scope="col">Ejecución 1</th>
+						<th scope="col">Ejecución 2</th>
+						<th scope="col">Diferencia</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Filas de staging</th>
+						<td>406.540</td>
+						<td>406.540</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<th scope="row">Grupos únicos tras deduplicar</th>
+						<td>258.965</td>
+						<td>258.965</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<th scope="row">Duplicados exactos</th>
+						<td>147.575</td>
+						<td>147.575</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<th scope="row">Modelo posterior al accidente</th>
+						<td>7.702</td>
+						<td>7.702</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<th scope="row">Edad atípica (etiqueta CSV &gt;40)</th>
+						<td>944</td>
+						<td>944</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<th scope="row">Edad vacía con motivo NULL</th>
+						<td>20</td>
+						<td>20</td>
+						<td>0</td>
+					</tr>
+					<tr>
+						<th scope="row">Total en revisión</th>
+						<td>8.666</td>
+						<td>8.666</td>
+						<td>0</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p class="results-note results-note-warning">
+			El resumen disponible informa 250.299 aceptados, pero los CSV de
+			aceptados incluidos en ambas carpetas son muestras de 20 filas.
+			El total por ejecución requiere verificación con un conteo SQL; no se
+			presenta como una comparación confirmada.
+		</p>
+	</section>
+
+	<section class="section results-conclusion-grid">
+		<div>
+			<h2>Qué demuestra</h2>
+			<p>
+				Los conteos agregados de staging, deduplicación y revisión
+				coinciden entre las dos ejecuciones del mismo lote. En ese nivel,
+				el resultado es reproducible.
+			</p>
+		</div>
+		<div>
+			<h2>Qué no demuestra</h2>
+			<p>
+				El paquete trunca staging y las tablas destino antes de recargar.
+				Por tanto, esta prueba no demuestra idempotencia de una carga
+				incremental ni que una segunda inserción sin truncado evite
+				duplicados.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="results-section-title">
+			<span class="results-index">02</span>
+			<div>
+				<h2>Evidencia de ejecución</h2>
+				<p>Capturas guardadas para las dos corridas del mismo lote.</p>
+			</div>
+		</div>
+
+		<div class="results-evidence-grid">
+			<figure class="results-evidence">
+				<img
+					src="{{ url_for('static', filename='img/etapa3/iteracion1/progreso_ejecucion_1.jpg') }}"
+					alt="Captura de progreso de SSIS, ejecución 1"
+					loading="lazy"
+				>
+				<figcaption>Ejecución 1 de Iteración 1.</figcaption>
+			</figure>
+			<figure class="results-evidence">
+				<img
+					src="{{ url_for('static', filename='img/etapa3/iteracion1/progreso_ejecucion_2.jpg') }}"
+					alt="Captura de progreso de SSIS, ejecución 2 del mismo lote"
+					loading="lazy"
+				>
+				<figcaption>Ejecución 2: reprocesamiento del mismo lote.</figcaption>
+			</figure>
+		</div>
+	</section>
+</div>
+{% endblock %}

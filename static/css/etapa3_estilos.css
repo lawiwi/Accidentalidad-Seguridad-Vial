@@ -3737,3 +3737,357 @@
             1fr;
     }
 }
+
+
+/* =========================================================
+   RESULTADOS DE ITERACION 1 Y COMPARACION DE EJECUCIONES
+   ========================================================= */
+
+.resultados-etapa3-page .results-section-title {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.resultados-etapa3-page .results-index {
+
+    display: inline-grid;
+
+    place-items: center;
+
+    flex: 0 0 38px;
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 8px;
+
+    background: rgba(46, 156, 147, .13);
+
+    color: var(--teal);
+
+    font-weight: 800;
+}
+
+.resultados-etapa3-page .results-section-title h2,
+.resultados-etapa3-page .results-conclusion-grid h2 {
+
+    margin: 0 0 5px;
+
+    color: var(--indigo);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.35rem;
+}
+
+.resultados-etapa3-page .results-section-title p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    line-height: 1.55;
+}
+
+.resultados-etapa3-page .results-kpis {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    margin: 10px 0 24px;
+
+    border-top: 1px solid var(--border);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.resultados-etapa3-page .results-kpi {
+
+    min-width: 0;
+
+    padding: 20px 16px;
+
+    border-right: 1px solid var(--border);
+}
+
+.resultados-etapa3-page .results-kpi:last-child {
+
+    border-right: 0;
+}
+
+.resultados-etapa3-page .results-kpi strong {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--indigo);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.75rem;
+
+    line-height: 1.15;
+}
+
+.resultados-etapa3-page .results-kpi:nth-child(2) strong {
+
+    color: var(--plum);
+}
+
+.resultados-etapa3-page .results-kpi:nth-child(4) strong {
+
+    color: #a56a12;
+}
+
+.resultados-etapa3-page .results-kpi span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: .88rem;
+
+    line-height: 1.45;
+}
+
+.resultados-etapa3-page .results-table-wrap {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+}
+
+.resultados-etapa3-page .results-table {
+
+    width: 100%;
+
+    min-width: 640px;
+
+    border-collapse: collapse;
+
+    background: var(--white);
+}
+
+.resultados-etapa3-page .results-table caption {
+
+    padding: 12px 14px;
+
+    color: var(--muted);
+
+    text-align: left;
+
+    font-size: .85rem;
+
+    font-weight: 600;
+}
+
+.resultados-etapa3-page .results-table th {
+
+    padding: 12px 14px;
+
+    background: var(--indigo);
+
+    color: var(--white);
+
+    text-align: left;
+
+    font-size: .84rem;
+
+    font-weight: 700;
+}
+
+.resultados-etapa3-page .results-table td {
+
+    padding: 12px 14px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--ink);
+
+    font-size: .88rem;
+
+    line-height: 1.5;
+
+    vertical-align: top;
+}
+
+.resultados-etapa3-page .results-table tbody tr:last-child td,
+.resultados-etapa3-page .results-table tbody tr:last-child th {
+
+    border-bottom: 0;
+}
+
+.resultados-etapa3-page .results-note {
+
+    margin: 18px 0 0;
+
+    padding: 14px 16px;
+
+    border-left: 4px solid var(--teal);
+
+    background: rgba(46, 156, 147, .08);
+
+    color: var(--ink);
+
+    font-size: .9rem;
+
+    line-height: 1.6;
+}
+
+.resultados-etapa3-page .results-note-warning {
+
+    border-left-color: #b87a16;
+
+    background: rgba(217, 164, 65, .12);
+}
+
+.resultados-etapa3-page .results-note p {
+
+    margin: 6px 0 0;
+}
+
+.resultados-etapa3-page .results-review-example {
+
+    margin-top: 22px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border);
+}
+
+.resultados-etapa3-page .results-review-example h3 {
+
+    margin: 0 0 7px;
+
+    color: var(--plum);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.05rem;
+}
+
+.resultados-etapa3-page .results-review-example p {
+
+    max-width: 850px;
+
+    margin: 0;
+
+    color: var(--ink);
+
+    line-height: 1.65;
+}
+
+.resultados-etapa3-page .results-evidence-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.resultados-etapa3-page .results-evidence {
+
+    min-width: 0;
+
+    margin: 0;
+}
+
+.resultados-etapa3-page .results-evidence img {
+
+    display: block;
+
+    width: 100%;
+
+    max-height: 440px;
+
+    object-fit: contain;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    background: #f2f3f4;
+}
+
+.resultados-etapa3-page .results-evidence figcaption {
+
+    padding-top: 8px;
+
+    color: var(--muted);
+
+    font-size: .84rem;
+
+    line-height: 1.5;
+}
+
+.resultados-etapa3-page .results-conclusion-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 28px;
+}
+
+.resultados-etapa3-page .results-conclusion-grid p {
+
+    margin: 8px 0 0;
+
+    color: var(--muted);
+
+    line-height: 1.65;
+}
+
+@media (max-width: 850px) {
+
+    .resultados-etapa3-page .results-kpis {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .resultados-etapa3-page .results-kpi:nth-child(2) {
+
+        border-right: 0;
+    }
+
+    .resultados-etapa3-page .results-kpi:nth-child(n + 3) {
+
+        border-top: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 650px) {
+
+    .resultados-etapa3-page .results-evidence-grid,
+    .resultados-etapa3-page .results-conclusion-grid {
+
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .resultados-etapa3-page .results-kpi {
+
+        padding: 16px 10px;
+    }
+
+    .resultados-etapa3-page .results-kpi strong {
+
+        font-size: 1.4rem;
+    }
+}

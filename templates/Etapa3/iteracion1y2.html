@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Etapa 3 - Iteración 1: Resultados{% endblock %}
+
+{% block head %}
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+<div class="etapa3-page resultados-etapa3-page">
+	<div class="side-nav left">
+		<a href="{{ url_for('ssis') }}" title="Volver a SSIS">←</a>
+	</div>
+	<div class="side-nav right">
+		<a href="{{ url_for('comparacion') }}" title="Ver comparación de ejecuciones">→</a>
+	</div>
+
+	<a href="{{ url_for('etapa3') }}" class="back-link">← Volver a Etapa 3</a>
+
+	<section class="hero">
+		<div class="hero-content">
+			<span class="stage-tag">Etapa 3 · Primera ejecución</span>
+			<h1>Iteración 1: Resultados</h1>
+			<p>
+				Balance del lote de vehículos, registros aceptados y filas separadas
+				para revisión. La segunda ejecución repite este mismo proceso para
+				comprobar la reproducibilidad de la recarga.
+			</p>
+		</div>
+		<div class="hero-number">05</div>
+	</section>
+
+	<section class="section">
+		<div class="results-section-title">
+			<span class="results-index">01</span>
+			<div>
+				<h2>Balance del lote</h2>
+				<p>Fuente: <strong>vehiculos_accidentes.csv</strong></p>
+			</div>
+		</div>
+
+		<div class="results-kpis" aria-label="Conteos principales de Iteración 1">
+			<div class="results-kpi">
+				<strong>406.540</strong>
+				<span>Filas recibidas y cargadas a staging</span>
+			</div>
+			<div class="results-kpi">
+				<strong>147.575</strong>
+				<span>Duplicados exactos retirados · 36,3 %</span>
+			</div>
+			<div class="results-kpi">
+				<strong>258.965</strong>
+				<span>Filas únicas después de deduplicar</span>
+			</div>
+			<div class="results-kpi">
+				<strong>8.666</strong>
+				<span>Filas enviadas a revisión · 3,35 %</span>
+			</div>
+		</div>
+
+		<div class="results-table-wrap">
+			<table class="results-table">
+				<caption>Conciliación de registros reportada para el lote</caption>
+				<thead>
+					<tr>
+						<th scope="col">Etapa</th>
+						<th scope="col">Registros</th>
+						<th scope="col">Comprobación</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Entrada / staging</td>
+						<td>406.540</td>
+						<td>Conteo reportado en el resumen de duplicados</td>
+					</tr>
+					<tr>
+						<td>Duplicados exactos</td>
+						<td>147.575</td>
+						<td>406.540 − 147.575 = 258.965 filas únicas</td>
+					</tr>
+					<tr>
+						<td>Aceptados</td>
+						<td>250.299*</td>
+						<td rowspan="2">250.299 + 8.666 = 258.965</td>
+					</tr>
+					<tr>
+						<td>En revisión</td>
+						<td>8.666</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<p class="results-note">
+			* El resumen de la ejecución informa 250.299 aceptados. Los CSV de
+			aceptados disponibles son muestras de 20 filas, no exportaciones
+			completas; por eso el total de aceptados queda pendiente de validación
+			directa en SQL. Las cifras agregadas sí reconcilian aritméticamente.
+		</p>
+	</section>
+
+	<section class="section">
+		<div class="results-section-title">
+			<span class="results-index">02</span>
+			<div>
+				<h2>Registros enviados a revisión</h2>
+				<p>El valor original se conserva en la salida de revisión.</p>
+			</div>
+		</div>
+
+		<div class="results-table-wrap">
+			<table class="results-table">
+				<caption>Motivos observados en los resultados agregados</caption>
+				<thead>
+					<tr>
+						<th scope="col">Motivo registrado</th>
+						<th scope="col">Filas</th>
+						<th scope="col">Hallazgo</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Modelo posterior al año del accidente</td>
+						<td>7.702</td>
+						<td>El año del modelo supera el año de la fecha del accidente.</td>
+					</tr>
+					<tr>
+						<td>Edad atípica (etiqueta exportada: &gt;40 años)</td>
+						<td>944</td>
+						<td>El paquete evalúa edad &gt;50; la etiqueta del motivo no coincide.</td>
+					</tr>
+					<tr>
+						<td>Edad vacía, motivo sin registrar</td>
+						<td>20</td>
+						<td><code>MotivoRevision</code> aparece como NULL en las muestras.</td>
+					</tr>
+					<tr>
+						<th scope="row">Total en revisión</th>
+						<th>8.666</th>
+						<td>Los tres conteos anteriores suman el total reportado.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="results-note results-note-warning">
+			<strong>Hallazgos para la siguiente iteración</strong>
+			<p>
+				Corregir la etiqueta del umbral para que describa la condición real
+				y asignar un motivo explícito a las 20 edades vacías. Estos son
+				hallazgos de Iteración 1; no se modificó aquí el paquete SSIS.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="results-section-title">
+			<span class="results-index">03</span>
+			<div>
+				<h2>Ejemplos antes y después</h2>
+				<p>Normalización de marca y conservación de una fila para revisión.</p>
+			</div>
+		</div>
+
+		<div class="results-table-wrap">
+			<table class="results-table">
+				<caption>Marca vacía normalizada en un registro aceptado</caption>
+				<thead>
+					<tr>
+						<th scope="col">Estado</th>
+						<th scope="col">Marca</th>
+						<th scope="col">Modelo</th>
+						<th scope="col">Tipo</th>
+						<th scope="col">Edad</th>
+						<th scope="col">Fecha</th>
+						<th scope="col">Municipio</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Entrada</th>
+						<td>(vacía)</td>
+						<td>1991</td>
+						<td>TRACTOR</td>
+						<td>5</td>
+						<td>2023-12-01</td>
+						<td>CANDELARIA</td>
+					</tr>
+					<tr>
+						<th scope="row">Aceptado</th>
+						<td>NO REGISTRADA</td>
+						<td>1991</td>
+						<td>TRACTOR</td>
+						<td>5</td>
+						<td>2023-12-01</td>
+						<td>CANDELARIA</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="results-review-example">
+			<h3>Ejemplo enviado a revisión</h3>
+			<p>
+				SUZUKI · modelo 2017 · motocicleta · edad vacía · accidente
+				2024-05-01 en Medellín, Antioquia. La muestra conserva esos valores,
+				pero exporta <code>MotivoRevision = NULL</code>; la causa requiere
+				completar la trazabilidad.
+			</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="results-section-title">
+			<span class="results-index">04</span>
+			<div>
+				<h2>Evidencia del paquete y la ejecución</h2>
+				<p>Capturas tomadas durante la primera ejecución.</p>
+			</div>
+		</div>
+
+		<div class="results-evidence-grid">
+			<figure class="results-evidence">
+				<img
+					src="{{ url_for('static', filename='img/etapa3/iteracion1/flujo_control.jpg') }}"
+					alt="Control Flow del paquete SSIS de vehículos"
+					loading="lazy"
+				>
+				<figcaption>Control Flow del paquete de Iteración 1.</figcaption>
+			</figure>
+			<figure class="results-evidence">
+				<img
+					src="{{ url_for('static', filename='img/etapa3/iteracion1/flujo_datos.jpg') }}"
+					alt="Data Flow de extracción y tratamiento en SSIS"
+					loading="lazy"
+				>
+				<figcaption>Data Flow de extracción, transformación y carga.</figcaption>
+			</figure>
+			<figure class="results-evidence">
+				<img
+					src="{{ url_for('static', filename='img/etapa3/iteracion1/progreso_ejecucion_1.jpg') }}"
+					alt="Captura de progreso de la primera ejecución de SSIS"
+					loading="lazy"
+				>
+				<figcaption>Progreso registrado para la ejecución 1.</figcaption>
+			</figure>
+		</div>
+	</section>
+</div>
+{% endblock %}
