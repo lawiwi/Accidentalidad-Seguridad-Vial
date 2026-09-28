@@ -3881,6 +3881,11 @@
     background: var(--white);
 }
 
+.resultados-etapa3-page .results-analysis-table {
+
+    min-width: 1120px;
+}
+
 .resultados-etapa3-page .results-table caption {
 
     padding: 12px 14px;

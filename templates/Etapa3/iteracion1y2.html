@@ -218,6 +218,205 @@
 		<div class="results-section-title">
 			<span class="results-index">04</span>
 			<div>
+				<h2>Análisis de calidad y tratamiento</h2>
+				<p>Definición del concepto, evidencia de esta iteración y alcance de la conclusión.</p>
+			</div>
+		</div>
+
+		<div class="results-table-wrap">
+			<table class="results-table results-analysis-table">
+				<caption>Evaluación de los conceptos aplicables a la primera iteración</caption>
+				<thead>
+					<tr>
+						<th scope="col">Dimensión</th>
+						<th scope="col">Concepto y definición</th>
+						<th scope="col">Resultado observado en Iteración 1</th>
+						<th scope="col">Evaluación</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Calidad de datos</td>
+						<td><strong>Exactitud:</strong> cercanía del dato a un valor verdadero o válido.</td>
+						<td>Se detectan 7.702 modelos cuyo año supera el año del accidente y 944 edades señaladas como atípicas. Se derivan a revisión; no se contrastan con una fuente de verdad externa.</td>
+						<td>Parcial: se identifican valores sospechosos, no se demuestra la exactitud real.</td>
+					</tr>
+					<tr>
+						<td>Calidad de datos</td>
+						<td><strong>Completitud:</strong> proporción de campos requeridos con valor.</td>
+						<td>La marca vacía se reemplaza por “NO REGISTRADA”; 20 edades vacías se conservan y envían a revisión, pero su motivo queda NULL.</td>
+						<td>Parcial: se trata la marca; la edad no se imputa y falta documentar su motivo.</td>
+					</tr>
+					<tr>
+						<td>Calidad de datos</td>
+						<td><strong>Consistencia:</strong> uniformidad de valores y reglas entre campos/registros.</td>
+						<td>Se normalizan textos y fechas; se valida la relación entre modelo y año del accidente. La condición de edad es &gt;50, pero la etiqueta exportada indica &gt;40.</td>
+						<td>Parcial: hay reglas de consistencia, con discrepancia pendiente en el rótulo del motivo.</td>
+					</tr>
+					<tr>
+						<td>Calidad de datos</td>
+						<td><strong>Actualidad:</strong> vigencia del dato respecto del momento en que se necesita.</td>
+						<td>Se observan fechas de accidentes en los registros, pero no hay fecha de extracción/ejecución ni una referencia de vigencia para compararlas.</td>
+						<td>No evaluado con la evidencia disponible.</td>
+					</tr>
+					<tr>
+						<td>Calidad de datos</td>
+						<td><strong>Credibilidad:</strong> grado de confianza en el origen y la trazabilidad del dato.</td>
+						<td>El CSV original se conserva en staging y los campos de revisión retienen valores de origen; no se aporta validación independiente de la fuente.</td>
+						<td>Parcial: hay trazabilidad técnica, sin corroboración externa.</td>
+					</tr>
+					<tr>
+						<td>Calidad de datos</td>
+						<td><strong>Interpretabilidad:</strong> facilidad para entender el significado y uso de los datos.</td>
+						<td>La salida separa aceptados/revisión y describe motivos; NULL en 20 motivos y el rótulo &gt;40 frente a la condición &gt;50 dificultan interpretar esos casos.</td>
+						<td>Parcial: estructura comprensible con dos ambigüedades documentadas.</td>
+					</tr>
+					<tr>
+						<td>Limpieza de datos</td>
+						<td><strong>Valores faltantes:</strong> campos vacíos, nulos o ausentes.</td>
+						<td>Marca vacía → “NO REGISTRADA”; edad faltante → revisión, conservando el valor vacío.</td>
+						<td>Aplicado parcialmente; falta completar MotivoRevision para 20 filas.</td>
+					</tr>
+					<tr>
+						<td>Limpieza de datos</td>
+						<td><strong>Datos ruidosos:</strong> variaciones o caracteres que dificultan comparar valores.</td>
+						<td>Se aplica TRIM y mayúsculas a campos de texto para retirar espacios extremos y uniformar capitalización.</td>
+						<td>Aplicado a los campos de texto configurados; no se mide cuánto ruido se eliminó.</td>
+					</tr>
+					<tr>
+						<td>Limpieza de datos</td>
+						<td><strong>Inconsistencias:</strong> valores que contradicen reglas o relaciones esperadas.</td>
+						<td>7.702 modelos posteriores al accidente y 944 edades atípicas se separan para revisión.</td>
+						<td>Detectadas y aisladas, no corregidas automáticamente.</td>
+					</tr>
+					<tr>
+						<td>Limpieza de datos</td>
+						<td><strong>Duplicados:</strong> filas repetidas según los campos comparados.</td>
+						<td>El Sort identifica 147.575 duplicados exactos; quedan 258.965 grupos únicos de 406.540 filas.</td>
+						<td>Aplicado: se retiran filas completas repetidas.</td>
+					</tr>
+					<tr>
+						<td>Limpieza de datos</td>
+						<td><strong>Valores atípicos:</strong> valores fuera del rango o criterio definido.</td>
+						<td>944 edades se envían a revisión con umbral configurado &gt;50 años; el texto del motivo reporta &gt;40.</td>
+						<td>Detectados, no corregidos; alinear el umbral y su etiqueta.</td>
+					</tr>
+					<tr>
+						<td>Limpieza de datos</td>
+						<td><strong>Formatos inconsistentes:</strong> representaciones distintas para un mismo tipo de dato.</td>
+						<td>La fecha de texto se convierte a DATE y los textos se normalizan.</td>
+						<td>Aplicado según las conversiones y expresiones del paquete.</td>
+					</tr>
+					<tr>
+						<td>Transformación</td>
+						<td><strong>Conversión de tipos:</strong> cambio a un tipo adecuado para validar y almacenar.</td>
+						<td>Edad/modelo se convierten a enteros y fecha de accidente a DATE; staging conserva los originales como texto.</td>
+						<td>Aplicado; los errores de conversión se derivan a revisión.</td>
+					</tr>
+					<tr>
+						<td>Transformación</td>
+						<td><strong>Estandarización de formatos:</strong> unificación de representación de valores.</td>
+						<td>Fecha almacenada como tipo DATE y campos de texto en mayúsculas, sin espacios externos.</td>
+						<td>Aplicado a fecha y texto según las reglas del flujo.</td>
+					</tr>
+					<tr>
+						<td>Transformación</td>
+						<td><strong>Normalización:</strong> ajuste de valores a una convención común.</td>
+						<td>Marca vacía pasa a “NO REGISTRADA”; marca, tipo, ubicación y autoridad se recortan y capitalizan.</td>
+						<td>Aplicado; no implica equivalencia semántica entre nombres geográficos.</td>
+					</tr>
+					<tr>
+						<td>Transformación</td>
+						<td><strong>Discretización:</strong> conversión de valores continuos en intervalos/categorías.</td>
+						<td>No se generan rangos ni categorías nuevas para edad u otras variables.</td>
+						<td>No aplicada.</td>
+					</tr>
+					<tr>
+						<td>Transformación</td>
+						<td><strong>Construcción de atributos:</strong> derivación de campos a partir de otros.</td>
+						<td>Se calculan banderas de edad atípica/modelo posterior y el motivo de revisión.</td>
+						<td>Aplicado; el motivo de 20 edades faltantes quedó NULL.</td>
+					</tr>
+					<tr>
+						<td>Transformación</td>
+						<td><strong>Agregación:</strong> resumen de varios registros en medidas agrupadas.</td>
+						<td>El ETL conserva filas individuales; los conteos de esta página son análisis posterior.</td>
+						<td>No aplicada en el Data Flow.</td>
+					</tr>
+					<tr>
+						<td>Integración de datos</td>
+						<td><strong>Diferencias entre nombres de atributos:</strong> correspondencia de campos equivalentes entre fuentes.</td>
+						<td>Esta ejecución procesa el CSV de vehículos; no combina sus atributos con otra fuente.</td>
+						<td>No aplica a esta ejecución.</td>
+					</tr>
+					<tr>
+						<td>Integración de datos</td>
+						<td><strong>Diferencias de tipos de datos:</strong> compatibilidad de tipos al cargar o combinar fuentes.</td>
+						<td>Los campos de staging en texto se convierten a tipos numéricos/fecha para las tablas limpias.</td>
+						<td>Conversión aplicada; no es una integración entre fuentes.</td>
+					</tr>
+					<tr>
+						<td>Integración de datos</td>
+						<td><strong>Conflictos de valores:</strong> valores incompatibles para una misma entidad entre fuentes.</td>
+						<td>No se cruzan fuentes en esta corrida; la regla modelo/año solo detecta una inconsistencia interna.</td>
+						<td>No evaluado entre fuentes; validación interna parcial.</td>
+					</tr>
+					<tr>
+						<td>Integración de datos</td>
+						<td><strong>Duplicación de registros:</strong> ocurrencias repetidas al combinar o cargar datos.</td>
+						<td>Se identifican 147.575 duplicados completos en la fuente y se conservan 258.965 grupos únicos.</td>
+						<td>Deduplicación exacta aplicada antes de la carga limpia.</td>
+					</tr>
+					<tr>
+						<td>Integración de datos</td>
+						<td><strong>Redundancia:</strong> repetición de información que no añade registros únicos.</td>
+						<td>Las filas idénticas completas se consideran redundantes; no se evalúan redundancias semánticas.</td>
+						<td>Redundancia exacta reducida; la semántica no evaluada.</td>
+					</tr>
+					<tr>
+						<td>Reducción de datos</td>
+						<td><strong>Eliminación de atributos irrelevantes:</strong> reducción de columnas sin utilidad analítica.</td>
+						<td>El flujo conserva los nueve atributos del vehículo.</td>
+						<td>No aplicada.</td>
+					</tr>
+					<tr>
+						<td>Reducción de datos</td>
+						<td><strong>Reducción de registros:</strong> disminución de filas preservando la información necesaria.</td>
+						<td>Se eliminan 147.575 duplicados exactos; staging retiene las filas originales.</td>
+						<td>Aplicada con trazabilidad mediante staging.</td>
+					</tr>
+					<tr>
+						<td>Reducción de datos</td>
+						<td><strong>Agregación:</strong> sustitución de filas detalladas por resúmenes.</td>
+						<td>No se reemplazan filas por totales dentro del ETL.</td>
+						<td>No aplicada.</td>
+					</tr>
+					<tr>
+						<td>Reducción de datos</td>
+						<td><strong>Muestreo:</strong> selección de una parte representativa del conjunto.</td>
+						<td>El proceso recibe el lote completo; las muestras CSV son solo evidencias de consulta.</td>
+						<td>No aplicado al ETL.</td>
+					</tr>
+					<tr>
+						<td>Reducción de datos</td>
+						<td><strong>Reducción de dimensionalidad:</strong> disminución del número de variables.</td>
+						<td>No se seleccionan componentes ni se reduce el conjunto de nueve atributos.</td>
+						<td>No aplicada.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<p class="results-note">
+			Los porcentajes de esta página describen conteos observados; no equivalen
+			a una medición integral de calidad. Actualidad, exactitud frente a una fuente
+			de verdad y credibilidad externa requieren datos o validaciones adicionales.
+		</p>
+	</section>
+
+	<section class="section">
+		<div class="results-section-title">
+			<span class="results-index">05</span>
+			<div>
 				<h2>Evidencia del paquete y la ejecución</h2>
 				<p>Capturas tomadas durante la primera ejecución.</p>
 			</div>
