@@ -52,16 +52,15 @@
             </span>
 
             <h1>
-                Extracción y transformación de vehículos mediante SSIS
+                Integración completa mediante SSIS: Siniestros y Vehículos
             </h1>
 
             <p>
-                Implementación del paquete SSIS
-                <strong>ETL_Accidentalidad_Vial</strong>, encargado de
-                extraer el archivo vehiculos_accidentes.csv hacia la zona
-                de Staging y de aplicar, de manera secuencial, las reglas
-                de tratamiento R01 a R09 definidas previamente, separando
-                los registros aceptados de aquellos que requieren revisión.
+                Implementación del paquete SSIS de integración, encargado de
+                cargar los archivos siniestros.csv y vehiculos.csv hacia la
+                zona de Staging y de transformarlos, mediante componentes
+                Lookup contra las tablas de dimensión del modelo relacional,
+                en los registros finales de TablaSiniestros y TablaVehiculos.
             </p>
 
         </div>
@@ -70,7 +69,7 @@
 
 
     <!-- =====================================================
-         01. INTRODUCCIÓN AL PAQUETE
+         01. ARQUITECTURA GENERAL DEL PAQUETE
          ===================================================== -->
 
     <section class="section">
@@ -82,7 +81,7 @@
             </div>
 
             <h2>
-                Paquete ETL_Accidentalidad_Vial
+                Arquitectura general del paquete
             </h2>
 
         </div>
@@ -90,895 +89,13 @@
 
         <p class="section-text">
 
-            La extracción y transformación de los datos de vehículos se
-            desarrolló mediante un paquete SSIS independiente,
-            <strong>ETL_Accidentalidad_Vial</strong>, construido en Visual
-            Studio sobre la misma base de datos
-            <strong>IntegracionSiniestrosVehiculos</strong>. Este paquete
-            toma como fuente el archivo
-            <strong>vehiculos_accidentes.csv</strong> y aplica, de manera
-            secuencial, las reglas de tratamiento R01 a R09 establecidas
-            en el diagnóstico inicial.
-
-        </p>
-
-
-        <p class="section-text">
-
-            El paquete se organiza en dos <strong>Data Flow Task</strong>
-            principales —
-            <strong>DFT_01_Extraccion</strong> y
-            <strong>DFT_02_Transformacion</strong> — coordinados por un
-            <strong>Control Flow</strong> que además garantiza la
-            repetibilidad del proceso sobre el mismo lote.
-
-        </p>
-
-
-        <div class="component-flow">
-
-            <div class="component-node">
-                <span class="component-tag">DATA FLOW 01</span>
-                <strong>DFT_01_Extraccion</strong>
-                <small>
-                    Carga sin transformar el CSV en
-                    StagingVehiculos.
-                </small>
-            </div>
-
-            <div class="component-arrow">→</div>
-
-            <div class="component-node">
-                <span class="component-tag">DATA FLOW 02</span>
-                <strong>DFT_02_Transformacion</strong>
-                <small>
-                    Convierte, normaliza, deduplica y separa
-                    aceptados de revisión.
-                </small>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         02. DFT_01_EXTRACCION
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                02
-            </div>
-
-            <h2>
-                Data Flow de extracción — DFT_01_Extraccion
-            </h2>
-
-        </div>
-
-
-        <p class="section-text">
-
-            El primer Data Flow Task tiene como finalidad cargar el
-            archivo <strong>vehiculos_accidentes.csv</strong>, sin
-            transformar, en la tabla <strong>StagingVehiculos</strong>,
-            conservando así los datos originales conforme al criterio de
-            conservación definido para el proceso.
-
-        </p>
-
-
-        <div class="component-flow">
-
-            <div class="component-node">
-                <span class="component-tag">FLAT FILE SOURCE</span>
-                <strong>vehiculos_accidentes.csv</strong>
-                <small>
-                    Conexión con las 9 columnas del archivo:
-                    marca_vehiculo, modelo_vehiculo, tipo_vehiculo,
-                    edad_vehiculo, fecha_accidente, gravedad_accidente,
-                    departamento_accidente, municipio_accidente y
-                    autoridad_de_transito.
-                </small>
-            </div>
-
-            <div class="component-arrow">→</div>
-
-            <div class="component-node">
-                <span class="component-tag">DATA CONVERSION</span>
-                <strong>Unicode string [DT_WSTR]</strong>
-                <small>
-                    El archivo plano interpreta el texto como cadenas
-                    no-unicode, mientras que StagingVehiculos utiliza
-                    columnas NVARCHAR.
-                </small>
-            </div>
-
-            <div class="component-arrow">→</div>
-
-            <div class="component-node">
-                <span class="component-tag">OLE DB DESTINATION</span>
-                <strong>dbo.StagingVehiculos</strong>
-                <small>
-                    Inserta los registros convertidos, mapeando cada
-                    columna de salida a su equivalente en la tabla.
-                </small>
-            </div>
-
-        </div>
-
-
-        <p class="section-text">
-
-            El Data Flow procesó exitosamente las
-            <strong>406.540 filas</strong> del archivo original, tanto en
-            la lectura del Flat File Source como en la conversión y la
-            carga final, un número que coincide con el total de registros
-            identificado en el diagnóstico de la Etapa 2, confirmando que
-            no se perdió ningún registro durante la extracción.
-
-        </p>
-
-
-        <figure class="evidence evidence-large">
-
-            <div class="evidence-frame">
-
-                <img
-                    src="{{ url_for(
-                        'static',
-                        filename='img/etapa3/ssis/extraccion.png'
-                    ) }}"
-                    alt="Data Flow DFT_01_Extraccion"
-                >
-
-            </div>
-
-            <figcaption>
-                Figura 1. Data Flow de extracción
-                <em>DFT_01_Extraccion</em>: Flat File Source, Data
-                Conversion y OLE DB Destination.
-            </figcaption>
-
-        </figure>
-
-
-        <p class="section-text">
-
-            Para verificar que la carga se realizó correctamente, se
-            consultó directamente la tabla StagingVehiculos en SQL Server
-            Management Studio:
-
-        </p>
-
-
-        <div class="code-box">
-
-<pre><code>SELECT MarcaVehiculo, ModeloVehiculo, TipoVehiculo, EdadVehiculo,
-       FechaAccidente, GravedadAccidente, DepartamentoAccidente,
-       MunicipioAccidente, AutoridadTransito
-FROM dbo.StagingVehiculos;</code></pre>
-
-        </div>
-
-
-        <p class="section-text">
-
-            La consulta confirmó que los 406.540 registros fueron
-            almacenados correctamente en StagingVehiculos, sin
-            modificaciones respecto al archivo original, quedando así
-            disponibles para la etapa de transformación.
-
-        </p>
-
-
-        <figure class="evidence">
-
-            <div class="evidence-frame">
-
-                <img
-                    src="{{ url_for(
-                        'static',
-                        filename='img/etapa3/ssis/consulta_staging.png'
-                    ) }}"
-                    alt="Consulta de verificación sobre StagingVehiculos"
-                >
-
-            </div>
-
-            <figcaption>
-                Figura 2. Resultado de la consulta sobre
-                <em>StagingVehiculos</em>, con los registros almacenados
-                sin modificaciones respecto al archivo original.
-            </figcaption>
-
-        </figure>
-
-    </section>
-
-
-    <!-- =====================================================
-         03. TABLAS DE DESTINO DEL TRATAMIENTO
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                03
-            </div>
-
-            <h2>
-                Tablas de destino: VehiculosLimpios y VehiculosRevision
-            </h2>
-
-        </div>
-
-
-        <p class="section-text">
-
-            Antes de configurar el Data Flow de transformación se crearon
-            las dos tablas que reciben el resultado del tratamiento:
-            <strong>VehiculosLimpios</strong>, para los registros
-            aceptados, y <strong>VehiculosRevision</strong>, para los
-            registros que requieren revisión, conservando su valor
-            original y el motivo de la clasificación.
-
-        </p>
-
-
-        <div class="staging-grid">
-
-            <div class="staging-card siniestros">
-
-                <div class="staging-card-header">
-
-                    <span>
-                        SALIDA ACEPTADOS
-                    </span>
-
-                    <strong>
-                        VehiculosLimpios
-                    </strong>
-
-                </div>
-
-                <div class="staging-card-body">
-
-                    <p>
-                        Recibe los registros convertidos, normalizados
-                        y sin duplicados que cumplen las condiciones
-                        definidas.
-                    </p>
-
-                    <code>
-                        Id · MarcaVehiculo · ModeloVehiculo ·
-                        TipoVehiculo · EdadVehiculo · FechaAccidente ·
-                        GravedadAccidente · DepartamentoAccidente ·
-                        MunicipioAccidente · AutoridadTransito ·
-                        FechaProceso
-                    </code>
-
-                </div>
-
-            </div>
-
-
-            <div class="staging-card vehiculos">
-
-                <div class="staging-card-header">
-
-                    <span>
-                        SALIDA REVISIÓN
-                    </span>
-
-                    <strong>
-                        VehiculosRevision
-                    </strong>
-
-                </div>
-
-                <div class="staging-card-body">
-
-                    <p>
-                        Conserva el valor original de los campos y
-                        documenta el motivo de la clasificación.
-                    </p>
-
-                    <code>
-                        Id · MarcaVehiculo · ModeloVehiculo ·
-                        TipoVehiculo · EdadVehiculo · FechaAccidente ·
-                        GravedadAccidente · DepartamentoAccidente ·
-                        MunicipioAccidente · AutoridadTransito ·
-                        MotivoRevision · FechaProceso
-                    </code>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="code-box">
-
-<pre><code>CREATE TABLE dbo.VehiculosLimpios (
-    Id                     INT IDENTITY(1,1) PRIMARY KEY,
-    MarcaVehiculo          NVARCHAR(100),
-    ModeloVehiculo         INT,
-    TipoVehiculo           NVARCHAR(100),
-    EdadVehiculo           INT NULL,
-    FechaAccidente         DATE,
-    GravedadAccidente      NVARCHAR(100),
-    DepartamentoAccidente  NVARCHAR(100),
-    MunicipioAccidente     NVARCHAR(100),
-    AutoridadTransito      NVARCHAR(200),
-    FechaProceso           DATETIME DEFAULT GETDATE()
-);
-
-CREATE TABLE dbo.VehiculosRevision (
-    Id                     INT IDENTITY(1,1) PRIMARY KEY,
-    MarcaVehiculo          NVARCHAR(100),
-    ModeloVehiculo         NVARCHAR(50),
-    TipoVehiculo           NVARCHAR(100),
-    EdadVehiculo           NVARCHAR(50),
-    FechaAccidente         NVARCHAR(50),
-    GravedadAccidente      NVARCHAR(100),
-    DepartamentoAccidente  NVARCHAR(100),
-    MunicipioAccidente     NVARCHAR(100),
-    AutoridadTransito      NVARCHAR(200),
-    MotivoRevision         NVARCHAR(300),
-    FechaProceso           DATETIME DEFAULT GETDATE()
-);</code></pre>
-
-        </div>
-
-
-        <div class="technical-note">
-
-            <div class="technical-note-icon">
-                i
-            </div>
-
-            <div>
-
-                <strong>
-                    Por qué dos tablas de destino
-                </strong>
-
-                <p>
-                    Separar los registros aceptados de los registros en
-                    revisión permite aplicar el criterio de no pérdida
-                    injustificada de información: ningún registro se
-                    elimina, únicamente se clasifica según el resultado
-                    de las validaciones.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         04. DFT_02_TRANSFORMACION — FUENTE Y CONVERSIÓN
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                04
-            </div>
-
-            <h2>
-                Data Flow de transformación — fuente y conversión de tipos
-            </h2>
-
-        </div>
-
-
-        <p class="section-text">
-
-            El Data Flow <strong>DFT_02_Transformacion</strong> toma
-            como fuente la propia tabla StagingVehiculos mediante un
-            componente <strong>OLE DB Source</strong> configurado en
-            modo SQL Command:
-
-        </p>
-
-
-        <div class="code-box">
-
-<pre><code>SELECT MarcaVehiculo, ModeloVehiculo, TipoVehiculo, EdadVehiculo,
-       FechaAccidente, GravedadAccidente, DepartamentoAccidente,
-       MunicipioAccidente, AutoridadTransito
-FROM dbo.StagingVehiculos;</code></pre>
-
-        </div>
-
-
-        <p class="section-text">
-
-            A partir de esta fuente, el primer componente aplicado fue
-            <strong>Data Conversion</strong>, encargado de convertir
-            FechaAccidente a tipo fecha (DT_DATE) y EdadVehiculo y
-            ModeloVehiculo a tipo entero (DT_I4), atendiendo la regla
-            <strong>R06</strong>.
-
-        </p>
-
-
-        <p class="section-text">
-
-            Durante las pruebas se identificó que los 20 registros con
-            edad_vehiculo nulo provocaban un error de conversión al
-            intentar transformar una cadena vacía en un número. Para
-            evitar que esto interrumpiera el procesamiento del resto del
-            lote, se configuró el <strong>Error Output</strong> del
-            componente en modo “Redirect row” para la columna
-            EdadVehiculo_conv, de manera que esas filas se separan
-            automáticamente hacia un flujo independiente que las envía a
-            VehiculosRevision, conservando el valor original —
-            implementando así la regla <strong>R03</strong>.
-
-        </p>
-
-
-        <div class="component-flow">
-
-            <div class="component-node">
-                <span class="component-tag">OLE DB SOURCE</span>
-                <strong>StagingVehiculos</strong>
-                <small>
-                    406.540 filas recibidas.
-                </small>
-            </div>
-
-            <div class="component-arrow">→</div>
-
-            <div class="component-node">
-                <span class="component-tag">DATA CONVERSION</span>
-                <strong>DT_DATE / DT_I4</strong>
-                <small>
-                    406.520 filas continúan hacia la transformación.
-                </small>
-            </div>
-
-            <div class="component-arrow">→</div>
-
-            <div class="component-node branch-error">
-                <span class="component-tag">ERROR OUTPUT</span>
-                <strong>OLE DB Destination</strong>
-                <small>
-                    20 filas con edad vacía redirigidas a
-                    VehiculosRevision.
-                </small>
-            </div>
-
-        </div>
-
-
-        <p class="section-text">
-
-            El componente confirmó el comportamiento esperado: de las
-            406.540 filas recibidas, 20 fueron redirigidas por el Error
-            Output directamente hacia VehiculosRevision, mientras que los
-            406.520 restantes continuaron por el flujo principal.
-
-        </p>
-
-
-        <figure class="evidence">
-
-            <div class="evidence-frame">
-
-                <img
-                    src="{{ url_for(
-                        'static',
-                        filename='img/etapa3/ssis/dataconversion.png'
-                    ) }}"
-                    alt="Error Output de Data Conversion"
-                >
-
-            </div>
-
-            <figcaption>
-                Figura 3. Redirección de las 20 filas con edad vacía
-                mediante el Error Output del componente Data Conversion.
-            </figcaption>
-
-        </figure>
-
-    </section>
-
-
-    <!-- =====================================================
-         05. DERIVED COLUMN
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                05
-            </div>
-
-            <h2>
-                Derived Column: normalización de texto y banderas de calidad
-            </h2>
-
-        </div>
-
-
-        <p class="section-text">
-
-            Sobre las filas que superaron la conversión se aplicó un
-            componente <strong>Derived Column</strong>, encargado de
-            implementar las reglas R02, R04, R05 y R07 mediante las
-            siguientes columnas derivadas:
-
-        </p>
-
-
-        <div class="table-wrapper">
-
-            <table class="technical-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Columna derivada
-                        </th>
-
-                        <th>
-                            Expresión (SSIS)
-                        </th>
-
-                        <th>
-                            Regla
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    <tr>
-
-                        <td>
-                            <strong>MarcaVehiculo_limpia</strong>
-                        </td>
-
-                        <td>
-                            (TRIM(MarcaVehiculo)=="" ||
-                            ISNULL(MarcaVehiculo)) ? "NO REGISTRADA" :
-                            UPPER(TRIM(MarcaVehiculo))
-                        </td>
-
-                        <td>
-                            R02
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <strong>TipoVehiculo_limpio</strong> /
-                            DepartamentoAccidente_limpio /
-                            MunicipioAccidente_limpio /
-                            AutoridadTransito_limpia
-                        </td>
-
-                        <td>
-                            UPPER(TRIM(campo))
-                        </td>
-
-                        <td>
-                            R07
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <strong>EdadAtipica</strong>
-                        </td>
-
-                        <td>
-                            EdadVehiculo_conv &gt; 40
-                        </td>
-
-                        <td>
-                            R04
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-
-                        <td>
-                            <strong>ModeloPosteriorAccidente</strong>
-                        </td>
-
-                        <td>
-                            ModeloVehiculo_conv &gt;
-                            YEAR(FechaAccidente_conv)
-                        </td>
-
-                        <td>
-                            R05
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-
-        <div class="technical-note warning">
-
-            <div class="technical-note-icon">
-                !
-            </div>
-
-            <div>
-
-                <strong>
-                    Hallazgo documentado
-                </strong>
-
-                <p>
-                    El predicado configurado en el paquete evalúa
-                    EdadVehiculo_conv &gt; 40; en el análisis de la
-                    Iteración 1 se identificó que la etiqueta exportada
-                    para este motivo indicaba un umbral distinto, por lo
-                    que quedó documentado como un aspecto a alinear en
-                    la siguiente iteración.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         06. SORT
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                06
-            </div>
-
-            <h2>
-                Sort: identificación y eliminación de duplicados
-            </h2>
-
-        </div>
-
-
-        <p class="section-text">
-
-            Sobre las columnas ya normalizadas y convertidas se aplicó un
-            componente <strong>Sort</strong>, configurado con la opción
-            “Remove rows with duplicate sort values” activada sobre la
-            totalidad de las columnas del registro.
-
-        </p>
-
-
-        <p class="section-text">
-
-            Esta configuración implementa la regla <strong>R01</strong>:
-            dos filas se consideran duplicadas únicamente cuando
-            coinciden en la totalidad de sus valores, ya normalizados y
-            convertidos, evitando así eliminar registros que solo
-            parecen similares.
-
-        </p>
-
-    </section>
-
-
-    <!-- =====================================================
-         07. CONDITIONAL SPLIT
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                07
-            </div>
-
-            <h2>
-                Conditional Split: separación de aceptados y en revisión
-            </h2>
-
-        </div>
-
-
-        <p class="section-text">
-
-            El resultado del Sort se dirige hacia un componente
-            <strong>Conditional Split</strong> que evalúa la condición
-            <strong>EdadAtipica || ModeloPosteriorAccidente</strong>. Los
-            registros que la cumplen se dirigen a la salida
-            <strong>Revision</strong> (reglas R04 y R05); el resto se
-            dirige a la salida por defecto <strong>Aceptados</strong>.
-
-        </p>
-
-
-        <p class="section-text">
-
-            Antes de insertar los registros de la rama Revision en
-            VehiculosRevision, un segundo Derived Column
-            (<strong>DER_MotivoRevision</strong>) construye el texto que
-            documenta el motivo de la clasificación, conforme a la regla
-            <strong>R09</strong> de trazabilidad:
-
-        </p>
-
-
-        <div class="code-box">
-
-<pre><code>EdadAtipica && ModeloPosteriorAccidente
-    ? "Edad atipica y modelo posterior al accidente"
-    : (EdadAtipica
-        ? "Edad atipica (>40 anios)"
-        : "Modelo posterior al anio del accidente")</code></pre>
-
-        </div>
-
-
-        <div class="component-flow">
-
-            <div class="component-node">
-                <span class="component-tag">SORT</span>
-                <strong>258.945 filas</strong>
-                <small>
-                    406.520 filas − 147.575 duplicados exactos.
-                </small>
-            </div>
-
-            <div class="component-arrow">→</div>
-
-            <div class="component-node">
-                <span class="component-tag">ACEPTADOS</span>
-                <strong>250.299 filas</strong>
-                <small>
-                    Salida por defecto del Conditional Split.
-                </small>
-            </div>
-
-            <div class="component-arrow">→</div>
-
-            <div class="component-node branch-revision">
-                <span class="component-tag">REVISIÓN</span>
-                <strong>8.646 filas</strong>
-                <small>
-                    Edad atípica o inconsistencia modelo/año.
-                </small>
-            </div>
-
-        </div>
-
-
-        <p class="section-text">
-
-            Los resultados obtenidos en la primera iteración fueron los
-            siguientes: de los 406.520 registros que llegaron al Sort,
-            se identificaron y eliminaron 147.575 duplicados exactos,
-            quedando 258.945 registros. De estos, 250.299 fueron
-            aceptados y 8.646 fueron enviados a revisión por edad
-            atípica o por inconsistencia entre el modelo y la fecha del
-            accidente, sumándose a los 20 registros ya separados por el
-            Data Conversion. En total, VehiculosRevision reúne
-            <strong>8.666 registros</strong>.
-
-        </p>
-
-
-        <figure class="evidence evidence-large">
-
-            <div class="evidence-frame">
-
-                <img
-                    src="{{ url_for(
-                        'static',
-                        filename='img/etapa3/ssis/transformacion.png'
-                    ) }}"
-                    alt="Data Flow DFT_02_Transformacion"
-                >
-
-            </div>
-
-            <figcaption>
-                Figura 4. Data Flow de transformación completo, con el
-                Sort, el Conditional Split y las dos salidas hacia
-                VehiculosLimpios y VehiculosRevision.
-            </figcaption>
-
-        </figure>
-
-    </section>
-
-
-    <!-- =====================================================
-         08. CONTROL DE REPETIBILIDAD
-         ===================================================== -->
-
-    <section class="section">
-
-        <div class="section-title">
-
-            <div class="section-number">
-                08
-            </div>
-
-            <h2>
-                Control de repetibilidad del proceso
-            </h2>
-
-        </div>
-
-
-        <p class="section-text">
-
-            Conforme al criterio de repetibilidad definido para el
-            proyecto, el paquete debe poder ejecutarse nuevamente sobre
-            el mismo lote sin generar registros duplicados adicionales.
-            Para garantizarlo, se incorporó al Control Flow un
-            <strong>Execute SQL Task</strong>
-            (<strong>SQL_TruncateTodo</strong>) que se ejecuta antes de
-            los dos Data Flow Task y que vacía las tres tablas
-            involucradas:
-
-        </p>
-
-
-        <div class="code-box">
-
-<pre><code>TRUNCATE TABLE dbo.StagingVehiculos;
-TRUNCATE TABLE dbo.VehiculosLimpios;
-TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
-
-        </div>
-
-
-        <p class="section-text">
-
-            De esta manera, cada ejecución completa del paquete parte
-            siempre de un estado limpio, evitando que corridas repetidas
-            acumulen copias adicionales de los mismos registros.
+            La integración completa de las dos fuentes se desarrolló en un
+            único paquete SSIS organizado mediante un
+            <strong>Control Flow</strong> de tres tareas secuenciales, cada
+            una dependiente de que la anterior finalice correctamente. Esta
+            secuencia garantiza que cada ejecución parta siempre de un
+            estado limpio y que las transformaciones se apliquen únicamente
+            sobre datos ya cargados en Staging.
 
         </p>
 
@@ -988,15 +105,15 @@ TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
             <div class="architecture-step source">
 
                 <span>
-                    01
+                    00
                 </span>
 
                 <strong>
-                    SQL_TruncateTodo
+                    00_Truncar_Todo
                 </strong>
 
                 <small>
-                    Vacía Staging, Limpios y Revisión
+                    Vacía todas las tablas involucradas
                 </small>
 
             </div>
@@ -1010,15 +127,15 @@ TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
             <div class="architecture-step staging">
 
                 <span>
-                    02
+                    01
                 </span>
 
                 <strong>
-                    DFT_01_Extraccion
+                    01_Staging
                 </strong>
 
                 <small>
-                    Carga el CSV en StagingVehiculos
+                    Carga Vehiculos_CSV y Siniestros_CSV sin transformar
                 </small>
 
             </div>
@@ -1032,15 +149,15 @@ TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
             <div class="architecture-step transform">
 
                 <span>
-                    03
+                    02
                 </span>
 
                 <strong>
-                    DFT_02_Transformacion
+                    02_Limpieza_Transformación
                 </strong>
 
                 <small>
-                    Convierte, deduplica y separa el resultado
+                    Normaliza, homologa y resuelve las claves del modelo
                 </small>
 
             </div>
@@ -1048,6 +165,40 @@ TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
         </div>
 
 
+        <p class="section-text">
+
+            Cada una de estas tres tareas del Control Flow corresponde,
+            respectivamente, a un <strong>Execute SQL Task</strong> de
+            truncado y a dos grupos de <strong>Data Flow Task</strong> (uno
+            para Staging y otro para la limpieza y transformación), que se
+            explican en detalle en las siguientes secciones.
+
+        </p>
+
+
+        <figure class="evidence evidence-large">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/control_flow.jpg'
+                    ) }}"
+                    alt="Control Flow del paquete de integración"
+                >
+
+            </div>
+
+            <figcaption>
+                Figura 1. Control Flow del paquete de integración:
+                <em>00_Truncar_Todo</em> → <em>01_Staging</em> →
+                <em>02_Limpieza_Transformación</em>.
+            </figcaption>
+
+        </figure>
+
+
         <div class="technical-note">
 
             <div class="technical-note-icon">
@@ -1057,48 +208,25 @@ TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
             <div>
 
                 <strong>
-                    Restricción de precedencia
+                    Repetibilidad del proceso
                 </strong>
 
                 <p>
-                    Cada tarea del Control Flow solo se ejecuta si la
-                    anterior finalizó correctamente, evitando que un
-                    Data Flow procese información sobre una tabla que
-                    no fue vaciada previamente.
+                    Al iniciar siempre por <em>00_Truncar_Todo</em>, el
+                    paquete puede ejecutarse cuantas veces sea necesario
+                    sobre el mismo lote sin acumular registros duplicados en
+                    Staging ni en las tablas finales del modelo.
                 </p>
 
             </div>
 
         </div>
 
-
-        <figure class="evidence">
-
-            <div class="evidence-frame">
-
-                <img
-                    src="{{ url_for(
-                        'static',
-                        filename='img/etapa3/ssis/controlflow.png'
-                    ) }}"
-                    alt="Control Flow con SQL_TruncateTodo"
-                >
-
-            </div>
-
-            <figcaption>
-                Figura 5. Control Flow del paquete
-                <em>ETL_Accidentalidad_Vial</em>, con la tarea de
-                truncado como punto de partida de cada ejecución.
-            </figcaption>
-
-        </figure>
-
     </section>
 
 
     <!-- =====================================================
-         09. VERIFICACIÓN DE RESULTADOS
+         02. TAREA 01_STAGING
          ===================================================== -->
 
     <section class="section">
@@ -1106,11 +234,11 @@ TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
         <div class="section-title">
 
             <div class="section-number">
-                09
+                02
             </div>
 
             <h2>
-                Verificación de resultados de la primera iteración
+                Tarea 01_Staging: carga inicial de las dos fuentes
             </h2>
 
         </div>
@@ -1118,61 +246,58 @@ TRUNCATE TABLE dbo.VehiculosRevision;</code></pre>
 
         <p class="section-text">
 
-            Finalmente, se verificaron los conteos finales directamente
-            en SQL Server:
+            La tarea <strong>01_Staging</strong> contiene un Data Flow con
+            dos pares independientes de componentes
+            <strong>Flat File Source → OLE DB Destination</strong>, uno por
+            cada archivo de origen. Ninguno de los dos aplica
+            transformaciones: su único propósito es trasladar el contenido
+            de los archivos planos hacia sus respectivas tablas de Staging,
+            conservando los datos originales.
 
         </p>
 
 
-        <div class="code-box">
+        <div class="component-flow">
 
-<pre><code>SELECT COUNT(*) AS Limpios  FROM dbo.VehiculosLimpios;
-SELECT COUNT(*) AS Revision FROM dbo.VehiculosRevision;</code></pre>
+            <div class="component-node">
+                <span class="component-tag">FLAT FILE SOURCE</span>
+                <strong>Vehiculos_CSV</strong>
+                <small>
+                    Lee vehiculos.csv con sus columnas originales.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">OLE DB DESTINATION</span>
+                <strong>Tabla_StagingVehiculos</strong>
+                <small>
+                    Inserta el archivo sin transformar.
+                </small>
+            </div>
 
         </div>
 
 
-        <div class="execution-result">
+        <div class="component-flow">
 
-            <div class="execution-item">
-
-                <span class="execution-status">
-                    ✓
-                </span>
-
-                <div>
-
-                    <strong>
-                        250.299 — VehiculosLimpios
-                    </strong>
-
-                    <small>
-                        Registros aceptados tras la transformación
-                    </small>
-
-                </div>
-
+            <div class="component-node">
+                <span class="component-tag">FLAT FILE SOURCE</span>
+                <strong>Siniestros_CSV</strong>
+                <small>
+                    Lee siniestros.csv con sus columnas originales.
+                </small>
             </div>
 
+            <div class="component-arrow">→</div>
 
-            <div class="execution-item">
-
-                <span class="execution-status">
-                    ✓
-                </span>
-
-                <div>
-
-                    <strong>
-                        8.666 — VehiculosRevision
-                    </strong>
-
-                    <small>
-                        20 por conversión + 8.646 por edad o modelo
-                    </small>
-
-                </div>
-
+            <div class="component-node">
+                <span class="component-tag">OLE DB DESTINATION</span>
+                <strong>Tabla_StagingSiniestros</strong>
+                <small>
+                    Inserta el archivo sin transformar.
+                </small>
             </div>
 
         </div>
@@ -1180,37 +305,603 @@ SELECT COUNT(*) AS Revision FROM dbo.VehiculosRevision;</code></pre>
 
         <p class="section-text">
 
-            Estos valores constituyen la línea base de la primera
-            iteración del proceso ETL y quedan disponibles, junto con el
-            paquete SSIS (Package.dtsx) y el script de creación de
-            tablas, para que el análisis comparativo de indicadores de
-            calidad y las siguientes iteraciones se desarrollen a partir
-            de ellos.
+            Al dejar ambos flujos dentro de la misma tarea de Staging pero
+            sin conectarlos entre sí, cada fuente conserva su propio ritmo
+            de carga y un error en una de ellas no impide necesariamente
+            que la otra complete su ejecución, facilitando el diagnóstico
+            de fallas en el Control Flow.
 
         </p>
 
 
-        <figure class="evidence">
+        <figure class="evidence evidence-large">
 
             <div class="evidence-frame">
 
                 <img
                     src="{{ url_for(
                         'static',
-                        filename='img/etapa3/ssis/conteos.png'
+                        filename='img/etapa3/ssis/staging_dataflow.jpg'
                     ) }}"
-                    alt="Verificación de conteos finales en SQL Server"
+                    alt="Data Flow de Staging para Vehiculos y Siniestros"
                 >
 
             </div>
 
             <figcaption>
-                Figura 6. Verificación de los conteos finales de
-                <em>VehiculosLimpios</em> y <em>VehiculosRevision</em>
-                en SQL Server Management Studio.
+                Figura 2. Data Flow de la tarea <em>01_Staging</em>, con los
+                dos pares Flat File Source → OLE DB Destination para
+                Vehículos y Siniestros.
             </figcaption>
 
         </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         03. DATA FLOW VEHÍCULOS — LIMPIEZA Y TRANSFORMACIÓN
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                03
+            </div>
+
+            <h2>
+                Data Flow de Vehículos: de Staging a TablaVehiculos
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Dentro de la tarea <strong>02_Limpieza_Transformación</strong>,
+            el Data Flow de Vehículos toma como fuente
+            <strong>Tabla_StagingVehiculos</strong> y aplica, en secuencia,
+            los componentes de limpieza, conversión y resolución de claves
+            necesarios para insertar cada registro en la tabla final
+            <strong>TablaVehiculos</strong> del modelo relacional.
+
+        </p>
+
+
+        <div class="table-wrapper">
+
+            <table class="technical-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Componente
+                        </th>
+
+                        <th>
+                            Tipo
+                        </th>
+
+                        <th>
+                            Función dentro del flujo
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            <strong>Tabla_StagingVehiculos</strong>
+                        </td>
+
+                        <td>
+                            OLE DB Source
+                        </td>
+
+                        <td>
+                            Origen del flujo: lee los registros cargados sin
+                            transformar en la etapa de Staging.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>AgregarTildes_Municipios 1</strong>
+                        </td>
+
+                        <td>
+                            Derived Column / Script Component
+                        </td>
+
+                        <td>
+                            Corrige nombres de municipios que en el archivo
+                            original aparecen sin tildes, reincorporándolas
+                            para que coincidan con los valores homologados
+                            en la tabla Municipio del modelo.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Limpieza_Columnas_</strong>
+                        </td>
+
+                        <td>
+                            Derived Column
+                        </td>
+
+                        <td>
+                            Aplica TRIM y estandarización de mayúsculas sobre
+                            los campos de texto (marca, tipo, departamento,
+                            municipio, autoridad de tránsito), homologando su
+                            formato antes de buscarlos en las tablas de
+                            dimensión.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Data Conversion 1</strong>
+                        </td>
+
+                        <td>
+                            Data Conversion
+                        </td>
+
+                        <td>
+                            Convierte los campos de fecha y los campos
+                            numéricos (edad del vehículo, año del modelo) a
+                            los tipos de datos exigidos por las columnas del
+                            modelo relacional.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Lookup_idFecha</strong>
+                        </td>
+
+                        <td>
+                            Lookup
+                        </td>
+
+                        <td>
+                            Busca en la tabla Fecha la clave subrogada
+                            <em>IdFechaAccidente</em> correspondiente a la
+                            fecha del accidente ya convertida.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Lookup_idDepartamentos 1</strong>
+                        </td>
+
+                        <td>
+                            Lookup
+                        </td>
+
+                        <td>
+                            Busca en DepartamentoMunicipio la clave
+                            <em>IdDepartamentoMunicipio</em> combinando el
+                            departamento y el municipio ya homologados.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Multicast</strong>
+                        </td>
+
+                        <td>
+                            Multicast
+                        </td>
+
+                        <td>
+                            Duplica el flujo, ya con IdFechaAccidente e
+                            IdDepartamentoMunicipio resueltos, en cuatro
+                            copias idénticas para resolver en paralelo las
+                            cuatro claves de dimensión restantes.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Marca_Lookup</strong>
+                        </td>
+
+                        <td>
+                            Lookup
+                        </td>
+
+                        <td>
+                            Resuelve <em>IdMarca</em> contra la tabla Marca a
+                            partir de MarcaVehiculo_limpia.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Tipo_Lookup</strong>
+                        </td>
+
+                        <td>
+                            Lookup
+                        </td>
+
+                        <td>
+                            Resuelve <em>IdTipoVehiculo</em> contra la tabla
+                            TipoVehiculo a partir de TipoVehiculo_limpio.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Gravedad_Lookup</strong>
+                        </td>
+
+                        <td>
+                            Lookup
+                        </td>
+
+                        <td>
+                            Resuelve <em>IdGravedadAccidente</em> contra la
+                            tabla GravedadAccidente.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Autoridad_Lookup</strong>
+                        </td>
+
+                        <td>
+                            Lookup
+                        </td>
+
+                        <td>
+                            Resuelve <em>IdAutoridadTransito</em> contra la
+                            tabla AutoridadTransito.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>Union All</strong>
+                        </td>
+
+                        <td>
+                            Union All
+                        </td>
+
+                        <td>
+                            Reúne nuevamente las cuatro ramas generadas por
+                            el Multicast en un único flujo, con las seis
+                            claves de dimensión ya resueltas sobre cada
+                            registro.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <strong>TablaVehiculos</strong>
+                        </td>
+
+                        <td>
+                            OLE DB Destination
+                        </td>
+
+                        <td>
+                            Inserta el registro final en la tabla Vehiculo
+                            del modelo relacional, ya referenciando sus seis
+                            claves foráneas.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <figure class="evidence evidence-portrait">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/vehiculos_dataflow.jpg'
+                    ) }}"
+                    alt="Data Flow de limpieza y transformación de Vehículos"
+                >
+
+            </div>
+
+            <figcaption>
+                Figura 3. Data Flow completo de Vehículos: desde
+                Tabla_StagingVehiculos hasta TablaVehiculos, con el
+                Multicast resolviendo en paralelo las cuatro claves de
+                dimensión restantes.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         04. DATA FLOW SINIESTROS — LIMPIEZA Y TRANSFORMACIÓN
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                04
+            </div>
+
+            <h2>
+                Data Flow de Siniestros: de Staging a TablaSiniestros
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            El Data Flow de Siniestros sigue la misma lógica que el de
+            Vehículos, adaptada a las dimensiones propias de esta fuente:
+            toma como origen <strong>Tabla_StagingSiniestros</strong> y
+            resuelve las claves foráneas necesarias para insertar cada
+            registro en <strong>TablaSiniestros</strong>.
+
+        </p>
+
+
+        <div class="component-flow">
+
+            <div class="component-node">
+                <span class="component-tag">OLE DB SOURCE</span>
+                <strong>Tabla_StagingSiniestros</strong>
+                <small>
+                    Origen: registros cargados en Staging.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">DERIVED COLUMN</span>
+                <strong>AgregarTildes_Municipios</strong>
+                <small>
+                    Corrige tildes en nombres de municipios.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">DERIVED COLUMN</span>
+                <strong>Limpieza_Columnas</strong>
+                <small>
+                    TRIM y mayúsculas sobre los campos de texto.
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="component-flow">
+
+            <div class="component-node">
+                <span class="component-tag">LOOKUP</span>
+                <strong>Lookup_idDepartamentos</strong>
+                <small>
+                    Resuelve IdDepartamentoMunicipio.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">DATA CONVERSION</span>
+                <strong>Data Conversion</strong>
+                <small>
+                    Convierte la fecha del hecho y los campos numéricos.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">LOOKUP</span>
+                <strong>Lookup_idFecha 1</strong>
+                <small>
+                    Resuelve IdFechaHecho.
+                </small>
+            </div>
+
+        </div>
+
+
+        <p class="section-text">
+
+            A diferencia del flujo de Vehículos, aquí el Lookup de
+            departamento se resuelve <strong>antes</strong> de la
+            conversión de tipos, ya que el campo geográfico no depende de
+            ella; la fecha, en cambio, requiere estar convertida a tipo
+            fecha antes de poder buscarse en la dimensión Fecha. Con ambas
+            claves resueltas, el flujo llega a un
+            <strong>Multicast 1</strong> que lo divide en tres copias para
+            resolver en paralelo las claves restantes:
+
+        </p>
+
+
+        <div class="component-flow">
+
+            <div class="component-node">
+                <span class="component-tag">MULTICAST 1</span>
+                <strong>3 ramas paralelas</strong>
+                <small>
+                    Clasificación, Hipótesis y Medio de conocimiento.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">LOOKUP</span>
+                <strong>Clasificacion_Lookup</strong>
+                <small>
+                    Resuelve IdClasificacionSiniestro.
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="component-flow">
+
+            <div class="component-node">
+                <span class="component-tag">LOOKUP</span>
+                <strong>Hipotesis_Lookup</strong>
+                <small>
+                    Resuelve IdHipotesis.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">LOOKUP</span>
+                <strong>Medio_Lookup</strong>
+                <small>
+                    Resuelve IdMedioConocimiento.
+                </small>
+            </div>
+
+            <div class="component-arrow">→</div>
+
+            <div class="component-node">
+                <span class="component-tag">UNION ALL 1</span>
+                <strong>TablaSiniestros</strong>
+                <small>
+                    Reúne las tres ramas e inserta el registro final.
+                </small>
+            </div>
+
+        </div>
+
+
+        <figure class="evidence evidence-portrait">
+
+            <div class="evidence-frame">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='img/etapa3/ssis/siniestros_dataflow.jpg'
+                    ) }}"
+                    alt="Data Flow de limpieza y transformación de Siniestros"
+                >
+
+            </div>
+
+            <figcaption>
+                Figura 4. Data Flow completo de Siniestros: desde
+                Tabla_StagingSiniestros hasta TablaSiniestros, con el
+                Multicast 1 resolviendo Clasificación, Hipótesis y Medio de
+                conocimiento en paralelo.
+            </figcaption>
+
+        </figure>
+
+    </section>
+
+
+    <!-- =====================================================
+         05. LOOKUP: RESOLUCIÓN DE CLAVES DE DIMENSIÓN
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                05
+            </div>
+
+            <h2>
+                El componente Lookup: resolución de claves de dimensión
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Cada componente <strong>Lookup</strong> del paquete cumple la
+            misma función conceptual: recibe un valor descriptivo ya
+            homologado (por ejemplo, el nombre de una marca o el nombre de
+            un municipio) y busca, contra la tabla de dimensión
+            correspondiente cargada en memoria, el identificador numérico
+            (clave subrogada) que representa ese valor en el modelo
+            relacional. Si encuentra coincidencia, el componente agrega esa
+            clave a la fila mediante su salida
+            <strong>Lookup Match Output</strong>, que es la única salida
+            utilizada en este paquete.
+
+        </p>
 
 
         <div class="technical-note">
@@ -1222,15 +913,236 @@ SELECT COUNT(*) AS Revision FROM dbo.VehiculosRevision;</code></pre>
             <div>
 
                 <strong>
-                    Análisis detallado
+                    Por qué normalizar antes del Lookup
                 </strong>
 
                 <p>
-                    El balance completo del lote, los motivos de
-                    revisión, los ejemplos antes y después, y el
-                    análisis de calidad y tratamiento correspondientes a
-                    esta primera iteración se desarrollan en la sección
-                    <strong>Iteración 1: Resultados</strong>.
+                    Los componentes Derived Column de limpieza
+                    (Limpieza_Columnas, AgregarTildes_Municipios) se ubican
+                    siempre antes de cualquier Lookup: una comparación exacta
+                    contra la tabla de dimensión solo tiene éxito si el texto
+                    de origen coincide carácter a carácter con el valor
+                    homologado almacenado en esa dimensión.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="technical-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Lookup
+                        </th>
+
+                        <th>
+                            Flujo
+                        </th>
+
+                        <th>
+                            Tabla de dimensión
+                        </th>
+
+                        <th>
+                            Clave resuelta
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr>
+                        <td>Lookup_idFecha</td>
+                        <td>Vehículos</td>
+                        <td>Fecha</td>
+                        <td>IdFechaAccidente</td>
+                    </tr>
+
+                    <tr>
+                        <td>Lookup_idDepartamentos 1</td>
+                        <td>Vehículos</td>
+                        <td>DepartamentoMunicipio</td>
+                        <td>IdDepartamentoMunicipio</td>
+                    </tr>
+
+                    <tr>
+                        <td>Marca_Lookup</td>
+                        <td>Vehículos</td>
+                        <td>Marca</td>
+                        <td>IdMarca</td>
+                    </tr>
+
+                    <tr>
+                        <td>Tipo_Lookup</td>
+                        <td>Vehículos</td>
+                        <td>TipoVehiculo</td>
+                        <td>IdTipoVehiculo</td>
+                    </tr>
+
+                    <tr>
+                        <td>Gravedad_Lookup</td>
+                        <td>Vehículos</td>
+                        <td>GravedadAccidente</td>
+                        <td>IdGravedadAccidente</td>
+                    </tr>
+
+                    <tr>
+                        <td>Autoridad_Lookup</td>
+                        <td>Vehículos</td>
+                        <td>AutoridadTransito</td>
+                        <td>IdAutoridadTransito</td>
+                    </tr>
+
+                    <tr>
+                        <td>Lookup_idDepartamentos</td>
+                        <td>Siniestros</td>
+                        <td>DepartamentoMunicipio</td>
+                        <td>IdDepartamentoMunicipio</td>
+                    </tr>
+
+                    <tr>
+                        <td>Lookup_idFecha 1</td>
+                        <td>Siniestros</td>
+                        <td>Fecha</td>
+                        <td>IdFechaHecho</td>
+                    </tr>
+
+                    <tr>
+                        <td>Clasificacion_Lookup</td>
+                        <td>Siniestros</td>
+                        <td>ClasificacionSiniestro</td>
+                        <td>IdClasificacionSiniestro</td>
+                    </tr>
+
+                    <tr>
+                        <td>Hipotesis_Lookup</td>
+                        <td>Siniestros</td>
+                        <td>Hipotesis</td>
+                        <td>IdHipotesis</td>
+                    </tr>
+
+                    <tr>
+                        <td>Medio_Lookup</td>
+                        <td>Siniestros</td>
+                        <td>MedioConocimiento</td>
+                        <td>IdMedioConocimiento</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         06. MULTICAST Y UNION ALL
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                06
+            </div>
+
+            <h2>
+                Multicast y Union All: resolución paralela de claves
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Una vez resueltas las claves que dependían de otro Lookup
+            previo (departamento y fecha), las claves de dimensión
+            restantes son independientes entre sí: el valor de Marca no
+            afecta la búsqueda de Tipo de vehículo, ni la Clasificación del
+            siniestro depende de la Hipótesis. Por esta razón, el paquete
+            utiliza un componente <strong>Multicast</strong> para duplicar
+            el flujo en tantas copias idénticas como Lookups independientes
+            queden por resolver, y ejecuta cada Lookup sobre su propia
+            copia del flujo.
+
+        </p>
+
+
+        <p class="section-text">
+
+            Después de que cada rama resuelve su clave correspondiente, un
+            componente <strong>Union All</strong> vuelve a combinar las
+            ramas en un único flujo de salida. A diferencia de un Merge
+            Join, el Union All no compara ni empareja filas entre las
+            ramas: simplemente concatena los conjuntos de columnas de cada
+            una, por lo que el diseño del paquete debe garantizar que cada
+            rama aporte únicamente la columna de clave que le corresponde y
+            que el orden de las filas se preserve.
+
+        </p>
+
+
+        <div class="rules-grid">
+
+            <div class="rule-card indigo">
+                <span class="rule-code">RAMA 1</span>
+                <h3>Marca_Lookup</h3>
+                <p>Aporta IdMarca al flujo combinado.</p>
+            </div>
+
+            <div class="rule-card plum">
+                <span class="rule-code">RAMA 2</span>
+                <h3>Tipo_Lookup</h3>
+                <p>Aporta IdTipoVehiculo al flujo combinado.</p>
+            </div>
+
+            <div class="rule-card gold">
+                <span class="rule-code">RAMA 3</span>
+                <h3>Gravedad_Lookup</h3>
+                <p>Aporta IdGravedadAccidente al flujo combinado.</p>
+            </div>
+
+            <div class="rule-card teal">
+                <span class="rule-code">RAMA 4</span>
+                <h3>Autoridad_Lookup</h3>
+                <p>Aporta IdAutoridadTransito al flujo combinado.</p>
+            </div>
+
+        </div>
+
+
+        <div class="technical-note warning">
+
+            <div class="technical-note-icon">
+                !
+            </div>
+
+            <div>
+
+                <strong>
+                    Ventaja frente a Lookups encadenados
+                </strong>
+
+                <p>
+                    Encadenar los seis Lookups uno detrás de otro también
+                    produciría el resultado correcto, pero obligaría a que
+                    cada fila pasara secuencialmente por seis búsquedas. El
+                    patrón Multicast → Lookups en paralelo → Union All
+                    reduce la profundidad del flujo para las claves
+                    independientes entre sí.
                 </p>
 
             </div>
@@ -1241,7 +1153,60 @@ SELECT COUNT(*) AS Revision FROM dbo.VehiculosRevision;</code></pre>
 
 
     <!-- =====================================================
-         10. RESULTADO
+         07. TAREA 00_TRUNCAR_TODO Y REPETIBILIDAD
+         ===================================================== -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div class="section-number">
+                07
+            </div>
+
+            <h2>
+                Tarea 00_Truncar_Todo: garantía de repetibilidad
+            </h2>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Antes de ejecutar cualquiera de los dos Data Flow, el Control
+            Flow ejecuta la tarea <strong>00_Truncar_Todo</strong>, un
+            Execute SQL Task que vacía todas las tablas involucradas en el
+            proceso: las dos tablas de Staging y las tablas finales del
+            modelo relacional que reciben los registros transformados.
+
+        </p>
+
+
+        <div class="code-box">
+
+<pre><code>TRUNCATE TABLE dbo.Tabla_StagingVehiculos;
+TRUNCATE TABLE dbo.Tabla_StagingSiniestros;
+TRUNCATE TABLE dbo.Vehiculo;
+TRUNCATE TABLE dbo.Siniestro;</code></pre>
+
+        </div>
+
+
+        <p class="section-text">
+
+            Al ubicar este truncado como primer paso obligatorio del
+            Control Flow, cada corrida completa del paquete parte de un
+            estado limpio y evita que una re-ejecución sobre el mismo lote
+            duplique los registros ya cargados, tanto en Staging como en
+            las tablas finales.
+
+        </p>
+
+    </section>
+
+
+    <!-- =====================================================
+         08. RESULTADO
          ===================================================== -->
 
     <section class="result-box">
@@ -1253,21 +1218,21 @@ SELECT COUNT(*) AS Revision FROM dbo.VehiculosRevision;</code></pre>
         <div>
 
             <h3>
-                Resultado de la construcción del proceso ETL
+                Resultado de la integración mediante SSIS
             </h3>
 
             <p>
 
-                Se implementó el paquete
-                <strong>ETL_Accidentalidad_Vial</strong> con dos Data
-                Flow Task encargados de extraer y transformar el archivo
-                vehiculos_accidentes.csv, aplicando de manera secuencial
-                las reglas R01 a R09. El proceso separó
-                <strong>147.575</strong> duplicados exactos y clasificó
-                los registros restantes en <strong>250.299</strong>
-                aceptados y <strong>8.666</strong> enviados a revisión,
-                dejando además un mecanismo de truncado que garantiza la
-                repetibilidad de la carga sobre el mismo lote.
+                Se implementó un paquete SSIS que integra las dos fuentes
+                del proyecto —siniestros y vehículos— en un único Control
+                Flow de tres pasos: truncado, carga a Staging y limpieza y
+                transformación. El Data Flow de cada fuente normaliza sus
+                campos de texto, corrige nombres geográficos, convierte los
+                tipos de datos necesarios y resuelve, mediante componentes
+                Lookup organizados con Multicast y Union All, la totalidad
+                de las claves foráneas exigidas por el modelo relacional
+                antes de insertar cada registro en TablaVehiculos y
+                TablaSiniestros.
 
             </p>
 

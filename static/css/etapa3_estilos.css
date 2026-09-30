@@ -2172,6 +2172,29 @@
 }
 
 
+/* =========================================================
+   EVIDENCIA EN FORMATO VERTICAL
+   Diagramas de Data Flow muy altos (Lookup + Multicast)
+   ========================================================= */
+
+.modelo-staging-page .evidence-portrait .evidence-frame {
+
+    min-height: 480px;
+
+    padding: 10px 0;
+}
+
+
+.modelo-staging-page .evidence-portrait .evidence-frame img {
+
+    max-height: 1100px;
+
+    width: auto;
+
+    max-width: 92%;
+}
+
+
 .modelo-staging-page .evidence-fallback {
 
     position: absolute;
