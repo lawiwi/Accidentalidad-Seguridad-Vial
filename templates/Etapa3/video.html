@@ -1,0 +1,168 @@
+
+{% extends "base.html" %}
+
+{% block title %}Etapa 3 - Video{% endblock %}
+
+{% block head %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+>
+<style>
+    .video-container {
+        width: 100%;
+        max-width: 1000px;
+        margin: 30px auto;
+        aspect-ratio: 16 / 9;
+        background: #171B3B;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 35px rgba(35, 42, 84, .18);
+    }
+
+    .video-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+    }
+
+    .video-description {
+        max-width: 850px;
+        margin: 20px auto;
+        text-align: center;
+        color: #6F7080;
+        line-height: 1.7;
+    }
+
+    .video-link {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 12px 22px;
+        border-radius: 12px;
+        background: #232A54;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: .2s ease;
+    }
+
+    .video-link:hover {
+        background: #8C4E7E;
+        color: white;
+    }
+
+    .video-section {
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .video-container {
+            border-radius: 12px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="etapa3-page video-page">
+
+    <!-- BOTÓN LATERAL ANTERIOR -->
+    <div class="side-nav left">
+        <a href="{{ url_for('comparacion') }}" title="Ir a Comparación">
+            ←
+        </a>
+    </div>
+
+    <!-- BOTÓN LATERAL SIGUIENTE -->
+    <div class="side-nav right">
+        <a href="{{ url_for('etapa3') }}" title="Volver al menú de Etapa 3">
+            →
+        </a>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="stage-tag">Etapa 3 · Video</span>
+
+            <h1>Presentación del proyecto</h1>
+
+            <p>
+                Registro audiovisual del proceso de integración de datos
+                de accidentalidad vial, con la explicación de las actividades
+                desarrolladas y los resultados documentados por el equipo.
+            </p>
+        </div>
+
+        <div class="hero-number">08</div>
+    </section>
+
+    <main class="container">
+
+        <!-- VIDEO -->
+        <section class="section video-section">
+
+            <div class="section-header">
+                <div class="section-number">08</div>
+
+                <div>
+                    <h2>Video de presentación</h2>
+                    <p>
+                        Reproducción del video alojado en YouTube.
+                    </p>
+                </div>
+            </div>
+
+            <div class="video-container">
+
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/QCyvHQNV2OU"
+                    title="Video de presentación del proyecto de accidentalidad vial"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen>
+                </iframe>
+
+            </div>
+
+            <p class="video-description">
+                En este video se presenta el desarrollo del proyecto,
+                el proceso de análisis de las fuentes de datos y las
+                actividades realizadas por los integrantes del equipo.
+            </p>
+
+            <a
+                href="https://www.youtube.com/watch?v=QCyvHQNV2OU"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="video-link">
+                Ver video en YouTube
+            </a>
+
+        </section>
+
+        <!-- NAVEGACIÓN INFERIOR -->
+        <div class="etapa-nav">
+
+            <a href="{{ url_for('comparacion') }}" class="nav-btn previous">
+                ← Comparación
+            </a>
+
+            <div class="nav-center">
+                <strong>Video</strong>
+                8 de 8
+            </div>
+
+            <a href="{{ url_for('etapa3') }}" class="nav-btn next">
+                Menú Etapa 3 →
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock %}

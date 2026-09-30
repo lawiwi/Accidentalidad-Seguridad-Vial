@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="9/23/2026 7:32:35 PM"
@@ -1349,19 +1349,19 @@
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="ModeloVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\206:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\379:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\Data Conversion.Inputs[Data Conversion Input].Columns[FechaAccidente]"
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="FechaAccidente"
-                      lineageId="Package\DFT_02_Transformacion\209:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\380:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\Data Conversion.Inputs[Data Conversion Input].Columns[EdadVehiculo]"
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="EdadVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\208:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\381:invalid" />
                   </inputColumns>
                   <externalMetadataColumns />
                 </input>
@@ -1386,7 +1386,7 @@
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\DFT_02_Transformacion\206:invalid}</property>
+                          name="SourceInputColumnLineageID">#{Package\DFT_02_Transformacion\379:invalid}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -1406,7 +1406,7 @@
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\DFT_02_Transformacion\209:invalid}</property>
+                          name="SourceInputColumnLineageID">#{Package\DFT_02_Transformacion\380:invalid}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -1426,7 +1426,7 @@
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\DFT_02_Transformacion\208:invalid}</property>
+                          name="SourceInputColumnLineageID">#{Package\DFT_02_Transformacion\381:invalid}</property>
                         <property
                           dataType="System.Boolean"
                           description="Indicates whether the column uses the faster, locale-neutral parsing routines."
@@ -1478,31 +1478,31 @@
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="MarcaVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\205:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\382:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\Derived Column.Inputs[Derived Column Input].Columns[TipoVehiculo]"
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="TipoVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\207:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\383:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\Derived Column.Inputs[Derived Column Input].Columns[DepartamentoAccidente]"
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="DepartamentoAccidente"
-                      lineageId="Package\DFT_02_Transformacion\211:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\384:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\Derived Column.Inputs[Derived Column Input].Columns[MunicipioAccidente]"
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="MunicipioAccidente"
-                      lineageId="Package\DFT_02_Transformacion\212:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\385:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\Derived Column.Inputs[Derived Column Input].Columns[AutoridadTransito]"
                       cachedDataType="wstr"
                       cachedLength="200"
                       cachedName="AutoridadTransito"
-                      lineageId="Package\DFT_02_Transformacion\213:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\386:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\Derived Column.Inputs[Derived Column Input].Columns[ModeloVehiculo_conv]"
                       cachedDataType="i4"
@@ -1544,7 +1544,7 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">([TRIM](#{Package\DFT_02_Transformacion\205:invalid}) == "" || [ISNULL](#{Package\DFT_02_Transformacion\205:invalid})) ? "NO REGISTRADA" : [UPPER]([TRIM](#{Package\DFT_02_Transformacion\205:invalid}))</property>
+                          name="Expression">([TRIM](#{Package\DFT_02_Transformacion\382:invalid}) == "" || [ISNULL](#{Package\DFT_02_Transformacion\382:invalid})) ? "NO REGISTRADA" : [UPPER]([TRIM](#{Package\DFT_02_Transformacion\382:invalid}))</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1567,7 +1567,7 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\207:invalid}))</property>
+                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\383:invalid}))</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1590,7 +1590,7 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\211:invalid}))</property>
+                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\384:invalid}))</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1613,7 +1613,7 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\212:invalid}))</property>
+                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\385:invalid}))</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1636,7 +1636,7 @@
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\213:invalid}))</property>
+                          name="Expression">[UPPER]([TRIM](#{Package\DFT_02_Transformacion\386:invalid}))</property>
                         <property
                           containsID="true"
                           dataType="System.String"
@@ -1881,63 +1881,63 @@
                       cachedLength="100"
                       cachedName="MarcaVehiculo"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MarcaVehiculo]"
-                      lineageId="Package\DFT_02_Transformacion\205:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\382:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ModeloVehiculo]"
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="ModeloVehiculo"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ModeloVehiculo]"
-                      lineageId="Package\DFT_02_Transformacion\206:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\379:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TipoVehiculo]"
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="TipoVehiculo"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TipoVehiculo]"
-                      lineageId="Package\DFT_02_Transformacion\207:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\383:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[EdadVehiculo]"
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="EdadVehiculo"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[EdadVehiculo]"
-                      lineageId="Package\DFT_02_Transformacion\208:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\381:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FechaAccidente]"
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="FechaAccidente"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FechaAccidente]"
-                      lineageId="Package\DFT_02_Transformacion\209:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\380:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GravedadAccidente]"
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="GravedadAccidente"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GravedadAccidente]"
-                      lineageId="Package\DFT_02_Transformacion\210:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\387:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DepartamentoAccidente]"
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="DepartamentoAccidente"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DepartamentoAccidente]"
-                      lineageId="Package\DFT_02_Transformacion\211:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\384:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MunicipioAccidente]"
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="MunicipioAccidente"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MunicipioAccidente]"
-                      lineageId="Package\DFT_02_Transformacion\212:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\385:invalid" />
                     <inputColumn
                       refId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AutoridadTransito]"
                       cachedDataType="wstr"
                       cachedLength="200"
                       cachedName="AutoridadTransito"
                       externalMetadataColumnId="Package\DFT_02_Transformacion\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AutoridadTransito]"
-                      lineageId="Package\DFT_02_Transformacion\213:invalid" />
+                      lineageId="Package\DFT_02_Transformacion\386:invalid" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -2999,7 +2999,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="MarcaVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\205:invalid">
+                      lineageId="Package\DFT_02_Transformacion\382:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3016,7 +3016,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="ModeloVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\206:invalid">
+                      lineageId="Package\DFT_02_Transformacion\379:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3033,7 +3033,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="TipoVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\207:invalid">
+                      lineageId="Package\DFT_02_Transformacion\383:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3050,7 +3050,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="EdadVehiculo"
-                      lineageId="Package\DFT_02_Transformacion\208:invalid">
+                      lineageId="Package\DFT_02_Transformacion\381:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3067,7 +3067,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="50"
                       cachedName="FechaAccidente"
-                      lineageId="Package\DFT_02_Transformacion\209:invalid">
+                      lineageId="Package\DFT_02_Transformacion\380:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3084,7 +3084,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="GravedadAccidente"
-                      lineageId="Package\DFT_02_Transformacion\210:invalid">
+                      lineageId="Package\DFT_02_Transformacion\387:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3101,7 +3101,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="DepartamentoAccidente"
-                      lineageId="Package\DFT_02_Transformacion\211:invalid">
+                      lineageId="Package\DFT_02_Transformacion\384:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3118,7 +3118,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="100"
                       cachedName="MunicipioAccidente"
-                      lineageId="Package\DFT_02_Transformacion\212:invalid">
+                      lineageId="Package\DFT_02_Transformacion\385:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3135,7 +3135,7 @@ FROM dbo.StagingVehiculos</property>
                       cachedDataType="wstr"
                       cachedLength="200"
                       cachedName="AutoridadTransito"
-                      lineageId="Package\DFT_02_Transformacion\213:invalid">
+                      lineageId="Package\DFT_02_Transformacion\386:invalid">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -3333,7 +3333,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\205:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\382:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3347,7 +3347,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\206:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\379:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3361,7 +3361,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\207:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\383:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3375,7 +3375,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\208:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\381:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3389,7 +3389,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\209:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\380:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3404,7 +3404,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\210:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\387:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3418,7 +3418,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\211:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\384:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3432,7 +3432,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\212:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\385:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -3446,7 +3446,7 @@ FROM dbo.StagingVehiculos</property>
                           containsID="true"
                           dataType="System.Int32"
                           description="Specifies the lineage identifier of the input column that is associated with this output column."
-                          name="SortColumnId">#{Package\DFT_02_Transformacion\213:invalid}</property>
+                          name="SortColumnId">#{Package\DFT_02_Transformacion\386:invalid}</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
