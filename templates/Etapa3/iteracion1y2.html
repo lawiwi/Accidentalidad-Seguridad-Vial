@@ -1,450 +1,798 @@
 {% extends "base.html" %}
 
-{% block title %}Etapa 3 - Iteración 1: Resultados{% endblock %}
+{% block title %}Etapa 3 - Iteraciones 1 y 2{% endblock %}
 
 {% block head %}
+
 <link
-	rel="stylesheet"
-	href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
 >
 {% endblock %}
 
 {% block content %}
+
 <div class="etapa3-page resultados-etapa3-page">
-	<div class="side-nav left">
-		<a href="{{ url_for('ssis') }}" title="Volver a SSIS">←</a>
-	</div>
-	<div class="side-nav right">
-		<a href="{{ url_for('comparacion') }}" title="Ver comparación de ejecuciones">→</a>
-	</div>
 
-	<a href="{{ url_for('etapa3') }}" class="back-link">← Volver a Etapa 3</a>
+```
+<!-- NAVEGACIÓN LATERAL -->
 
-	<section class="hero">
-		<div class="hero-content">
-			<span class="stage-tag">Etapa 3 · Primera ejecución</span>
-			<h1>Iteración 1: Resultados</h1>
-			<p>
-				Balance del lote de vehículos, registros aceptados y filas separadas
-				para revisión. La segunda ejecución repite este mismo proceso para
-				comprobar la reproducibilidad de la recarga.
-			</p>
-		</div>
-		<div class="hero-number">05</div>
-	</section>
-
-	<section class="section">
-		<div class="results-section-title">
-			<span class="results-index">01</span>
-			<div>
-				<h2>Balance del lote</h2>
-				<p>Fuente: <strong>vehiculos_accidentes.csv</strong></p>
-			</div>
-		</div>
-
-		<div class="results-kpis" aria-label="Conteos principales de Iteración 1">
-			<div class="results-kpi">
-				<strong>406.540</strong>
-				<span>Filas recibidas y cargadas a staging</span>
-			</div>
-			<div class="results-kpi">
-				<strong>147.575</strong>
-				<span>Duplicados exactos retirados · 36,3 %</span>
-			</div>
-			<div class="results-kpi">
-				<strong>258.965</strong>
-				<span>Filas únicas después de deduplicar</span>
-			</div>
-			<div class="results-kpi">
-				<strong>8.666</strong>
-				<span>Filas enviadas a revisión · 3,35 %</span>
-			</div>
-		</div>
-
-		<div class="results-table-wrap">
-			<table class="results-table">
-				<caption>Conciliación de registros reportada para el lote</caption>
-				<thead>
-					<tr>
-						<th scope="col">Etapa</th>
-						<th scope="col">Registros</th>
-						<th scope="col">Comprobación</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Entrada / staging</td>
-						<td>406.540</td>
-						<td>Conteo reportado en el resumen de duplicados</td>
-					</tr>
-					<tr>
-						<td>Duplicados exactos</td>
-						<td>147.575</td>
-						<td>406.540 − 147.575 = 258.965 filas únicas</td>
-					</tr>
-					<tr>
-						<td>Aceptados</td>
-						<td>250.299*</td>
-						<td rowspan="2">250.299 + 8.666 = 258.965</td>
-					</tr>
-					<tr>
-						<td>En revisión</td>
-						<td>8.666</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<p class="results-note">
-			* El resumen de la ejecución informa 250.299 aceptados. 
-		</p>
-	</section>
-
-	<section class="section">
-		<div class="results-section-title">
-			<span class="results-index">02</span>
-			<div>
-				<h2>Registros enviados a revisión</h2>
-				<p>El valor original se conserva en la salida de revisión.</p>
-			</div>
-		</div>
-
-		<div class="results-table-wrap">
-			<table class="results-table">
-				<caption>Motivos observados en los resultados agregados</caption>
-				<thead>
-					<tr>
-						<th scope="col">Motivo registrado</th>
-						<th scope="col">Filas</th>
-						<th scope="col">Hallazgo</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Modelo posterior al año del accidente</td>
-						<td>7.702</td>
-						<td>El año del modelo supera el año de la fecha del accidente.</td>
-					</tr>
-					<tr>
-						<td>Edad atípica (etiqueta exportada: &gt;40 años)</td>
-						<td>944</td>
-						<td>El paquete evalúa edad &gt;50; la etiqueta del motivo no coincide.</td>
-					</tr>
-					<tr>
-						<td>Edad vacía, motivo sin registrar</td>
-						<td>20</td>
-						<td><code>MotivoRevision</code> aparece como NULL en las muestras.</td>
-					</tr>
-					<tr>
-						<th scope="row">Total en revisión</th>
-						<th>8.666</th>
-						<td>Los tres conteos anteriores suman el total reportado.</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="results-note results-note-warning">
-			<strong>Hallazgos para la siguiente iteración</strong>
-			<p>
-				Corregir la etiqueta del umbral para que describa la condición real
-				y asignar un motivo explícito a las 20 edades vacías. Estos son
-				hallazgos de Iteración 1; no se modificó aquí el paquete SSIS.
-			</p>
-		</div>
-	</section>
-
-	<section class="section">
-		<div class="results-section-title">
-			<span class="results-index">03</span>
-			<div>
-				<h2>Ejemplos antes y después</h2>
-				<p>Normalización de marca y conservación de una fila para revisión.</p>
-			</div>
-		</div>
-
-		<div class="results-table-wrap">
-			<table class="results-table">
-				<caption>Marca vacía normalizada en un registro aceptado</caption>
-				<thead>
-					<tr>
-						<th scope="col">Estado</th>
-						<th scope="col">Marca</th>
-						<th scope="col">Modelo</th>
-						<th scope="col">Tipo</th>
-						<th scope="col">Edad</th>
-						<th scope="col">Fecha</th>
-						<th scope="col">Municipio</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th scope="row">Entrada</th>
-						<td>(vacía)</td>
-						<td>1991</td>
-						<td>TRACTOR</td>
-						<td>5</td>
-						<td>2023-12-01</td>
-						<td>CANDELARIA</td>
-					</tr>
-					<tr>
-						<th scope="row">Aceptado</th>
-						<td>NO REGISTRADA</td>
-						<td>1991</td>
-						<td>TRACTOR</td>
-						<td>5</td>
-						<td>2023-12-01</td>
-						<td>CANDELARIA</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<div class="results-review-example">
-			<h3>Ejemplo enviado a revisión</h3>
-			<p>
-				SUZUKI · modelo 2017 · motocicleta · edad vacía · accidente
-				2024-05-01 en Medellín, Antioquia. La muestra conserva esos valores,
-				pero exporta <code>MotivoRevision = NULL</code>; la causa requiere
-				completar la trazabilidad.
-			</p>
-		</div>
-	</section>
-
-	<section class="section">
-		<div class="results-section-title">
-			<span class="results-index">04</span>
-			<div>
-				<h2>Análisis de calidad y tratamiento</h2>
-				<p>Definición del concepto, evidencia de esta iteración y alcance de la conclusión.</p>
-			</div>
-		</div>
-
-		<div class="results-table-wrap">
-			<table class="results-table results-analysis-table">
-				<caption>Evaluación de los conceptos aplicables a la primera iteración</caption>
-				<thead>
-					<tr>
-						<th scope="col">Dimensión</th>
-						<th scope="col">Concepto y definición</th>
-						<th scope="col">Resultado observado en Iteración 1</th>
-						<th scope="col">Evaluación</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Calidad de datos</td>
-						<td><strong>Exactitud:</strong> cercanía del dato a un valor verdadero o válido.</td>
-						<td>Se detectan 7.702 modelos cuyo año supera el año del accidente y 944 edades señaladas como atípicas. Se derivan a revisión; no se contrastan con una fuente de verdad externa.</td>
-						<td>Parcial: se identifican valores sospechosos, no se demuestra la exactitud real.</td>
-					</tr>
-					<tr>
-						<td>Calidad de datos</td>
-						<td><strong>Completitud:</strong> proporción de campos requeridos con valor.</td>
-						<td>La marca vacía se reemplaza por “NO REGISTRADA”; 20 edades vacías se conservan y envían a revisión, pero su motivo queda NULL.</td>
-						<td>Parcial: se trata la marca; la edad no se imputa y falta documentar su motivo.</td>
-					</tr>
-					<tr>
-						<td>Calidad de datos</td>
-						<td><strong>Consistencia:</strong> uniformidad de valores y reglas entre campos/registros.</td>
-						<td>Se normalizan textos y fechas; se valida la relación entre modelo y año del accidente. La condición de edad es &gt;50, pero la etiqueta exportada indica &gt;40.</td>
-						<td>Parcial: hay reglas de consistencia, con discrepancia pendiente en el rótulo del motivo.</td>
-					</tr>
-					<tr>
-						<td>Calidad de datos</td>
-						<td><strong>Actualidad:</strong> vigencia del dato respecto del momento en que se necesita.</td>
-						<td>Se observan fechas de accidentes en los registros, pero no hay fecha de extracción/ejecución ni una referencia de vigencia para compararlas.</td>
-						<td>No evaluado con la evidencia disponible.</td>
-					</tr>
-					<tr>
-						<td>Calidad de datos</td>
-						<td><strong>Credibilidad:</strong> grado de confianza en el origen y la trazabilidad del dato.</td>
-						<td>El CSV original se conserva en staging y los campos de revisión retienen valores de origen; no se aporta validación independiente de la fuente.</td>
-						<td>Parcial: hay trazabilidad técnica, sin corroboración externa.</td>
-					</tr>
-					<tr>
-						<td>Calidad de datos</td>
-						<td><strong>Interpretabilidad:</strong> facilidad para entender el significado y uso de los datos.</td>
-						<td>La salida separa aceptados/revisión y describe motivos; NULL en 20 motivos y el rótulo &gt;40 frente a la condición &gt;50 dificultan interpretar esos casos.</td>
-						<td>Parcial: estructura comprensible con dos ambigüedades documentadas.</td>
-					</tr>
-					<tr>
-						<td>Limpieza de datos</td>
-						<td><strong>Valores faltantes:</strong> campos vacíos, nulos o ausentes.</td>
-						<td>Marca vacía → “NO REGISTRADA”; edad faltante → revisión, conservando el valor vacío.</td>
-						<td>Aplicado parcialmente; falta completar MotivoRevision para 20 filas.</td>
-					</tr>
-					<tr>
-						<td>Limpieza de datos</td>
-						<td><strong>Datos ruidosos:</strong> variaciones o caracteres que dificultan comparar valores.</td>
-						<td>Se aplica TRIM y mayúsculas a campos de texto para retirar espacios extremos y uniformar capitalización.</td>
-						<td>Aplicado a los campos de texto configurados; no se mide cuánto ruido se eliminó.</td>
-					</tr>
-					<tr>
-						<td>Limpieza de datos</td>
-						<td><strong>Inconsistencias:</strong> valores que contradicen reglas o relaciones esperadas.</td>
-						<td>7.702 modelos posteriores al accidente y 944 edades atípicas se separan para revisión.</td>
-						<td>Detectadas y aisladas, no corregidas automáticamente.</td>
-					</tr>
-					<tr>
-						<td>Limpieza de datos</td>
-						<td><strong>Duplicados:</strong> filas repetidas según los campos comparados.</td>
-						<td>El Sort identifica 147.575 duplicados exactos; quedan 258.965 grupos únicos de 406.540 filas.</td>
-						<td>Aplicado: se retiran filas completas repetidas.</td>
-					</tr>
-					<tr>
-						<td>Limpieza de datos</td>
-						<td><strong>Valores atípicos:</strong> valores fuera del rango o criterio definido.</td>
-						<td>944 edades se envían a revisión con umbral configurado &gt;50 años; el texto del motivo reporta &gt;40.</td>
-						<td>Detectados, no corregidos; alinear el umbral y su etiqueta.</td>
-					</tr>
-					<tr>
-						<td>Limpieza de datos</td>
-						<td><strong>Formatos inconsistentes:</strong> representaciones distintas para un mismo tipo de dato.</td>
-						<td>La fecha de texto se convierte a DATE y los textos se normalizan.</td>
-						<td>Aplicado según las conversiones y expresiones del paquete.</td>
-					</tr>
-					<tr>
-						<td>Transformación</td>
-						<td><strong>Conversión de tipos:</strong> cambio a un tipo adecuado para validar y almacenar.</td>
-						<td>Edad/modelo se convierten a enteros y fecha de accidente a DATE; staging conserva los originales como texto.</td>
-						<td>Aplicado; los errores de conversión se derivan a revisión.</td>
-					</tr>
-					<tr>
-						<td>Transformación</td>
-						<td><strong>Estandarización de formatos:</strong> unificación de representación de valores.</td>
-						<td>Fecha almacenada como tipo DATE y campos de texto en mayúsculas, sin espacios externos.</td>
-						<td>Aplicado a fecha y texto según las reglas del flujo.</td>
-					</tr>
-					<tr>
-						<td>Transformación</td>
-						<td><strong>Normalización:</strong> ajuste de valores a una convención común.</td>
-						<td>Marca vacía pasa a “NO REGISTRADA”; marca, tipo, ubicación y autoridad se recortan y capitalizan.</td>
-						<td>Aplicado; no implica equivalencia semántica entre nombres geográficos.</td>
-					</tr>
-					<tr>
-						<td>Transformación</td>
-						<td><strong>Discretización:</strong> conversión de valores continuos en intervalos/categorías.</td>
-						<td>No se generan rangos ni categorías nuevas para edad u otras variables.</td>
-						<td>No aplicada.</td>
-					</tr>
-					<tr>
-						<td>Transformación</td>
-						<td><strong>Construcción de atributos:</strong> derivación de campos a partir de otros.</td>
-						<td>Se calculan banderas de edad atípica/modelo posterior y el motivo de revisión.</td>
-						<td>Aplicado; el motivo de 20 edades faltantes quedó NULL.</td>
-					</tr>
-					<tr>
-						<td>Transformación</td>
-						<td><strong>Agregación:</strong> resumen de varios registros en medidas agrupadas.</td>
-						<td>El ETL conserva filas individuales; los conteos de esta página son análisis posterior.</td>
-						<td>No aplicada en el Data Flow.</td>
-					</tr>
-					<tr>
-						<td>Integración de datos</td>
-						<td><strong>Diferencias entre nombres de atributos:</strong> correspondencia de campos equivalentes entre fuentes.</td>
-						<td>Esta ejecución procesa el CSV de vehículos; no combina sus atributos con otra fuente.</td>
-						<td>No aplica a esta ejecución.</td>
-					</tr>
-					<tr>
-						<td>Integración de datos</td>
-						<td><strong>Diferencias de tipos de datos:</strong> compatibilidad de tipos al cargar o combinar fuentes.</td>
-						<td>Los campos de staging en texto se convierten a tipos numéricos/fecha para las tablas limpias.</td>
-						<td>Conversión aplicada; no es una integración entre fuentes.</td>
-					</tr>
-					<tr>
-						<td>Integración de datos</td>
-						<td><strong>Conflictos de valores:</strong> valores incompatibles para una misma entidad entre fuentes.</td>
-						<td>No se cruzan fuentes en esta corrida; la regla modelo/año solo detecta una inconsistencia interna.</td>
-						<td>No evaluado entre fuentes; validación interna parcial.</td>
-					</tr>
-					<tr>
-						<td>Integración de datos</td>
-						<td><strong>Duplicación de registros:</strong> ocurrencias repetidas al combinar o cargar datos.</td>
-						<td>Se identifican 147.575 duplicados completos en la fuente y se conservan 258.965 grupos únicos.</td>
-						<td>Deduplicación exacta aplicada antes de la carga limpia.</td>
-					</tr>
-					<tr>
-						<td>Integración de datos</td>
-						<td><strong>Redundancia:</strong> repetición de información que no añade registros únicos.</td>
-						<td>Las filas idénticas completas se consideran redundantes; no se evalúan redundancias semánticas.</td>
-						<td>Redundancia exacta reducida; la semántica no evaluada.</td>
-					</tr>
-					<tr>
-						<td>Reducción de datos</td>
-						<td><strong>Eliminación de atributos irrelevantes:</strong> reducción de columnas sin utilidad analítica.</td>
-						<td>El flujo conserva los nueve atributos del vehículo.</td>
-						<td>No aplicada.</td>
-					</tr>
-					<tr>
-						<td>Reducción de datos</td>
-						<td><strong>Reducción de registros:</strong> disminución de filas preservando la información necesaria.</td>
-						<td>Se eliminan 147.575 duplicados exactos; staging retiene las filas originales.</td>
-						<td>Aplicada con trazabilidad mediante staging.</td>
-					</tr>
-					<tr>
-						<td>Reducción de datos</td>
-						<td><strong>Agregación:</strong> sustitución de filas detalladas por resúmenes.</td>
-						<td>No se reemplazan filas por totales dentro del ETL.</td>
-						<td>No aplicada.</td>
-					</tr>
-					<tr>
-						<td>Reducción de datos</td>
-						<td><strong>Muestreo:</strong> selección de una parte representativa del conjunto.</td>
-						<td>El proceso recibe el lote completo; las muestras CSV son solo evidencias de consulta.</td>
-						<td>No aplicado al ETL.</td>
-					</tr>
-					<tr>
-						<td>Reducción de datos</td>
-						<td><strong>Reducción de dimensionalidad:</strong> disminución del número de variables.</td>
-						<td>No se seleccionan componentes ni se reduce el conjunto de nueve atributos.</td>
-						<td>No aplicada.</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<p class="results-note">
-			Los resultados muestran cuántos registros se procesaron aceptaron, eliminaron o
-			enviaron a revisión. Estas cifras describen lo ocurrido durante la ejecución, pero no
-			son por sí solas una calificación general de la calidad de los datos.
-		</p>
-	</section>
-
-	<section class="section">
-		<div class="results-section-title">
-			<span class="results-index">05</span>
-			<div>
-				<h2>Evidencia del paquete y la ejecución</h2>
-				<p>Capturas tomadas durante la primera ejecución.</p>
-			</div>
-		</div>
-
-		<div class="results-evidence-grid">
-			<figure class="results-evidence">
-				<img
-					src="{{ url_for('static', filename='img/etapa3/iteracion1/flujo_control.jpg') }}"
-					alt="Control Flow del paquete SSIS de vehículos"
-					loading="lazy"
-				>
-				<figcaption>Control Flow del paquete de Iteración 1.</figcaption>
-			</figure>
-			<figure class="results-evidence">
-				<img
-					src="{{ url_for('static', filename='img/etapa3/iteracion1/flujo_datos.jpg') }}"
-					alt="Data Flow de extracción y tratamiento en SSIS"
-					loading="lazy"
-				>
-				<figcaption>Data Flow de extracción, transformación y carga.</figcaption>
-			</figure>
-			<figure class="results-evidence">
-				<img
-					src="{{ url_for('static', filename='img/etapa3/iteracion1/progreso_ejecucion_1.jpg') }}"
-					alt="Captura de progreso de la primera ejecución de SSIS"
-					loading="lazy"
-				>
-				<figcaption>Progreso registrado para la ejecución 1.</figcaption>
-			</figure>
-		</div>
-	</section>
+<div class="side-nav left">
+    <a href="{{ url_for('ssis') }}" title="Volver a SSIS">←</a>
 </div>
+
+<div class="side-nav right">
+    <a href="{{ url_for('iteracion3') }}" title="Ir a Iteración 3">→</a>
+</div>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="stage-tag">
+            Etapa 3 · Iteraciones 1 y 2
+        </span>
+
+        <h1>
+            Iteración 1 y 2: ejecución, revisión y reproducibilidad
+        </h1>
+
+        <p>
+            Las dos primeras ejecuciones permiten comprobar el
+            comportamiento del paquete SSIS, identificar registros
+            que requieren revisión y verificar que el proceso pueda
+            ejecutarse nuevamente de manera controlada.
+        </p>
+
+    </div>
+
+    <div class="hero-number">
+        05
+    </div>
+
+</section>
+
+
+<!-- 01. PROPÓSITO -->
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            01
+        </span>
+
+        <div>
+
+            <h2>
+                Propósito de las iteraciones
+            </h2>
+
+            <p>
+                Validación progresiva del proceso ETL.
+            </p>
+
+        </div>
+
+    </div>
+
+    <p class="section-text">
+
+        La Iteración 1 corresponde a la primera ejecución completa
+        del proceso de integración. Su objetivo fue observar el
+        comportamiento real del paquete SSIS sobre los datos de
+        vehículos, identificar registros rechazados o enviados a
+        revisión y documentar las condiciones encontradas.
+
+    </p>
+
+    <p class="section-text">
+
+        La Iteración 2 utiliza nuevamente el paquete después de
+        revisar los resultados de la primera ejecución. Su función
+        principal es comprobar la reproducibilidad del proceso y
+        verificar que los cambios aplicados no generen duplicaciones
+        ni alteraciones inesperadas en los resultados.
+
+    </p>
+
+</section>
+
+
+<!-- 02. ITERACIÓN 1 -->
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            02
+        </span>
+
+        <div>
+
+            <h2>
+                Iteración 1: primera ejecución
+            </h2>
+
+            <p>
+                Resultado inicial del procesamiento.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-kpis">
+
+        <div class="results-kpi">
+            <strong>406.540</strong>
+            <span>
+                Registros recibidos
+            </span>
+        </div>
+
+        <div class="results-kpi">
+            <strong>147.575</strong>
+            <span>
+                Duplicados exactos identificados
+            </span>
+        </div>
+
+        <div class="results-kpi">
+            <strong>258.965</strong>
+            <span>
+                Registros únicos
+            </span>
+        </div>
+
+        <div class="results-kpi">
+            <strong>8.666</strong>
+            <span>
+                Registros enviados a revisión
+            </span>
+        </div>
+
+    </div>
+
+
+    <div class="results-table-wrap">
+
+        <table class="results-table">
+
+            <caption>
+                Balance de la primera ejecución
+            </caption>
+
+            <thead>
+
+                <tr>
+                    <th>Resultado</th>
+                    <th>Registros</th>
+                    <th>Descripción</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Entrada</td>
+                    <td>406.540</td>
+                    <td>
+                        Registros recibidos desde
+                        <strong>vehiculos_accidentes.csv</strong>.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Duplicados</td>
+                    <td>147.575</td>
+                    <td>
+                        Registros repetidos identificados durante
+                        el proceso de depuración.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Registros únicos</td>
+                    <td>258.965</td>
+                    <td>
+                        Resultado después de retirar los duplicados
+                        exactos.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>En revisión</td>
+                    <td>8.666</td>
+                    <td>
+                        Registros que incumplieron alguna de las
+                        reglas de validación.
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- 03. HALLAZGOS ITERACIÓN 1 -->
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            03
+        </span>
+
+        <div>
+
+            <h2>
+                Hallazgos de la Iteración 1
+            </h2>
+
+            <p>
+                Registros separados para revisión.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-table-wrap">
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+                    <th>Condición</th>
+                    <th>Registros</th>
+                    <th>Tratamiento</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Modelo posterior al año del accidente
+                    </td>
+
+                    <td>
+                        7.702
+                    </td>
+
+                    <td>
+                        Enviado a revisión.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Edad considerada atípica
+                    </td>
+
+                    <td>
+                        944
+                    </td>
+
+                    <td>
+                        Enviado a revisión.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Edad vacía
+                    </td>
+
+                    <td>
+                        20
+                    </td>
+
+                    <td>
+                        Conservada y enviada a revisión.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+                        Total
+                    </th>
+
+                    <th>
+                        8.666
+                    </th>
+
+                    <td>
+                        Registros separados para revisión.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="results-note results-note-warning">
+
+        <strong>
+            Hallazgo de la primera ejecución
+        </strong>
+
+        <p>
+
+            La primera ejecución permitió identificar una diferencia
+            entre el criterio utilizado para detectar edades atípicas
+            y la etiqueta utilizada para describir el motivo.
+            También se identificaron registros con edad vacía cuyo
+            motivo de revisión no quedó registrado.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- 04. TRATAMIENTOS APLICADOS -->
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            04
+        </span>
+
+        <div>
+
+            <h2>
+                Tratamientos revisados
+            </h2>
+
+            <p>
+                Ajustes derivados de los hallazgos.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="rules-grid">
+
+        <div class="rule-card indigo">
+
+            <span class="rule-code">
+                TEXTO
+            </span>
+
+            <h3>
+                Normalización
+            </h3>
+
+            <p>
+                Aplicación de TRIM y mayúsculas para uniformar
+                los campos de texto.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card plum">
+
+            <span class="rule-code">
+                FALTANTES
+            </span>
+
+            <h3>
+                Valores vacíos
+            </h3>
+
+            <p>
+                Las marcas vacías se representan como
+                “NO REGISTRADA”.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card gold">
+
+            <span class="rule-code">
+                VALIDACIÓN
+            </span>
+
+            <h3>
+                Reglas de negocio
+            </h3>
+
+            <p>
+                Se verifican relaciones como año del modelo
+                frente al año del accidente.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card teal">
+
+            <span class="rule-code">
+                DUPLICADOS
+            </span>
+
+            <h3>
+                Deduplicación
+            </h3>
+
+            <p>
+                Se identifican filas completamente repetidas
+                antes de la carga final.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- 05. ITERACIÓN 2 -->
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            05
+        </span>
+
+        <div>
+
+            <h2>
+                Iteración 2: repetición controlada
+            </h2>
+
+            <p>
+                Comprobación de reproducibilidad.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <p class="section-text">
+
+        La segunda iteración vuelve a ejecutar el flujo completo
+        partiendo de un estado limpio. La tarea
+        <strong>00_Truncar_Todo</strong> elimina previamente los
+        registros de Staging y de las tablas de destino, evitando
+        que la nueva ejecución acumule registros provenientes de
+        la ejecución anterior.
+
+    </p>
+
+
+    <div class="component-flow">
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                01
+            </span>
+
+            <strong>
+                Limpiar
+            </strong>
+
+            <small>
+                Truncado de las tablas.
+            </small>
+
+        </div>
+
+
+        <div class="component-arrow">
+            →
+        </div>
+
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                02
+            </span>
+
+            <strong>
+                Recargar
+            </strong>
+
+            <small>
+                Nueva carga desde los CSV.
+            </small>
+
+        </div>
+
+
+        <div class="component-arrow">
+            →
+        </div>
+
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                03
+            </span>
+
+            <strong>
+                Transformar
+            </strong>
+
+            <small>
+                Aplicación nuevamente de las reglas.
+            </small>
+
+        </div>
+
+
+        <div class="component-arrow">
+            →
+        </div>
+
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                04
+            </span>
+
+            <strong>
+                Comparar
+            </strong>
+
+            <small>
+                Verificación de resultados.
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-note">
+
+        <strong>
+            Objetivo de la Iteración 2
+        </strong>
+
+        <p>
+
+            Confirmar que el proceso sea reproducible y que una
+            nueva ejecución sobre el mismo lote no genere
+            duplicación acumulativa en las tablas de Staging o
+            destino.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- 06. COMPARACIÓN 1 VS 2 -->
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            06
+        </span>
+
+        <div>
+
+            <h2>
+                Iteración 1 frente a Iteración 2
+            </h2>
+
+            <p>
+                Aspectos verificados.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-table-wrap">
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Aspecto
+                    </th>
+
+                    <th>
+                        Iteración 1
+                    </th>
+
+                    <th>
+                        Iteración 2
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Carga
+                    </td>
+
+                    <td>
+                        Primera ejecución.
+                    </td>
+
+                    <td>
+                        Nueva ejecución desde estado limpio.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Duplicados
+                    </td>
+
+                    <td>
+                        Identificados y tratados.
+                    </td>
+
+                    <td>
+                        Se verifica que no se acumulen entre ejecuciones.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Reglas de validación
+                    </td>
+
+                    <td>
+                        Aplicadas inicialmente.
+                    </td>
+
+                    <td>
+                        Ejecutadas nuevamente.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Reproducibilidad
+                    </td>
+
+                    <td>
+                        No comprobada todavía.
+                    </td>
+
+                    <td>
+                        Evaluada mediante una segunda ejecución.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- 07. CONCLUSIÓN -->
+
+<section class="result-box">
+
+    <div class="result-icon">
+        ✓
+    </div>
+
+    <div>
+
+        <h3>
+            Resultado de las Iteraciones 1 y 2
+        </h3>
+
+        <p>
+
+            Las dos primeras iteraciones permitieron observar el
+            comportamiento inicial del proceso ETL, identificar
+            registros que requieren revisión y comprobar la
+            ejecución repetible del paquete SSIS. Los hallazgos
+            encontrados durante la primera ejecución sirven como
+            insumo para los ajustes documentados en la Iteración 3.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- NAVEGACIÓN -->
+
+<div class="etapa-nav">
+
+    <a
+        href="{{ url_for('ssis') }}"
+        class="nav-btn previous"
+    >
+        ← SSIS
+    </a>
+
+
+    <div class="nav-center">
+
+        <strong>
+            Iteraciones 1 y 2
+        </strong>
+
+        5 de 8
+
+    </div>
+
+
+    <a
+        href="{{ url_for('iteracion3') }}"
+        class="nav-btn next"
+    >
+        Iteración 3 →
+    </a>
+
+</div>
+```
+
+</div>
+
 {% endblock %}
