@@ -1,0 +1,497 @@
+{% extends "base.html" %}
+
+{% block title %}Etapa 3 - Iteración 3{% endblock %}
+
+{% block head %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="etapa3-page resultados-etapa3-page">
+
+```
+<div class="side-nav left">
+    <a href="{{ url_for('iteracion1y2') }}" title="Volver a Iteraciones 1 y 2">←</a>
+</div>
+
+<div class="side-nav right">
+    <a href="{{ url_for('comparacion') }}" title="Ver comparación final">→</a>
+</div>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="stage-tag">
+            Etapa 3 · Iteración 3
+        </span>
+
+        <h1>
+            Iteración 3: ajuste y validación final del proceso
+        </h1>
+
+        <p>
+            Tercera ejecución del paquete SSIS después de revisar los
+            hallazgos encontrados durante las primeras iteraciones.
+            Esta fase documenta los cambios realizados y la nueva
+            ejecución del proceso.
+        </p>
+
+    </div>
+
+    <div class="hero-number">
+        06
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            01
+        </span>
+
+        <div>
+
+            <h2>
+                Problemas tomados de las iteraciones anteriores
+            </h2>
+
+            <p>
+                Aspectos utilizados para orientar el ajuste.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-table-wrap">
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+                    <th>Hallazgo</th>
+                    <th>Acción de ajuste</th>
+                    <th>Objetivo</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Etiqueta del umbral de edad no coincidía
+                        con la condición aplicada.
+                    </td>
+
+                    <td>
+                        Revisar y homologar la descripción
+                        del motivo.
+                    </td>
+
+                    <td>
+                        Evitar ambigüedad en la interpretación
+                        de los registros.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Edades vacías sin motivo explícito.
+                    </td>
+
+                    <td>
+                        Incorporar una clasificación específica
+                        para valores faltantes.
+                    </td>
+
+                    <td>
+                        Mejorar la trazabilidad de los registros
+                        enviados a revisión.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Necesidad de comprobar nuevamente
+                        el comportamiento del paquete.
+                    </td>
+
+                    <td>
+                        Ejecutar nuevamente el flujo completo.
+                    </td>
+
+                    <td>
+                        Verificar reproducibilidad después
+                        de los ajustes.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            02
+        </span>
+
+        <div>
+
+            <h2>
+                Cambios aplicados
+            </h2>
+
+            <p>
+                Ajustes incorporados al flujo.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="rules-grid">
+
+        <div class="rule-card indigo">
+
+            <span class="rule-code">
+                REGLA 01
+            </span>
+
+            <h3>
+                Motivos explícitos
+            </h3>
+
+            <p>
+                Los registros enviados a revisión deben conservar
+                una causa identificable.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card plum">
+
+            <span class="rule-code">
+                REGLA 02
+            </span>
+
+            <h3>
+                Umbral documentado
+            </h3>
+
+            <p>
+                La descripción del criterio debe coincidir con
+                la condición realmente aplicada.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card gold">
+
+            <span class="rule-code">
+                REGLA 03
+            </span>
+
+            <h3>
+                Trazabilidad
+            </h3>
+
+            <p>
+                Los registros rechazados o enviados a revisión
+                conservan la información necesaria para analizarlos.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card teal">
+
+            <span class="rule-code">
+                REGLA 04
+            </span>
+
+            <h3>
+                Reejecución
+            </h3>
+
+            <p>
+                El paquete vuelve a ejecutarse desde un estado
+                limpio para comprobar el resultado.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            03
+        </span>
+
+        <div>
+
+            <h2>
+                Flujo de la Iteración 3
+            </h2>
+
+            <p>
+                Secuencia utilizada para la nueva ejecución.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="component-flow">
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                01
+            </span>
+
+            <strong>
+                Truncar
+            </strong>
+
+            <small>
+                Limpieza de las tablas.
+            </small>
+
+        </div>
+
+        <div class="component-arrow">
+            →
+        </div>
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                02
+            </span>
+
+            <strong>
+                Staging
+            </strong>
+
+            <small>
+                Carga de las fuentes.
+            </small>
+
+        </div>
+
+        <div class="component-arrow">
+            →
+        </div>
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                03
+            </span>
+
+            <strong>
+                Transformación
+            </strong>
+
+            <small>
+                Limpieza y validación.
+            </small>
+
+        </div>
+
+        <div class="component-arrow">
+            →
+        </div>
+
+        <div class="component-node">
+
+            <span class="component-tag">
+                04
+            </span>
+
+            <strong>
+                Resultado
+            </strong>
+
+            <small>
+                Carga de las tablas finales.
+            </small>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            04
+        </span>
+
+        <div>
+
+            <h2>
+                Evidencia de la tercera ejecución
+            </h2>
+
+            <p>
+                Capturas asociadas a la ejecución final.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-evidence-grid">
+
+        <figure class="results-evidence">
+
+            <img
+                src="{{ url_for('static', filename='img/etapa3/iteracion3/flujo_control.jpg') }}"
+                alt="Control Flow de la Iteración 3"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Control Flow utilizado durante la tercera ejecución.
+            </figcaption>
+
+        </figure>
+
+
+        <figure class="results-evidence">
+
+            <img
+                src="{{ url_for('static', filename='img/etapa3/iteracion3/flujo_datos.jpg') }}"
+                alt="Data Flow de la Iteración 3"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Data Flow de transformación y carga.
+            </figcaption>
+
+        </figure>
+
+
+        <figure class="results-evidence">
+
+            <img
+                src="{{ url_for('static', filename='img/etapa3/iteracion3/progreso_ejecucion_3.jpg') }}"
+                alt="Progreso de la tercera ejecución"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Evidencia del progreso de la ejecución.
+            </figcaption>
+
+        </figure>
+
+    </div>
+
+</section>
+
+
+<section class="result-box">
+
+    <div class="result-icon">
+        ✓
+    </div>
+
+    <div>
+
+        <h3>
+            Resultado de la Iteración 3
+        </h3>
+
+        <p>
+
+            La tercera iteración representa la ejecución del proceso
+            después de revisar los hallazgos obtenidos previamente.
+            Su propósito es documentar los ajustes realizados,
+            verificar nuevamente el flujo y disponer de una ejecución
+            final para compararla con las iteraciones anteriores.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<div class="etapa-nav">
+
+    <a
+        href="{{ url_for('iteracion1y2') }}"
+        class="nav-btn previous"
+    >
+        ← Iteraciones 1 y 2
+    </a>
+
+    <div class="nav-center">
+
+        <strong>
+            Iteración 3
+        </strong>
+
+        6 de 8
+
+    </div>
+
+    <a
+        href="{{ url_for('comparacion') }}"
+        class="nav-btn next"
+    >
+        Comparación →
+    </a>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

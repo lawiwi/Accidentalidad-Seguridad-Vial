@@ -1,0 +1,175 @@
+/* =========================================================
+   PÁGINA DE INICIO
+   ========================================================= */
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+  min-height:
+    calc(100vh - var(--header-height));
+
+  padding:
+    clamp(90px, 18vh, 190px)
+    12vw
+    60px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: space-between;
+
+  gap: 40px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(8, 43, 59, 0.48),
+      rgba(8, 43, 59, 0.06)
+    );
+}
+
+
+.hero-copy {
+  max-width: 840px;
+}
+
+
+.eyebrow {
+  margin: 0 0 22px;
+
+  color: var(--lime);
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+
+.hero h1 {
+  margin: 0;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size:
+    clamp(3.5rem, 7vw, 6.8rem);
+
+  line-height: 0.98;
+
+  font-weight: 500;
+
+  letter-spacing: -0.04em;
+}
+
+
+.hero-copy p {
+  max-width: 540px;
+
+  margin: 30px 0 0;
+
+  color:
+    rgba(255, 255, 255, 0.9);
+
+  font-size: 1.05rem;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   ACCIONES
+   ========================================================= */
+
+.quick-actions {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-top: 34px;
+}
+
+
+.quick-actions a {
+  padding: 13px 20px;
+
+  color: var(--navy);
+
+  background: var(--lime);
+
+  border:
+    1px solid var(--lime);
+
+  text-decoration: none;
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 0.86rem;
+
+  font-weight: 700;
+}
+
+
+.quick-actions a.secondary {
+  color: var(--white);
+
+  background: transparent;
+
+  border-color:
+    rgba(255, 255, 255, 0.75);
+}
+
+
+/* =========================================================
+   MENSAJES
+   ========================================================= */
+
+.welcome {
+  margin: 0;
+
+  color: var(--lime);
+
+  font-size: 0.95rem;
+
+  font-weight: 600;
+}
+
+
+.construction {
+  color:
+    rgba(255, 255, 255, 0.72);
+
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 560px) {
+
+  .hero {
+    padding:
+      90px
+      7vw
+      42px;
+  }
+
+  .hero h1 {
+    font-size:
+      clamp(3.1rem, 15vw, 5rem);
+  }
+
+  .hero-copy p {
+    font-size: 0.95rem;
+  }
+}
