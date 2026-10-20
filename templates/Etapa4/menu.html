@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Etapa 4 - Estructura de Trabajo{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="stage4-page">
+  <header class="stage4-header">
+    <span class="stage4-tag">Fase de Desarrollo</span>
+    <h1>Etapa <span>4</span></h1>
+    <div class="stage4-divider"></div>
+    <p>
+      Esta etapa prepara la estructura general del trabajo colaborativo para la actividad académica.
+      Cada integrante tendrá su propia vista de trabajo, de forma independiente y con navegación clara hacia la página principal.
+    </p>
+    <div class="stage4-meta">
+      <span class="stage4-chip">👥 4 integrantes</span>
+      <span class="stage4-chip">🧩 Estructura base</span>
+      <span class="stage4-chip">📁 Trabajo modular</span>
+    </div>
+  </header>
+
+  <div class="stage4-menu">
+    <a href="/Etapa4/integrante1" class="stage4-card">
+      <div class="stage4-card-header">
+        <span class="stage4-card-badge">1</span>
+        <span class="stage4-card-title">Integrante 1</span>
+      </div>
+      <p>Vista de trabajo correspondiente a la primera parte de la actividad.</p>
+    </a>
+
+    <a href="/Etapa4/integrante2" class="stage4-card">
+      <div class="stage4-card-header">
+        <span class="stage4-card-badge">2</span>
+        <span class="stage4-card-title">Integrante 2</span>
+      </div>
+      <p>Vista de trabajo correspondiente a la segunda parte de la actividad.</p>
+    </a>
+
+    <a href="/Etapa4/integrante3" class="stage4-card">
+      <div class="stage4-card-header">
+        <span class="stage4-card-badge">3</span>
+        <span class="stage4-card-title">Integrante 3</span>
+      </div>
+      <p>Vista de trabajo correspondiente a la tercera parte de la actividad.</p>
+    </a>
+
+    <a href="/Etapa4/integrante4" class="stage4-card">
+      <div class="stage4-card-header">
+        <span class="stage4-card-badge">4</span>
+        <span class="stage4-card-title">Integrante 4</span>
+      </div>
+      <p>Vista de trabajo correspondiente a la cuarta parte de la actividad.</p>
+    </a>
+  </div>
+
+  <div class="stage4-actions">
+    <a href="/" class="stage4-button">← Volver al menú principal</a>
+  </div>
+</div>
+{% endblock %}

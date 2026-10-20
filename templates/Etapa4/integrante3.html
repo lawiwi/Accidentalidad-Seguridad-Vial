@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Etapa 4 - Integrante 3{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="stage4-page">
+  <header class="stage4-header">
+    <span class="stage4-tag">Etapa 4 · Integrante 3</span>
+    <h1>Integrante <span>3</span></h1>
+    <div class="stage4-divider"></div>
+    <p>
+      Esta vista corresponde a la tercera parte de la actividad de la Etapa 4.
+      Queda preparada para recibir el contenido específico del integrante 3, de forma aislada y ordenada.
+    </p>
+    <div class="stage4-meta">
+      <span class="stage4-chip">🧩 Espacio de trabajo</span>
+      <span class="stage4-chip">📁 Plantilla independiente</span>
+    </div>
+  </header>
+
+  <section class="stage4-card detail-card" style="--stage4-accent: #D9A441;">
+    <h2>Sección en preparación</h2>
+    <p>
+      La estructura permite que el integrante 3 trabaje de manera independiente, reduciendo conflictos y manteniendo la coherencia visual y operativa del proyecto.
+    </p>
+    <ul class="stage4-list">
+      <li>Partes del trabajo asignadas al integrante 3.</li>
+      <li>Contenido visual y textual reservado.</li>
+      <li>Archivos propios para la futura implementación.</li>
+      <li>Navegación de retorno a la vista principal de la Etapa 4.</li>
+    </ul>
+  </section>
+
+  <div class="stage4-actions">
+    <a href="/Etapa4" class="stage4-button">← Volver a la Etapa 4</a>
+  </div>
+</div>
+{% endblock %}

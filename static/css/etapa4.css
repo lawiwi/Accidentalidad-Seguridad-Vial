@@ -1,0 +1,272 @@
+:root {
+  --stage4-navy: #232A54;
+  --stage4-ink: #2A2A38;
+  --stage4-mist: #F6F4FA;
+  --stage4-plum: #8C4E7E;
+  --stage4-gold: #D9A441;
+  --stage4-teal: #2E9C93;
+  --stage4-shadow: rgba(23, 27, 59, 0.18);
+}
+
+.stage4-page {
+  width: min(1100px, 90%);
+  margin: 50px auto 60px;
+}
+
+.stage4-header {
+  position: relative;
+  overflow: hidden;
+  padding: 44px 40px 38px;
+  border-radius: 28px;
+  text-align: center;
+  color: #fff;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(135deg, var(--stage4-navy) 0%, #171b3b 55%, var(--stage4-plum) 130%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 20px 45px rgba(23, 27, 59, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.stage4-header::after,
+.stage4-header::before {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.stage4-header::after {
+  width: 260px;
+  height: 260px;
+  right: -70px;
+  top: -100px;
+  background: radial-gradient(circle, rgba(217, 164, 65, 0.30), transparent 70%);
+}
+
+.stage4-header::before {
+  width: 200px;
+  height: 200px;
+  left: -55px;
+  bottom: -70px;
+  background: radial-gradient(circle, rgba(46, 156, 147, 0.24), transparent 70%);
+}
+
+.stage4-tag {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 5px 16px 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.10);
+  color: var(--stage4-gold);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.stage4-tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--stage4-gold);
+  box-shadow: 0 0 8px 1px rgba(217, 164, 65, 0.8);
+}
+
+.stage4-header h1 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 6px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+  letter-spacing: -0.6px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.stage4-header h1 span {
+  color: var(--stage4-gold);
+}
+
+.stage4-divider {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 3px;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--stage4-gold), var(--stage4-teal));
+}
+
+.stage4-header p {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.stage4-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.stage4-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.stage4-menu {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.stage4-card {
+  display: block;
+  padding: 22px 22px 18px;
+  border-radius: 22px;
+  text-decoration: none;
+  color: var(--stage4-ink);
+  background: #fff;
+  border: 1.5px solid rgba(35, 42, 84, 0.06);
+  border-top: 4px solid var(--stage4-accent, var(--stage4-teal));
+  box-shadow: 0 8px 22px rgba(35, 42, 84, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.25s ease;
+}
+
+.stage4-card:hover,
+.stage4-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(35, 42, 84, 0.18);
+  background: linear-gradient(180deg, #ffffff 0%, color-mix(in srgb, var(--stage4-accent, var(--stage4-teal)) 6%, #ffffff) 100%);
+  outline: none;
+}
+
+.stage4-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.stage4-card-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--stage4-accent, var(--stage4-teal)) 18%, white);
+  color: var(--stage4-navy);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+.stage4-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--stage4-ink);
+}
+
+.stage4-card p {
+  margin: 0;
+  color: rgba(42, 42, 56, 0.78);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.stage4-card:nth-child(1) { --stage4-accent: var(--stage4-teal); }
+.stage4-card:nth-child(2) { --stage4-accent: var(--stage4-plum); }
+.stage4-card:nth-child(3) { --stage4-accent: var(--stage4-gold); }
+.stage4-card:nth-child(4) { --stage4-accent: var(--stage4-navy); }
+
+.detail-card {
+  margin-top: 28px;
+  border-top-width: 4px;
+  border-top-color: var(--stage4-accent, var(--stage4-teal));
+}
+
+.detail-card h2 {
+  margin: 0 0 14px;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  color: var(--stage4-navy);
+}
+
+.detail-card p,
+.detail-card li {
+  color: rgba(42, 42, 56, 0.85);
+  line-height: 1.7;
+}
+
+.stage4-list {
+  margin: 18px 0 0;
+  padding-left: 18px;
+}
+
+.stage4-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.stage4-button,
+.stage4-button:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(35, 42, 84, 0.1);
+  color: var(--stage4-navy);
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.stage4-button:hover,
+.stage4-button:focus-visible {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--stage4-navy) 0%, var(--stage4-plum) 100%);
+  color: #fff;
+  outline: none;
+}
+
+@media (max-width: 680px) {
+  .stage4-menu {
+    grid-template-columns: 1fr;
+  }
+
+  .stage4-header {
+    padding: 32px 22px 30px;
+  }
+
+  .stage4-header p {
+    font-size: 0.88rem;
+  }
+}
