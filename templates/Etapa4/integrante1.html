@@ -5,14 +5,12 @@
 {#
   =====================================================================
   URL DEL INFORME DE POWER BI
-  Pega aquí el enlace de inserción que te da Power BI Service
-  (Archivo > Insertar informe > Publicar en la web  o  Sitio web o portal).
+  Pega aquí el enlace de «Publicar en la web» (https://app.powerbi.com/view?r=...).
   Si lo dejas vacío, la página muestra un aviso en lugar del iframe.
   =====================================================================
 #}
-{% set powerbi_embed_url = "" %}
-{% set powerbi_link_url = "" %}
-
+{% set powerbi_embed_url = "https://app.powerbi.com/view?r=eyJrIjoiOGQzYjAyNTEtODc0Yi00OTM2LTlhMDMtODg0ZWY4Nzk5ODllIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" %}
+{% set powerbi_link_url = "https://app.powerbi.com/view?r=eyJrIjoiOGQzYjAyNTEtODc0Yi00OTM2LTlhMDMtODg0ZWY4Nzk5ODllIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" %}
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4_pregunta1.css') }}">
@@ -27,125 +25,54 @@
     <h1>Composición y <span>distribución</span> de la población</h1>
     <div class="stage4-divider"></div>
     <p>
-      Antes de comparar territorios, periodos o perfiles, conviene saber de qué está hecha la población que
-      se analiza. Esta sección describe qué tipos de vehículos, qué marcas y qué antigüedades aparecen con
-      mayor y menor frecuencia entre los vehículos involucrados en accidentes de tránsito con heridos o muertos.
+      ¿Qué tipos de vehículos, marcas y antigüedades predominan entre los vehículos involucrados en
+      accidentes de tránsito con heridos o muertos?
     </p>
     <div class="stage4-meta">
-      <span class="stage4-chip">📅 Enero 2022 – Febrero 2026</span>
-      <span class="stage4-chip">🚗 406.540 vehículos involucrados</span>
-      <span class="stage4-chip">🗂️ Fuente: Datos Abiertos Colombia</span>
+      <span class="stage4-chip">📅 Ene 2022 – Feb 2026</span>
+      <span class="stage4-chip">🚗 406.540 vehículos</span>
+      <span class="stage4-chip">🗂️ Datos Abiertos Colombia</span>
     </div>
   </header>
-
-  <!-- ============ CONTEXTO DE LOS DATOS ============ -->
-  <section class="stage4-card detail-card q1-section" style="--stage4-accent: #2E9C93;">
-    <h2>Datos sobre los que se trabaja</h2>
-    <div class="q1-grid-2">
-      <div>
-        <h3 class="q1-h3">Fuente y periodo</h3>
-        <p>
-          Conjunto <em>Vehículos involucrados en un accidente de tránsito</em> (datos.gov.co, identificador
-          <code>6jmc-vaxk</code>), cargado en la base <code>IntegracionSiniestrosVehiculos</code> mediante el
-          proceso ETL de la Etapa 3. La fecha del accidente viene registrada por mes, desde enero de 2022 hasta
-          febrero de 2026.
-        </p>
-        <h3 class="q1-h3">Tratamiento aplicado</h3>
-        <p>
-          En la Etapa 3 se normalizaron marcas, tipos de vehículo, departamentos y municipios; se convirtieron
-          los textos a tipos numéricos y de fecha; se validó el año del modelo y se separaron en tablas de
-          revisión los registros que no cumplían las reglas. Quedaron <strong>406.540 registros</strong>
-          disponibles en la tabla <code>Vehiculo</code>.
-        </p>
-      </div>
-      <div>
-        <h3 class="q1-h3">Unidad de análisis</h3>
-        <p>
-          Cada registro representa <strong>un vehículo involucrado en un accidente</strong>. No es un accidente
-          (un mismo accidente puede tener varios vehículos) ni un vehículo único: el conjunto no trae placa, así
-          que un mismo carro que tuvo dos accidentes aparece dos veces.
-        </p>
-        <h3 class="q1-h3">Problemas de calidad que siguen presentes</h3>
-        <ul class="stage4-list q1-list-tight">
-          <li>147.580 filas son idénticas en todas sus columnas. Se conservaron porque, con la fecha a nivel de mes y sin placa, dos motos iguales accidentadas en el mismo municipio y mes pueden ser vehículos distintos.</li>
-          <li>La edad que trae la fuente se calculó frente a 2026 y no frente a la fecha del accidente; por eso se recalculó (ver variables).</li>
-          <li>44 registros sin marca y 78 sin edad original; se muestran como «Sin dato», no como cero.</li>
-          <li>2025 tiene cerca de la mitad de registros que 2024 y 2026 solo cubre enero y parte de febrero: probable cambio de cobertura en el reporte.</li>
-          <li>Julio de 2024 es un valor inusual: Antioquia registra 23.553 vehículos ese mes, frente a unos 3.200 en junio. Se revisó y se conservó (no se pudo confirmar que fuera un error), pero quitarlo apenas mueve la participación de motos de 56,4 % a 57,2 %.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
 
   <!-- ============ PREGUNTA ============ -->
   <section class="q1-question">
     <span class="q1-question-label">Pregunta de análisis 1</span>
     <p>
-      ¿Cómo se compone la población de vehículos involucrados en accidentes de tránsito con víctimas en
-      Colombia entre 2022 y 2026, según tipo de vehículo, marca y antigüedad al momento del accidente, y qué
-      grupos resultan predominantes y cuáles minoritarios?
+      ¿Cómo se compone la población de vehículos involucrados en accidentes con víctimas en Colombia
+      (2022–2026) según tipo, marca y antigüedad, y qué grupos son predominantes y minoritarios?
     </p>
-  </section>
-
-  <!-- ============ VARIABLES ============ -->
-  <section class="stage4-card detail-card q1-section" style="--stage4-accent: #8C4E7E;">
-    <h2>Variables utilizadas</h2>
-    <div class="q1-table-wrap">
-      <table class="q1-table">
-        <thead>
-          <tr><th>Variable</th><th>Tabla del modelo</th><th>Tipo</th><th>Uso en el tablero</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Tipo de vehículo</td><td><code>TipoVehiculo[NombreTipoVehiculo]</code></td><td>Categórica (28 tipos)</td><td>Composición por tipo; los tipos con menos de 1.000 registros se agrupan en «Otros».</td></tr>
-          <tr><td>Marca</td><td><code>Marca[NombreMarca]</code></td><td>Categórica (360 marcas)</td><td>Concentración de marcas (las 10 principales).</td></tr>
-          <tr><td>Año del modelo</td><td><code>Vehiculo[AnioModelo]</code></td><td>Numérica</td><td>Base para calcular la edad.</td></tr>
-          <tr><td>Edad al accidente</td><td><code>Vehiculo[Edad al Accidente]</code> (columna calculada)</td><td>Numérica, en años</td><td>Año del accidente − año del modelo; los modelos del año siguiente quedan en 0.</td></tr>
-          <tr><td>Rango de edad</td><td><code>Vehiculo[Rango Edad]</code> (columna calculada)</td><td>Ordinal</td><td>Distribución por grupos de antigüedad.</td></tr>
-          <tr><td>Gravedad del accidente</td><td><code>GravedadAccidente[NombreGravedad]</code></td><td>Categórica (con heridos / con muertos)</td><td>Segmentador.</td></tr>
-          <tr><td>Año del accidente</td><td><code>Fecha[Anio]</code></td><td>Temporal</td><td>Segmentador.</td></tr>
-        </tbody>
-      </table>
-    </div>
   </section>
 
   <!-- ============ INDICADORES ============ -->
   <section class="q1-section">
-    <h2 class="q1-title-out">Indicadores principales <small>(conjunto completo, sin filtros)</small></h2>
     <div class="q1-kpis">
       <article class="q1-kpi" style="--kpi: #232A54;">
         <span class="q1-kpi-label">Vehículos involucrados</span>
         <strong class="q1-kpi-value">406.540</strong>
-        <span class="q1-kpi-note">Registros de vehículo en accidentes con víctimas</span>
       </article>
       <article class="q1-kpi" style="--kpi: #2E9C93;">
-        <span class="q1-kpi-label">Participación de motocicletas</span>
+        <span class="q1-kpi-label">Motocicletas</span>
         <strong class="q1-kpi-value">56,4 %</strong>
-        <span class="q1-kpi-note">229.212 de 406.540 vehículos</span>
       </article>
       <article class="q1-kpi" style="--kpi: #D9A441;">
-        <span class="q1-kpi-label">Edad mediana al accidente</span>
+        <span class="q1-kpi-label">Edad mediana</span>
         <strong class="q1-kpi-value">6 años</strong>
-        <span class="q1-kpi-note">La mitad de los vehículos tenía 6 años o menos</span>
       </article>
       <article class="q1-kpi" style="--kpi: #8C4E7E;">
-        <span class="q1-kpi-label">Concentración en 10 marcas</span>
+        <span class="q1-kpi-label">En 10 marcas</span>
         <strong class="q1-kpi-value">73,8 %</strong>
-        <span class="q1-kpi-note">De 360 marcas registradas</span>
       </article>
     </div>
-    <p class="q1-footnote">
-      Denominador de todos los porcentajes: total de vehículos involucrados con los filtros seleccionados
-      (sin filtros, 406.540). En el tablero interactivo estos valores cambian con los segmentadores de año y gravedad.
-    </p>
+    <p class="q1-footnote">Conjunto completo, sin filtros. Porcentajes sobre el total de vehículos involucrados.</p>
   </section>
 
   <!-- ============ POWER BI ============ -->
   <section class="stage4-card detail-card q1-section" style="--stage4-accent: #D9A441;">
-    <h2>Tablero interactivo en Power BI</h2>
+    <h2>Tablero interactivo</h2>
     <p>
-      El tablero incluye los indicadores, las tres visualizaciones y dos segmentadores (año del accidente y
-      gravedad). Al cambiar un filtro se actualizan los indicadores, los gráficos y el texto interpretativo
-      dinámico.
+      Filtra por <strong>año</strong> y <strong>gravedad</strong>: cambian los indicadores, los gráficos y el texto
+      dinámico. Al final del tablero están los tres conocimientos evidentes completos.
     </p>
     {% if powerbi_embed_url %}
       <div class="q1-embed">
@@ -163,118 +90,98 @@
       <p class="q1-link-row">
         <a class="stage4-button" href="{{ powerbi_link_url }}" target="_blank" rel="noopener">Abrir el informe en Power BI ↗</a>
       </p>
-      <p class="q1-footnote">
-        Si el informe pide iniciar sesión, use una cuenta institucional con acceso al área de trabajo del equipo.
-        Dentro del informe, la pregunta 1 está en la página «1 · Composición».
-      </p>
     {% endif %}
   </section>
 
-  <!-- ============ VISUALIZACIONES ============ -->
+  <!-- ============ HALLAZGOS ============ -->
   <section class="q1-section">
-    <h2 class="q1-title-out">Visualizaciones e interpretación</h2>
+    <h2 class="q1-title-out">Lo que muestran los datos</h2>
     <div class="q1-viz-grid">
       <article class="q1-viz">
-        <span class="q1-viz-num">V1</span>
-        <h3>Vehículos por tipo</h3>
-        <p class="q1-viz-kind">Barras horizontales · cantidad y % del total</p>
+        <span class="q1-viz-num">1</span>
+        <h3>La moto predomina</h3>
         <p>
-          La motocicleta domina con 56,4 %, seguida del automóvil (22,7 %) y la camioneta (8,4 %). Entre las
-          dos primeras suman el 79,1 % de la población. Los 18 tipos con menos de 1.000 registros, en su mayoría
-          maquinaria, apenas alcanzan el 0,28 % y se agrupan como «Otros».
+          <strong>56,4 %</strong> son motocicletas; con los automóviles (22,7 %) suman el 79,1 %.
+          Se mantuvo entre 54,9 % y 58,0 % cada año.
         </p>
       </article>
       <article class="q1-viz">
-        <span class="q1-viz-num">V2</span>
-        <h3>Diez marcas con más vehículos</h3>
-        <p class="q1-viz-kind">Barras · filtro N superior = 10</p>
+        <span class="q1-viz-num">2</span>
+        <h3>Pocas marcas concentran</h3>
         <p>
-          Bajaj (13,0 %), Yamaha (12,6 %) y Chevrolet (11,4 %) encabezan la lista. Cinco marcas reúnen la mitad
-          de los vehículos (51,1 %) y diez llegan al 73,8 %, mientras 280 de las 360 marcas tienen menos de
-          100 registros cada una.
+          De 360 marcas, <strong>10 reúnen el 73,8 %</strong>. Lideran Bajaj, Yamaha y Chevrolet;
+          tres de las cinco primeras son de motos.
         </p>
       </article>
       <article class="q1-viz">
-        <span class="q1-viz-num">V3</span>
-        <h3>Distribución por rango de edad</h3>
-        <p class="q1-viz-kind">Columnas · edad al momento del accidente</p>
+        <span class="q1-viz-num">3</span>
+        <h3>Vehículos jóvenes</h3>
         <p>
-          El grupo más numeroso es el de 0 a 2 años (29,2 %), seguido del de 6 a 10 años (25,5 %). El 46,2 % de los
-          vehículos tenía 5 años o menos y solo el 12,0 % superaba los 15. Las motocicletas son claramente más
-          jóvenes (mediana de 4 años) que los automóviles (mediana de 10).
+          Edad mediana de <strong>6 años</strong>; el 46,2 % tenía 5 años o menos.
+          Motos: mediana de 4 años; automóviles: 10.
         </p>
       </article>
     </div>
-    <p class="q1-footnote">Las interpretaciones de esta página describen el conjunto completo (enero 2022 – febrero 2026, ambas gravedades).</p>
-  </section>
-
-  <!-- ============ CONOCIMIENTOS EVIDENTES ============ -->
-  <section class="q1-section">
-    <h2 class="q1-title-out">Conocimientos evidentes</h2>
-
-    <article class="q1-know" style="--know: #2E9C93;">
-      <header><span>C1</span><h3>La motocicleta es el vehículo predominante en la accidentalidad con víctimas</h3></header>
-      <dl>
-        <dt>Pregunta</dt><dd>¿Qué tipos de vehículo concentran la población involucrada en accidentes y cuáles son minoritarios?</dd>
-        <dt>Variables</dt><dd>Tipo de vehículo; total de vehículos involucrados.</dd>
-        <dt>Procedimiento</dt><dd>Conteo de registros de la tabla <code>Vehiculo</code> agrupados por tipo y división entre el total de vehículos (406.540). Los tipos con menos de 1.000 registros se agruparon en «Otros».</dd>
-        <dt>Evidencia</dt><dd>Indicador «% Motocicletas» y visualización V1.</dd>
-        <dt>Hallazgo</dt><dd>229.212 motocicletas (56,4 %) frente a 92.166 automóviles (22,7 %) y 34.270 camionetas (8,4 %). Motos y automóviles suman el 79,1 %. Los 18 tipos minoritarios suman 1.135 vehículos (0,28 %).</dd>
-        <dt>Interpretación</dt><dd>Más de la mitad de los vehículos que terminan en un accidente con heridos o muertos son motos. Es un patrón estable: en cada año completo su participación se mantuvo entre 54,9 % y 58,0 %.</dd>
-        <dt>Utilidad</dt><dd>Orienta hacia el motociclista las campañas de prevención, los controles en vía y los contenidos de formación de conductores.</dd>
-        <dt>Limitación</dt><dd>No permite afirmar que la moto sea más riesgosa por vehículo, porque falta el tamaño del parque automotor (RUNT) como denominador de exposición.</dd>
-      </dl>
-    </article>
-
-    <article class="q1-know" style="--know: #8C4E7E;">
-      <header><span>C2</span><h3>Pocas marcas concentran la mayor parte de la población</h3></header>
-      <dl>
-        <dt>Pregunta</dt><dd>¿La población se reparte entre muchas marcas o se concentra en unas pocas?</dd>
-        <dt>Variables</dt><dd>Marca; total de vehículos involucrados.</dd>
-        <dt>Procedimiento</dt><dd>Conteo por marca, ordenado de mayor a menor; se calculó la participación acumulada de las 5 y las 10 primeras sobre el total de vehículos. Los 44 registros sin marca se contaron aparte.</dd>
-        <dt>Evidencia</dt><dd>Indicador «% Top 10 Marcas» y visualización V2.</dd>
-        <dt>Hallazgo</dt><dd>De 360 marcas, Bajaj (53.036; 13,0 %), Yamaha (51.091; 12,6 %) y Chevrolet (46.343; 11,4 %) lideran. Las 5 primeras suman el 51,1 % y las 10 primeras el 73,8 %; 280 marcas tienen menos de 100 registros.</dd>
-        <dt>Interpretación</dt><dd>La concentración refleja la composición por tipo: tres de las cinco marcas principales (Bajaj, Yamaha y AKT, 33,4 % entre ellas) son de motocicletas de bajo cilindraje, muy comunes en el país.</dd>
-        <dt>Utilidad</dt><dd>Identifica con qué fabricantes y concesionarios vale la pena coordinar campañas de entrega segura y formación al comprador.</dd>
-        <dt>Limitación</dt><dd>Una marca con más registros no es necesariamente menos segura; probablemente solo tiene más unidades circulando. Esta explicación es una hipótesis que no se puede comprobar con estos datos.</dd>
-      </dl>
-    </article>
-
-    <article class="q1-know" style="--know: #D9A441;">
-      <header><span>C3</span><h3>Los vehículos involucrados son mayoritariamente jóvenes</h3></header>
-      <dl>
-        <dt>Pregunta</dt><dd>¿Cómo se distribuye la antigüedad de los vehículos al momento del accidente?</dd>
-        <dt>Variables</dt><dd>Año del modelo; año del accidente; edad al accidente (calculada); rango de edad; tipo de vehículo.</dd>
-        <dt>Procedimiento</dt><dd>Se recalculó la edad como año del accidente menos año del modelo, porque la edad de la fuente estaba referida a 2026. Luego se agrupó en seis rangos y se obtuvo la mediana general y por tipo.</dd>
-        <dt>Evidencia</dt><dd>Indicador «Edad mediana al accidente» y visualización V3.</dd>
-        <dt>Hallazgo</dt><dd>La mediana es de 6 años. El 46,2 % tenía 5 años o menos y solo el 12,0 % superaba los 15. La mediana es de 4 años para motos y de 10 para automóviles; el 59,5 % de las motos tenía 5 años o menos.</dd>
-        <dt>Interpretación</dt><dd>La antigüedad no parece ser el rasgo dominante de esta población: predominan vehículos relativamente nuevos, sobre todo motos, lo que sugiere conductores con poco tiempo en ese vehículo (hipótesis).</dd>
-        <dt>Utilidad</dt><dd>Respalda reforzar la formación en el momento de la compra y la entrega del vehículo, más que centrar las medidas solo en la revisión técnico-mecánica de vehículos viejos.</dd>
-        <dt>Limitación</dt><dd>La fecha viene por mes y el año del modelo puede ser posterior al de fabricación, así que la edad es aproximada. Los 3.077 vehículos de más de 40 años se revisaron y se conservaron, porque pueden ser vehículos antiguos reales.</dd>
-      </dl>
-    </article>
   </section>
 
   <!-- ============ LIMITACIÓN Y DECISIÓN ============ -->
   <section class="q1-grid-2 q1-section">
     <article class="stage4-card detail-card q1-callout" style="--stage4-accent: #8C4E7E;">
-      <h2>Limitación del análisis</h2>
+      <h2>Limitación</h2>
       <p>
-        Los porcentajes describen la composición de los vehículos accidentados, no el riesgo. Sin el número de
-        vehículos en circulación de cada tipo, marca o edad no se puede calcular una tasa de accidentalidad,
-        y cualquier comparación de «peligrosidad» queda fuera de lo que estos datos permiten afirmar. Además,
-        la menor cantidad de registros en 2025 y 2026 obliga a leer con cautela cualquier filtro sobre esos años.
+        Los porcentajes describen <strong>quiénes</strong> se accidentan, no el <strong>riesgo</strong>: sin el
+        parque automotor no se pueden calcular tasas. 2025 y 2026 tienen menos registros.
       </p>
     </article>
     <article class="stage4-card detail-card q1-callout" style="--stage4-accent: #2E9C93;">
-      <h2>Decisión sustentada en los datos</h2>
+      <h2>Decisión</h2>
       <p>
-        Priorizar a los motociclistas y a los vehículos de hasta 5 años en los programas de prevención. Por
-        ejemplo, con un módulo obligatorio de conducción segura al momento de la venta, coordinado con las
-        marcas que concentran la mayor parte de la población (Bajaj, Yamaha, AKT y Honda), y medir su efecto
-        comparando la participación de motos en los años siguientes.
+        Priorizar a motociclistas y vehículos de hasta 5 años, con formación en conducción segura al
+        momento de la compra, coordinada con las marcas que concentran la población.
       </p>
     </article>
+  </section>
+
+  <!-- ============ DETALLE TÉCNICO (desplegable) ============ -->
+  <section class="q1-section q1-more">
+    <h2 class="q1-title-out">Detalle técnico</h2>
+
+    <details class="q1-details">
+      <summary>Datos, unidad de análisis y calidad</summary>
+      <ul class="stage4-list q1-list-tight">
+        <li><strong>Fuente:</strong> «Vehículos involucrados en un accidente de tránsito» (datos.gov.co, <code>6jmc-vaxk</code>), procesado con el ETL de la Etapa 3. Fecha registrada por mes.</li>
+        <li><strong>Unidad:</strong> cada registro es un vehículo involucrado en un accidente; no es un accidente ni un vehículo único (no hay placa).</li>
+        <li><strong>Edad:</strong> se recalculó como año del accidente − año del modelo (la de la fuente estaba referida a 2026).</li>
+        <li><strong>Faltantes:</strong> 44 registros sin marca y 78 sin edad original, tratados como «Sin dato».</li>
+        <li><strong>Valores inusuales:</strong> julio de 2024 (Antioquia, 23.553 vehículos) se revisó y conservó; quitarlo solo mueve el % de motos de 56,4 a 57,2.</li>
+        <li><strong>Filas repetidas:</strong> 147.580 se conservaron, porque sin placa y con fecha mensual pueden ser vehículos distintos.</li>
+      </ul>
+    </details>
+
+    <details class="q1-details">
+      <summary>Variables utilizadas</summary>
+      <div class="q1-table-wrap">
+        <table class="q1-table">
+          <thead><tr><th>Variable</th><th>Tipo</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>Tipo de vehículo</td><td>Categórica (28)</td><td>Composición; los de menos de 1.000 registros se agrupan en «Otros».</td></tr>
+            <tr><td>Marca</td><td>Categórica (360)</td><td>Concentración (10 principales).</td></tr>
+            <tr><td>Edad al accidente</td><td>Numérica (años)</td><td>Mediana y rangos de antigüedad.</td></tr>
+            <tr><td>Año y gravedad</td><td>Temporal / categórica</td><td>Filtros del tablero.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="q1-details">
+      <summary>Conocimientos evidentes (resumen)</summary>
+      <ul class="stage4-list q1-list-tight">
+        <li><strong>C1 · Motocicleta:</strong> 56,4 % del total; útil para enfocar campañas en motociclistas. No implica que sea más riesgosa por vehículo.</li>
+        <li><strong>C2 · Marcas:</strong> 5 marcas = 51,1 %, 10 = 73,8 %; útil para coordinar con fabricantes. Más registros no significa menos seguridad (hipótesis: más unidades circulando).</li>
+        <li><strong>C3 · Antigüedad:</strong> mediana de 6 años, 46,2 % con 5 años o menos; útil para formar al comprador. La edad es aproximada (fecha mensual).</li>
+      </ul>
+      <p class="q1-footnote">La versión completa (pregunta, variables, procedimiento, evidencia, hallazgo, interpretación, utilidad y limitación) está en el tablero de Power BI.</p>
+    </details>
   </section>
 
   <div class="stage4-actions">
