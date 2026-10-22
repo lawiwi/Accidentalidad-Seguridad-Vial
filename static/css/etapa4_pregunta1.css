@@ -1,0 +1,280 @@
+/* =========================================================
+   Etapa 4 · Pregunta 1 · Composición y distribución
+   Complementa etapa4.css (usa sus mismas variables de color)
+   ========================================================= */
+
+.q1-section { margin-top: 28px; }
+
+.q1-h3 {
+  margin: 16px 0 6px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  color: var(--stage4-plum);
+}
+.q1-h3:first-child { margin-top: 0; }
+
+.q1-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+.q1-grid-2 > .detail-card { margin-top: 0; }
+
+.q1-list-tight li { margin-bottom: 6px; font-size: 0.92rem; }
+
+.q1-page code {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--stage4-mist);
+  color: var(--stage4-navy);
+  font-size: 0.85em;
+}
+
+/* ---------- Pregunta destacada ---------- */
+.q1-question {
+  margin-top: 28px;
+  padding: 26px 30px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(46, 156, 147, 0.10), rgba(140, 78, 126, 0.10));
+  border: 1.5px dashed rgba(35, 42, 84, 0.22);
+}
+.q1-question-label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--stage4-teal);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+.q1-question p {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.02rem, 1.6vw, 1.22rem);
+  line-height: 1.6;
+  color: var(--stage4-navy);
+}
+
+/* ---------- Tabla de variables ---------- */
+.q1-table-wrap { overflow-x: auto; }
+.q1-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+}
+.q1-table th {
+  padding: 10px 12px;
+  background: var(--stage4-navy);
+  color: #fff;
+  text-align: left;
+  font-weight: 600;
+}
+.q1-table th:first-child { border-top-left-radius: 12px; }
+.q1-table th:last-child  { border-top-right-radius: 12px; }
+.q1-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(35, 42, 84, 0.08);
+  vertical-align: top;
+  color: rgba(42, 42, 56, 0.88);
+}
+.q1-table tbody tr:nth-child(even) td { background: #fbfaff; }
+
+/* ---------- Títulos fuera de tarjeta ---------- */
+.q1-title-out {
+  margin: 0 0 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  color: var(--stage4-navy);
+}
+.q1-title-out small {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(42, 42, 56, 0.6);
+}
+
+/* ---------- KPIs ---------- */
+.q1-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.q1-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px 20px 18px;
+  border-radius: 22px;
+  background: #fff;
+  border-left: 5px solid var(--kpi);
+  box-shadow: 0 8px 22px rgba(35, 42, 84, 0.08);
+}
+.q1-kpi-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: rgba(42, 42, 56, 0.6);
+}
+.q1-kpi-value {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  color: var(--kpi);
+  line-height: 1.15;
+}
+.q1-kpi-note { font-size: 0.82rem; color: rgba(42, 42, 56, 0.72); }
+
+.q1-footnote {
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  color: rgba(42, 42, 56, 0.62);
+  font-style: italic;
+}
+
+/* ---------- Power BI ---------- */
+.q1-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9.6;
+  margin-top: 16px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--stage4-mist);
+  box-shadow: inset 0 0 0 1px rgba(35, 42, 84, 0.08);
+}
+.q1-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.q1-embed-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 34px 24px;
+  border-radius: 18px;
+  text-align: center;
+  background: var(--stage4-mist);
+  border: 1.5px dashed rgba(217, 164, 65, 0.6);
+  color: var(--stage4-navy);
+}
+.q1-link-row { margin: 18px 0 0; text-align: center; }
+
+/* ---------- Visualizaciones ---------- */
+.q1-viz-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.q1-viz {
+  position: relative;
+  padding: 22px 20px 18px;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(35, 42, 84, 0.08);
+}
+.q1-viz-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--stage4-navy), var(--stage4-plum));
+  color: var(--stage4-gold);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.q1-viz h3 {
+  margin: 12px 0 2px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.02rem;
+  color: var(--stage4-navy);
+}
+.q1-viz-kind {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  color: var(--stage4-teal);
+  font-weight: 600;
+}
+.q1-viz p:last-child {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: rgba(42, 42, 56, 0.85);
+}
+
+/* ---------- Conocimientos evidentes ---------- */
+.q1-know {
+  margin-bottom: 20px;
+  padding: 24px 26px;
+  border-radius: 24px;
+  background: #fff;
+  border-top: 4px solid var(--know);
+  box-shadow: 0 8px 22px rgba(35, 42, 84, 0.08);
+}
+.q1-know header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.q1-know header span {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--know) 18%, white);
+  color: var(--stage4-navy);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+.q1-know h3 {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: var(--stage4-navy);
+}
+.q1-know dl {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 10px 18px;
+  margin: 0;
+}
+.q1-know dt {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--know);
+  padding-top: 2px;
+}
+.q1-know dd {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: rgba(42, 42, 56, 0.88);
+}
+
+.q1-callout p { margin: 0; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .q1-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .q1-viz-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .q1-grid-2 { grid-template-columns: 1fr; }
+  .q1-kpis { grid-template-columns: 1fr; }
+  .q1-know dl { grid-template-columns: 1fr; gap: 2px; }
+  .q1-know dd { margin-bottom: 10px; }
+  .q1-embed { aspect-ratio: 3 / 4; }
+}
