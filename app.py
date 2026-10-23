@@ -386,7 +386,11 @@ def Etapa2_conclusiones():
 
 @app.route("/Etapa4")
 def etapa4():
-    return render_template("Etapa4/menu.html")
+    powerbi_url = os.getenv(
+        "POWERBI_REPORT_URL",
+        "https://app.powerbi.com/view?r=eyJrIjoiZTc1MTFjOWUtMmJlMy00Mjg0LThiZjQtMTY4NWE3ZGRjMTc0IiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9",
+    )
+    return render_template("Etapa4/menu.html", powerbi_url=powerbi_url)
 
 
 @app.route("/Etapa4/integrante1")

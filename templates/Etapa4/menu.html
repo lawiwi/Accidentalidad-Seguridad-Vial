@@ -1,64 +1,162 @@
 {% extends 'base.html' %}
 
-{% block title %}Etapa 4 - Estructura de Trabajo{% endblock %}
+{% block title %}Conocimiento evidente - Seguridad Vial{% endblock %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="stage4-page">
+<main class="stage4-page stage4-overview">
   <header class="stage4-header">
-    <span class="stage4-tag">Fase de Desarrollo</span>
-    <h1>Etapa <span>4</span></h1>
+    <span class="stage4-tag">Exploración de datos · Etapa 4</span>
+    <h1>Conocimiento <span>evidente</span></h1>
     <div class="stage4-divider"></div>
     <p>
-      Esta etapa prepara la estructura general del trabajo colaborativo para la actividad académica.
-      Cada integrante tendrá su propia vista de trabajo, de forma independiente y con navegación clara hacia la página principal.
+      Exploramos los datos de accidentalidad vial para reconocer su composición,
+      diferencias territoriales, cambios en el tiempo y patrones entre varias variables.
+      Estas preguntas orientan la lectura de los tableros interactivos de Power BI.
     </p>
     <div class="stage4-meta">
-      <span class="stage4-chip">👥 4 integrantes</span>
-      <span class="stage4-chip">🧩 Estructura base</span>
-      <span class="stage4-chip">📁 Trabajo modular</span>
+      <span class="stage4-chip">Fuente: Datos Abiertos Colombia</span>
+      <span class="stage4-chip">Vehículos: ene. 2022 – feb. 2026</span>
+      <span class="stage4-chip">406.540 registros de vehículos</span>
     </div>
   </header>
 
-  <div class="stage4-menu">
-    <a href="/Etapa4/integrante1" class="stage4-card">
-      <div class="stage4-card-header">
-        <span class="stage4-card-badge">1</span>
-        <span class="stage4-card-title">Composición y distribución</span>
-      </div>
-      <p>¿Qué tipos, marcas y antigüedades predominan entre los vehículos involucrados en accidentes?</p>
-    </a>
+  <section class="stage4-overview-intro" aria-labelledby="overview-context-title">
+    <div>
+      <span class="stage4-overview-eyebrow">Propósito de esta etapa</span>
+      <h2 id="overview-context-title">¿Qué buscamos conocer?</h2>
+      <p>
+        Identificar patrones que ayuden a describir los registros de vehículos y siniestros,
+        comparar grupos y territorios, revisar su comportamiento temporal y observar cómo
+        se combinan variables relevantes para la seguridad vial.
+      </p>
+    </div>
+    <aside class="stage4-unit-note">
+      <h3>Unidad de análisis y alcance</h3>
+      <p>
+        En los análisis de composición y tiempo, cada fila representa un vehículo involucrado,
+        no necesariamente un siniestro único ni una persona. En el análisis territorial,
+        cada fila representa un siniestro registrado. Por ello, los conteos de ambas fuentes
+        no se deben sumar ni interpretar como la misma unidad.
+      </p>
+      <p>
+        Los registros de vehículos cubren enero de 2022 a febrero de 2026; 2026 es parcial.
+        La vista territorial presentada corresponde a enero–agosto de 2019. Las proporciones
+        se calculan sobre el total de registros del periodo y los filtros seleccionados,
+        salvo que el tablero indique otro denominador.
+      </p>
+    </aside>
+  </section>
 
-    <a href="/Etapa4/integrante2" class="stage4-card">
-      <div class="stage4-card-header">
-        <span class="stage4-card-badge">2</span>
-        <span class="stage4-card-title">Integrante 2</span>
-      </div>
-      <p>Vista de trabajo correspondiente a la segunda parte de la actividad.</p>
-    </a>
+  <section class="stage4-overview-questions" aria-labelledby="overview-questions-title">
+    <div class="stage4-overview-heading">
+      <span class="stage4-overview-eyebrow">Preguntas de análisis</span>
+      <h2 id="overview-questions-title">Cuatro perspectivas complementarias</h2>
+    </div>
 
-    <a href="/Etapa4/integrante3" class="stage4-card">
-      <div class="stage4-card-header">
-        <span class="stage4-card-badge">3</span>
-        <span class="stage4-card-title">Dimensión temporal</span>
-      </div>
-      <p>¿Cómo ha evolucionado la cantidad de vehículos involucrados en siniestros viales en Colombia entre 2022 y 2026?</p>
-    </a>
+    <div class="stage4-menu">
+      <article class="stage4-card stage4-question-card">
+        <div class="stage4-card-header">
+          <span class="stage4-card-badge">1</span>
+          <h3 class="stage4-card-title">Composición y distribución de vehículos</h3>
+        </div>
+        <p class="stage4-question">
+          ¿Cómo se compone la población de vehículos involucrados en accidentes con víctimas
+          en Colombia entre 2022 y 2026, según tipo, marca y antigüedad, y qué grupos son
+          predominantes o minoritarios?
+        </p>
+        <p>
+          Compara la participación por tipo y marca, además de la antigüedad de los vehículos.
+          El tablero presenta cantidades, porcentajes y distribución de edades; se puede filtrar
+          por año y gravedad. La unidad es un vehículo involucrado.
+        </p>
+        <p class="stage4-question-meta"><strong>Lectura clave:</strong> los porcentajes describen la composición de los vehículos registrados, no el riesgo de sufrir un accidente.</p>
+      </article>
 
-    <a href="/Etapa4/integrante4" class="stage4-card">
-      <div class="stage4-card-header">
-        <span class="stage4-card-badge">4</span>
-        <span class="stage4-card-title">Integrante 4</span>
-      </div>
-      <p>Vista de trabajo correspondiente a la cuarta parte de la actividad.</p>
-    </a>
-  </div>
+      <article class="stage4-card stage4-question-card">
+        <div class="stage4-card-header">
+          <span class="stage4-card-badge">2</span>
+          <h3 class="stage4-card-title">Diferencias entre territorios</h3>
+        </div>
+        <p class="stage4-question">
+          ¿Qué departamentos concentran más siniestros viales y qué participación representa
+          Bogotá D. C. frente al total nacional y frente a los departamentos con más y menos registros?
+        </p>
+        <p>
+          Compara conteos por departamento y municipio, la participación territorial y la ubicación
+          de los registros en el mapa. El tablero territorial mostrado cubre enero–agosto de 2019;
+          su unidad es el siniestro registrado.
+        </p>
+        <p class="stage4-question-meta"><strong>Lectura clave:</strong> los conteos absolutos reflejan volumen de registros, no tasas ajustadas por población, parque automotor o exposición vial.</p>
+      </article>
+
+      <article class="stage4-card stage4-question-card">
+        <div class="stage4-card-header">
+          <span class="stage4-card-badge">3</span>
+          <h3 class="stage4-card-title">Comportamiento temporal</h3>
+        </div>
+        <p class="stage4-question">
+          ¿Cómo ha evolucionado mensualmente la cantidad de vehículos involucrados en siniestros
+          viales en Colombia entre 2022 y 2026, qué periodos muestran cambios destacados y cómo
+          varía su distribución según la gravedad registrada?
+        </p>
+        <p>
+          Revisa la serie mensual, compara meses equivalentes entre años y observa la distribución
+          porcentual por gravedad. Los filtros disponibles permiten explorar año y departamento.
+          La unidad es un registro de vehículo involucrado.
+        </p>
+        <p class="stage4-question-meta"><strong>Lectura clave:</strong> 2026 es parcial y el pico de julio de 2024 debe validarse como posible anomalía de cobertura o registro antes de interpretarlo.</p>
+      </article>
+
+      <article class="stage4-card stage4-question-card">
+        <div class="stage4-card-header">
+          <span class="stage4-card-badge">4</span>
+          <h3 class="stage4-card-title">Relaciones entre variables y perfiles</h3>
+        </div>
+        <p class="stage4-question">
+          ¿Cómo varía la clasificación del siniestro entre departamentos y municipios, y qué
+          concentraciones geográficas o combinaciones de territorio y tipo de evento se observan?
+        </p>
+        <p>
+          Cruza conjuntamente departamento, municipio, clasificación del siniestro y coordenadas
+          de latitud y longitud; compara los conteos por categoría y revisa su distribución espacial.
+          El conteo resultante se interpreta como siniestros registrados, no como una medida de riesgo.
+        </p>
+        <p class="stage4-question-meta"><strong>Lectura clave:</strong> las asociaciones y concentraciones observadas no demuestran causalidad; los registros sin clasificar y la cobertura territorial limitan la comparación.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="stage4-overview-report" aria-labelledby="overview-report-title">
+    <div class="stage4-overview-heading">
+      <span class="stage4-overview-eyebrow">Exploración interactiva</span>
+      <h2 id="overview-report-title">Informe de Power BI</h2>
+      <p>
+        Usa los segmentadores del informe para explorar los resultados. Si la inserción no se
+        muestra por restricciones de acceso o del navegador, abre la publicación directamente
+        en Power BI.
+      </p>
+    </div>
+    <div class="stage4-report-frame">
+      <iframe
+        title="Informe de conocimiento evidente sobre accidentalidad y seguridad vial"
+        src="{{ powerbi_url }}"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+    <div class="stage4-report-actions">
+      <a class="stage4-button" href="{{ powerbi_url }}" target="_blank" rel="noopener noreferrer">
+        Abrir informe en Power BI <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
 
   <div class="stage4-actions">
     <a href="/" class="stage4-button">← Volver al menú principal</a>
   </div>
-</div>
+</main>
 {% endblock %}
