@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+
+{% block title %}Etapa 4 - Análisis temporal{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="stage4-page stage4-page--temporal">
+  <header class="stage4-header">
+    <span class="stage4-tag">Etapa 4 · Integrante 3</span>
+    <h1>Análisis temporal de los siniestros viales en Colombia</h1>
+    <div class="stage4-divider"></div>
+    <p>
+      Exploración de la evolución mensual de los registros de vehículos involucrados
+      en siniestros viales y de su distribución según la gravedad registrada.
+    </p>
+    <div class="stage4-meta">
+      <span class="stage4-chip">Enero 2022 – febrero 2026</span>
+      <span class="stage4-chip">406.540 registros</span>
+      <span class="stage4-chip">Unidad: vehículo involucrado</span>
+    </div>
+  </header>
+
+  <section class="temporal-panel temporal-question" aria-labelledby="temporal-question-title">
+    <span class="temporal-eyebrow">Objetivo y pregunta de análisis</span>
+    <h2 id="temporal-question-title">
+      ¿Cómo ha evolucionado mensualmente la cantidad de vehículos involucrados en
+      siniestros viales en Colombia entre 2022 y 2026, qué periodos presentan los
+      mayores cambios y cómo varía su distribución según la gravedad de los registros?
+    </h2>
+    <p>
+      Los datos de 2026 son parciales y llegan hasta febrero. Para comparar años,
+      especialmente 2026 con años anteriores, se deben utilizar periodos equivalentes.
+    </p>
+  </section>
+
+  <section class="temporal-panel" aria-labelledby="temporal-source-title">
+    <div class="temporal-section-heading">
+      <span class="temporal-eyebrow">Continuidad metodológica con la Etapa 3</span>
+      <h2 id="temporal-source-title">Fuente de datos y unidad de análisis</h2>
+    </div>
+    <p class="temporal-copy">
+      El análisis de la dimensión temporal se desarrolló a partir de los datos
+      previamente trabajados en la Etapa 3 del proyecto. Se analizaron 406.540
+      registros correspondientes al periodo comprendido entre enero de 2022 y
+      febrero de 2026, con el objetivo de identificar tendencias, variaciones y
+      concentraciones temporales en los registros de vehículos involucrados en
+      siniestros viales.
+    </p>
+    <dl class="temporal-facts">
+      <div>
+        <dt>Periodo analizado</dt>
+        <dd>Enero de 2022 a febrero de 2026</dd>
+      </div>
+      <div>
+        <dt>Fecha principal</dt>
+        <dd>FechaAccidente</dd>
+      </div>
+      <div>
+        <dt>Variables utilizadas</dt>
+        <dd>Año, Mes, AñoMes, GravedadAccidente y Departamento</dd>
+      </div>
+      <div>
+        <dt>Unidad de análisis</dt>
+        <dd>Registro de vehículo involucrado; no necesariamente un siniestro único</dd>
+      </div>
+    </dl>
+  </section>
+
+  <section class="temporal-panel temporal-dashboard" aria-labelledby="temporal-dashboard-title">
+    <div class="temporal-section-heading">
+      <span class="temporal-eyebrow">Exploración interactiva</span>
+      <h2 id="temporal-dashboard-title">Tablero interactivo: dimensión temporal</h2>
+    </div>
+    <p class="temporal-copy">
+      Explora la evolución de los registros, compara periodos y utiliza los filtros
+      disponibles de año y departamento. La información de 2026 es parcial.
+    </p>
+    {% if powerbi_url %}
+      <div class="powerbi-container">
+        <iframe
+          title="Tablero de análisis temporal de siniestros viales"
+          src="{{ powerbi_url }}"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+      <p class="temporal-copy">
+        Si el informe no aparece, comprueba tu conexión y accede directamente al
+        servicio de Power BI mediante el enlace alternativo.
+      </p>
+      <a
+        class="powerbi-link"
+        href="{{ powerbi_url }}"
+        target="_blank"
+        rel="noopener noreferrer">
+        Abrir tablero en Power BI
+        <span aria-hidden="true">↗</span>
+      </a>
+    {% else %}
+      <div class="powerbi-fallback" role="status">
+        <h3>El tablero no está configurado</h3>
+        <p>
+          Configura la variable <code>POWERBI_TEMPORAL_URL</code> con la URL pública
+          del informe para mostrarlo aquí.
+        </p>
+      </div>
+    {% endif %}
+  </section>
+
+  <section class="temporal-panel" aria-labelledby="temporal-indicators-title">
+    <div class="temporal-section-heading">
+      <span class="temporal-eyebrow">Lectura de métricas</span>
+      <h2 id="temporal-indicators-title">Indicadores del análisis temporal</h2>
+    </div>
+    <div class="temporal-card-grid temporal-card-grid--three">
+      <article class="temporal-info-card">
+        <span class="temporal-card-number">01</span>
+        <h3>Total de registros de vehículos</h3>
+        <p>Cantidad de registros de vehículos involucrados en siniestros para el periodo seleccionado.</p>
+      </article>
+      <article class="temporal-info-card">
+        <span class="temporal-card-number">02</span>
+        <h3>Variación anual</h3>
+        <p>
+          Cambio porcentual en el número de registros respecto al año anterior.
+          La comparación debe hacerse para periodos equivalentes.
+        </p>
+        <p class="temporal-formula">
+          ((Valor actual − Valor anterior) / Valor anterior) × 100
+        </p>
+      </article>
+      <article class="temporal-info-card">
+        <span class="temporal-card-number">03</span>
+        <h3>Porcentaje de registros «Con muertos»</h3>
+        <p>
+          Proporción de registros de esa categoría de gravedad respecto al total
+          del periodo seleccionado. No representa una tasa de mortalidad de personas.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="temporal-panel" aria-labelledby="temporal-visuals-title">
+    <div class="temporal-section-heading">
+      <span class="temporal-eyebrow">Guía de lectura</span>
+      <h2 id="temporal-visuals-title">¿Qué podemos analizar en el tablero?</h2>
+    </div>
+    <div class="temporal-card-grid temporal-card-grid--three">
+      <article class="temporal-info-card">
+        <span class="temporal-card-number">01</span>
+        <h3>Evolución mensual</h3>
+        <p>
+          El gráfico de líneas muestra el número de registros de vehículos a través
+          de los meses y permite identificar tendencias, incrementos, disminuciones
+          y cambios importantes.
+        </p>
+      </article>
+      <article class="temporal-info-card">
+        <span class="temporal-card-number">02</span>
+        <h3>Mapa de calor temporal</h3>
+        <p>
+          La matriz cruza meses y años; el color representa la cantidad de registros.
+          Facilita reconocer concentraciones altas o bajas y comparar meses equivalentes.
+        </p>
+      </article>
+      <article class="temporal-info-card">
+        <span class="temporal-card-number">03</span>
+        <h3>Distribución de la gravedad</h3>
+        <p>
+          Las columnas apiladas al 100 % muestran la proporción de registros por
+          categoría de gravedad y permiten comparar su composición entre años.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="temporal-panel" aria-labelledby="temporal-findings-title">
+    <div class="temporal-section-heading">
+      <span class="temporal-eyebrow">Resultados documentados · conjunto general</span>
+      <h2 id="temporal-findings-title">Conocimientos evidentes identificados</h2>
+    </div>
+    <p class="temporal-copy">
+      Los siguientes conocimientos corresponden al conjunto general, sin filtros
+      territoriales del tablero.
+    </p>
+
+    <div class="temporal-findings">
+      <details class="temporal-finding">
+        <summary>
+          <span class="temporal-finding-number">01</span>
+          <span>Variación entre años</span>
+        </summary>
+        <dl>
+          <div><dt>Pregunta</dt><dd>¿Cómo cambió la cantidad de registros entre 2022 y 2024?</dd></div>
+          <div><dt>Variables</dt><dd>Año y cantidad de registros de vehículos.</dd></div>
+          <div><dt>Procedimiento</dt><dd>Agrupar los registros por año y comparar los totales y sus variaciones porcentuales.</dd></div>
+          <div><dt>Evidencia</dt><dd>2022: 114.478 registros; 2023: 111.609; 2024: 120.342.</dd></div>
+          <div><dt>Hallazgo</dt><dd>Entre 2022 y 2023 los registros disminuyeron aproximadamente 2,51 %. Entre 2023 y 2024 aumentaron aproximadamente 7,82 %.</dd></div>
+          <div><dt>Interpretación</dt><dd>La evolución de los registros no fue constante y presentó cambios entre los años analizados.</dd></div>
+          <div><dt>Utilidad</dt><dd>Identificar periodos que requieren un análisis más detallado.</dd></div>
+          <div><dt>Limitación</dt><dd>Las variaciones no pueden atribuirse exclusivamente a cambios reales en la accidentalidad sin revisar la cobertura y los procedimientos de registro.</dd></div>
+        </dl>
+      </details>
+
+      <details class="temporal-finding">
+        <summary>
+          <span class="temporal-finding-number">02</span>
+          <span>Concentración mensual inusual</span>
+        </summary>
+        <dl>
+          <div><dt>Pregunta</dt><dd>¿Qué mes registró la mayor cantidad de vehículos involucrados durante 2024?</dd></div>
+          <div><dt>Variables</dt><dd>FechaAccidente, Año, Mes y total de registros.</dd></div>
+          <div><dt>Procedimiento</dt><dd>Filtrar 2024, agrupar por mes e identificar el valor máximo y su participación anual.</dd></div>
+          <div><dt>Evidencia</dt><dd>Julio de 2024: 28.794 registros; total de 2024: 120.342; participación de julio: aproximadamente 23,93 %.</dd></div>
+          <div><dt>Hallazgo</dt><dd>Julio concentró cerca del 23,93 % de los registros del año 2024.</dd></div>
+          <div><dt>Interpretación</dt><dd>Se identifica una concentración mensual excepcional que debe investigarse antes de considerar que representa un incremento real de los siniestros.</dd></div>
+          <div><dt>Utilidad</dt><dd>Priorizar la revisión de calidad, cobertura y registro de ese periodo.</dd></div>
+          <div><dt>Limitación</dt><dd>Con estos indicadores no es posible determinar la causa del aumento.</dd></div>
+        </dl>
+      </details>
+
+      <details class="temporal-finding">
+        <summary>
+          <span class="temporal-finding-number">03</span>
+          <span>Composición por gravedad</span>
+        </summary>
+        <dl>
+          <div><dt>Pregunta</dt><dd>¿Cómo cambió la participación de registros clasificados como «Con muertos» entre 2023 y 2024?</dd></div>
+          <div><dt>Variables</dt><dd>Año, GravedadAccidente y total de registros.</dd></div>
+          <div><dt>Procedimiento</dt><dd>Agrupar por año y calcular la proporción de registros de la categoría «Con muertos» respecto al total anual.</dd></div>
+          <div><dt>Evidencia</dt><dd>2023: aproximadamente 4,57 %; 2024: aproximadamente 4,37 %.</dd></div>
+          <div><dt>Hallazgo</dt><dd>La participación disminuyó aproximadamente 0,20 puntos porcentuales entre 2023 y 2024.</dd></div>
+          <div><dt>Interpretación</dt><dd>La composición de los registros por gravedad cambió, aunque el total de registros aumentó en 2024.</dd></div>
+          <div><dt>Utilidad</dt><dd>Complementar el análisis de cantidad de registros con una perspectiva de gravedad.</dd></div>
+          <div><dt>Limitación</dt><dd>No permite concluir directamente que disminuyó la mortalidad vial, porque la unidad de análisis es el registro de vehículo.</dd></div>
+        </dl>
+      </details>
+    </div>
+  </section>
+
+  <section class="temporal-panel temporal-limitations" aria-labelledby="temporal-limitations-title">
+    <div class="temporal-section-heading">
+      <span class="temporal-eyebrow">Calidad y alcance</span>
+      <h2 id="temporal-limitations-title">Consideraciones y limitaciones del análisis</h2>
+    </div>
+    <ul>
+      <li>Los registros corresponden a vehículos involucrados y no necesariamente a siniestros únicos.</li>
+      <li>La información de 2026 es parcial y está disponible únicamente hasta febrero; las comparaciones anuales requieren periodos equivalentes.</li>
+      <li>La reducción importante en la cantidad de registros de 2025 debe verificarse frente a la cobertura de los datos.</li>
+      <li>La concentración observada en julio de 2024 requiere revisión antes de interpretarse como cambio real.</li>
+      <li>Las variaciones de los registros no demuestran por sí solas relaciones causales.</li>
+      <li>Los valores faltantes no deben confundirse con valores cero.</li>
+    </ul>
+  </section>
+
+  <aside class="temporal-decision" aria-labelledby="temporal-decision-title">
+    <span class="temporal-eyebrow">Recomendación basada en evidencia</span>
+    <h2 id="temporal-decision-title">Decisión orientada por los datos</h2>
+    <p>
+      Priorizar la verificación de la calidad y cobertura de los registros de julio
+      de 2024 y de los periodos más recientes. Después de validar su consistencia,
+      utilizar los resultados temporales para identificar periodos que requieren
+      un análisis más profundo y apoyar la planificación de acciones de prevención vial.
+    </p>
+    <p class="temporal-decision-note">
+      Esta recomendación no establece una relación causal; depende de validar primero
+      la consistencia y cobertura de la información.
+    </p>
+  </aside>
+
+  <div class="stage4-actions">
+    <a href="{{ url_for('etapa4') }}" class="stage4-button">← Volver a la Etapa 4</a>
+  </div>
+</main>
+{% endblock %}
