@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-  <script src="https://t.contentsquare.net/uxa/2caa67f476ad3.js"></script>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lista de Reportes</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% extends 'base.html' %}
+
+{% block title %}Lista de Reportes{% endblock %}
+
+{% block head %}
   <style>
+    #global-map {
+      display: none;
+    }
     body {
       font-family: Arial, sans-serif;
       background-color: #f8f9fa;
@@ -28,42 +27,36 @@
       overflow: hidden;
       box-shadow: 0 0 5px rgba(0,0,0,0.2);
     }
+    .reports-title {
+      margin: 28px 20px 18px;
+      color: var(--navy);
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.6rem;
+    }
     th, td {
       padding: 10px;
       border-bottom: 1px solid #ddd;
       text-align: center;
     }
+    td {
+      color: #17313c;
+    }
     th {
-      background-color: #007bff;
+      background-color: var(--navy);
       color: white;
+      border-bottom: 3px solid var(--lime);
     }
     #map {
       height: 400px;
       margin: 20px;
       border-radius: 10px;
     }
-    .boton-volver {
-      display: block;
-      margin: 10px auto;
-      padding: 10px 20px;
-      background-color: #28a745;
-      color: white;
-      text-align: center;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .boton-volver:hover {
-      background-color: #1e7e34;
-    }
   </style>
-</head>
-<body>
-  <header>
-    <h2>📋 Lista de Reportes de Incidentes</h2>
-  </header>
+{% endblock %}
 
-  <button class="boton-volver" onclick="window.location.href='/'">⬅️ Volver al inicio</button>
+{% block content %}
+  <h1 class="reports-title">Lista de Reportes de Incidentes</h1>
 
   <div id="map"></div>
 
@@ -90,7 +83,10 @@
     </tbody>
   </table>
 
-  <script>
+{% endblock %}
+
+{% block scripts %}
+<script>
     const reportes = {{ reportes | tojson }};
     const map = L.map('map').setView([4.916, -74.031], 10);
 
@@ -105,6 +101,5 @@
           .bindPopup(`⚠️ <b>${r.tipo}</b><br>${r.descripcion}<br><small>${r.fecha_hora}</small>`);
       }
     });
-  </script>
-</body>
-</html>
+</script>
+{% endblock %}
