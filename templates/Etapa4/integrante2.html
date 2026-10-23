@@ -1,41 +1,134 @@
 {% extends 'base.html' %}
 
-{% block title %}Etapa 4 - Integrante 2{% endblock %}
+{% block title %}Etapa 4 - Dimensión Territorial{% endblock %}
 
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
+  <style>
+    /* Estilos específicos para el iframe responsivo de Power BI */
+    .powerbi-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* Relación de aspecto 16:9 */
+      margin-top: 20px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border: 2px solid #e0e0e0;
+    }
+    
+    .powerbi-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .conocimiento-box {
+      background-color: #f8f9fa;
+      border-left: 4px solid var(--stage4-accent, #8C4E7E);
+      padding: 15px 20px;
+      margin-bottom: 20px;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .conocimiento-box h3 {
+      margin-top: 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .conocimiento-box p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #444;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
 <div class="stage4-page">
   <header class="stage4-header">
-    <span class="stage4-tag">Etapa 4 · Integrante 2</span>
-    <h1>Integrante <span>2</span></h1>
+    <span class="stage4-tag">Etapa 4 · Dimensión Territorial</span>
+    <h1>Análisis <span>Territorial</span></h1>
     <div class="stage4-divider"></div>
     <p>
-      Esta vista corresponde a la segunda parte de la actividad de la Etapa 4.
-      El contenido específico se desarrollará más adelante, manteniendo la misma estructura visual del proyecto.
+      Análisis exploratorio de la siniestralidad vial en Colombia, enfocado en la distribución geográfica, 
+      la concentración por departamentos y municipios, y el impacto de la capital frente al resto del país.
     </p>
     <div class="stage4-meta">
-      <span class="stage4-chip">🧩 Espacio de trabajo</span>
-      <span class="stage4-chip">📁 Plantilla independiente</span>
+      <span class="stage4-chip">Análisis Geográfico</span>
+      <span class="stage4-chip">Power BI</span>
+      <span class="stage4-chip">Conocimiento Evidente</span>
     </div>
   </header>
 
+  <!-- SECCIÓN 1: EL TABLERO INTERACTIVO -->
   <section class="stage4-card detail-card" style="--stage4-accent: #8C4E7E;">
-    <h2>Sección en preparación</h2>
+    <h2>Tablero Interactivo: Dimensión Territorial</h2>
     <p>
-      Aquí se trabajará la segunda parte de la actividad de la Etapa 4, sin modificar las rutas o funcionalidades existentes del proyecto.
+      Interactúa con el siguiente informe para explorar los datos. Puedes filtrar por departamento y tipo de vía.
     </p>
-    <ul class="stage4-list">
-      <li>Objetivo específico del integrante 2.</li>
-      <li>Desarrollo modular y separado de otras áreas.</li>
-      <li>Espacio para incluir análisis y componentes futuros.</li>
-      <li>Retorno seguro a la vista principal de la etapa.</li>
-    </ul>
+    
+    <div class="powerbi-container">
+      <iframe 
+        title="Dimensión Territorial - Siniestros Viales" 
+        src="https://app.powerbi.com/view?r=eyJrIjoiMjVmZDc1YWQtNDg2YS00YzQyLTgzNGQtYTU2NzNmNjUxNTdmIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" 
+        allowFullScreen="true">
+      </iframe>
+    </div>
   </section>
 
-  <div class="stage4-actions">
+  <!-- SECCIÓN 2: CONOCIMIENTOS EVIDENTES (Texto para el informe) -->
+  <section class="stage4-card detail-card" style="--stage4-accent: #8C4E7E; margin-top: 20px;">
+    <h2>Conocimientos Evidentes</h2>
+    <p>A continuación se presentan los hallazgos clave extraídos del tablero territorial:</p>
+
+    <div class="conocimiento-box">
+      <h3>1. Bogotá D.C.: Minoría proporcional, foco crítico individual</h3>
+      <p>
+        Para responder qué porcentaje de la siniestralidad nacional aporta la capital, se filtró el municipio "Bogotá D.C." y se dividió entre los 19.015 registros nacionales. La evidencia muestra que Bogotá aporta el <strong>6,31%</strong> de todos los siniestros del país (más de 1.200 casos). Aunque Antioquia tiene más volumen como departamento, Bogotá es el municipio individual que más casos registra por su densidad vehicular. Esta información justifica presupuestos específicos para la Secretaría de Movilidad de Bogotá. <em>Limitación: el cálculo se hace sobre municipios, no sobre departamentos completos.</em>
+      </p>
+    </div>
+
+    <div class="conocimiento-box">
+      <h3>2. El "Choque" es el evento predominante</h3>
+      <p>
+        Al cruzar las variables Departamento y ClasificaciónSiniestro, se evidencia visualmente que la barra de color azul correspondiente a <strong>"Choque" es la más alta</strong> en departamentos líderes como Antioquia, Valle, Cundinamarca y Bogotá, superando ampliamente a Atropellos y Volcamientos. Esto indica que la siniestralidad nacional está dominada por colisiones entre vehículos, lo que sugiere fallas en la distancia de seguridad o impericia. <em>Limitación: existe un alto volumen de registros "Sin Clasificar", lo que evidencia un problema de calidad del dato.</em>
+      </p>
+    </div>
+
+    <div class="conocimiento-box">
+      <h3>3. Alta concentración en nodos metropolitanos</h3>
+      <p>
+        Al ordenar los municipios por volumen, se observa que los <strong>4 primeros superan los 1.000 casos</strong> cada uno, mientras que la gran mayoría de municipios no alcanza los 100. Esto revela una distribución tipo Pareto donde unos pocos territorios concentran la mayoría de los hechos. Es útil para crear "Planes de Choque" enfocados en las principales ciudades. <em>Limitación: el archivo no normaliza por población; es natural que las ciudades grandes tengan más casos absolutos.</em>
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN 3: LIMITACIÓN Y DECISIÓN -->
+  <section class="stage4-card detail-card" style="--stage4-accent: #8C4E7E; margin-top: 20px;">
+    <h2>Conclusiones del Análisis</h2>
+    
+    <div style="margin-bottom: 15px;">
+      <strong style="color: #d9534f;">Limitación del Análisis Territorial:</strong>
+      <p style="margin-top: 5px;">
+        El análisis está sesgado por la cobertura desigual del reporte. Las grandes ciudades y vías nacionales cuentan con más policías de tránsito y sistemas de reporte (como el cruce SPOA-SIEDCO), mientras que en zonas rurales apartadas el subregistro es alto. No se puede afirmar que haya menos siniestros allí, sino que hay menos reportes oficiales.
+      </p>
+    </div>
+
+    <div>
+      <strong style="color: #5cb85c;">Decisión Sustentada:</strong>
+      <p style="margin-top: 5px;">
+        Se recomienda focalizar las campañas de prevención de choques por exceso de velocidad en los <strong>5 municipios principales</strong> (por su alto volumen) y destinar recursos de infraestructura a las <strong>vías nacionales de Antioquia y Valle del Cauca</strong>, que son los corredores donde más colisiones fatales se registran.
+      </p>
+    </div>
+  </section>
+
+  <!-- BOTÓN DE RETORNO -->
+  <div class="stage4-actions" style="margin-top: 30px;">
     <a href="/Etapa4" class="stage4-button">← Volver a la Etapa 4</a>
   </div>
 </div>
