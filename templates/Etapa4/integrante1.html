@@ -1,38 +1,187 @@
 {% extends 'base.html' %}
 
-{% block title %}Etapa 4 - Integrante 1{% endblock %}
+{% block title %}Etapa 4 - Composición y distribución de la población{% endblock %}
 
+{#
+  =====================================================================
+  URL DEL INFORME DE POWER BI
+  Pega aquí el enlace de «Publicar en la web» (https://app.powerbi.com/view?r=...).
+  Si lo dejas vacío, la página muestra un aviso en lugar del iframe.
+  =====================================================================
+#}
+{% set powerbi_embed_url = "https://app.powerbi.com/view?r=eyJrIjoiOGQzYjAyNTEtODc0Yi00OTM2LTlhMDMtODg0ZWY4Nzk5ODllIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" %}
+{% set powerbi_link_url = "https://app.powerbi.com/view?r=eyJrIjoiOGQzYjAyNTEtODc0Yi00OTM2LTlhMDMtODg0ZWY4Nzk5ODllIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9" %}
 {% block head %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4_pregunta1.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="stage4-page">
+<div class="stage4-page q1-page">
+
+  <!-- ============ ENCABEZADO ============ -->
   <header class="stage4-header">
-    <span class="stage4-tag">Etapa 4 · Integrante 1</span>
-    <h1>Integrante <span>1</span></h1>
+    <span class="stage4-tag">Etapa 4 · Conocimiento evidente </span>
+    <h1>Composición y <span>distribución</span> de la población</h1>
     <div class="stage4-divider"></div>
     <p>
-      Esta vista corresponde a la primera parte de la actividad de la Etapa 4.
-      Aquí se preparará la funcionalidad y el contenido específico que este integrante desarrollará.
+      ¿Qué tipos de vehículos, marcas y antigüedades predominan entre los vehículos involucrados en
+      accidentes de tránsito con heridos o muertos?
     </p>
     <div class="stage4-meta">
-      <span class="stage4-chip">🧩 Espacio de trabajo</span>
-      <span class="stage4-chip">📁 Plantilla independiente</span>
+      <span class="stage4-chip">📅 Ene 2022 – Feb 2026</span>
+      <span class="stage4-chip">🚗 406.540 vehículos</span>
+      <span class="stage4-chip">🗂️ Datos Abiertos Colombia</span>
     </div>
   </header>
 
-  <section class="stage4-card detail-card" style="--stage4-accent: #2E9C93;">
-    <h2>Sección en preparación</h2>
+  <!-- ============ PREGUNTA ============ -->
+  <section class="q1-question">
+    <span class="q1-question-label">Pregunta de análisis 1</span>
     <p>
-      Esta página tiene el objetivo de dejar una estructura funcional para que el integrante 1 pueda concentrarse en su parte del proyecto sin afectar las demás vistas.
+      ¿Cómo se compone la población de vehículos involucrados en accidentes con víctimas en Colombia
+      (2022–2026) según tipo, marca y antigüedad, y qué grupos son predominantes y minoritarios?
     </p>
-    <ul class="stage4-list">
-      <li>Título de la sección.</li>
-      <li>Descripción breve de la parte asignada.</li>
-      <li>Espacio preparado para futuros requerimientos.</li>
-      <li>Enlace de regreso a la página principal de la Etapa 4.</li>
-    </ul>
+  </section>
+
+  <!-- ============ INDICADORES ============ -->
+  <section class="q1-section">
+    <div class="q1-kpis">
+      <article class="q1-kpi" style="--kpi: #232A54;">
+        <span class="q1-kpi-label">Vehículos involucrados</span>
+        <strong class="q1-kpi-value">406.540</strong>
+      </article>
+      <article class="q1-kpi" style="--kpi: #2E9C93;">
+        <span class="q1-kpi-label">Motocicletas</span>
+        <strong class="q1-kpi-value">56,4 %</strong>
+      </article>
+      <article class="q1-kpi" style="--kpi: #D9A441;">
+        <span class="q1-kpi-label">Edad mediana</span>
+        <strong class="q1-kpi-value">6 años</strong>
+      </article>
+      <article class="q1-kpi" style="--kpi: #8C4E7E;">
+        <span class="q1-kpi-label">En 10 marcas</span>
+        <strong class="q1-kpi-value">73,8 %</strong>
+      </article>
+    </div>
+    <p class="q1-footnote">Conjunto completo, sin filtros. Porcentajes sobre el total de vehículos involucrados.</p>
+  </section>
+
+  <!-- ============ POWER BI ============ -->
+  <section class="stage4-card detail-card q1-section" style="--stage4-accent: #D9A441;">
+    <h2>Tablero interactivo</h2>
+    <p>
+      Filtra por <strong>año</strong> y <strong>gravedad</strong>: cambian los indicadores, los gráficos y el texto
+      dinámico. Al final del tablero están los tres conocimientos evidentes completos.
+    </p>
+    {% if powerbi_embed_url %}
+      <div class="q1-embed">
+        <iframe title="Pregunta 1 - Composición y distribución de la población"
+                src="{{ powerbi_embed_url }}"
+                frameborder="0" allowfullscreen="true" loading="lazy"></iframe>
+      </div>
+    {% else %}
+      <div class="q1-embed-empty">
+        <strong>El informe se está publicando.</strong>
+        <span>Cuando esté disponible en Power BI Service, su vista interactiva aparecerá en este espacio.</span>
+      </div>
+    {% endif %}
+    {% if powerbi_link_url %}
+      <p class="q1-link-row">
+        <a class="stage4-button" href="{{ powerbi_link_url }}" target="_blank" rel="noopener">Abrir el informe en Power BI ↗</a>
+      </p>
+    {% endif %}
+  </section>
+
+  <!-- ============ HALLAZGOS ============ -->
+  <section class="q1-section">
+    <h2 class="q1-title-out">Lo que muestran los datos</h2>
+    <div class="q1-viz-grid">
+      <article class="q1-viz">
+        <span class="q1-viz-num">1</span>
+        <h3>La moto predomina</h3>
+        <p>
+          <strong>56,4 %</strong> son motocicletas; con los automóviles (22,7 %) suman el 79,1 %.
+          Se mantuvo entre 54,9 % y 58,0 % cada año.
+        </p>
+      </article>
+      <article class="q1-viz">
+        <span class="q1-viz-num">2</span>
+        <h3>Pocas marcas concentran</h3>
+        <p>
+          De 360 marcas, <strong>10 reúnen el 73,8 %</strong>. Lideran Bajaj, Yamaha y Chevrolet;
+          tres de las cinco primeras son de motos.
+        </p>
+      </article>
+      <article class="q1-viz">
+        <span class="q1-viz-num">3</span>
+        <h3>Vehículos jóvenes</h3>
+        <p>
+          Edad mediana de <strong>6 años</strong>; el 46,2 % tenía 5 años o menos.
+          Motos: mediana de 4 años; automóviles: 10.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ LIMITACIÓN Y DECISIÓN ============ -->
+  <section class="q1-grid-2 q1-section">
+    <article class="stage4-card detail-card q1-callout" style="--stage4-accent: #8C4E7E;">
+      <h2>Limitación</h2>
+      <p>
+        Los porcentajes describen <strong>quiénes</strong> se accidentan, no el <strong>riesgo</strong>: sin el
+        parque automotor no se pueden calcular tasas. 2025 y 2026 tienen menos registros.
+      </p>
+    </article>
+    <article class="stage4-card detail-card q1-callout" style="--stage4-accent: #2E9C93;">
+      <h2>Decisión</h2>
+      <p>
+        Priorizar a motociclistas y vehículos de hasta 5 años, con formación en conducción segura al
+        momento de la compra, coordinada con las marcas que concentran la población.
+      </p>
+    </article>
+  </section>
+
+  <!-- ============ DETALLE TÉCNICO (desplegable) ============ -->
+  <section class="q1-section q1-more">
+    <h2 class="q1-title-out">Detalle técnico</h2>
+
+    <details class="q1-details">
+      <summary>Datos, unidad de análisis y calidad</summary>
+      <ul class="stage4-list q1-list-tight">
+        <li><strong>Fuente:</strong> «Vehículos involucrados en un accidente de tránsito» (datos.gov.co, <code>6jmc-vaxk</code>), procesado con el ETL de la Etapa 3. Fecha registrada por mes.</li>
+        <li><strong>Unidad:</strong> cada registro es un vehículo involucrado en un accidente; no es un accidente ni un vehículo único (no hay placa).</li>
+        <li><strong>Edad:</strong> se recalculó como año del accidente − año del modelo (la de la fuente estaba referida a 2026).</li>
+        <li><strong>Faltantes:</strong> 44 registros sin marca y 78 sin edad original, tratados como «Sin dato».</li>
+        <li><strong>Valores inusuales:</strong> julio de 2024 (Antioquia, 23.553 vehículos) se revisó y conservó; quitarlo solo mueve el % de motos de 56,4 a 57,2.</li>
+        <li><strong>Filas repetidas:</strong> 147.580 se conservaron, porque sin placa y con fecha mensual pueden ser vehículos distintos.</li>
+      </ul>
+    </details>
+
+    <details class="q1-details">
+      <summary>Variables utilizadas</summary>
+      <div class="q1-table-wrap">
+        <table class="q1-table">
+          <thead><tr><th>Variable</th><th>Tipo</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>Tipo de vehículo</td><td>Categórica (28)</td><td>Composición; los de menos de 1.000 registros se agrupan en «Otros».</td></tr>
+            <tr><td>Marca</td><td>Categórica (360)</td><td>Concentración (10 principales).</td></tr>
+            <tr><td>Edad al accidente</td><td>Numérica (años)</td><td>Mediana y rangos de antigüedad.</td></tr>
+            <tr><td>Año y gravedad</td><td>Temporal / categórica</td><td>Filtros del tablero.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </details>
+
+    <details class="q1-details">
+      <summary>Conocimientos evidentes (resumen)</summary>
+      <ul class="stage4-list q1-list-tight">
+        <li><strong>C1 · Motocicleta:</strong> 56,4 % del total; útil para enfocar campañas en motociclistas. No implica que sea más riesgosa por vehículo.</li>
+        <li><strong>C2 · Marcas:</strong> 5 marcas = 51,1 %, 10 = 73,8 %; útil para coordinar con fabricantes. Más registros no significa menos seguridad (hipótesis: más unidades circulando).</li>
+        <li><strong>C3 · Antigüedad:</strong> mediana de 6 años, 46,2 % con 5 años o menos; útil para formar al comprador. La edad es aproximada (fecha mensual).</li>
+      </ul>
+      <p class="q1-footnote">La versión completa (pregunta, variables, procedimiento, evidencia, hallazgo, interpretación, utilidad y limitación) está en el tablero de Power BI.</p>
+    </details>
   </section>
 
   <div class="stage4-actions">
