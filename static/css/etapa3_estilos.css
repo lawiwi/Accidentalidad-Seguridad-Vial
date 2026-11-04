@@ -1,0 +1,4312 @@
+/* =========================================================
+   ETAPA 3
+   DIAGNÓSTICO · REGLAS · MODELO Y STAGING
+   ========================================================= */
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+.etapa3-page,
+.diagnostico-page,
+.reglas-page,
+.modelo-staging-page {
+
+    --indigo: #232A54;
+    --indigo-dark: #171B3B;
+
+    --plum: #8C4E7E;
+
+    --gold: #695f4d;
+
+    --teal: #2E9C93;
+
+    --mist: #F6F4FA;
+
+    --ink: #2A2A38;
+
+    --muted: #6F7080;
+
+    --white: #FFFFFF;
+
+    --border: #E6E4EC;
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+/*
+ * IMPORTANTE:
+ * Todas las páginas de Etapa 3 utilizan ahora el mismo
+ * ancho máximo.
+ *
+ * El fondo de base.html continúa ocupando toda la pantalla,
+ * pero el contenido queda centrado.
+ */
+
+.etapa3-page {
+
+    width: min(1200px, calc(100% - 80px));
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 30px 0 50px;
+
+    box-sizing: border-box;
+
+    color: var(--ink);
+
+    font-family: 'Inter', sans-serif;
+}
+
+
+/*
+ * Las clases específicas mantienen el mismo comportamiento.
+ * No necesitan volver a definir width o max-width.
+ */
+
+.diagnostico-page,
+.reglas-page,
+.modelo-staging-page {
+
+    color: var(--ink);
+}
+
+
+/* =========================================================
+   HERO
+   Compartido por todas las páginas
+   ========================================================= */
+
+.etapa3-page .hero {
+
+    position: relative;
+
+    width: 100%;
+
+    /* IMPORTANTE:
+       El hero debe crecer únicamente según su contenido */
+    height: auto;
+    min-height: 0;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+
+    background:
+
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(140, 78, 126, .25),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(46, 156, 147, .18),
+            transparent 30%
+        ),
+
+        linear-gradient(
+            135deg,
+            var(--indigo-dark),
+            var(--indigo)
+        );
+
+    border-radius: 24px;
+
+    /*
+     * Menos espacio vertical.
+     * El horizontal se mantiene cómodo.
+     */
+    padding: 30px 38px;
+
+    color: white;
+
+    margin-bottom: 28px;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+
+/* =========================================================
+   ANIMACIÓN DEL HERO
+   ========================================================= */
+
+.etapa3-page .hero:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 16px 36px
+        rgba(35, 42, 84, .14);
+}
+
+
+/* =========================================================
+   DECORACIÓN DEL HERO
+   ========================================================= */
+
+.etapa3-page .hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: .08;
+
+    background-image:
+
+        radial-gradient(
+            #fff 1px,
+            transparent 1px
+        );
+
+    background-size: 18px 18px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.etapa3-page .hero-content {
+
+    position: relative;
+
+    z-index: 1;
+
+    /*
+     * Evita que algún estilo externo
+     * fuerce una altura innecesaria.
+     */
+    height: auto;
+}
+
+
+/* =========================================================
+   STAGE TAG
+   ========================================================= */
+
+.etapa3-page .stage-tag {
+
+    display: inline-block;
+
+    padding: 7px 14px;
+
+    border-radius: 30px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    border:
+        1px solid rgba(255,255,255,.2);
+
+    font-size: .78rem;
+
+    font-weight: 700;
+
+    letter-spacing: .08em;
+
+    text-transform: uppercase;
+
+    margin-bottom: 14px;
+}
+
+
+/* =========================================================
+   HERO TITLE
+   ========================================================= */
+
+.etapa3-page .hero h1 {
+
+    margin: 0 0 10px;
+
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size:
+        clamp(2rem, 4vw, 3rem);
+
+    line-height: 1.1;
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+   ========================================================= */
+
+.etapa3-page .hero p {
+
+    max-width: 850px;
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.82);
+
+    line-height: 1.6;
+
+    font-size: 1rem;
+}
+
+
+/* =========================================================
+   NÚMERO DEL HERO
+   ========================================================= */
+
+.stage-number,
+.hero-number {
+
+    position: absolute;
+
+    right: 35px;
+
+    top: 25px;
+
+    font-size: 7rem;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    color:
+        rgba(255,255,255,.06);
+
+    user-select: none;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   NAVEGACIÓN LATERAL
+   ========================================================= */
+
+.etapa3-page .side-nav {
+
+    position: fixed;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    z-index: 9999;
+}
+
+
+.etapa3-page .side-nav.left {
+
+    left: 24px;
+}
+
+
+.etapa3-page .side-nav.right {
+
+    right: 24px;
+}
+
+
+.etapa3-page .side-nav a {
+
+    width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.94);
+
+    color:
+        var(--indigo);
+
+    text-decoration: none;
+
+    font-size: 25px;
+
+    font-weight: 600;
+
+    border:
+        1px solid
+        rgba(35,42,84,.12);
+
+    box-shadow:
+        0 8px 24px
+        rgba(23,27,59,.16);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease,
+        color .25s ease;
+}
+
+
+.etapa3-page .side-nav a:hover {
+
+    transform:
+        scale(1.08);
+
+    background:
+        var(--indigo);
+
+    color:
+        var(--white);
+
+    box-shadow:
+        0 12px 28px
+        rgba(35,42,84,.25);
+}
+
+
+/* =========================================================
+   VOLVER
+   ========================================================= */
+
+.back-link {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color:
+        var(--indigo);
+
+    text-decoration: none;
+
+    font-weight: 700;
+
+    margin-bottom: 22px;
+
+    transition:
+        color .2s ease,
+        transform .2s ease;
+}
+
+
+.back-link:hover {
+
+    color:
+        var(--plum);
+
+    transform:
+        translateX(-2px);
+}
+
+
+/* =========================================================
+   SECCIONES
+   Compartidas por Diagnóstico, Reglas y Staging
+   ========================================================= */
+
+.etapa3-page .section {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    background:
+        var(--white);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(35,42,84,.05);
+
+    transition:
+        transform .28s ease,
+        box-shadow .28s ease,
+        border-color .28s ease;
+}
+
+
+/*
+ * Animación compartida.
+ *
+ * Esto lleva a Diagnóstico y Reglas el mismo efecto
+ * que tenía Staging.
+ */
+
+.etapa3-page .section:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 14px 34px
+        rgba(35,42,84,.08);
+
+    border-color:
+        rgba(140,78,126,.25);
+}
+
+
+/* =========================================================
+   ANIMACIÓN DE TARJETAS
+   Compartida por todas las páginas
+   ========================================================= */
+
+.etapa3-page .dataset-card,
+.etapa3-page .problem-card,
+.etapa3-page .rule-card,
+.etapa3-page .match-card,
+.etapa3-page .criterion,
+.etapa3-page .entity,
+.etapa3-page .hierarchy-card,
+.etapa3-page .entity-detail,
+.etapa3-page .staging-card,
+.etapa3-page .ssis-node,
+.etapa3-page .execution-item,
+.etapa3-page .architecture-step,
+.etapa3-page .architecture-box,
+.etapa3-page .independence-side,
+.etapa3-page .technical-note {
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+}
+
+
+.etapa3-page .dataset-card:hover,
+.etapa3-page .problem-card:hover,
+.etapa3-page .rule-card:hover,
+.etapa3-page .match-card:hover,
+.etapa3-page .criterion:hover,
+.etapa3-page .entity:hover,
+.etapa3-page .hierarchy-card:hover,
+.etapa3-page .entity-detail:hover,
+.etapa3-page .staging-card:hover,
+.etapa3-page .ssis-node:hover,
+.etapa3-page .execution-item:hover,
+.etapa3-page .architecture-step:hover,
+.etapa3-page .architecture-box:hover,
+.etapa3-page .independence-side:hover,
+.etapa3-page .technical-note:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(35,42,84,.09);
+}
+
+
+/* =========================================================
+   TÍTULOS DE SECCIÓN — DIAGNÓSTICO
+   ========================================================= */
+
+.diagnostico-page .section-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.diagnostico-page .section-number,
+.reglas-page .section-number {
+
+    min-width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        var(--mist);
+
+    color:
+        var(--indigo);
+
+    font-weight: 800;
+
+    font-size: .95rem;
+}
+
+
+.diagnostico-page .section-header h2 {
+
+    margin: 0 0 5px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1.35rem;
+}
+
+
+.diagnostico-page .section-header p {
+
+    margin: 0;
+
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+}
+
+
+.diagnostico-page .section-text {
+
+    color:
+        #464756;
+
+    line-height: 1.7;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   DATASETS — DIAGNÓSTICO
+   ========================================================= */
+
+.dataset-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+
+.dataset-card {
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    background:
+        #fff;
+}
+
+
+.dataset-title {
+
+    padding: 18px 20px;
+
+    color: white;
+}
+
+
+.dataset-title.siniestros {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--indigo),
+            #343C78
+        );
+}
+
+
+.dataset-title.vehiculos {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--plum),
+            #A56898
+        );
+}
+
+
+.dataset-title h3 {
+
+    margin: 0 0 5px;
+
+    font-size: 1.05rem;
+}
+
+
+.dataset-title span {
+
+    font-size: .82rem;
+
+    opacity: .82;
+}
+
+
+.dataset-body {
+
+    padding: 20px;
+}
+
+
+.dataset-stats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.diagnostico-page .stat {
+
+    background:
+        var(--mist);
+
+    border-radius: 12px;
+
+    padding: 13px;
+}
+
+
+.diagnostico-page .stat strong {
+
+    display: block;
+
+    color:
+        var(--indigo);
+
+    font-size: 1.15rem;
+}
+
+
+.diagnostico-page .stat span {
+
+    color:
+        var(--muted);
+
+    font-size: .78rem;
+}
+
+
+.dataset-body p {
+
+    color:
+        #555665;
+
+    line-height: 1.6;
+
+    font-size: .92rem;
+
+    margin: 0 0 12px;
+}
+
+
+.columns {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+}
+
+
+.column {
+
+    background:
+        #f1eff6;
+
+    color:
+        var(--indigo);
+
+    padding: 5px 9px;
+
+    border-radius: 7px;
+
+    font-size: .72rem;
+
+    font-family:
+        Consolas,
+        monospace;
+}
+
+
+/* =========================================================
+   MÉTRICAS
+   ========================================================= */
+
+.metrics {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+
+.metric {
+
+    text-align: center;
+
+    padding: 20px 12px;
+
+    border-radius: 16px;
+
+    background:
+        var(--mist);
+
+    border-top:
+        4px solid
+        var(--teal);
+}
+
+
+.metric:nth-child(2) {
+
+    border-top-color:
+        var(--plum);
+}
+
+
+.metric:nth-child(3) {
+
+    border-top-color:
+        var(--gold);
+}
+
+
+.metric:nth-child(4) {
+
+    border-top-color:
+        var(--indigo);
+}
+
+
+.metric .value {
+
+    display: block;
+
+    font-size: 1.7rem;
+
+    font-weight: 900;
+
+    color:
+        var(--indigo);
+
+    margin-bottom: 4px;
+}
+
+
+.metric .label {
+
+    font-size: .8rem;
+
+    color:
+        var(--muted);
+}
+
+
+/* =========================================================
+   TABLA DE COMPARACIÓN
+   ========================================================= */
+
+.comparison {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+}
+
+
+.comparison th {
+
+    background:
+        var(--indigo);
+
+    color: white;
+
+    padding: 14px;
+
+    text-align: left;
+
+    font-size: .85rem;
+}
+
+
+.comparison td {
+
+    padding: 14px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    font-size: .88rem;
+
+    vertical-align: top;
+}
+
+
+.comparison tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+.comparison tr:nth-child(even) {
+
+    background:
+        #faf9fc;
+}
+
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.status {
+
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    font-size: .72rem;
+
+    font-weight: 700;
+}
+
+
+.status.ok {
+
+    background:
+        #e6f5f2;
+
+    color:
+        #23776f;
+}
+
+
+.status.warning {
+
+    background:
+        #fff5dc;
+
+    color:
+        #916c18;
+}
+
+
+.status.problem {
+
+    background:
+        #f7e8f1;
+
+    color:
+        #81416f;
+}
+
+
+/* =========================================================
+   PROBLEMAS
+   ========================================================= */
+
+.problem-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+}
+
+
+.problem-card {
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    background:
+        #faf9fc;
+
+    border-left:
+        4px solid
+        var(--plum);
+}
+
+
+.problem-card h3 {
+
+    margin: 0 0 9px;
+
+    font-size: 1rem;
+
+    color:
+        var(--indigo);
+}
+
+
+.problem-card p {
+
+    margin: 0;
+
+    font-size: .87rem;
+
+    line-height: 1.6;
+
+    color:
+        #5c5d6c;
+}
+
+
+/* =========================================================
+   DECISIÓN
+   ========================================================= */
+
+.decision {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f7f5fa,
+            #f2f8f7
+        );
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 18px;
+
+    padding: 24px;
+}
+
+
+.decision h3 {
+
+    margin: 0 0 12px;
+
+    color:
+        var(--indigo);
+}
+
+
+.decision p {
+
+    margin: 0 0 15px;
+
+    color:
+        #4f5060;
+
+    line-height: 1.7;
+}
+
+
+.criteria {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+}
+
+
+.criterion {
+
+    background:
+        white;
+
+    border-radius: 13px;
+
+    padding: 15px;
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.criterion strong {
+
+    display: block;
+
+    color:
+        var(--teal);
+
+    margin-bottom: 5px;
+
+    font-size: .88rem;
+}
+
+
+.criterion span {
+
+    color:
+        var(--muted);
+
+    font-size: .78rem;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   MODELO ER
+   ========================================================= */
+
+.er-model {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.entity {
+
+    border:
+        2px solid
+        var(--indigo);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    background:
+        white;
+}
+
+
+.entity.associative {
+
+    border-color:
+        var(--teal);
+}
+
+
+.entity.vehicle {
+
+    border-color:
+        var(--plum);
+}
+
+
+.entity-header {
+
+    padding: 13px;
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    font-weight: 800;
+
+    text-align: center;
+
+    font-size: .9rem;
+}
+
+
+.entity.associative .entity-header {
+
+    background:
+        var(--teal);
+}
+
+
+.entity.vehicle .entity-header {
+
+    background:
+        var(--plum);
+}
+
+
+.entity-body {
+
+    padding: 14px;
+}
+
+
+.field {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 7px 0;
+
+    border-bottom:
+        1px solid
+        #eeeef2;
+
+    font-size: .76rem;
+}
+
+
+.field:last-child {
+
+    border-bottom: none;
+}
+
+
+.pk {
+
+    color:
+        var(--gold);
+
+    font-weight: 800;
+}
+
+
+.fk {
+
+    color:
+        var(--teal);
+
+    font-weight: 800;
+}
+
+
+.connector {
+
+    text-align: center;
+
+    color:
+        var(--muted);
+
+    font-size: .75rem;
+
+    font-weight: 700;
+}
+
+
+.connector-line {
+
+    height: 2px;
+
+    width: 50px;
+
+    background:
+        var(--border);
+
+    margin:
+        0 auto 6px;
+}
+
+
+/* =========================================================
+   RESULTADO
+   ========================================================= */
+
+.result-box {
+
+    display: grid;
+
+    grid-template-columns:
+        auto 1fr;
+
+    gap: 18px;
+
+    align-items: center;
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+
+.result-box:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 32px
+        rgba(35,42,84,.14);
+}
+
+
+.result-icon {
+
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(255,255,255,.12);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 1.4rem;
+
+    font-weight: 900;
+}
+
+
+.result-box h3 {
+
+    margin: 0 0 6px;
+}
+
+
+.result-box p {
+
+    margin: 0;
+
+    color:
+        rgba(255,255,255,.78);
+
+    line-height: 1.6;
+
+    font-size: .9rem;
+}
+
+
+/* =========================================================
+   REGLAS
+   ========================================================= */
+
+.reglas-page .section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.reglas-page .section-title h2 {
+
+    margin: 0;
+
+    color:
+        var(--indigo);
+
+    font-size: 1.35rem;
+}
+
+
+.reglas-page .section > p {
+
+    color:
+        #464756;
+
+    line-height: 1.7;
+
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   REGLAS GRID
+   ========================================================= */
+
+.rules-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 16px;
+}
+
+
+.rule-card {
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        #faf9fc;
+}
+
+
+.rule-card h3 {
+
+    margin: 8px 0 8px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1rem;
+}
+
+
+.rule-card p {
+
+    margin: 0;
+
+    color:
+        #5c5d6c;
+
+    line-height: 1.6;
+
+    font-size: .87rem;
+}
+
+
+.rule-card.indigo {
+
+    border-top:
+        4px solid
+        var(--indigo);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f4f3fa,
+            #faf9fc
+        );
+}
+
+
+.rule-card.plum {
+
+    border-top:
+        4px solid
+        var(--plum);
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf3f8,
+            #faf9fc
+        );
+}
+
+
+.rule-card.gold {
+
+    border-top:
+        4px solid
+        var(--gold);
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf8f0,
+            #faf9fc
+        );
+}
+
+
+.rule-card.teal {
+
+    border-top:
+        4px solid
+        var(--teal);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0f9f7,
+            #faf9fc
+        );
+}
+
+
+/* =========================================================
+   CÓDIGOS DE REGLAS
+   ========================================================= */
+
+.rule-code {
+
+    display: inline-block;
+
+    padding: 4px 8px;
+
+    border-radius: 6px;
+
+    background:
+        var(--mist);
+
+    color:
+        var(--indigo);
+
+    font-size: .7rem;
+
+    font-weight: 800;
+
+    letter-spacing: .04em;
+}
+
+
+.rule-card.indigo .rule-code {
+
+    background:
+        rgba(35,42,84,.10);
+
+    color:
+        var(--indigo);
+}
+
+
+.rule-card.plum .rule-code {
+
+    background:
+        rgba(140,78,126,.10);
+
+    color:
+        var(--plum);
+}
+
+
+.rule-card.gold .rule-code {
+
+    background:
+        rgba(105,95,77,.12);
+
+    color:
+        var(--gold);
+}
+
+
+.rule-card.teal .rule-code {
+
+    background:
+        rgba(46,156,147,.12);
+
+    color:
+        var(--teal);
+}
+
+
+/* =========================================================
+   TABLAS — REGLAS
+   ========================================================= */
+
+.table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 14px;
+}
+
+
+.reglas-page table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background:
+        white;
+}
+
+
+.reglas-page th {
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    padding: 14px;
+
+    text-align: left;
+
+    font-size: .85rem;
+}
+
+
+.reglas-page td {
+
+    padding: 14px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    color:
+        #4f5060;
+
+    line-height: 1.55;
+
+    font-size: .88rem;
+
+    vertical-align: top;
+}
+
+
+.reglas-page tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+.reglas-page tbody tr:nth-child(even) {
+
+    background:
+        #faf9fc;
+}
+
+
+/* =========================================================
+   COINCIDENCIAS
+   ========================================================= */
+
+.match-box {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+
+    margin-top: 20px;
+}
+
+
+.match-card {
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    background:
+        #faf9fc;
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.match-card strong {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: .92rem;
+}
+
+
+.match-card p {
+
+    margin: 0;
+
+    color:
+        #5c5d6c;
+
+    line-height: 1.6;
+
+    font-size: .84rem;
+}
+
+
+.match-card.strong-match {
+
+    border-top:
+        4px solid
+        var(--teal);
+}
+
+
+.match-card.strong-match strong {
+
+    color:
+        var(--teal);
+}
+
+
+.match-card.partial-match {
+
+    border-top:
+        4px solid
+        var(--gold);
+}
+
+
+.match-card.partial-match strong {
+
+    color:
+        var(--gold);
+}
+
+
+.match-card.no-match {
+
+    border-top:
+        4px solid
+        var(--plum);
+}
+
+
+.match-card.no-match strong {
+
+    color:
+        var(--plum);
+}
+
+
+/* =========================================================
+   FLUJO — REGLAS
+   ========================================================= */
+
+.reglas-page .flow {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+
+.reglas-page .flow-step {
+
+    flex: 1;
+
+    min-height: 105px;
+
+    padding: 17px;
+
+    background:
+        var(--mist);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 14px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.reglas-page .flow-step strong {
+
+    color:
+        var(--indigo);
+
+    font-size: .88rem;
+
+    margin-bottom: 7px;
+}
+
+
+.reglas-page .flow-step span {
+
+    color:
+        var(--muted);
+
+    font-size: .77rem;
+
+    line-height: 1.5;
+}
+
+
+.reglas-page .flow-arrow {
+
+    color:
+        var(--plum);
+
+    font-size: 1.3rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   NAVEGACIÓN INFERIOR
+   ========================================================= */
+
+.etapa-nav {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 30px;
+
+    padding-top: 10px;
+}
+
+
+.nav-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        12px 18px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: .88rem;
+
+    font-weight: 700;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        white;
+
+    color:
+        var(--indigo);
+
+    box-shadow:
+        0 5px 15px
+        rgba(35,42,84,.06);
+
+    transition:
+        all .25s ease;
+}
+
+
+.nav-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(35,42,84,.10);
+}
+
+
+.nav-btn.previous:hover {
+
+    border-color:
+        var(--plum);
+
+    color:
+        var(--plum);
+}
+
+
+.nav-btn.next {
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    border-color:
+        var(--indigo);
+}
+
+
+.nav-btn.next:hover {
+
+    background:
+        var(--indigo-dark);
+}
+
+
+.nav-center {
+
+    color:
+        var(--muted);
+
+    font-size: .78rem;
+
+    font-weight: 700;
+
+    text-align: center;
+}
+
+
+.nav-center strong {
+
+    display: block;
+
+    color:
+        var(--indigo);
+
+    font-size: .85rem;
+
+    margin-bottom: 3px;
+}
+
+
+/* =========================================================
+   MODELO Y STAGING
+   ========================================================= */
+
+/*
+ * IMPORTANTE:
+ * Ya NO se define width, max-width ni margin aquí.
+ *
+ * modelo-staging-page utiliza directamente el mismo
+ * contenedor .etapa3-page que Diagnóstico y Reglas.
+ */
+
+.modelo-staging-page .section-text {
+
+    color:
+        #464756;
+
+    line-height: 1.78;
+
+    margin:
+        0 0 16px;
+
+    font-size: .94rem;
+}
+
+
+.modelo-staging-page .section-text:last-child {
+
+    margin-bottom: 0;
+}
+
+
+.modelo-staging-page strong {
+
+    color:
+        var(--indigo);
+}
+
+
+/* =========================================================
+   ANIMACIÓN DE ENTRADA DE STAGING
+   ========================================================= */
+
+.modelo-staging-page .section.section-visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/*
+ * Si JavaScript no agrega section-visible,
+ * las secciones siguen siendo visibles.
+ */
+
+.modelo-staging-page .section {
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   BLOQUES DE CÓDIGO
+   ========================================================= */
+
+.modelo-staging-page .code-box {
+
+    margin:
+        20px 0;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background:
+        #191c2e;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    box-shadow:
+        0 8px 22px
+        rgba(23,27,59,.12);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.modelo-staging-page .code-box:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 13px 28px
+        rgba(23,27,59,.16);
+}
+
+
+.modelo-staging-page .code-box pre {
+
+    margin: 0;
+
+    padding:
+        20px 22px;
+
+    overflow-x: auto;
+
+    color:
+        #e9e9f1;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size: .82rem;
+
+    line-height: 1.7;
+}
+
+
+.modelo-staging-page .code-box code {
+
+    color:
+        inherit;
+}
+
+
+/* =========================================================
+   EVIDENCIAS / CAPTURAS
+   ========================================================= */
+
+.modelo-staging-page .evidence {
+
+    margin:
+        28px 0 4px;
+}
+
+
+.modelo-staging-page .evidence-frame {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 260px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        linear-gradient(
+            135deg,
+            #f6f4fa,
+            #f0f8f7
+        );
+
+    box-shadow:
+        0 8px 24px
+        rgba(35,42,84,.06);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+
+.modelo-staging-page .evidence-frame:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 15px 32px
+        rgba(35,42,84,.12);
+}
+
+
+.modelo-staging-page .evidence-frame img {
+
+    display: block;
+
+    width: 100%;
+
+    height: auto;
+
+    max-height: 650px;
+
+    object-fit: contain;
+
+    padding: 12px;
+
+    border-radius: 18px;
+
+    opacity: 0;
+
+    transform:
+        scale(.985);
+
+    transition:
+        opacity .35s ease,
+        transform .35s ease;
+}
+
+
+.modelo-staging-page .evidence-frame.image-loaded img {
+
+    opacity: 1;
+
+    transform:
+        scale(1);
+}
+
+
+.modelo-staging-page .evidence-large .evidence-frame {
+
+    min-height: 380px;
+}
+
+
+/* =========================================================
+   EVIDENCIA EN FORMATO VERTICAL
+   Diagramas de Data Flow muy altos (Lookup + Multicast)
+   ========================================================= */
+
+.modelo-staging-page .evidence-portrait .evidence-frame {
+
+    min-height: 480px;
+
+    padding: 10px 0;
+}
+
+
+.modelo-staging-page .evidence-portrait .evidence-frame img {
+
+    max-height: 1100px;
+
+    width: auto;
+
+    max-width: 92%;
+}
+
+
+.modelo-staging-page .evidence-fallback {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    color:
+        var(--muted);
+}
+
+
+.modelo-staging-page .evidence-fallback span {
+
+    display: inline-block;
+
+    margin-bottom: 10px;
+
+    padding:
+        6px 11px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(35,42,84,.08);
+
+    color:
+        var(--indigo);
+
+    font-size: .7rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .evidence-fallback strong {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1rem;
+}
+
+
+.modelo-staging-page .evidence-fallback small {
+
+    max-width: 480px;
+
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+
+    font-size: .8rem;
+}
+
+
+.modelo-staging-page .evidence figcaption {
+
+    margin-top: 10px;
+
+    color:
+        var(--muted);
+
+    font-size: .76rem;
+
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   JERARQUÍA GEOGRÁFICA
+   ========================================================= */
+
+.modelo-staging-page .hierarchy-flow {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1.2fr auto 1fr;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin:
+        28px 0 10px;
+}
+
+
+.modelo-staging-page .hierarchy-card {
+
+    padding: 20px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-top:
+        4px solid
+        var(--indigo);
+
+    border-radius: 16px;
+
+    background:
+        #faf9fc;
+}
+
+
+.modelo-staging-page .hierarchy-card.associative {
+
+    border-top-color:
+        var(--teal);
+}
+
+
+.modelo-staging-page .hierarchy-card.vehicle {
+
+    border-top-color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .hierarchy-code {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--muted);
+
+    font-size: .68rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .hierarchy-card strong {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: .95rem;
+}
+
+
+.modelo-staging-page .hierarchy-card small {
+
+    display: block;
+
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+
+    font-size: .77rem;
+}
+
+
+.modelo-staging-page .hierarchy-arrow {
+
+    color:
+        var(--plum);
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   NOTAS TÉCNICAS
+   ========================================================= */
+
+.modelo-staging-page .technical-note {
+
+    display: grid;
+
+    grid-template-columns:
+        42px 1fr;
+
+    gap: 14px;
+
+    align-items: start;
+
+    margin-top: 22px;
+
+    padding: 18px;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f4fa,
+            #f1f8f7
+        );
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.modelo-staging-page .technical-note-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        rgba(46,156,147,.12);
+
+    color:
+        var(--teal);
+
+    font-weight: 900;
+}
+
+
+.modelo-staging-page .technical-note strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--indigo);
+
+    font-size: .9rem;
+}
+
+
+.modelo-staging-page .technical-note p {
+
+    margin: 0;
+
+    color:
+        #555665;
+
+    line-height: 1.6;
+
+    font-size: .84rem;
+}
+
+
+.modelo-staging-page .technical-note.warning {
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf6ef,
+            #faf3f8
+        );
+}
+
+
+.modelo-staging-page .technical-note.warning
+.technical-note-icon {
+
+    background:
+        rgba(140,78,126,.10);
+
+    color:
+        var(--plum);
+}
+
+
+/* =========================================================
+   DETALLE DE ENTIDADES
+   ========================================================= */
+
+.modelo-staging-page .entity-detail {
+
+    margin-top: 24px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 18px;
+
+    background:
+        white;
+
+    box-shadow:
+        0 7px 22px
+        rgba(35,42,84,.05);
+}
+
+
+.modelo-staging-page .entity-detail-header {
+
+    padding:
+        15px 20px;
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    font-family:
+        'Poppins',
+        sans-serif;
+
+    font-weight: 700;
+}
+
+
+.modelo-staging-page .vehicle-detail
+.entity-detail-header {
+
+    background:
+        var(--plum);
+}
+
+
+.modelo-staging-page .entity-detail-body {
+
+    padding:
+        8px 20px;
+}
+
+
+.modelo-staging-page .field-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        11px 0;
+
+    border-bottom:
+        1px solid
+        #eeeeF2;
+
+    color:
+        #555665;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: .78rem;
+}
+
+
+.modelo-staging-page .field-row:last-child {
+
+    border-bottom: none;
+}
+
+
+.modelo-staging-page .field-row .pk {
+
+    color:
+        var(--gold);
+}
+
+
+.modelo-staging-page .field-row .fk {
+
+    color:
+        var(--teal);
+}
+
+
+/* =========================================================
+   INDEPENDENCIA SINIESTRO / VEHÍCULO
+   ========================================================= */
+
+.modelo-staging-page .independence-box {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 160px 1fr;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin:
+        28px 0;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        #faf9fc;
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.modelo-staging-page .independence-side {
+
+    padding: 22px;
+
+    text-align: center;
+
+    border:
+        2px solid
+        var(--indigo);
+
+    border-radius: 16px;
+
+    background:
+        white;
+}
+
+
+.modelo-staging-page .independence-side.vehiculo {
+
+    border-color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .independence-side span {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--muted);
+
+    font-size: .66rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .independence-side strong {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1.05rem;
+}
+
+
+.modelo-staging-page .independence-side.vehiculo strong {
+
+    color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .independence-side small {
+
+    color:
+        var(--muted);
+
+    line-height: 1.7;
+
+    font-size: .73rem;
+
+    font-family:
+        Consolas,
+        monospace;
+}
+
+
+.modelo-staging-page .independence-center {
+
+    text-align: center;
+}
+
+
+.modelo-staging-page .no-relation {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin:
+        0 auto 8px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(140,78,126,.10);
+
+    color:
+        var(--plum);
+
+    font-size: 1.6rem;
+
+    font-weight: 900;
+}
+
+
+.modelo-staging-page .independence-center span {
+
+    color:
+        var(--muted);
+
+    font-size: .63rem;
+
+    font-weight: 800;
+
+    letter-spacing: .05em;
+}
+
+
+/* =========================================================
+   TABLAS TÉCNICAS
+   ========================================================= */
+
+.modelo-staging-page .table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    margin-top: 20px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(35,42,84,.04);
+}
+
+
+.modelo-staging-page .technical-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background:
+        white;
+}
+
+
+.modelo-staging-page .technical-table th {
+
+    padding: 14px;
+
+    background:
+        var(--indigo);
+
+    color:
+        white;
+
+    text-align: left;
+
+    font-size: .82rem;
+
+    white-space: nowrap;
+}
+
+
+.modelo-staging-page .technical-table td {
+
+    padding:
+        13px 14px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    color:
+        #555665;
+
+    line-height: 1.5;
+
+    font-size: .82rem;
+
+    vertical-align: top;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        text-decoration .2s ease;
+}
+
+
+.modelo-staging-page .technical-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+.modelo-staging-page .technical-table tbody tr:nth-child(even) {
+
+    background:
+        #faf9fc;
+}
+
+
+/*
+ * Clase utilizada por JavaScript para resaltar
+ * la columna completa.
+ */
+
+.modelo-staging-page .technical-table
+.column-hover {
+
+    background:
+        rgba(140,78,126,.08) !important;
+
+    color:
+        var(--indigo) !important;
+
+    text-decoration:
+        underline;
+
+    text-decoration-color:
+        var(--plum);
+
+    text-decoration-thickness:
+        2px;
+
+    text-underline-offset:
+        4px;
+}
+
+
+/* =========================================================
+   STAGING CARDS
+   ========================================================= */
+
+.modelo-staging-page .staging-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin-top: 22px;
+}
+
+
+.modelo-staging-page .staging-card {
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 18px;
+
+    background:
+        white;
+}
+
+
+.modelo-staging-page .staging-card-header {
+
+    padding:
+        17px 20px;
+
+    color:
+        white;
+
+    background:
+        var(--indigo);
+}
+
+
+.modelo-staging-page .staging-card.vehiculos
+.staging-card-header {
+
+    background:
+        var(--plum);
+}
+
+
+.modelo-staging-page .staging-card-header span {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+
+    opacity: .75;
+}
+
+
+.modelo-staging-page .staging-card-header strong {
+
+    color:
+        white;
+
+    font-size: 1rem;
+}
+
+
+.modelo-staging-page .staging-card-body {
+
+    padding: 20px;
+}
+
+
+.modelo-staging-page .staging-card-body p {
+
+    margin:
+        0 0 15px;
+
+    color:
+        #555665;
+
+    line-height: 1.6;
+
+    font-size: .86rem;
+}
+
+
+.modelo-staging-page .staging-card-body code {
+
+    display: block;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background:
+        var(--mist);
+
+    color:
+        var(--indigo);
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: .69rem;
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   ARQUITECTURA
+   ========================================================= */
+
+.modelo-staging-page .architecture-flow {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr auto 1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 28px;
+}
+
+
+.modelo-staging-page .architecture-step {
+
+    min-height: 125px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 18px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-top:
+        4px solid
+        var(--indigo);
+
+    border-radius: 16px;
+
+    background:
+        var(--mist);
+}
+
+
+.modelo-staging-page .architecture-step.staging {
+
+    border-top-color:
+        var(--teal);
+}
+
+
+.modelo-staging-page .architecture-step.transform {
+
+    border-top-color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .architecture-step.model {
+
+    border-top-color:
+        var(--gold);
+}
+
+
+.modelo-staging-page .architecture-step span {
+
+    color:
+        var(--muted);
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    margin-bottom: 7px;
+}
+
+
+.modelo-staging-page .architecture-step strong {
+
+    color:
+        var(--indigo);
+
+    margin-bottom: 7px;
+
+    font-size: .92rem;
+}
+
+
+.modelo-staging-page .architecture-step small {
+
+    color:
+        var(--muted);
+
+    line-height: 1.45;
+
+    font-size: .72rem;
+}
+
+
+.modelo-staging-page .architecture-arrow {
+
+    color:
+        var(--plum);
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   SSIS
+   ========================================================= */
+
+.modelo-staging-page .ssis-flow {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 18px;
+
+    margin:
+        25px 0 5px;
+}
+
+
+.modelo-staging-page .ssis-node {
+
+    padding: 22px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f5f4fa,
+            #faf9fc
+        );
+
+    border-left:
+        4px solid
+        var(--indigo);
+}
+
+
+.modelo-staging-page .ssis-node:nth-child(2) {
+
+    border-left-color:
+        var(--plum);
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf3f8,
+            #faf9fc
+        );
+}
+
+
+.modelo-staging-page .ssis-node span {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--muted);
+
+    font-size: .66rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .ssis-node strong {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color:
+        var(--indigo);
+
+    font-size: 1rem;
+}
+
+
+.modelo-staging-page .ssis-node small {
+
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+
+    font-size: .76rem;
+}
+
+
+/* =========================================================
+   EJECUCIÓN
+   ========================================================= */
+
+.modelo-staging-page .execution-result {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+
+    margin-top: 22px;
+}
+
+
+.modelo-staging-page .execution-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 17px;
+
+    border:
+        1px solid
+        #dfece9;
+
+    border-radius: 15px;
+
+    background:
+        #f3faf8;
+}
+
+
+.modelo-staging-page .execution-status {
+
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background:
+        rgba(46,156,147,.13);
+
+    color:
+        var(--teal);
+
+    font-weight: 900;
+}
+
+
+.modelo-staging-page .execution-item strong {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color:
+        var(--indigo);
+
+    font-size: .87rem;
+}
+
+
+.modelo-staging-page .execution-item small {
+
+    color:
+        var(--muted);
+
+    font-size: .73rem;
+}
+
+
+/* =========================================================
+   ARQUITECTURA COMPLETA
+   ========================================================= */
+
+.modelo-staging-page .full-architecture {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr auto 1fr auto 1fr;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
+
+    padding: 22px;
+
+    border-radius: 20px;
+
+    background:
+        #faf9fc;
+
+    border:
+        1px solid
+        var(--border);
+}
+
+
+.modelo-staging-page .architecture-column {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+
+.modelo-staging-page .architecture-label {
+
+    margin-bottom: 2px;
+
+    color:
+        var(--muted);
+
+    font-size: .65rem;
+
+    font-weight: 800;
+
+    letter-spacing: .08em;
+}
+
+
+.modelo-staging-page .architecture-box {
+
+    padding: 13px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 11px;
+
+    background:
+        white;
+
+    color:
+        var(--indigo);
+
+    font-size: .75rem;
+
+    font-weight: 700;
+
+    text-align: center;
+}
+
+
+.modelo-staging-page .architecture-box.staging-box {
+
+    border-color:
+        rgba(46,156,147,.25);
+
+    color:
+        var(--teal);
+}
+
+
+.modelo-staging-page .architecture-box.transform-box {
+
+    border-color:
+        rgba(140,78,126,.25);
+
+    color:
+        var(--plum);
+}
+
+
+.modelo-staging-page .architecture-box.model-box {
+
+    border-color:
+        rgba(105,95,77,.25);
+
+    color:
+        var(--gold);
+}
+
+
+.modelo-staging-page .big-arrow {
+
+    color:
+        var(--plum);
+
+    font-size:
+        1.4rem;
+
+    font-weight:
+        900;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .etapa3-page {
+
+        width:
+            calc(100% - 100px);
+    }
+
+    .etapa3-page .side-nav.left {
+
+        left:
+            8px;
+    }
+
+    .etapa3-page .side-nav.right {
+
+        right:
+            8px;
+    }
+
+    .etapa3-page .side-nav a {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        font-size:
+            1.1rem;
+    }
+}
+
+
+@media (max-width: 950px) {
+
+    .modelo-staging-page .hierarchy-flow,
+    .modelo-staging-page .architecture-flow {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .hierarchy-arrow,
+    .modelo-staging-page .architecture-arrow {
+
+        transform:
+            rotate(90deg);
+
+        text-align:
+            center;
+    }
+
+    .modelo-staging-page .independence-box {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .independence-center {
+
+        order:
+            2;
+    }
+
+    .modelo-staging-page .independence-side.vehiculo {
+
+        order:
+            3;
+    }
+
+    .modelo-staging-page .full-architecture {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .big-arrow {
+
+        transform:
+            rotate(90deg);
+
+        text-align:
+            center;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .dataset-grid,
+    .problem-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .metrics {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .criteria {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .er-model {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .connector-line {
+
+        width:
+            2px;
+
+        height:
+            30px;
+
+        margin:
+            0 auto;
+    }
+
+    .hero-number,
+    .stage-number {
+
+        display:
+            none;
+    }
+
+    .match-box {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .reglas-page .flow {
+
+        flex-direction:
+            column;
+    }
+
+    .reglas-page .flow-step {
+
+        width:
+            100%;
+    }
+
+    .reglas-page .flow-arrow {
+
+        transform:
+            rotate(90deg);
+    }
+
+    .modelo-staging-page .staging-grid,
+    .modelo-staging-page .ssis-flow,
+    .modelo-staging-page .execution-result {
+
+        grid-template-columns:
+            1fr;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .etapa3-page {
+
+        width:
+            calc(100% - 32px);
+
+        padding:
+            20px 0 40px;
+    }
+
+    /*
+     * En móvil se mantienen ocultas las flechas,
+     * igual que en la versión anterior.
+     */
+
+    .etapa3-page .side-nav {
+
+        display:
+            none;
+    }
+
+    .etapa-nav {
+
+        gap:
+            8px;
+    }
+
+    .nav-btn {
+
+        padding:
+            10px 13px;
+
+        font-size:
+            .78rem;
+    }
+
+    .nav-center {
+
+        display:
+            none;
+    }
+
+    .rules-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .etapa3-page .hero {
+
+        padding:
+            28px 22px;
+    }
+
+    .etapa3-page .section {
+
+        padding:
+            24px 22px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .modelo-staging-page .evidence-frame {
+
+        min-height:
+            220px;
+    }
+
+    .modelo-staging-page .evidence-large
+    .evidence-frame {
+
+        min-height:
+            250px;
+    }
+
+    .modelo-staging-page .technical-note {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .modelo-staging-page .technical-note-icon {
+
+        width:
+            38px;
+
+        height:
+            38px;
+    }
+
+    .modelo-staging-page .entity-detail-body {
+
+        padding:
+            8px 15px;
+    }
+
+    .modelo-staging-page .field-row {
+
+        font-size:
+            .7rem;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .metrics {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .dataset-stats {
+
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .comparison {
+
+        display:
+            block;
+
+        overflow-x:
+            auto;
+    }
+
+    .etapa3-page .section {
+
+        padding:
+            22px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .metrics,
+    .dataset-stats {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .etapa3-page .hero {
+
+        padding:
+            24px 18px;
+
+        border-radius:
+            18px;
+    }
+
+    .etapa3-page .hero h1 {
+
+        font-size:
+            clamp(
+                1.8rem,
+                8vw,
+                2.5rem
+            );
+    }
+
+    .result-box {
+
+        grid-template-columns:
+            1fr;
+    }
+}
+
+
+/* =========================================================
+   RESULTADOS DE ITERACION 1 Y COMPARACION DE EJECUCIONES
+   ========================================================= */
+
+.resultados-etapa3-page .results-section-title {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+.resultados-etapa3-page .results-index {
+
+    display: inline-grid;
+
+    place-items: center;
+
+    flex: 0 0 38px;
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 8px;
+
+    background: rgba(46, 156, 147, .13);
+
+    color: var(--teal);
+
+    font-weight: 800;
+}
+
+.resultados-etapa3-page .results-section-title h2,
+.resultados-etapa3-page .results-conclusion-grid h2 {
+
+    margin: 0 0 5px;
+
+    color: var(--indigo);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.35rem;
+}
+
+.resultados-etapa3-page .results-section-title p {
+
+    margin: 0;
+
+    color: var(--muted);
+
+    line-height: 1.55;
+}
+
+.resultados-etapa3-page .results-kpis {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    margin: 10px 0 24px;
+
+    border-top: 1px solid var(--border);
+
+    border-bottom: 1px solid var(--border);
+}
+
+.resultados-etapa3-page .results-kpi {
+
+    min-width: 0;
+
+    padding: 20px 16px;
+
+    border-right: 1px solid var(--border);
+}
+
+.resultados-etapa3-page .results-kpi:last-child {
+
+    border-right: 0;
+}
+
+.resultados-etapa3-page .results-kpi strong {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--indigo);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.75rem;
+
+    line-height: 1.15;
+}
+
+.resultados-etapa3-page .results-kpi:nth-child(2) strong {
+
+    color: var(--plum);
+}
+
+.resultados-etapa3-page .results-kpi:nth-child(4) strong {
+
+    color: #a56a12;
+}
+
+.resultados-etapa3-page .results-kpi span {
+
+    display: block;
+
+    color: var(--muted);
+
+    font-size: .88rem;
+
+    line-height: 1.45;
+}
+
+.resultados-etapa3-page .results-table-wrap {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+}
+
+.resultados-etapa3-page .results-table {
+
+    width: 100%;
+
+    min-width: 640px;
+
+    border-collapse: collapse;
+
+    background: var(--white);
+}
+
+.resultados-etapa3-page .results-analysis-table {
+
+    min-width: 1120px;
+}
+
+.resultados-etapa3-page .results-table caption {
+
+    padding: 12px 14px;
+
+    color: var(--muted);
+
+    text-align: left;
+
+    font-size: .85rem;
+
+    font-weight: 600;
+}
+
+.resultados-etapa3-page .results-table th {
+
+    padding: 12px 14px;
+
+    background: var(--indigo);
+
+    color: var(--white);
+
+    text-align: left;
+
+    font-size: .84rem;
+
+    font-weight: 700;
+}
+
+.resultados-etapa3-page .results-table td {
+
+    padding: 12px 14px;
+
+    border-top: 1px solid var(--border);
+
+    color: var(--ink);
+
+    font-size: .88rem;
+
+    line-height: 1.5;
+
+    vertical-align: top;
+}
+
+.resultados-etapa3-page .results-table tbody tr:last-child td,
+.resultados-etapa3-page .results-table tbody tr:last-child th {
+
+    border-bottom: 0;
+}
+
+.resultados-etapa3-page .results-note {
+
+    margin: 18px 0 0;
+
+    padding: 14px 16px;
+
+    border-left: 4px solid var(--teal);
+
+    background: rgba(46, 156, 147, .08);
+
+    color: var(--ink);
+
+    font-size: .9rem;
+
+    line-height: 1.6;
+}
+
+.resultados-etapa3-page .results-note-warning {
+
+    border-left-color: #b87a16;
+
+    background: rgba(217, 164, 65, .12);
+}
+
+.resultados-etapa3-page .results-note p {
+
+    margin: 6px 0 0;
+}
+
+.resultados-etapa3-page .results-review-example {
+
+    margin-top: 22px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid var(--border);
+}
+
+.resultados-etapa3-page .results-review-example h3 {
+
+    margin: 0 0 7px;
+
+    color: var(--plum);
+
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 1.05rem;
+}
+
+.resultados-etapa3-page .results-review-example p {
+
+    max-width: 850px;
+
+    margin: 0;
+
+    color: var(--ink);
+
+    line-height: 1.65;
+}
+
+.resultados-etapa3-page .results-evidence-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.resultados-etapa3-page .results-evidence {
+
+    min-width: 0;
+
+    margin: 0;
+}
+
+.resultados-etapa3-page .results-evidence img {
+
+    display: block;
+
+    width: 100%;
+
+    max-height: 440px;
+
+    object-fit: contain;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
+
+    background: #f2f3f4;
+}
+
+.resultados-etapa3-page .results-evidence figcaption {
+
+    padding-top: 8px;
+
+    color: var(--muted);
+
+    font-size: .84rem;
+
+    line-height: 1.5;
+}
+
+.resultados-etapa3-page .results-conclusion-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 28px;
+}
+
+.resultados-etapa3-page .results-conclusion-grid p {
+
+    margin: 8px 0 0;
+
+    color: var(--muted);
+
+    line-height: 1.65;
+}
+
+@media (max-width: 850px) {
+
+    .resultados-etapa3-page .results-kpis {
+
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .resultados-etapa3-page .results-kpi:nth-child(2) {
+
+        border-right: 0;
+    }
+
+    .resultados-etapa3-page .results-kpi:nth-child(n + 3) {
+
+        border-top: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 650px) {
+
+    .resultados-etapa3-page .results-evidence-grid,
+    .resultados-etapa3-page .results-conclusion-grid {
+
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .resultados-etapa3-page .results-kpi {
+
+        padding: 16px 10px;
+    }
+
+    .resultados-etapa3-page .results-kpi strong {
+
+        font-size: 1.4rem;
+    }
+}
+
+
+/* =========================================================
+   SSIS — TÍTULOS DE SECCIÓN
+   Reutiliza el patrón de Reglas/Diagnóstico para esta página
+   ========================================================= */
+
+.ssis-page .section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.ssis-page .section-title h2 {
+
+    margin: 0;
+
+    color:
+        var(--indigo);
+
+    font-size: 1.35rem;
+}
+
+
+.ssis-page .section-number {
+
+    min-width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        var(--mist);
+
+    color:
+        var(--indigo);
+
+    font-weight: 800;
+
+    font-size: .95rem;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SSIS — TARJETAS DE COMPONENTES DEL DATA FLOW
+   ========================================================= */
+
+.ssis-page .component-flow {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: stretch;
+
+    gap: 0;
+
+    margin: 22px 0;
+}
+
+
+.ssis-page .component-node {
+
+    flex: 1 1 180px;
+
+    background:
+        var(--mist);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-top:
+        4px solid
+        var(--teal);
+
+    border-radius: 16px;
+
+    padding: 16px 18px;
+
+    min-width: 160px;
+}
+
+
+.ssis-page .component-node.branch-revision {
+
+    border-top-color:
+        var(--plum);
+}
+
+
+.ssis-page .component-node.branch-error {
+
+    border-top-color:
+        var(--gold);
+}
+
+
+.ssis-page .component-node span.component-tag {
+
+    display: block;
+
+    font-size: .68rem;
+
+    font-weight: 700;
+
+    letter-spacing: .06em;
+
+    text-transform: uppercase;
+
+    color:
+        var(--muted);
+
+    margin-bottom: 6px;
+}
+
+
+.ssis-page .component-node strong {
+
+    display: block;
+
+    color:
+        var(--indigo);
+
+    font-size: .98rem;
+
+    margin-bottom: 4px;
+}
+
+
+.ssis-page .component-node small {
+
+    display: block;
+
+    color:
+        var(--muted);
+
+    font-size: .78rem;
+
+    line-height: 1.5;
+}
+
+
+.ssis-page .component-arrow {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex: 0 0 40px;
+
+    color:
+        var(--teal);
+
+    font-size: 1.3rem;
+
+    font-weight: 700;
+}
+
+
+@media (max-width: 750px) {
+
+    .ssis-page .component-flow {
+
+        flex-direction: column;
+    }
+
+    .ssis-page .component-arrow {
+
+        transform: rotate(90deg);
+
+        flex: 0 0 30px;
+    }
+}

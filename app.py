@@ -18,7 +18,7 @@ def crear_admin_por_defecto():
     df = cargar_usuarios()
     if not ((df["Correo"] == "nicolas72lol@gmail.com") & (df["Rol"] == "admin")).any():
         registrar_usuario("Nicolás", "nicolas72lol@gmail.com", "admin", rol="admin")
-        print("✅ Usuario administrador creado por defecto")
+        print("Usuario administrador creado por defecto")
 
 crear_admin_por_defecto()
 app = Flask(__name__)
@@ -31,18 +31,18 @@ def cargar_geojson():
     try:
         geojson_path = 'static/sabana_centro.geojson'
         if not os.path.exists(geojson_path) or os.path.getsize(geojson_path) == 0:
-            print(f"⚠️ Archivo {geojson_path} no válido")
+            print(f"Archivo {geojson_path} no válido")
             return False
         with open(geojson_path, 'r', encoding='utf-8') as f:
             contenido = f.read().strip()
             if not contenido:
-                print(f"⚠️ Archivo {geojson_path} vacío")
+                print(f"Archivo {geojson_path} vacío")
                 return False
             sabana_geojson = json.loads(contenido)
-            print(f"✅ GeoJSON cargado con {len(sabana_geojson['features'])} municipios")
+            print(f"GeoJSON cargado con {len(sabana_geojson['features'])} municipios")
             return True
     except Exception as e:
-        print(f"❌ Error cargando GeoJSON: {e}")
+        print(f"Error cargando GeoJSON: {e}")
         return False
 
 def obtener_municipio(lat, lng):
@@ -321,6 +321,145 @@ def descargar_vehiculos():
 def internal_error(e):
     app.logger.exception("Internal server error")
     return jsonify({"error": "Internal server error"}), 500
+
+# =========================
+# ETAPA 2 - CALIDAD DE DATOS
+# =========================
+
+@app.route("/Etapa2")
+def Etapa2():
+    return render_template("Etapa2/menu.html")
+
+
+@app.route("/Etapa2/proposito")
+def Etapa2_proposito():
+    return render_template("Etapa2/proposito.html")
+
+
+@app.route("/Etapa2/requisitos")
+def Etapa2_requisitos():
+    return render_template("Etapa2/requisitos.html")
+
+
+@app.route("/Etapa2/perfilamiento")
+def Etapa2_perfilamiento():
+    return render_template("Etapa2/perfilamiento.html")
+
+
+@app.route("/Etapa2/metricas")
+def Etapa2_metricas():
+    return render_template("Etapa2/metricas.html")
+
+
+@app.route("/Etapa2/problemas")
+def Etapa2_problemas():
+    return render_template("Etapa2/problemas.html")
+
+
+@app.route("/Etapa2/causas")
+def Etapa2_causas():
+    return render_template("Etapa2/causas.html")
+
+
+@app.route("/Etapa2/integracion")
+def Etapa2_integracion():
+    return render_template("Etapa2/integracion.html")
+
+
+@app.route("/Etapa2/tratamiento")
+def Etapa2_tratamiento():
+    return render_template("Etapa2/tratamiento.html")
+
+
+@app.route("/Etapa2/comparacion")
+def Etapa2_comparacion():
+    return render_template("Etapa2/comparacion.html")
+
+
+@app.route("/Etapa2/conclusiones")
+def Etapa2_conclusiones():
+    return render_template("Etapa2/conclusiones.html")
+
+# =========================
+# ETAPA 4 - ESTRUCTURA Y TRABAJO COLABORATIVO
+# =========================
+
+@app.route("/Etapa4")
+def etapa4():
+    powerbi_url = os.getenv(
+        "POWERBI_REPORT_URL",
+        "https://app.powerbi.com/view?r=eyJrIjoiZTc1MTFjOWUtMmJlMy00Mjg0LThiZjQtMTY4NWE3ZGRjMTc0IiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9",
+    )
+    return render_template("Etapa4/menu.html", powerbi_url=powerbi_url)
+
+
+@app.route("/Etapa4/integrante1")
+def etapa4_integrante1():
+    return render_template("Etapa4/integrante1.html")
+
+
+@app.route("/Etapa4/integrante2")
+def etapa4_integrante2():
+    return render_template("Etapa4/integrante2.html")
+
+
+@app.route("/Etapa4/integrante3")
+def etapa4_integrante3():
+    powerbi_url = os.getenv(
+        "POWERBI_TEMPORAL_URL",
+        "https://app.powerbi.com/view?r=eyJrIjoiOGZhMTBiYjItYzhkZS00NDkwLTlmNjMtZWM0NjViOTNkYzhiIiwidCI6IjA3ZGE2N2EwLTFmNDMtNGU4Yy05NzdmLTVmODhiNjQ3MGVlNiIsImMiOjR9",
+    )
+    return render_template("Etapa4/integrante3.html", powerbi_url=powerbi_url)
+
+
+@app.route("/Etapa4/integrante4")
+def etapa4_integrante4():
+    return render_template("Etapa4/integrante4.html")
+
+# =========================
+# ETAPA 3 - LIMPIEZA DE DATOS
+# =========================
+
+@app.route("/Etapa3")
+def etapa3():
+    return render_template("Etapa3/menu.html")
+
+@app.route("/Etapa3/diagnostico")
+def etapa3_diagnostico():
+    return render_template("Etapa3/diagnostico.html")
+
+@app.route("/Etapa3/reglas")
+def reglas():
+    return render_template("Etapa3/reglas.html")
+
+@app.route("/Etapa3/ssis")
+def ssis():
+    return render_template("Etapa3/ssis.html")
+
+
+@app.route("/Etapa3/staging")
+def staging():
+    return render_template("Etapa3/staging.html")
+
+
+@app.route("/Etapa3/iteracion1y2")
+def iteracion1y2():
+    return render_template("Etapa3/iteracion1y2.html")
+
+
+@app.route("/Etapa3/iteracion3")
+def iteracion3():
+    return render_template("Etapa3/iteracion3.html")
+
+
+@app.route("/Etapa3/comparacion")
+def comparacion():
+    return render_template("Etapa3/comparacion.html")
+
+
+@app.route("/Etapa3/video")
+def video():
+    return render_template("Etapa3/video.html")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

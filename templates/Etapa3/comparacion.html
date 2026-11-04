@@ -1,0 +1,599 @@
+{% extends "base.html" %}
+
+{% block title %}Etapa 3 - Comparación de Iteraciones{% endblock %}
+
+{% block head %}
+
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/etapa3_estilos.css') }}"
+>
+{% endblock %}
+
+{% block content %}
+
+<div class="etapa3-page resultados-etapa3-page">
+
+```
+<div class="side-nav left">
+    <a href="{{ url_for('iteracion3') }}" title="Volver a Iteración 3">←</a>
+</div>
+
+<div class="side-nav right">
+    <a href="{{ url_for('video') }}" title="Ver video">→</a>
+</div>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="stage-tag">
+            Etapa 3 · Comparación
+        </span>
+
+        <h1>
+            Comparación de las tres iteraciones
+        </h1>
+
+        <p>
+            Comparación del comportamiento del proceso SSIS durante
+            las tres ejecuciones documentadas y síntesis de los
+            cambios realizados a partir de los hallazgos.
+        </p>
+
+    </div>
+
+    <div class="hero-number">
+        07
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            01
+        </span>
+
+        <div>
+
+            <h2>
+                Evolución del proceso
+            </h2>
+
+            <p>
+                Comparación general de cada ejecución.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-table-wrap">
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Aspecto
+                    </th>
+
+                    <th>
+                        Iteración 1
+                    </th>
+
+                    <th>
+                        Iteración 2
+                    </th>
+
+                    <th>
+                        Iteración 3
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Objetivo
+                    </td>
+
+                    <td>
+                        Identificar comportamiento inicial.
+                    </td>
+
+                    <td>
+                        Comprobar reproducibilidad.
+                    </td>
+
+                    <td>
+                        Ejecutar el proceso después de los ajustes.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Estado inicial
+                    </td>
+
+                    <td>
+                        Primera carga.
+                    </td>
+
+                    <td>
+                        Estado limpiado previamente.
+                    </td>
+
+                    <td>
+                        Estado limpiado previamente.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Duplicados
+                    </td>
+
+                    <td>
+                        147.575 identificados.
+                    </td>
+
+                    <td>
+                        Verificación de no acumulación.
+                    </td>
+
+                    <td>
+                        Verificación posterior a los ajustes.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Registros en revisión
+                    </td>
+
+                    <td>
+                        8.666
+                    </td>
+
+                    <td>
+                        <strong>Completar con resultado real.</strong>
+                    </td>
+
+                    <td>
+                        <strong>Completar con resultado real.</strong>
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Motivos de revisión
+                    </td>
+
+                    <td>
+                        Presentan hallazgos documentados.
+                    </td>
+
+                    <td>
+                        Revisados.
+                    </td>
+
+                    <td>
+                        Ajustados/documentados.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Reproducibilidad
+                    </td>
+
+                    <td>
+                        Línea base.
+                    </td>
+
+                    <td>
+                        Verificada mediante reejecución.
+                    </td>
+
+                    <td>
+                        Verificada después de los ajustes.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            02
+        </span>
+
+        <div>
+
+            <h2>
+                Cambios entre iteraciones
+            </h2>
+
+            <p>
+                Evolución documentada del proceso.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="rules-grid">
+
+        <div class="rule-card indigo">
+
+            <span class="rule-code">
+                I1
+            </span>
+
+            <h3>
+                Línea base
+            </h3>
+
+            <p>
+                Se ejecuta el proceso y se identifican los primeros
+                hallazgos de calidad y trazabilidad.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card plum">
+
+            <span class="rule-code">
+                I2
+            </span>
+
+            <h3>
+                Repetición
+            </h3>
+
+            <p>
+                Se ejecuta nuevamente el proceso para comprobar
+                que la carga sea reproducible.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card gold">
+
+            <span class="rule-code">
+                I3
+            </span>
+
+            <h3>
+                Ajuste
+            </h3>
+
+            <p>
+                Se incorporan las correcciones definidas a partir
+                de los hallazgos anteriores.
+            </p>
+
+        </div>
+
+
+        <div class="rule-card teal">
+
+            <span class="rule-code">
+                FINAL
+            </span>
+
+            <h3>
+                Evidencia
+            </h3>
+
+            <p>
+                Se documentan los resultados para cerrar el ciclo
+                de construcción del ETL.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            03
+        </span>
+
+        <div>
+
+            <h2>
+                Criterios de comparación
+            </h2>
+
+            <p>
+                Variables utilizadas para analizar las ejecuciones.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-table-wrap">
+
+        <table class="results-table">
+
+            <thead>
+
+                <tr>
+                    <th>Criterio</th>
+                    <th>Qué se verifica</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        Cantidad de registros
+                    </td>
+
+                    <td>
+                        Que los conteos correspondan con las
+                        entradas y salidas esperadas.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Duplicados
+                    </td>
+
+                    <td>
+                        Que las filas repetidas sean identificadas
+                        y no se acumulen entre ejecuciones.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Registros en revisión
+                    </td>
+
+                    <td>
+                        Que los registros que incumplen reglas
+                        puedan ser identificados y trazados.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Motivo de revisión
+                    </td>
+
+                    <td>
+                        Que cada registro separado tenga una
+                        explicación consistente.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Transformaciones
+                    </td>
+
+                    <td>
+                        Que las reglas de limpieza y conversión
+                        continúen funcionando después de los ajustes.
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        Reproducibilidad
+                    </td>
+
+                    <td>
+                        Que una nueva ejecución no genere
+                        acumulación inesperada de registros.
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="results-section-title">
+
+        <span class="results-index">
+            04
+        </span>
+
+        <div>
+
+            <h2>
+                Evidencia comparativa
+            </h2>
+
+            <p>
+                Capturas representativas del proceso.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="results-evidence-grid">
+
+        <figure class="results-evidence">
+
+            <img
+                src="{{ url_for('static', filename='img/etapa3/comparacion/iteracion1.jpg') }}"
+                alt="Evidencia de Iteración 1"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Iteración 1.
+            </figcaption>
+
+        </figure>
+
+
+        <figure class="results-evidence">
+
+            <img
+                src="{{ url_for('static', filename='img/etapa3/comparacion/iteracion2.jpg') }}"
+                alt="Evidencia de Iteración 2"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Iteración 2.
+            </figcaption>
+
+        </figure>
+
+
+        <figure class="results-evidence">
+
+            <img
+                src="{{ url_for('static', filename='img/etapa3/comparacion/iteracion3.jpg') }}"
+                alt="Evidencia de Iteración 3"
+                loading="lazy"
+            >
+
+            <figcaption>
+                Iteración 3.
+            </figcaption>
+
+        </figure>
+
+    </div>
+
+</section>
+
+
+<section class="result-box">
+
+    <div class="result-icon">
+        ✓
+    </div>
+
+    <div>
+
+        <h3>
+            Cierre de la construcción del proceso ETL
+        </h3>
+
+        <p>
+
+            La comparación de las iteraciones permite documentar
+            cómo el paquete SSIS fue ejecutado, revisado y ajustado
+            progresivamente. La Iteración 1 establece la línea base,
+            la Iteración 2 permite comprobar la repetibilidad y la
+            Iteración 3 incorpora los ajustes derivados de los
+            hallazgos anteriores.
+
+            Los resultados numéricos finales deben corresponder a
+            las evidencias obtenidas directamente durante cada
+            ejecución.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<div class="etapa-nav">
+
+    <a
+        href="{{ url_for('iteracion3') }}"
+        class="nav-btn previous"
+    >
+        ← Iteración 3
+    </a>
+
+    <div class="nav-center">
+
+        <strong>
+            Comparación
+        </strong>
+
+        7 de 8
+
+    </div>
+
+    <a
+        href="{{ url_for('video') }}"
+        class="nav-btn next"
+    >
+        Video →
+    </a>
+
+</div>
+```
+
+</div>
+
+{% endblock %}

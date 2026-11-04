@@ -1,0 +1,2216 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfilamiento de datos | Etapa 2{% endblock %}
+
+{% block head %}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Perfilamiento de datos | Etapa 2</title>
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+/* ==================================================
+   VARIABLES
+   ================================================== */
+
+:root {
+    --indigo: #232A54;
+    --indigo-dark: #171B3B;
+    --plum: #8C4E7E;
+    --gold: #D9A441;
+    --teal: #2E9C93;
+
+    --mist: #F6F4FA;
+    --ink: #2A2A38;
+    --muted: #777687;
+    --border: #E4E1EB;
+    --white: #FFFFFF;
+}
+
+
+/* ==================================================
+   CONFIGURACIÓN GENERAL
+   ================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.etapa2-perfilamiento-page {
+    color: var(--ink);
+
+    font-family: "Inter", sans-serif;
+
+    line-height: 1.7;
+
+    min-height: 100vh;
+
+    position: relative;
+    z-index: 2;
+}
+
+
+/* Espacio para que el contenido no quede oculto detrás
+   de la barra de navegación fija. */
+
+.etapa2-perfilamiento-page main {
+    padding-bottom: 110px;
+}
+
+
+/* ==================================================
+   FONDO
+   ================================================== */
+
+.etapa2-perfilamiento-page::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(140, 78, 126, 0.07),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(46, 156, 147, 0.07),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(217, 164, 65, 0.05),
+            transparent 30%
+        );
+
+    z-index: -1;
+}
+
+
+/* ==================================================
+   HEADER
+   ================================================== */
+
+.stage-header {
+    background:
+        linear-gradient(
+            135deg,
+            var(--indigo-dark),
+            var(--indigo)
+        );
+
+    color: white;
+
+    padding: 55px 25px 70px;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.stage-header::after {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -130px;
+    top: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.header-content {
+    max-width: 1050px;
+
+    margin: auto;
+
+    position: relative;
+    z-index: 2;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 7px 14px;
+
+    border-radius: 30px;
+
+    background: rgba(255, 255, 255, 0.09);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 20px;
+}
+
+.stage-header h1 {
+    font-family: "Poppins", sans-serif;
+
+    font-size: clamp(32px, 5vw, 52px);
+
+    line-height: 1.15;
+
+    margin-bottom: 18px;
+}
+
+.stage-header p {
+    max-width: 760px;
+
+    color: rgba(255, 255, 255, 0.76);
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+
+/* ==================================================
+   CONTENEDOR
+   ================================================== */
+
+.etapa2-perfilamiento-page main {
+    max-width: 1050px;
+
+    margin: 24px auto 0;
+
+    padding: 0 20px 150px;
+
+    position: relative;
+    z-index: 3;
+}
+
+
+/* ==================================================
+   TARJETAS
+   ================================================== */
+
+.section-card {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    padding: 30px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 12px 35px rgba(35, 42, 84, 0.045);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 18px;
+}
+
+.section-number {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: rgba(46, 156, 147, 0.10);
+
+    color: var(--teal);
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+.section-title h2 {
+    font-family: "Poppins", sans-serif;
+
+    color: var(--indigo);
+
+    font-size: 21px;
+
+    line-height: 1.3;
+}
+
+.section-card p {
+    color: var(--muted);
+
+    font-size: 14px;
+
+    margin-bottom: 12px;
+}
+
+.section-card p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ==================================================
+   INTRODUCCIÓN
+   ================================================== */
+
+.intro-card {
+    border-left: 4px solid var(--teal);
+}
+
+.intro-card p {
+    font-size: 15px;
+}
+
+
+/* ==================================================
+   ESTADÍSTICAS
+   ================================================== */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin-top: 22px;
+}
+
+.stat {
+    padding: 22px 18px;
+
+    background: #FCFBFD;
+
+    border: 1px solid var(--border);
+
+    border-radius: 17px;
+
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+
+    font-family: "Poppins", sans-serif;
+
+    color: var(--indigo);
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    margin-bottom: 7px;
+}
+
+.stat-label {
+    display: block;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.6px;
+}
+
+
+/* ==================================================
+   TABLA
+   ================================================== */
+
+.table-wrapper {
+    overflow-x: auto;
+
+    margin-top: 20px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 700px;
+}
+
+th {
+    padding: 15px;
+
+    text-align: left;
+
+    background: var(--indigo);
+
+    color: white;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+td {
+    padding: 14px 15px;
+
+    border-bottom: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    vertical-align: top;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+td:first-child {
+    color: var(--indigo);
+
+    font-weight: 600;
+}
+
+
+/* ==================================================
+   ETIQUETAS DE TIPO
+   ================================================== */
+
+.type {
+    display: inline-block;
+
+    padding: 4px 9px;
+
+    border-radius: 8px;
+
+    background: rgba(46, 156, 147, 0.09);
+
+    color: var(--teal);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* ==================================================
+   BLOQUES DE INFORMACIÓN
+   ================================================== */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin-top: 20px;
+}
+
+.info-box {
+    padding: 20px;
+
+    border-radius: 16px;
+
+    border: 1px solid var(--border);
+
+    background: #FCFBFD;
+}
+
+.info-box h3 {
+    font-family: "Poppins", sans-serif;
+
+    color: var(--indigo);
+
+    font-size: 15px;
+
+    margin-bottom: 8px;
+}
+
+.info-box p {
+    font-size: 13px;
+
+    margin: 0;
+}
+
+
+/* ==================================================
+   ALERTA
+   ================================================== */
+
+.notice {
+    margin-top: 20px;
+
+    padding: 20px 22px;
+
+    border-radius: 16px;
+
+    background:
+        rgba(217, 164, 65, 0.08);
+
+    border: 1px solid rgba(217, 164, 65, 0.22);
+}
+
+.notice strong {
+    color: var(--indigo);
+
+    font-family: "Poppins", sans-serif;
+}
+
+.notice p {
+    margin-top: 6px;
+
+    margin-bottom: 0;
+}
+
+
+/* ==================================================
+   LISTA
+   ================================================== */
+
+.profile-list {
+    display: grid;
+
+    gap: 11px;
+
+    margin-top: 20px;
+}
+
+.profile-item {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding: 15px 17px;
+
+    background: #FCFBFD;
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+}
+
+.profile-marker {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: rgba(140, 78, 126, 0.10);
+
+    color: var(--plum);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.profile-item p {
+    margin: 0;
+
+    font-size: 13px;
+}
+
+
+/* ==================================================
+   CONCLUSIÓN
+   ================================================== */
+
+.conclusion {
+    background:
+        linear-gradient(
+            135deg,
+            var(--indigo),
+            var(--indigo-dark)
+        );
+
+    color: white;
+
+    border: none;
+}
+
+.conclusion .section-number {
+    background: rgba(255, 255, 255, 0.12);
+
+    color: white;
+}
+
+.conclusion .section-title h2 {
+    color: white;
+}
+
+.conclusion p {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* ==================================================
+   NAVEGACIÓN ETAPA 2
+   ESTILO BASADO EN LA IMAGEN DE REFERENCIA
+   ================================================== */
+
+.navigation-buttons {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 100;
+
+    height: 72px;
+
+    padding: 0 28px;
+
+    background: rgba(242, 242, 246, 0.94);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-top: 1px solid rgba(35, 42, 84, 0.08);
+
+    box-shadow:
+        0 -5px 20px rgba(35, 42, 84, 0.06);
+}
+
+
+/* CONTENEDOR DE NAVEGACIÓN */
+
+.navigation-buttons-inner {
+    max-width: 1050px;
+
+    height: 100%;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+/* BOTONES */
+
+.nav-button {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-decoration: none;
+
+    color: #8C4E7E;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+
+    flex-shrink: 0;
+}
+
+
+/* TEXTO PEQUEÑO:
+   ANTERIOR / SIGUIENTE */
+
+.nav-button small {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #9B99A8;
+
+    font-family: "Inter", sans-serif;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    line-height: 1;
+
+    text-transform: uppercase;
+}
+
+
+/* TEXTO PRINCIPAL */
+
+.nav-label {
+    display: block;
+
+    white-space: nowrap;
+}
+
+
+/* ==================================================
+   CÍRCULOS DE LAS FLECHAS
+   ================================================== */
+
+.nav-arrow {
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #232A54;
+
+    color: #FFFFFF;
+
+    border: none;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 18px;
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* FLECHA ANTERIOR */
+
+.nav-prev .nav-arrow {
+    background: #FFFFFF;
+
+    color: #232A54;
+
+    border: 1px solid rgba(35, 42, 84, 0.10);
+
+    box-shadow:
+        0 3px 10px rgba(35, 42, 84, 0.08);
+}
+
+
+/* FLECHA SIGUIENTE */
+
+.nav-next .nav-arrow {
+    background: #232A54;
+
+    color: #FFFFFF;
+
+    border: none;
+
+    box-shadow:
+        0 4px 12px rgba(35, 42, 84, 0.16);
+}
+
+
+/* ==================================================
+   HOVER
+   ================================================== */
+
+.nav-button:hover {
+    color: #232A54;
+
+    transform: translateY(-1px);
+}
+
+.nav-button:hover .nav-arrow {
+    background: #8C4E7E;
+
+    color: #FFFFFF;
+
+    border-color: #8C4E7E;
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 5px 14px rgba(140, 78, 126, 0.22);
+}
+
+
+/* ==================================================
+   INDICADORES DE PROGRESO
+   ================================================== */
+
+.nav-progress {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    flex-shrink: 0;
+}
+
+.nav-progress span {
+    width: 6px;
+
+    height: 6px;
+
+    display: block;
+
+    border-radius: 50%;
+
+    background: #D9D7E2;
+
+    transition:
+        width 0.25s ease,
+        background 0.25s ease;
+}
+
+
+/* INDICADOR ACTIVO */
+
+.nav-progress span.active {
+    width: 22px;
+
+    height: 6px;
+
+    border-radius: 10px;
+
+    background: #2E9C93;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+   ================================================== */
+
+@media (max-width: 800px) {
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .section-card {
+        padding: 23px;
+    }
+
+    .stage-header {
+        padding: 45px 20px 60px;
+    }
+
+    .etapa2-perfilamiento-page main {
+        padding-left: 14px;
+
+        padding-right: 14px;
+    }
+
+    .navigation-buttons {
+        height: 66px;
+
+        padding: 0 16px;
+    }
+
+    .nav-button {
+        font-size: 12px;
+
+        gap: 9px;
+    }
+
+    .nav-arrow {
+        width: 34px;
+
+        height: 34px;
+
+        font-size: 16px;
+    }
+
+    .nav-progress {
+        gap: 4px;
+    }
+
+    .nav-progress span {
+        width: 5px;
+
+        height: 5px;
+    }
+
+    .nav-progress span.active {
+        width: 18px;
+
+        height: 5px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .stage-header h1 {
+        font-size: 31px;
+    }
+
+    .stage-header p {
+        font-size: 14px;
+    }
+
+    .section-card {
+        padding: 20px;
+    }
+
+    .section-title h2 {
+        font-size: 18px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .navigation-buttons {
+        height: 62px;
+
+        padding: 0 12px;
+    }
+
+    .nav-label {
+        display: none;
+    }
+
+    .nav-button {
+        gap: 0;
+    }
+
+    .nav-arrow {
+        width: 34px;
+
+        height: 34px;
+
+        font-size: 15px;
+    }
+
+    .nav-progress {
+        display: flex;
+    }
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="etapa2-perfilamiento-page">
+
+
+    <!-- ==================================================
+         HEADER
+         ================================================== -->
+
+    <header class="stage-header">
+
+        <div class="header-content">
+
+            <div class="badge">
+                ETAPA 2 · CALIDAD DE DATOS
+            </div>
+
+            <h1>
+                Perfilamiento de los datos
+            </h1>
+
+            <p>
+                Exploración inicial de la estructura, contenido y
+                características estadísticas del dataset de vehículos
+                involucrados en accidentes de tránsito.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==================================================
+         CONTENIDO PRINCIPAL
+         ================================================== -->
+
+    <main>
+
+
+        <!-- INTRODUCCIÓN -->
+
+        <section class="section-card intro-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <h2>
+                    ¿Qué es el perfilamiento?
+                </h2>
+
+            </div>
+
+            <p>
+                El perfilamiento de datos consiste en examinar de manera
+                sistemática la estructura y el contenido de un conjunto
+                de datos antes de realizar procesos de limpieza o análisis.
+            </p>
+
+            <p>
+                Esta etapa permite conocer las características reales del
+                dataset y detectar posibles problemas relacionados con
+                valores faltantes, duplicados, formatos, rangos, categorías
+                e inconsistencias.
+            </p>
+
+        </section>
+
+
+        <!-- RESUMEN GENERAL -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <h2>
+                    Resumen general del dataset
+                </h2>
+
+            </div>
+
+            <p>
+                El dataset seleccionado contiene información sobre
+                vehículos involucrados en accidentes de tránsito
+                registrados entre 2022 y 2026.
+            </p>
+
+            <div class="stats-grid">
+
+                <div class="stat">
+
+                    <span class="stat-value">
+                        406.540
+                    </span>
+
+                    <span class="stat-label">
+                        Registros
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="stat-value">
+                        9
+                    </span>
+
+                    <span class="stat-label">
+                        Variables
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="stat-value">
+                        64
+                    </span>
+
+                    <span class="stat-label">
+                        Valores faltantes
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span class="stat-value">
+                        147.575
+                    </span>
+
+                    <span class="stat-label">
+                        Duplicados completos
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="notice">
+
+                <strong>
+                    Observación inicial
+                </strong>
+
+                <p>
+                    La presencia de registros completamente duplicados
+                    constituye uno de los principales hallazgos del
+                    perfilamiento y deberá ser analizada antes de utilizar
+                    el dataset para cálculos que involucren conteos de
+                    vehículos.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ESTRUCTURA -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <h2>
+                    Estructura y tipos de variables
+                </h2>
+
+            </div>
+
+            <p>
+                Las nueve variables disponibles presentan diferentes
+                naturalezas y requieren reglas específicas de validación.
+            </p>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Variable
+                            </th>
+
+                            <th>
+                                Tipo esperado
+                            </th>
+
+                            <th>
+                                Función dentro del análisis
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                marca_vehiculo
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Categórica
+                                </span>
+                            </td>
+
+                            <td>
+                                Identificar fabricantes o marcas de
+                                vehículos involucrados.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                modelo_vehiculo
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Numérica
+                                </span>
+                            </td>
+
+                            <td>
+                                Representar el año del modelo del vehículo.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                tipo_vehiculo
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Categórica
+                                </span>
+                            </td>
+
+                            <td>
+                                Clasificar el tipo de vehículo involucrado.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                edad_vehiculo
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Numérica
+                                </span>
+                            </td>
+
+                            <td>
+                                Analizar la antigüedad del vehículo.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                fecha_accidente
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Fecha
+                                </span>
+                            </td>
+
+                            <td>
+                                Analizar la distribución temporal de los
+                                accidentes.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                gravedad_accidente
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Categórica
+                                </span>
+                            </td>
+
+                            <td>
+                                Diferenciar accidentes con heridos y
+                                accidentes con muertos.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                departamento_accidente
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Categórica
+                                </span>
+                            </td>
+
+                            <td>
+                                Analizar la distribución geográfica.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                municipio_accidente
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Categórica
+                                </span>
+                            </td>
+
+                            <td>
+                                Permitir análisis a nivel municipal.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                autoridad_de_transito
+                            </td>
+
+                            <td>
+                                <span class="type">
+                                    Categórica
+                                </span>
+                            </td>
+
+                            <td>
+                                Identificar la autoridad asociada al
+                                registro del accidente.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- VALORES FALTANTES -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    04
+                </div>
+
+                <h2>
+                    Valores faltantes
+                </h2>
+
+            </div>
+
+            <p>
+                El perfilamiento identificó una cantidad reducida de
+                valores faltantes en relación con el tamaño total del
+                dataset.
+            </p>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Variable
+                            </th>
+
+                            <th>
+                                Valores faltantes
+                            </th>
+
+                            <th>
+                                Porcentaje aproximado
+                            </th>
+
+                            <th>
+                                Observación
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                marca_vehiculo
+                            </td>
+
+                            <td>
+                                44
+                            </td>
+
+                            <td>
+                                0,011 %
+                            </td>
+
+                            <td>
+                                Ausencia de información sobre la marca.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                edad_vehiculo
+                            </td>
+
+                            <td>
+                                20
+                            </td>
+
+                            <td>
+                                0,005 %
+                            </td>
+
+                            <td>
+                                Ausencia de información sobre la edad.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Total
+                            </td>
+
+                            <td>
+                                64
+                            </td>
+
+                            <td>
+                                0,016 %
+                            </td>
+
+                            <td>
+                                Proporción muy pequeña frente al total.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- DUPLICADOS -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    05
+                </div>
+
+                <h2>
+                    Registros duplicados
+                </h2>
+
+            </div>
+
+            <p>
+                Se identificaron 147.575 registros completamente
+                duplicados. Esto representa aproximadamente el
+                36,3 % del total de registros.
+            </p>
+
+            <p>
+                Este hallazgo es relevante porque puede provocar una
+                sobreestimación de la cantidad de vehículos involucrados
+                si los duplicados se utilizan directamente en los análisis.
+            </p>
+
+
+            <div
+                class="highlight"
+                style="
+                    margin-top: 20px;
+                    padding: 22px;
+                    border-radius: 16px;
+                    background:
+                        linear-gradient(
+                            135deg,
+                            rgba(140, 78, 126, 0.08),
+                            rgba(35, 42, 84, 0.035)
+                        );
+                    border: 1px solid rgba(140, 78, 126, 0.18);
+                "
+            >
+
+                <strong>
+                    Indicador de unicidad
+                </strong>
+
+                <p style="margin-top: 6px;">
+                    Aproximadamente el 63,7 % de los registros son únicos,
+                    mientras que el 36,3 % corresponde a registros
+                    completamente duplicados.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ESTADÍSTICAS NUMÉRICAS -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    06
+                </div>
+
+                <h2>
+                    Estadísticas de variables numéricas
+                </h2>
+
+            </div>
+
+            <p>
+                El análisis descriptivo permite identificar valores
+                centrales, rangos y posibles observaciones atípicas
+                que deberán ser revisadas posteriormente.
+            </p>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Variable
+                            </th>
+
+                            <th>
+                                Mínimo
+                            </th>
+
+                            <th>
+                                Promedio
+                            </th>
+
+                            <th>
+                                Mediana
+                            </th>
+
+                            <th>
+                                Máximo
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                edad_vehiculo
+                            </td>
+
+                            <td>
+                                0
+                            </td>
+
+                            <td>
+                                10,47
+                            </td>
+
+                            <td>
+                                9
+                            </td>
+
+                            <td>
+                                1826
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                modelo_vehiculo
+                            </td>
+
+                            <td>
+                                1937
+                            </td>
+
+                            <td>
+                                2015,59
+                            </td>
+
+                            <td>
+                                —
+                            </td>
+
+                            <td>
+                                2027
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="notice">
+
+                <strong>
+                    Posible inconsistencia detectada
+                </strong>
+
+                <p>
+                    El valor máximo de 1.826 años en
+                    <strong>edad_vehiculo</strong> resulta incompatible
+                    con la interpretación de la variable y constituye
+                    un valor atípico que deberá ser investigado antes
+                    de utilizar esta variable en modelos o estadísticas.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- VARIABLES CATEGÓRICAS -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    07
+                </div>
+
+                <h2>
+                    Principales categorías encontradas
+                </h2>
+
+            </div>
+
+            <p>
+                El análisis de frecuencia permite conocer cuáles son las
+                categorías más representativas dentro del dataset.
+            </p>
+
+
+            <div class="info-grid">
+
+
+                <div class="info-box">
+
+                    <h3>
+                        Tipo de vehículo
+                    </h3>
+
+                    <p>
+                        MOTOCICLETA: 229.212 registros
+                    </p>
+
+                    <p>
+                        AUTOMOVIL: 92.166 registros
+                    </p>
+
+                    <p>
+                        CAMIONETA: 34.270 registros
+                    </p>
+
+                    <p>
+                        BUS: 16.127 registros
+                    </p>
+
+                    <p>
+                        CAMION: 10.840 registros
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <h3>
+                        Gravedad del accidente
+                    </h3>
+
+                    <p>
+                        CON HERIDOS: 385.881 registros
+                    </p>
+
+                    <p>
+                        CON MUERTOS: 20.659 registros
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <h3>
+                        Principales marcas
+                    </h3>
+
+                    <p>
+                        BAJAJ: 53.036 registros
+                    </p>
+
+                    <p>
+                        YAMAHA: 51.091 registros
+                    </p>
+
+                    <p>
+                        CHEVROLET: 46.343 registros
+                    </p>
+
+                    <p>
+                        AKT: 31.805 registros
+                    </p>
+
+                    <p>
+                        HONDA: 25.336 registros
+                    </p>
+
+                </div>
+
+
+                <div class="info-box">
+
+                    <h3>
+                        Principales departamentos
+                    </h3>
+
+                    <p>
+                        Antioquia: 162.012 registros
+                    </p>
+
+                    <p>
+                        Bogotá: 60.350 registros
+                    </p>
+
+                    <p>
+                        Valle: 49.560 registros
+                    </p>
+
+                    <p>
+                        Santander: 16.857 registros
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- PERFIL TEMPORAL -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    08
+                </div>
+
+                <h2>
+                    Cobertura temporal
+                </h2>
+
+            </div>
+
+            <p>
+                La variable <strong>fecha_accidente</strong> permite
+                identificar el período cubierto por los registros y
+                realizar posteriormente análisis de evolución temporal.
+            </p>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Año
+                            </th>
+
+                            <th>
+                                Registros
+                            </th>
+
+                            <th>
+                                Observación
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                2022
+                            </td>
+
+                            <td>
+                                114.478
+                            </td>
+
+                            <td>
+                                Cobertura disponible.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                2023
+                            </td>
+
+                            <td>
+                                111.609
+                            </td>
+
+                            <td>
+                                Cobertura disponible.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                2024
+                            </td>
+
+                            <td>
+                                120.342
+                            </td>
+
+                            <td>
+                                Mayor volumen de registros del período.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                2025
+                            </td>
+
+                            <td>
+                                57.867
+                            </td>
+
+                            <td>
+                                Puede existir diferencia por actualización
+                                o cobertura de reporte.
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                2026
+                            </td>
+
+                            <td>
+                                2.244
+                            </td>
+
+                            <td>
+                                Período parcial; no debe compararse
+                                directamente con años completos.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="notice">
+
+                <strong>
+                    Consideración temporal
+                </strong>
+
+                <p>
+                    La cantidad de registros por año no debe interpretarse
+                    automáticamente como una disminución o aumento real
+                    de la accidentalidad. Los períodos parciales y los
+                    posibles retrasos de reporte deben considerarse en
+                    el análisis de oportunidad.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- HALLAZGOS -->
+
+        <section class="section-card">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    09
+                </div>
+
+                <h2>
+                    Hallazgos iniciales del perfilamiento
+                </h2>
+
+            </div>
+
+
+            <div class="profile-list">
+
+
+                <div class="profile-item">
+
+                    <div class="profile-marker">
+                        1
+                    </div>
+
+                    <p>
+                        El dataset contiene un volumen considerable de
+                        información, con 406.540 registros y 9 variables.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-marker">
+                        2
+                    </div>
+
+                    <p>
+                        Los valores faltantes representan una proporción
+                        muy pequeña del conjunto de datos.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-marker">
+                        3
+                    </div>
+
+                    <p>
+                        La duplicación completa de registros representa
+                        uno de los principales problemas identificados.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-marker">
+                        4
+                    </div>
+
+                    <p>
+                        La variable edad_vehiculo presenta valores
+                        extremos que requieren validación.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-marker">
+                        5
+                    </div>
+
+                    <p>
+                        Existen diferencias importantes en la cantidad
+                        de registros entre años, por lo que la dimensión
+                        de oportunidad debe ser considerada.
+                    </p>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <div class="profile-marker">
+                        6
+                    </div>
+
+                    <p>
+                        Las variables geográficas y categóricas requieren
+                        procesos de homologación para evitar diferencias
+                        de escritura o clasificación.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- CONCLUSIÓN -->
+
+        <section class="section-card conclusion">
+
+            <div class="section-title">
+
+                <div class="section-number">
+                    10
+                </div>
+
+                <h2>
+                    Resultado del perfilamiento
+                </h2>
+
+            </div>
+
+            <p>
+                El perfilamiento permitió obtener una primera visión
+                objetiva sobre la estructura y calidad del dataset.
+                Aunque los valores faltantes son mínimos, se identificaron
+                problemas relevantes relacionados con duplicados,
+                valores atípicos, consistencia y cobertura temporal.
+            </p>
+
+            <p>
+                Estos hallazgos serán utilizados como evidencia para
+                construir las métricas de calidad y definir posteriormente
+                los tratamientos necesarios.
+            </p>
+
+        </section>
+
+
+        <!-- ==================================================
+             NAVEGACIÓN ETAPA 2
+             ================================================== -->
+
+        <div class="navigation-buttons">
+
+            <div class="navigation-buttons-inner">
+
+
+                <!-- ANTERIOR -->
+
+                <a
+                    href="{{ url_for('Etapa2_requisitos') }}"
+                    class="nav-button nav-prev"
+                >
+
+                    <span class="nav-arrow">
+                        ←
+                    </span>
+
+                    <span class="nav-label">
+
+                        <small>
+                            ANTERIOR
+                        </small>
+
+                        Requisitos de calidad
+
+                    </span>
+
+                </a>
+
+
+                <!-- PROGRESO -->
+
+                <div class="nav-progress">
+
+                    <span></span>
+                    <span></span>
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+
+                <!-- SIGUIENTE -->
+
+                <a
+                    href="{{ url_for('Etapa2_metricas') }}"
+                    class="nav-button nav-next"
+                >
+
+                    <span class="nav-label">
+
+                        <small>
+                            SIGUIENTE
+                        </small>
+
+                        Dimensiones y métricas
+
+                    </span>
+
+                    <span class="nav-arrow">
+                        →
+                    </span>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+{% endblock %}
