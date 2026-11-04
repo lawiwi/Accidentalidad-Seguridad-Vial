@@ -1,0 +1,142 @@
+{
+  "filas_por_tabla": {
+    "DimTiempo": 51,
+    "DimUbicacion": 556,
+    "DimTipoVehiculo": 29,
+    "DimMarca": 361,
+    "DimGravedad": 3,
+    "DimAutoridadTransito": 233,
+    "DimAntiguedad": 89,
+    "FactVehiculoAccidente": 406540
+  },
+  "unicidad_dimensiones": {
+    "DimTiempo": {
+      "filas": 51,
+      "claves_distintas": 51,
+      "claves_negocio_distintas": 51,
+      "ok": true
+    },
+    "DimUbicacion": {
+      "filas": 556,
+      "claves_distintas": 556,
+      "claves_negocio_distintas": 556,
+      "ok": true
+    },
+    "DimTipoVehiculo": {
+      "filas": 29,
+      "claves_distintas": 29,
+      "claves_negocio_distintas": 29,
+      "ok": true
+    },
+    "DimMarca": {
+      "filas": 361,
+      "claves_distintas": 361,
+      "claves_negocio_distintas": 361,
+      "ok": true
+    },
+    "DimGravedad": {
+      "filas": 3,
+      "claves_distintas": 3,
+      "claves_negocio_distintas": 3,
+      "ok": true
+    },
+    "DimAutoridadTransito": {
+      "filas": 233,
+      "claves_distintas": 233,
+      "claves_negocio_distintas": 233,
+      "ok": true
+    },
+    "DimAntiguedad": {
+      "filas": 89,
+      "claves_distintas": 89,
+      "claves_negocio_distintas": 89,
+      "ok": true
+    }
+  },
+  "hechos_huerfanos": {
+    "SK_Tiempo": 0,
+    "SK_Ubicacion": 0,
+    "SK_TipoVehiculo": 0,
+    "SK_Marca": 0,
+    "SK_Gravedad": 0,
+    "SK_Autoridad": 0,
+    "SK_Antiguedad": 0
+  },
+  "hechos_en_miembro_desconocido": {
+    "SK_Tiempo": 0,
+    "SK_Ubicacion": 0,
+    "SK_TipoVehiculo": 0,
+    "SK_Marca": 44,
+    "SK_Gravedad": 0,
+    "SK_Autoridad": 0,
+    "SK_Antiguedad": 0
+  },
+  "duplicados_clave_origen": 0,
+  "duplicados_fila_origen": 0,
+  "filas_con_contenido_repetido_en_origen": 147580,
+  "comparaciones_origen": [
+    {
+      "prueba": "C1 Total de vehículos",
+      "origen": 406540,
+      "modelo": 406540,
+      "diferencia": 0
+    },
+    {
+      "prueba": "C2 Vehículos por año",
+      "origen": {
+        "2022": 114478,
+        "2023": 111609,
+        "2024": 120342,
+        "2025": 57867,
+        "2026": 2244
+      },
+      "modelo": {
+        "2022": 114478,
+        "2023": 111609,
+        "2024": 120342,
+        "2025": 57867,
+        "2026": 2244
+      },
+      "diferencia": 0
+    },
+    {
+      "prueba": "C3 Vehículos en accidentes con muertos",
+      "origen": 20659,
+      "modelo": 20659,
+      "diferencia": 0
+    },
+    {
+      "prueba": "C4 Vehículos por tipo (28 tipos)",
+      "origen": 28,
+      "modelo": 28,
+      "diferencia": 0
+    },
+    {
+      "prueba": "C5 Vehículos por departamento",
+      "origen": 31,
+      "modelo": 31,
+      "diferencia": 0
+    },
+    {
+      "prueba": "C6 Marca nula -> miembro desconocido",
+      "origen": 44,
+      "modelo": 44,
+      "diferencia": 0
+    }
+  ],
+  "coherencia_rollup": {
+    "total": 406540,
+    "suma_meses": 406540,
+    "suma_municipios": 406540,
+    "ok": true
+  },
+  "calidad": {
+    "marca_nula": 44,
+    "categoria_sin_marca": 97,
+    "edad_original_nula": 78,
+    "edad_al_accidente_nula": 0,
+    "modelo_posterior_al_accidente": 14233,
+    "edad_mayor_40": 3077
+  },
+  "todas_ok": true
+}
