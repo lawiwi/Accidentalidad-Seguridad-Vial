@@ -35,7 +35,7 @@ try:
     app.register_blueprint(bp_multidimensional)
 except ImportError as error_md:
     print(f"Análisis multidimensional no disponible: {error_md}. Ejecute: pip install -r requirements.txt")
-    
+
 # Variable global para el GeoJSON
 sabana_geojson = None
 
