@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% import 'Multidimensional/_componentes.html' as ui %}
+
+{% block title %}Pregunta 4 · Análisis multidimensional - Seguridad Vial{% endblock %}
+
+{% block content %}
+{{ ui.estilos() }}
+<div class="md-page">
+  {{ ui.encabezado(numero, cfg, cobertura) }}
+  {% if error %}
+    {{ ui.sin_modelo(error) }}
+  {% else %}
+    {{ ui.ficha(cfg, dimensiones, medidas) }}
+    {{ ui.tablero(numero, filtros) }}
+    {{ ui.cierre(
+      "La concentración en pocas marcas es alta en motos y livianos y baja en carga y pasajeros; entre regiones cambia poco. Dentro de las motocicletas, la participación de cada marca entre los vehículos en accidentes con muertos no es igual a su participación en el total, lo que muestra que la gravedad no se reparte de forma proporcional entre marcas.",
+      "La marca no indica la seguridad del vehículo: faltan el cilindraje, el modelo comercial y el uso, que probablemente explican las diferencias. El grupo de 10 marcas principales se calculó con todo el periodo; las marcas con pocos registros producen porcentajes inestables.",
+      "Coordinar campañas de conducción segura con las marcas que concentran las motos y, en especial, con las que tienen mayor participación entre los casos con muertos; para carga y pasajeros, trabajar con gremios y empresas de transporte, porque allí la concentración por marca es baja."
+    ) }}
+    {{ ui.bloque_conocimientos(conocimientos) }}
+  {% endif %}
+  {{ ui.navegacion(numero) }}
+</div>
+<script src="{{ url_for('static', filename='js/multidimensional.js') }}"></script>
+{% endblock %}

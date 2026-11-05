@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% import 'Multidimensional/_componentes.html' as ui %}
+
+{% block title %}Pregunta 1 · Análisis multidimensional - Seguridad Vial{% endblock %}
+
+{% block content %}
+{{ ui.estilos() }}
+<div class="md-page">
+  {{ ui.encabezado(numero, cfg, cobertura) }}
+  {% if error %}
+    {{ ui.sin_modelo(error) }}
+  {% else %}
+    {{ ui.ficha(cfg, dimensiones, medidas) }}
+    {{ ui.tablero(numero, filtros) }}
+    {{ ui.cierre(
+      "Al bajar del año al mes y de la región a la autoridad, los cambios que en la Etapa 4 parecían nacionales se concentran en pocos reportantes: el pico de julio de 2024 y buena parte de la caída de 2025 dependen de un mismo organismo. La serie anual, por tanto, mezcla accidentalidad con cobertura del registro, y la proporción de casos con muertos cambia cuando cambia quién reporta.",
+      "Los datos no permiten saber si los registros de julio de 2024 corresponden a accidentes de otros meses ni por qué un organismo dejó de reportar. Tampoco hay parque automotor ni población para calcular tasas; 2026 solo tiene enero y febrero, por lo que solo se compara con meses equivalentes.",
+      "Antes de usar la serie para planear acciones, validar con la fuente los reportes de la Secretaría de Tránsito de Medellín (julio de 2024 y 2025) y construir los indicadores de tendencia solo con los organismos que reportan de forma continua, comparando siempre meses equivalentes."
+    ) }}
+    {{ ui.bloque_conocimientos(conocimientos) }}
+  {% endif %}
+  {{ ui.navegacion(numero) }}
+</div>
+<script src="{{ url_for('static', filename='js/multidimensional.js') }}"></script>
+{% endblock %}
