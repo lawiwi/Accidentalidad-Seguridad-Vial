@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+{% import 'Multidimensional/_componentes.html' as ui %}
+
+{% block title %}Análisis multidimensional - Seguridad Vial{% endblock %}
+
+{% block content %}
+{{ ui.estilos() }}
+{% macro fmt(v) %}{{ "{:,}".format(v).replace(",", ".") }}{% endmacro %}
+<div class="md-page">
+
+  <!-- ================= ENCABEZADO ================= -->
+  <header class="stage4-header">
+    <span class="stage4-tag">Minería de datos · Etapa 5</span>
+    <h1>Análisis <span>multidimensional</span></h1>
+    <div class="stage4-divider"></div>
+    <p>Construimos un modelo estrella con los datos tratados de vehículos involucrados en accidentes de tránsito
+       y lo exploramos desde varias dimensiones y niveles de detalle para profundizar los conocimientos evidentes
+       de la Etapa 4.</p>
+    <div class="stage4-meta">
+      <span class="stage4-chip">Fuente: Datos Abiertos Colombia · «Vehículos involucrados en un accidente de tránsito» (6jmc-vaxk)</span>
+      {% if cobertura %}
+      <span class="stage4-chip">Cobertura: {{ cobertura.desde }} a {{ cobertura.hasta }} ({{ cobertura.n_meses }} meses; 2026 parcial)</span>
+      <span class="stage4-chip">{{ fmt(cobertura.vehiculos) }} vehículos · {{ cobertura.departamentos }} departamentos · {{ cobertura.municipios }} municipios</span>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if error %}
+    {{ ui.sin_modelo(error) }}
+  {% else %}
+
+  <!-- ================= PROPÓSITO ================= -->
+  <section class="md-grid-2 md-section-gap">
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-teal);">
+      <span class="md-eyebrow">Propósito de la etapa</span>
+      <h2>¿Qué buscamos?</h2>
+      <p>En la Etapa 4 describimos la composición de los vehículos, su comportamiento en el tiempo y la
+         concentración de marcas, cada aspecto por separado. Ahora cruzamos esas perspectivas en un modelo
+         estrella para comparar grupos, ubicar concentraciones y ver qué cambia al bajar de lo general a lo
+         particular (año → mes, región → municipio, categoría → tipo).</p>
+      <p>Se usa solo la fuente de vehículos tratada en la Etapa 3 (tabla <code>dbo.Vehiculo</code>,
+         {{ fmt(cobertura.vehiculos) }} registros). La fuente de siniestros no se mezcla con esta porque tiene otra
+         unidad de análisis, otro periodo (2019) y no comparte una llave con los vehículos.</p>
+    </article>
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-plum);">
+      <span class="md-eyebrow">Unidad de análisis y granularidad</span>
+      <h2>¿Qué representa cada registro?</h2>
+      <p><strong>Unidad de análisis:</strong> el vehículo involucrado en un accidente de tránsito con víctimas
+         (con heridos o con muertos) en Colombia. Es la población que estudiamos desde la Etapa 1.</p>
+      <p><strong>Granularidad del hecho:</strong> cada fila de <code>FactVehiculoAccidente</code> es un registro
+         de la fuente: un vehículo, en un mes, en un municipio y reportado por un organismo de tránsito. No es un
+         accidente (un accidente puede tener varios vehículos), ni un vehículo único (no hay placa), ni una persona.</p>
+      <p>Por eso los conteos son de <em>vehículos involucrados</em> y los porcentajes de gravedad se leen
+         «por vehículo», no como tasas de mortalidad.</p>
+    </article>
+  </section>
+
+  <!-- ================= RELACIÓN CON ETAPA 4 ================= -->
+  <section class="md-panel md-panel--accent" style="--md-accent: var(--md-gold);">
+    <span class="md-eyebrow">Continuidad con el conocimiento evidente</span>
+    <h2>Qué conocimientos de la Etapa 4 se profundizan</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Conocimiento evidente (Etapa 4)</th><th>Qué faltaba</th><th>Cómo se profundiza</th><th>Vista</th></tr></thead>
+        <tbody>
+          <tr><td>Variación anual (−2,51 % y +7,82 %) y pico de julio de 2024 (23,93 % del año), señalado como posible anomalía.</td>
+              <td>No se sabía qué territorio u organismo lo producía ni por qué 2025 cae.</td>
+              <td>Drill-down Año → Mes y Región → Municipio, cruce con Autoridad de tránsito y meses equivalentes.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=1) }}">Pregunta 1</a></td></tr>
+          <tr><td>La motocicleta es el 56,4 % de los vehículos; «Con muertos» fue 4,57 % (2023) y 4,37 % (2024).</td>
+              <td>Volumen y gravedad se leyeron por separado.</td>
+              <td>% con muertos por Categoría → Tipo y por Región, recalculado en cada celda.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=2) }}">Pregunta 2</a></td></tr>
+          <tr><td>Población joven: edad mediana de 6 años y 46,2 % con 5 años o menos.</td>
+              <td>No se relacionó la antigüedad con la categoría ni con la gravedad.</td>
+              <td>Jerarquía Grupo → Rango → Años de antigüedad cruzada con Categoría y Gravedad.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=3) }}">Pregunta 3</a></td></tr>
+          <tr><td>10 de 360 marcas reúnen el 73,8 % de los vehículos.</td>
+              <td>La concentración se midió solo sobre el total.</td>
+              <td>Grupo de marca → Marca por Categoría y Región (pivot) y por gravedad.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=4) }}">Pregunta 4</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="md-hint">Los resultados de la Etapa 4 sobre siniestros (territorio y clasificación del siniestro, 2019)
+       pertenecen a otra fuente y no se usan aquí; la perspectiva territorial se estudia ahora con los vehículos.</p>
+  </section>
+
+  <!-- ================= MODELO ESTRELLA ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Diseño</span>
+    <h2>Modelo estrella: FactVehiculoAccidente y siete dimensiones</h2>
+    <p>La tabla de hechos guarda una fila por registro de vehículo con siete claves foráneas, tres medidas y dos
+       atributos de trazabilidad (dimensión degenerada). Cada dimensión responde una pregunta: cuándo, dónde, qué
+       vehículo, qué marca, qué pasó, quién registra y qué antigüedad tenía el vehículo. Todas incluyen un miembro
+       <strong>−1 «Sin dato»</strong> para que ningún hecho se pierda.</p>
+    <img class="md-diagram" src="{{ url_for('static', filename='img/multidimensional/modelo_estrella.png') }}"
+         alt="Diagrama del modelo estrella: FactVehiculoAccidente en el centro unida a DimTiempo, DimUbicacion, DimTipoVehiculo, DimMarca, DimGravedad, DimAutoridadTransito y DimAntiguedad" loading="lazy">
+  </section>
+
+  <!-- ================= DIMENSIONES ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Dimensiones y jerarquías</span>
+    <h2>Perspectivas del análisis</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Dimensión</th><th>Responde</th><th>Clave</th><th>Atributos principales</th><th>Jerarquía</th><th>Filas</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DimTiempo</strong></td><td>¿Cuándo?</td><td>SK_Tiempo (AAAAMM)</td><td>Anio, Semestre, Trimestre, NombreMes, AnioMes, CoberturaAnio</td><td>Año > Semestre > Trimestre > Mes</td><td>{{ fmt(conteos.DimTiempo) }}</td></tr>
+          <tr><td><strong>DimUbicacion</strong></td><td>¿Dónde?</td><td>SK_Ubicacion (BK IdDepartamentoMunicipio)</td><td>RegionNatural, Departamento, Municipio, AmbitoProyecto (Sabana Centro)</td><td>Región > Departamento > Municipio</td><td>{{ fmt(conteos.DimUbicacion) }}</td></tr>
+          <tr><td><strong>DimTipoVehiculo</strong></td><td>¿Qué vehículo?</td><td>SK_TipoVehiculo</td><td>CategoriaVehiculo, TipoVehiculo</td><td>Categoría > Tipo</td><td>{{ fmt(conteos.DimTipoVehiculo) }}</td></tr>
+          <tr><td><strong>DimMarca</strong></td><td>¿Qué marca?</td><td>SK_Marca</td><td>Marca, GrupoMarca, PosicionMarca, CalidadDato</td><td>Grupo de marca > Marca</td><td>{{ fmt(conteos.DimMarca) }}</td></tr>
+          <tr><td><strong>DimGravedad</strong></td><td>¿Qué pasó?</td><td>SK_Gravedad</td><td>Gravedad, NivelSeveridad, DescripcionGravedad</td><td>— (dos miembros)</td><td>{{ fmt(conteos.DimGravedad) }}</td></tr>
+          <tr><td><strong>DimAutoridadTransito</strong></td><td>¿Quién registra?</td><td>SK_Autoridad</td><td>Autoridad, TipoEntidad, NivelTerritorial</td><td>Nivel territorial > Autoridad</td><td>{{ fmt(conteos.DimAutoridadTransito) }}</td></tr>
+          <tr><td><strong>DimAntiguedad</strong></td><td>¿Qué antigüedad?</td><td>SK_Antiguedad (años)</td><td>EdadAnios, RangoEdad, GrupoEdad</td><td>Grupo > Rango > Años</td><td>{{ fmt(conteos.DimAntiguedad) }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="md-hint">Las filas incluyen el miembro «Sin dato». La región natural, la categoría de vehículo, el grupo
+       de marca, el tipo de entidad, el nivel territorial y los rangos de antigüedad son atributos derivados con reglas
+       documentadas en <code>modelo_multidimensional/etl/reglas.py</code>.</p>
+  </section>
+
+  <!-- ================= MEDIDAS ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Medidas</span>
+    <h2>Cómo se calculan y agregan</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Medida</th><th>Unidad</th><th>Fórmula</th><th>Agregación</th><th>¿Se puede sumar?</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vehículos involucrados</strong></td><td>vehículos</td><td>SUM(CantidadVehiculos)</td><td>Suma</td><td>Sí, en todas las dimensiones (es un conteo de registros).</td></tr>
+          <tr><td><strong>Vehículos en accidentes con muertos</strong></td><td>vehículos</td><td>SUM(VehiculoAccidenteConMuertos)</td><td>Suma</td><td>Sí. No es un número de personas fallecidas.</td></tr>
+          <tr><td><strong>Edad al accidente</strong></td><td>años</td><td>MAX(0, año del accidente − año del modelo)</td><td>Promedio ponderado = SUM(Edad) / COUNT(Edad); mediana desde el histograma</td><td>No. Se recalcula desde sus componentes; nunca se promedian promedios.</td></tr>
+          <tr><td><strong>% en accidentes con muertos</strong> (derivada)</td><td>%</td><td>SUM(ConMuertos) / SUM(Cantidad)</td><td>Razón</td><td>No. Se recalcula en cada nivel; denominador: vehículos del grupo.</td></tr>
+          <tr><td><strong>Participación</strong> (derivada)</td><td>%</td><td>vehículos del grupo / vehículos de la selección</td><td>Razón</td><td>Solo suma 100 % dentro de una misma agrupación; el denominador cambia con los filtros.</td></tr>
+          <tr><td><strong>Marcas distintas</strong> (derivada)</td><td>marcas</td><td>COUNT(DISTINCT marca con registros)</td><td>Conteo distinto</td><td>No. Las marcas de dos grupos pueden repetirse.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= OPERACIONES ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Operaciones implementadas</span>
+    <h2>Cinco operaciones que cambian la consulta</h2>
+    <p>Cada operación modifica el <code>GROUP BY</code> o el <code>WHERE</code> de la consulta SQL que se ejecuta
+       sobre el modelo; la consulta se puede ver en cada gráfico y matriz.</p>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Operación</th><th>Qué hace</th><th>Ejemplo aplicado</th><th>Dónde probarla</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Drill-down</strong></td><td>Baja un nivel en la jerarquía (más detalle).</td><td>Año 2024 → meses de 2024 → julio por departamento → municipios de Antioquia.</td><td>Pregunta 1, gráfico 1 y matriz (botón ▼ o clic en un elemento).</td></tr>
+          <tr><td><strong>Roll-up</strong></td><td>Sube un nivel y vuelve a agregar.</td><td>Tipo de vehículo → Categoría: el % con muertos se recalcula con las sumas de la categoría.</td><td>Pregunta 2, gráfico 1 (botón ▲).</td></tr>
+          <tr><td><strong>Slice</strong></td><td>Fija un valor de una dimensión.</td><td>Tipo de vehículo = Motocicleta para comparar marcas solo entre motos.</td><td>Pregunta 4, filtro Tipo de vehículo.</td></tr>
+          <tr><td><strong>Dice</strong></td><td>Combina filtros en dos o más dimensiones.</td><td>Categoría = Motocicletas y Gravedad = Con muertos para ver su antigüedad.</td><td>Pregunta 3, filtros Categoría y Gravedad.</td></tr>
+          <tr><td><strong>Pivot</strong></td><td>Intercambia filas y columnas de la matriz.</td><td>Autoridad × Año pasa a Año × Autoridad; el «% de la fila» se recalcula con los nuevos totales.</td><td>Matriz de cualquier pregunta (botón ⇄ Pivot).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= ACCESO A LAS VISTAS ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Vistas interactivas</span>
+    <h2>Cuatro preguntas de análisis</h2>
+    <div class="md-question-cards">
+      {% for numero, cfg in preguntas.items() %}
+      <a class="stage4-card" href="{{ url_for('multidimensional.pregunta', numero=numero) }}">
+        <div class="stage4-card-header"><span class="stage4-card-badge">{{ numero }}</span>
+          <h3 class="stage4-card-title" style="margin:0;">{{ cfg.titulo }}</h3></div>
+        <p>{{ cfg.pregunta }}</p>
+        <p><strong>Dimensiones:</strong> {% for d in cfg.dimensiones %}{{ dimensiones[d].nombre }}{{ ", " if not loop.last }}{% endfor %}</p>
+        <span class="md-cta">Abrir vista →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ================= CONOCIMIENTOS ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Conocimientos descubiertos</span>
+    <h2>Ocho hallazgos multidimensionales</h2>
+    <p>Resumen calculado en vivo sobre el modelo. Cada vista presenta el detalle completo (pregunta, procedimiento,
+       evidencia, interpretación, utilidad y limitación).</p>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>#</th><th>Conocimiento</th><th>Hallazgo</th></tr></thead>
+        <tbody>
+          {% for k in conocimientos %}
+          <tr><td>C{{ k.id }}<br><small>P{{ k.pregunta_n }}</small></td><td><strong>{{ k.titulo }}</strong></td><td>{{ k.hallazgo }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= VALIDACIÓN ================= -->
+  {% if validacion %}
+  <section class="md-panel">
+    <span class="md-eyebrow">Validación de la carga</span>
+    <h2>Comparación del modelo con los datos tratados</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Comprobación</th><th>Datos tratados</th><th>Modelo estrella</th><th>Diferencia</th></tr></thead>
+        <tbody>
+          {% for c in validacion.comparaciones_origen %}
+          <tr><td>{{ c.prueba }}</td>
+              <td>{{ c.origen if c.origen is not mapping else (c.origen|length) ~ " grupos" }}</td>
+              <td>{{ c.modelo if c.modelo is not mapping else (c.modelo|length) ~ " grupos" }}</td>
+              <td>{{ c.diferencia }}</td></tr>
+          {% endfor %}
+          <tr><td>Hechos sin dimensión relacionada (huérfanos)</td><td colspan="2">Suma de las 7 claves foráneas</td><td>{{ validacion.hechos_huerfanos.values()|sum }}</td></tr>
+          <tr><td>Claves de origen duplicadas en el hecho</td><td colspan="2">IdRegistroOrigen</td><td>{{ validacion.duplicados_clave_origen }}</td></tr>
+          <tr><td>Hechos asignados a «Sin dato» en Marca</td><td colspan="2">Marca nula en la fuente</td><td>{{ validacion.hechos_en_miembro_desconocido.SK_Marca }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="md-hint">Fuente: <code>modelo_multidimensional/dw/validacion_etl.json</code>, generado por el ETL.
+       Se conservan {{ fmt(validacion.filas_con_contenido_repetido_en_origen) }} filas con contenido repetido porque,
+       sin placa y con fecha mensual, pueden ser vehículos distintos (decisión de la Etapa 4).</p>
+  </section>
+  {% endif %}
+
+  <!-- ================= LIMITACIONES Y CONCLUSIONES ================= -->
+  <section class="md-grid-2 md-section-gap">
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-plum);">
+      <span class="md-eyebrow">Limitaciones</span>
+      <h2>Lo que el modelo no permite afirmar</h2>
+      <ul>
+        <li>Los conteos son de vehículos involucrados, no de accidentes ni de personas; no hay tasas por parque automotor o población.</li>
+        <li>La cobertura del registro cambia: un organismo concentra el pico de julio de 2024 y deja de reportar en 2025; 2026 solo tiene enero y febrero.</li>
+        <li>La fecha es mensual y la edad del vehículo es aproximada; los modelos posteriores al año del accidente quedan en 0 años.</li>
+        <li>Región, categoría, tipo de entidad y nivel territorial son agrupaciones por reglas; los grupos pequeños dan porcentajes inestables.</li>
+        <li>Las asociaciones observadas no son causas; las explicaciones posibles se presentan como hipótesis.</li>
+      </ul>
+    </article>
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-teal);">
+      <span class="md-eyebrow">Conclusiones</span>
+      <h2>Qué aporta el análisis multidimensional</h2>
+      <ul>
+        <li>Las tendencias anuales de la Etapa 4 mezclan accidentalidad con cobertura del reporte; separar por autoridad cambia su lectura.</li>
+        <li>El volumen (motos) y la severidad (carga, vehículos antiguos, regiones fuera de la Andina) apuntan a públicos distintos.</li>
+        <li>Los promedios generales esconden diferencias: la «población joven» y la concentración de marcas son rasgos de las motos.</li>
+        <li>Las decisiones de seguridad vial deben combinar volumen y proporción de casos graves, y validar primero la cobertura de los datos.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="md-panel">
+    <span class="md-eyebrow">Fuente y reproducibilidad</span>
+    <h2>Origen de los datos</h2>
+    <p>Conjunto original: <a href="https://www.datos.gov.co/Transporte/VEHICULOS-INVOLUCRADOS-EN-UN-ACCIDENTE-DE-TRANSITO/6jmc-vaxk/about_data" target="_blank" rel="noopener">datos.gov.co · 6jmc-vaxk</a>.
+       Datos tratados: base <code>IntegracionSiniestrosVehiculos</code> (Etapa 3, respaldo FILE = 3), tabla <code>dbo.Vehiculo</code>.
+       Modelo: <code>DW_AccidentalidadVial</code> en SQL Server (scripts 01 a 05) y su réplica
+       {% if meta.fecha_construccion %}SQLite construida el {{ meta.fecha_construccion }}{% else %}consultada por la aplicación{% endif %}.</p>
+  </section>
+
+  {% endif %}
+
+  <div class="stage4-actions">
+    <a href="/" class="stage4-button">← Volver al inicio</a>
+  </div>
+</div>
+{% endblock %}

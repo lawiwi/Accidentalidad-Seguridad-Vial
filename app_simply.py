@@ -5,6 +5,7 @@ import json
 
 app = Flask(__name__)
 
+
 # Almacenamiento temporal en memoria
 reportes_temp = []
 
