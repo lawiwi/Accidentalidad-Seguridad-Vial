@@ -50,6 +50,40 @@ def test_pregunta_inexistente(client):
     assert client.get("/analisis-multidimensional/pregunta/9").status_code == 404
 
 
+# ------------------------------------------------------------------ secciones del recorrido
+SECCIONES = ["contexto", "modelo", "dimensiones", "medidas", "operaciones",
+             "validacion", "conocimientos", "conclusiones"]
+
+
+@pytest.mark.parametrize("slug", SECCIONES)
+def test_secciones_responden_y_navegan(client, slug):
+    resp = client.get(f"/analisis-multidimensional/seccion/{slug}")
+    assert resp.status_code == 200
+    html = resp.data.decode("utf-8")
+    assert 'aria-current="page"' in html                       # la sección actual se marca
+    for otra in SECCIONES:                                       # se puede saltar a cualquier otra
+        assert f"/analisis-multidimensional/seccion/{otra}" in html
+
+
+def test_mapa_enlaza_secciones_y_preguntas(client):
+    html = client.get("/analisis-multidimensional/").data.decode("utf-8")
+    for slug in SECCIONES:
+        assert f"/analisis-multidimensional/seccion/{slug}" in html
+    for n in range(1, 5):
+        assert f"/analisis-multidimensional/pregunta/{n}" in html
+
+
+def test_seccion_inexistente(client):
+    assert client.get("/analisis-multidimensional/seccion/otra").status_code == 404
+
+
+def test_secciones_muestran_datos_del_modelo(client):
+    dims = client.get("/analisis-multidimensional/seccion/dimensiones").data.decode("utf-8")
+    assert "DimAntiguedad" in dims and "Grupo > Rango > Años" in dims
+    con = client.get("/analisis-multidimensional/seccion/conocimientos").data.decode("utf-8")
+    assert con.count("<tr><td>C") == 8                          # los ocho conocimientos
+
+
 # ------------------------------------------------------------------ modelo
 def test_total_y_medidas_basicas():
     t, _ = C.total()
