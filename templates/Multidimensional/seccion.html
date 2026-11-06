@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% import 'Multidimensional/_componentes.html' as ui %}
+
+{% block title %}{{ seccion.titulo }} - Análisis multidimensional{% endblock %}
+
+{% block content %}
+{{ ui.estilos() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional_menu.css') }}">
+<div class="md-page md-seccion" style="--md-accent: var(--md-sec-{{ (seccion.numero - 1) % 4 + 1 }});">
+
+  <!-- ================= ENCABEZADO DE LA SECCIÓN ================= -->
+  <header class="stage4-header">
+    <span class="stage4-tag">Análisis multidimensional · Sección {{ "%02d"|format(seccion.numero) }} de {{ secciones|length }}</span>
+    <h1>{{ seccion.titulo }}</h1>
+    <div class="stage4-divider"></div>
+    <p>{{ seccion.resumen }}</p>
+    {% if cobertura %}
+    <div class="stage4-meta">
+      <span class="stage4-chip">Fuente: Datos Abiertos Colombia (6jmc-vaxk)</span>
+      <span class="stage4-chip">Periodo: {{ cobertura.desde }} a {{ cobertura.hasta }} (2026 parcial)</span>
+    </div>
+    {% endif %}
+  </header>
+
+  <!-- ================= NAVEGACIÓN ENTRE SECCIONES ================= -->
+  <nav class="md-secnav" aria-label="Secciones del análisis multidimensional">
+    <a class="md-secnav-home" href="{{ url_for('multidimensional.inicio') }}">◎ Mapa</a>
+    {% for s in secciones %}
+    <a class="md-secnav-item{% if s.slug == seccion.slug %} is-active{% endif %}"
+       href="{{ url_for('multidimensional.seccion', slug=s.slug) }}"
+       {% if s.slug == seccion.slug %}aria-current="page"{% endif %} title="{{ s.titulo }}">
+      <span class="md-secnav-num">{{ "%02d"|format(s.numero) }}</span><span class="md-secnav-txt">{{ s.titulo }}</span>
+    </a>
+    {% endfor %}
+  </nav>
+
+  {% if error %}
+    {{ ui.sin_modelo(error) }}
+  {% else %}
+    {% include 'Multidimensional/secciones/' ~ seccion.slug ~ '.html' %}
+  {% endif %}
+
+  <!-- ================= ANTERIOR / SIGUIENTE ================= -->
+  <div class="md-secpager">
+    {% if nav.anterior %}
+    <a class="md-secpager-link" href="{{ url_for('multidimensional.seccion', slug=nav.anterior.slug) }}">
+      <small>← Anterior · {{ "%02d"|format(nav.anterior.numero) }}</small><strong>{{ nav.anterior.titulo }}</strong>
+    </a>
+    {% else %}<span></span>{% endif %}
+    <a class="md-secpager-link md-secpager-link--center" href="{{ url_for('multidimensional.inicio') }}#md-vistas">
+      <small>Vistas interactivas</small><strong>Ir a las 4 preguntas</strong>
+    </a>
+    {% if nav.siguiente %}
+    <a class="md-secpager-link md-secpager-link--next" href="{{ url_for('multidimensional.seccion', slug=nav.siguiente.slug) }}">
+      <small>Siguiente · {{ "%02d"|format(nav.siguiente.numero) }} →</small><strong>{{ nav.siguiente.titulo }}</strong>
+    </a>
+    {% else %}<span></span>{% endif %}
+  </div>
+
+  <div class="stage4-actions">
+    <a href="{{ url_for('multidimensional.inicio') }}" class="stage4-button">← Volver al análisis multidimensional</a>
+  </div>
+</div>
+{% endblock %}
