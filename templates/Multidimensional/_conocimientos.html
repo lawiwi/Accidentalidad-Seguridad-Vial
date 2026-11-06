@@ -1,0 +1,19 @@
+{% if conocimientos %}
+  {% for k in conocimientos %}
+  <article class="md-panel md-knowledge" style="--md-accent: {{ 'var(--md-teal)' if loop.index == 1 else 'var(--md-plum)' }};">
+    <h3><span class="md-badge-num">C{{ k.id }}</span>{{ k.titulo }}</h3>
+    <dl>
+      <dt>Pregunta</dt><dd>{{ k.pregunta }}</dd>
+      <dt>Dimensiones y medidas</dt><dd>{{ k.dimensiones }}</dd>
+      <dt>Procedimiento</dt><dd>{{ k.procedimiento }}</dd>
+      <dt>Evidencia</dt><dd>{{ k.evidencia }}</dd>
+      <dt>Hallazgo</dt><dd class="md-finding">{{ k.hallazgo }}</dd>
+      <dt>Interpretación</dt><dd>{{ k.interpretacion }}{% if 'Hipótesis' in k.interpretacion or 'hipótesis' in k.interpretacion %}<span class="md-hyp">hipótesis</span>{% endif %}</dd>
+      <dt>Utilidad</dt><dd>{{ k.utilidad }}</dd>
+      <dt>Limitación</dt><dd>{{ k.limitacion }}</dd>
+    </dl>
+  </article>
+  {% endfor %}
+{% else %}
+<p class="md-panel" role="status">Los hallazgos se cargarán después de los gráficos.</p>
+{% endif %}

@@ -49,9 +49,14 @@
     this.raiz = raiz;
     this.numero = parseInt(raiz.getAttribute('data-md-vista'), 10);
     this.api = raiz.getAttribute('data-api');
+    this.conocimientosApi = raiz.getAttribute('data-conocimientos-api');
     this.chartUrl = raiz.getAttribute('data-chartjs');
     this.graficos = {};
     this.datos = null;
+    this.requestController = null;
+    this.conocimientosController = null;
+    this.conocimientosCargados = false;
+    this.destruida = false;
     this.reiniciarEstado();
     this.enlazar();
   }
@@ -201,21 +206,78 @@
   Vista.prototype.consultar = function () {
     var self = this;
     var error = this.raiz.querySelector('[data-error]');
+    if (this.destruida) { return Promise.resolve(); }
+    if (this.requestController) { this.requestController.abort(); }
+    var controller = new AbortController();
+    this.requestController = controller;
     this.raiz.classList.add('md-loading');
     return fetch(this.api, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-      body: JSON.stringify(this.estado)
+      body: JSON.stringify(this.estado),
+      signal: controller.signal
     }).then(function (r) {
       return r.json().then(function (j) { if (!r.ok) { throw new Error(j.error || 'Error en la consulta'); } return j; });
     }).then(function (datos) {
+      if (self.destruida || self.requestController !== controller) { return; }
       self.datos = datos;
       error.hidden = true;
+      self.cargarConocimientos();
       return cargarChartJs(self.chartUrl).then(function () { self.pintar(); });
     }).catch(function (e) {
-      error.hidden = false;
-      error.textContent = 'No se pudo actualizar la vista: ' + e.message;
-    }).then(function () { self.raiz.classList.remove('md-loading'); });
+      if (e.name !== 'AbortError' && !self.destruida && self.requestController === controller) {
+        error.hidden = false;
+        error.textContent = 'No se pudo actualizar la vista: ' + e.message;
+      }
+    }).then(function () {
+      if (self.requestController === controller) {
+        self.requestController = null;
+        self.raiz.classList.remove('md-loading');
+      }
+    });
+  };
+
+  Vista.prototype.destruir = function () {
+    this.destruida = true;
+    if (this.requestController) {
+      this.requestController.abort();
+      this.requestController = null;
+    }
+    if (this.conocimientosController) {
+      this.conocimientosController.abort();
+      this.conocimientosController = null;
+    }
+    Object.keys(this.graficos).forEach(function (grafico) {
+      this.graficos[grafico].destroy();
+    }, this);
+    this.graficos = {};
+  };
+
+  Vista.prototype.cargarConocimientos = function () {
+    if (this.conocimientosCargados || this.conocimientosController || !this.conocimientosApi) { return; }
+    var self = this;
+    var controller = new AbortController();
+    var contenedor = this.raiz.parentElement.querySelector('[data-md-conocimientos-content]');
+    if (!contenedor) { return; }
+    this.conocimientosController = controller;
+    fetch(this.conocimientosApi, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      signal: controller.signal
+    }).then(function (respuesta) {
+      if (!respuesta.ok) { throw new Error('Error HTTP ' + respuesta.status); }
+      return respuesta.text();
+    }).then(function (html) {
+      if (self.destruida || self.conocimientosController !== controller) { return; }
+      var documento = new DOMParser().parseFromString(html, 'text/html');
+      contenedor.replaceChildren.apply(contenedor, Array.from(documento.body.childNodes));
+      self.conocimientosCargados = true;
+    }).catch(function (error) {
+      if (error.name !== 'AbortError' && !self.destruida && self.conocimientosController === controller) {
+        contenedor.textContent = 'No se pudieron cargar los conocimientos: ' + error.message;
+      }
+    }).then(function () {
+      if (self.conocimientosController === controller) { self.conocimientosController = null; }
+    });
   };
 
   /* ---------------- Pintado ---------------- */

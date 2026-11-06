@@ -366,14 +366,17 @@ CONOCIMIENTOS = [
 @lru_cache(maxsize=1)
 def calcular():
     """Devuelve los ocho conocimientos con el hallazgo completado con cifras reales."""
-    salida = []
-    for k in CONOCIMIENTOS:
-        ev = k["evidencia_fn"]()
-        visibles = {a: b for a, b in ev.items() if not a.startswith("_")}
-        salida.append({**{a: b for a, b in k.items() if a != "evidencia_fn"},
-                       "hallazgo": k["hallazgo"].format(**visibles), "valores": ev["_valores"]})
-    return salida
+    return [_completar(k) for k in CONOCIMIENTOS]
 
 
+def _completar(k):
+    ev = k["evidencia_fn"]()
+    visibles = {a: b for a, b in ev.items() if not a.startswith("_")}
+    return {**{a: b for a, b in k.items() if a != "evidencia_fn"},
+            "hallazgo": k["hallazgo"].format(**visibles), "valores": ev["_valores"]}
+
+
+@lru_cache(maxsize=4)
 def por_pregunta(numero):
-    return [k for k in calcular() if k["pregunta_n"] == numero]
+    """Calcula solo los dos conocimientos que muestra la pregunta solicitada."""
+    return [_completar(k) for k in CONOCIMIENTOS if k["pregunta_n"] == numero]

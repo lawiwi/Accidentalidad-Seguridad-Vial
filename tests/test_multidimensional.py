@@ -193,3 +193,41 @@ def test_valores_de_los_conocimientos():
     assert v[6] == {"med_moto": 4, "med_carga": 11}
     assert round(v[7]["moto"], 4) == 0.8339 and round(v[7]["carga"], 4) == 0.2986
     assert round(v[8]["b_pct"], 4) == 0.0549 and round(v[8]["k_pct"], 4) == 0.0168
+
+
+def test_pregunta_calcula_solo_sus_conocimientos(monkeypatch):
+    K.por_pregunta.cache_clear()
+    monkeypatch.setattr(K, "calcular", lambda: pytest.fail("No debe calcular todos los conocimientos"))
+
+    conocimientos = K.por_pregunta(1)
+
+    assert [k["id"] for k in conocimientos] == [1, 2]
+    K.por_pregunta.cache_clear()
+
+
+def test_pagina_pregunta_difiere_el_calculo_de_conocimientos(client, monkeypatch):
+    monkeypatch.setattr(K, "por_pregunta", lambda numero: pytest.fail(
+        "Los conocimientos no deben bloquear la carga de la pregunta"))
+
+    response = client.get("/analisis-multidimensional/pregunta/1")
+
+    assert response.status_code == 200
+    assert "Los hallazgos se cargarán después de los gráficos" in response.data.decode("utf-8")
+
+
+def test_api_conocimientos_devuelve_solo_hallazgos_de_la_pregunta(client):
+    response = client.get("/analisis-multidimensional/api/pregunta/1/conocimientos")
+
+    assert response.status_code == 200
+    assert response.data.decode("utf-8").count('class="md-panel md-knowledge"') == 2
+
+
+def test_opciones_filtros_se_leen_de_las_dimensiones(monkeypatch):
+    P.opciones_filtros.cache_clear()
+    monkeypatch.setattr(C, "miembros", lambda *args, **kwargs: pytest.fail(
+        "Las opciones de filtro no deben agregar la tabla de hechos"))
+
+    opciones = P.opciones_filtros(1)
+
+    assert opciones[0]["valores"] == [2022, 2023, 2024, 2025, 2026]
+    assert len(opciones[1]["valores"]) == 31

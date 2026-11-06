@@ -6,6 +6,8 @@ Cada vista envía su "estado" (filtros, niveles, ruta de drill-down, pivot y mé
 a /analisis-multidimensional/api/pregunta/<n>. Este módulo valida el estado contra la
 configuración (lista blanca), arma las consultas con cubo.agregar() y devuelve JSON.
 """
+from functools import lru_cache
+
 from . import cubo as C
 
 # ---------------------------------------------------------------------------
@@ -514,7 +516,9 @@ def resolver(numero, estado):
     }
 
 
+@lru_cache(maxsize=4)
 def opciones_filtros(numero):
     cfg = PREGUNTAS[numero]
-    return [{**f, "valores": [_texto(v) if not isinstance(v, int) else v for v in C.miembros(f["dim"], f["nivel"])]}
+    return [{**f, "valores": [_texto(v) if not isinstance(v, int) else v
+                              for v in C.miembros_dimension(f["dim"], f["nivel"])]}
             for f in cfg["filtros"]]

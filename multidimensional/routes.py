@@ -12,6 +12,7 @@ API JSON (la usan las vistas para filtros, drill-down, roll-up, slice, dice y pi
 """
 import json
 import os
+from functools import lru_cache
 
 from flask import Blueprint, abort, jsonify, render_template, request
 
@@ -48,16 +49,30 @@ SECCIONES = [
 SECCIONES_POR_SLUG = {s["slug"]: dict(s, numero=i) for i, s in enumerate(SECCIONES, start=1)}
 
 
+@lru_cache(maxsize=1)
 def _cobertura():
     """Periodo y volumen leídos del modelo (no escritos a mano)."""
     tot, _ = C.total()
-    meses = C.miembros("tiempo", "mes")
-    meses = [m for m in meses if m and m != "Sin dato"]
+    periodo = db.consultar(
+        "SELECT MIN(AnioMes) AS desde, MAX(AnioMes) AS hasta, "
+        "COUNT(DISTINCT AnioMes) AS n_meses "
+        "FROM DimTiempo WHERE SK_Tiempo <> -1 AND AnioMes IS NOT NULL AND AnioMes <> 'Sin dato'"
+    )[0]
+    ubicacion = db.consultar(
+        "SELECT COUNT(DISTINCT Departamento) AS departamentos, "
+        "COUNT(DISTINCT MunicipioDepartamento) AS municipios "
+        "FROM DimUbicacion WHERE SK_Ubicacion <> -1 "
+        "AND Departamento IS NOT NULL AND Departamento <> 'Sin dato' "
+        "AND MunicipioDepartamento IS NOT NULL AND MunicipioDepartamento <> 'Sin dato'"
+    )[0]
+    marcas = db.consultar(
+        "SELECT COUNT(DISTINCT Marca) AS marcas FROM DimMarca "
+        "WHERE SK_Marca <> -1 AND Marca IS NOT NULL AND Marca NOT LIKE 'Sin dato%'"
+    )[0]["marcas"]
     return {"vehiculos": tot["n"], "con_muertos": tot["m"], "pct_con_muertos": tot["pct_con_muertos"],
-            "desde": meses[0] if meses else None, "hasta": meses[-1] if meses else None,
-            "n_meses": len(meses), "departamentos": len([d for d in C.miembros("ubicacion", "departamento") if d != "Sin dato"]),
-            "municipios": len([m for m in C.miembros("ubicacion", "municipio") if m != "Sin dato"]),
-            "marcas": len([m for m in C.miembros("marca", "marca") if not str(m).startswith("Sin dato")])}
+            "desde": periodo["desde"], "hasta": periodo["hasta"], "n_meses": periodo["n_meses"],
+            "departamentos": ubicacion["departamentos"], "municipios": ubicacion["municipios"],
+            "marcas": marcas}
 
 
 def _conteos():
@@ -124,7 +139,7 @@ def pregunta(numero):
         return render_template(PLANTILLAS[numero], error=error, numero=numero, cfg=cfg, filtros=[],
                                conocimientos=[], dimensiones=C.DIMENSIONES, medidas=C.MEDIDAS, cobertura=None), 503
     return render_template(PLANTILLAS[numero], error=None, numero=numero, cfg=cfg,
-                           filtros=P.opciones_filtros(numero), conocimientos=K.por_pregunta(numero),
+                           filtros=P.opciones_filtros(numero), conocimientos=[],
                            dimensiones=C.DIMENSIONES, medidas=C.MEDIDAS, cobertura=_cobertura())
 
 
@@ -135,6 +150,14 @@ def api_pregunta(numero):
         return jsonify(P.resolver(numero, estado))
     except C.ErrorConsulta as exc:
         return jsonify({"error": str(exc)}), 400
+
+
+@bp_multidimensional.route("/api/pregunta/<int:numero>/conocimientos")
+def api_conocimientos(numero):
+    if numero not in P.PREGUNTAS:
+        abort(404)
+    return render_template("Multidimensional/_conocimientos.html",
+                           conocimientos=K.por_pregunta(numero))
 
 
 @bp_multidimensional.route("/api/salud")

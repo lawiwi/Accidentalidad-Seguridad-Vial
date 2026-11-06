@@ -241,6 +241,21 @@ def miembros(dim, nivel, filtros=None):
     return [f["claves"][0] for f in filas]
 
 
+def miembros_dimension(dim, nivel):
+    """Valores de un nivel directamente desde su dimensión, sin recorrer la tabla de hechos."""
+    d, (_, etiqueta, orden) = nivel_def(dim, nivel)
+    tabla = d["tabla"]
+    alias = d["alias"]
+    clave = d["clave"]
+    agrupacion = etiqueta if etiqueta == orden else f"{etiqueta}, {orden}"
+    filas = db.consultar(
+        f"SELECT {etiqueta} AS valor FROM {tabla} {alias} "
+        f"WHERE {alias}.{clave} <> -1 AND {etiqueta} IS NOT NULL "
+        f"GROUP BY {agrupacion} ORDER BY {orden}"
+    )
+    return [fila["valor"] for fila in filas]
+
+
 def pivotar(filas, eje_filas, eje_columnas):
     """Arma una matriz {fila: {columna: celda}} desde una agregación de dos ejes.
     eje_filas / eje_columnas son índices (0 o 1) dentro de 'claves'; pivotar = intercambiarlos."""
