@@ -1,0 +1,28 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= VALIDACIÓN ================= -->
+  {% if validacion %}
+  <section class="md-panel">
+    <span class="md-eyebrow">Validación de la carga</span>
+    <h2>Comparación del modelo con los datos tratados</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Comprobación</th><th>Datos tratados</th><th>Modelo estrella</th><th>Diferencia</th></tr></thead>
+        <tbody>
+          {% for c in validacion.comparaciones_origen %}
+          <tr><td>{{ c.prueba }}</td>
+              <td>{{ c.origen if c.origen is not mapping else (c.origen|length) ~ " grupos" }}</td>
+              <td>{{ c.modelo if c.modelo is not mapping else (c.modelo|length) ~ " grupos" }}</td>
+              <td>{{ c.diferencia }}</td></tr>
+          {% endfor %}
+          <tr><td>Hechos sin dimensión relacionada (huérfanos)</td><td colspan="2">Suma de las 7 claves foráneas</td><td>{{ validacion.hechos_huerfanos.values()|sum }}</td></tr>
+          <tr><td>Claves de origen duplicadas en el hecho</td><td colspan="2">IdRegistroOrigen</td><td>{{ validacion.duplicados_clave_origen }}</td></tr>
+          <tr><td>Hechos asignados a «Sin dato» en Marca</td><td colspan="2">Marca nula en la fuente</td><td>{{ validacion.hechos_en_miembro_desconocido.SK_Marca }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="md-hint">Fuente: <code>modelo_multidimensional/dw/validacion_etl.json</code>, generado por el ETL.
+       Se conservan {{ fmt(validacion.filas_con_contenido_repetido_en_origen) }} filas con contenido repetido porque,
+       sin placa y con fecha mensual, pueden ser vehículos distintos (decisión de la Etapa 4).</p>
+  </section>
+  {% endif %}

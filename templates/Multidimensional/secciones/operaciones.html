@@ -1,0 +1,21 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= OPERACIONES ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Operaciones implementadas</span>
+    <h2>Cinco operaciones que cambian la consulta</h2>
+    <p>Cada operación modifica el <code>GROUP BY</code> o el <code>WHERE</code> de la consulta SQL que se ejecuta
+       sobre el modelo; la consulta se puede ver en cada gráfico y matriz.</p>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Operación</th><th>Qué hace</th><th>Ejemplo aplicado</th><th>Dónde probarla</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Drill-down</strong></td><td>Baja un nivel en la jerarquía (más detalle).</td><td>Año 2024 → meses de 2024 → julio por departamento → municipios de Antioquia.</td><td>Pregunta 1, gráfico 1 y matriz (botón ▼ o clic en un elemento).</td></tr>
+          <tr><td><strong>Roll-up</strong></td><td>Sube un nivel y vuelve a agregar.</td><td>Tipo de vehículo → Categoría: el % con muertos se recalcula con las sumas de la categoría.</td><td>Pregunta 2, gráfico 1 (botón ▲).</td></tr>
+          <tr><td><strong>Slice</strong></td><td>Fija un valor de una dimensión.</td><td>Tipo de vehículo = Motocicleta para comparar marcas solo entre motos.</td><td>Pregunta 4, filtro Tipo de vehículo.</td></tr>
+          <tr><td><strong>Dice</strong></td><td>Combina filtros en dos o más dimensiones.</td><td>Categoría = Motocicletas y Gravedad = Con muertos para ver su antigüedad.</td><td>Pregunta 3, filtros Categoría y Gravedad.</td></tr>
+          <tr><td><strong>Pivot</strong></td><td>Intercambia filas y columnas de la matriz.</td><td>Autoridad × Año pasa a Año × Autoridad; el «% de la fila» se recalcula con los nuevos totales.</td><td>Matriz de cualquier pregunta (botón ⇄ Pivot).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>

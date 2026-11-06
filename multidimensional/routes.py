@@ -2,7 +2,8 @@
 Rutas de la sección «Análisis multidimensional».
 
 Vistas HTML:
-    /analisis-multidimensional                 página principal de la sección
+    /analisis-multidimensional                 página principal (mapa de secciones y preguntas)
+    /analisis-multidimensional/seccion/<slug>  ocho secciones del recorrido (contexto … conclusiones)
     /analisis-multidimensional/pregunta/1..4   cuatro vistas independientes
 
 API JSON (la usan las vistas para filtros, drill-down, roll-up, slice, dice y pivot):
@@ -23,6 +24,28 @@ bp_multidimensional = Blueprint("multidimensional", __name__, url_prefix="/anali
 
 PLANTILLAS = {1: "Multidimensional/pregunta1.html", 2: "Multidimensional/pregunta2.html",
               3: "Multidimensional/pregunta3.html", 4: "Multidimensional/pregunta4.html"}
+
+# Secciones del recorrido (página principal en forma de mapa, como la Etapa 3).
+# El orden de la lista es el orden de lectura sugerido; cada sección es una página propia.
+SECCIONES = [
+    {"slug": "contexto", "titulo": "Contexto y alcance",
+     "resumen": "Propósito, unidad de análisis, granularidad y relación con la Etapa 4."},
+    {"slug": "modelo", "titulo": "Modelo estrella",
+     "resumen": "Tabla de hechos, siete dimensiones y diagrama del modelo."},
+    {"slug": "dimensiones", "titulo": "Dimensiones y jerarquías",
+     "resumen": "Qué responde cada dimensión, sus atributos, niveles y número de filas."},
+    {"slug": "medidas", "titulo": "Medidas",
+     "resumen": "Cómo se calcula y agrega cada medida y cuáles se pueden sumar."},
+    {"slug": "operaciones", "titulo": "Operaciones OLAP",
+     "resumen": "Drill-down, roll-up, slice, dice y pivot, con ejemplos y dónde probarlos."},
+    {"slug": "validacion", "titulo": "Validación de la carga",
+     "resumen": "Comparación del modelo con los datos tratados de la Etapa 3."},
+    {"slug": "conocimientos", "titulo": "Conocimientos",
+     "resumen": "Los ocho hallazgos multidimensionales calculados sobre el modelo."},
+    {"slug": "conclusiones", "titulo": "Limitaciones y conclusiones",
+     "resumen": "Lo que el modelo no permite afirmar, lo que aporta y el origen de los datos."},
+]
+SECCIONES_POR_SLUG = {s["slug"]: dict(s, numero=i) for i, s in enumerate(SECCIONES, start=1)}
 
 
 def _cobertura():
@@ -55,14 +78,40 @@ def _validacion():
 @bp_multidimensional.route("/")
 def inicio():
     ok, error = db.motor_disponible()
+    secciones = [SECCIONES_POR_SLUG[s["slug"]] for s in SECCIONES]
     if not ok:
         return render_template("Multidimensional/menu.html", error=error, preguntas=P.PREGUNTAS,
-                               dimensiones=C.DIMENSIONES, medidas=C.MEDIDAS, conocimientos=[], cobertura=None,
-                               meta={}, conteos={}, validacion=None), 503
+                               dimensiones=C.DIMENSIONES, secciones=secciones, cobertura=None), 503
     return render_template("Multidimensional/menu.html", error=None, preguntas=P.PREGUNTAS,
-                           dimensiones=C.DIMENSIONES, medidas=C.MEDIDAS, conocimientos=K.calcular(),
-                           cobertura=_cobertura(), meta=db.metadatos(), conteos=_conteos(),
-                           validacion=_validacion())
+                           dimensiones=C.DIMENSIONES, secciones=secciones, cobertura=_cobertura())
+
+
+@bp_multidimensional.route("/seccion/<slug>")
+def seccion(slug):
+    """Una sección del recorrido; solo se consulta lo que esa sección muestra."""
+    actual = SECCIONES_POR_SLUG.get(slug)
+    if actual is None:
+        abort(404)
+    secciones = [SECCIONES_POR_SLUG[s["slug"]] for s in SECCIONES]
+    i = actual["numero"] - 1
+    nav = {"anterior": secciones[i - 1] if i > 0 else None,
+           "siguiente": secciones[i + 1] if i + 1 < len(secciones) else None}
+    ok, error = db.motor_disponible()
+    datos = {"error": error, "seccion": actual, "secciones": secciones, "nav": nav,
+             "preguntas": P.PREGUNTAS, "dimensiones": C.DIMENSIONES, "medidas": C.MEDIDAS,
+             "cobertura": None, "conteos": {}, "conocimientos": [], "validacion": None, "meta": {}}
+    if not ok:
+        return render_template("Multidimensional/seccion.html", **datos), 503
+    datos["cobertura"] = _cobertura()
+    if slug == "dimensiones":
+        datos["conteos"] = _conteos()
+    elif slug == "validacion":
+        datos["validacion"] = _validacion()
+    elif slug == "conocimientos":
+        datos["conocimientos"] = K.calcular()
+    elif slug == "conclusiones":
+        datos["meta"] = db.metadatos()
+    return render_template("Multidimensional/seccion.html", **datos)
 
 
 @bp_multidimensional.route("/pregunta/<int:numero>")
