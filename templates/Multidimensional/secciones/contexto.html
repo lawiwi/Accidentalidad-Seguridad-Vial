@@ -1,0 +1,58 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= PROPÓSITO ================= -->
+  <section class="md-grid-2 md-section-gap">
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-teal);">
+      <span class="md-eyebrow">Propósito de la etapa</span>
+      <h2>¿Qué buscamos?</h2>
+      <p>En la Etapa 4 describimos la composición de los vehículos, su comportamiento en el tiempo y la
+         concentración de marcas, cada aspecto por separado. Ahora cruzamos esas perspectivas en un modelo
+         estrella para comparar grupos, ubicar concentraciones y ver qué cambia al bajar de lo general a lo
+         particular (año → mes, región → municipio, categoría → tipo).</p>
+      <p>Se usa solo la fuente de vehículos tratada en la Etapa 3 (tabla <code>dbo.Vehiculo</code>,
+         {{ fmt(cobertura.vehiculos) }} registros). La fuente de siniestros no se mezcla con esta porque tiene otra
+         unidad de análisis, otro periodo (2019) y no comparte una llave con los vehículos.</p>
+    </article>
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-plum);">
+      <span class="md-eyebrow">Unidad de análisis y granularidad</span>
+      <h2>¿Qué representa cada registro?</h2>
+      <p><strong>Unidad de análisis:</strong> el vehículo involucrado en un accidente de tránsito con víctimas
+         (con heridos o con muertos) en Colombia. Es la población que estudiamos desde la Etapa 1.</p>
+      <p><strong>Granularidad del hecho:</strong> cada fila de <code>FactVehiculoAccidente</code> es un registro
+         de la fuente: un vehículo, en un mes, en un municipio y reportado por un organismo de tránsito. No es un
+         accidente (un accidente puede tener varios vehículos), ni un vehículo único (no hay placa), ni una persona.</p>
+      <p>Por eso los conteos son de <em>vehículos involucrados</em> y los porcentajes de gravedad se leen
+         «por vehículo», no como tasas de mortalidad.</p>
+    </article>
+  </section>
+
+  <!-- ================= RELACIÓN CON ETAPA 4 ================= -->
+  <section class="md-panel md-panel--accent" style="--md-accent: var(--md-gold);">
+    <span class="md-eyebrow">Continuidad con el conocimiento evidente</span>
+    <h2>Qué conocimientos de la Etapa 4 se profundizan</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Conocimiento evidente (Etapa 4)</th><th>Qué faltaba</th><th>Cómo se profundiza</th><th>Vista</th></tr></thead>
+        <tbody>
+          <tr><td>Variación anual (−2,51 % y +7,82 %) y pico de julio de 2024 (23,93 % del año), señalado como posible anomalía.</td>
+              <td>No se sabía qué territorio u organismo lo producía ni por qué 2025 cae.</td>
+              <td>Drill-down Año → Mes y Región → Municipio, cruce con Autoridad de tránsito y meses equivalentes.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=1) }}">Pregunta 1</a></td></tr>
+          <tr><td>La motocicleta es el 56,4 % de los vehículos; «Con muertos» fue 4,57 % (2023) y 4,37 % (2024).</td>
+              <td>Volumen y gravedad se leyeron por separado.</td>
+              <td>% con muertos por Categoría → Tipo y por Región, recalculado en cada celda.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=2) }}">Pregunta 2</a></td></tr>
+          <tr><td>Población joven: edad mediana de 6 años y 46,2 % con 5 años o menos.</td>
+              <td>No se relacionó la antigüedad con la categoría ni con la gravedad.</td>
+              <td>Jerarquía Grupo → Rango → Años de antigüedad cruzada con Categoría y Gravedad.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=3) }}">Pregunta 3</a></td></tr>
+          <tr><td>10 de 360 marcas reúnen el 73,8 % de los vehículos.</td>
+              <td>La concentración se midió solo sobre el total.</td>
+              <td>Grupo de marca → Marca por Categoría y Región (pivot) y por gravedad.</td>
+              <td><a href="{{ url_for('multidimensional.pregunta', numero=4) }}">Pregunta 4</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="md-hint">Los resultados de la Etapa 4 sobre siniestros (territorio y clasificación del siniestro, 2019)
+       pertenecen a otra fuente y no se usan aquí; la perspectiva territorial se estudia ahora con los vehículos.</p>
+  </section>

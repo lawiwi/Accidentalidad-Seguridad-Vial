@@ -1,0 +1,19 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= CONOCIMIENTOS ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Conocimientos descubiertos</span>
+    <h2>Ocho hallazgos multidimensionales</h2>
+    <p>Resumen calculado en vivo sobre el modelo. Cada vista presenta el detalle completo (pregunta, procedimiento,
+       evidencia, interpretación, utilidad y limitación).</p>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>#</th><th>Conocimiento</th><th>Hallazgo</th></tr></thead>
+        <tbody>
+          {% for k in conocimientos %}
+          <tr><td>C{{ k.id }}<br><small><a href="{{ url_for('multidimensional.pregunta', numero=k.pregunta_n) }}">P{{ k.pregunta_n }}</a></small></td><td><strong>{{ k.titulo }}</strong></td><td>{{ k.hallazgo }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>

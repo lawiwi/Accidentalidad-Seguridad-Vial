@@ -23,6 +23,19 @@ def crear_admin_por_defecto():
 crear_admin_por_defecto()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY", "clave-segura")
+
+# =========================
+# ETAPA 5 - ANÁLISIS MULTIDIMENSIONAL (modelo estrella)
+# Las rutas viven en el paquete multidimensional/ (Blueprint) para no
+# modificar las rutas de las etapas anteriores.
+# =========================
+# Si falta una dependencia (p. ej. SQLAlchemy), las etapas anteriores siguen funcionando.
+try:
+    from multidimensional import bp_multidimensional
+    app.register_blueprint(bp_multidimensional)
+except ImportError as error_md:
+    print(f"Análisis multidimensional no disponible: {error_md}. Ejecute: pip install -r requirements.txt")
+
 # Variable global para el GeoJSON
 sabana_geojson = None
 

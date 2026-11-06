@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% import 'Multidimensional/_componentes.html' as ui %}
+
+{% block title %}Pregunta 3 · Análisis multidimensional - Seguridad Vial{% endblock %}
+
+{% block content %}
+{{ ui.estilos() }}
+<div class="md-page">
+  {{ ui.encabezado(numero, cfg, cobertura) }}
+  {% if error %}
+    {{ ui.sin_modelo(error) }}
+  {% else %}
+    {{ ui.ficha(cfg, dimensiones, medidas) }}
+    {{ ui.tablero(numero, filtros) }}
+    {{ ui.cierre(
+      "La antigüedad cambia de sentido según la categoría: las motos accidentadas son mayoritariamente nuevas, mientras que los vehículos de carga y los livianos son más antiguos. A la vez, la proporción de vehículos en accidentes con muertos crece con la antigüedad y ese aumento se observa también al comparar dentro de una misma categoría.",
+      "La edad se calcula con el año del modelo y el año del accidente (fecha mensual), por lo que es aproximada; los modelos posteriores al año del accidente quedan en 0 años. Se describen vehículos accidentados, no el parque en circulación, de modo que no se puede hablar de riesgo por vehículo.",
+      "Diferenciar las medidas por antigüedad: para motos nuevas, formación y acompañamiento al momento de la compra; para vehículos de más de 15 años, especialmente de carga y livianos, reforzar la revisión técnico-mecánica y los operativos sobre el estado del vehículo."
+    ) }}
+    {{ ui.bloque_conocimientos(conocimientos, numero) }}
+  {% endif %}
+  {{ ui.navegacion(numero) }}
+</div>
+<script src="{{ url_for('static', filename='js/multidimensional.js') }}"></script>
+{% endblock %}

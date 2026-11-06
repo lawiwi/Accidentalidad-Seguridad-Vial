@@ -1,0 +1,20 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= MEDIDAS ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Medidas</span>
+    <h2>Cómo se calculan y agregan</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Medida</th><th>Unidad</th><th>Fórmula</th><th>Agregación</th><th>¿Se puede sumar?</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Vehículos involucrados</strong></td><td>vehículos</td><td>SUM(CantidadVehiculos)</td><td>Suma</td><td>Sí, en todas las dimensiones (es un conteo de registros).</td></tr>
+          <tr><td><strong>Vehículos en accidentes con muertos</strong></td><td>vehículos</td><td>SUM(VehiculoAccidenteConMuertos)</td><td>Suma</td><td>Sí. No es un número de personas fallecidas.</td></tr>
+          <tr><td><strong>Edad al accidente</strong></td><td>años</td><td>MAX(0, año del accidente − año del modelo)</td><td>Promedio ponderado = SUM(Edad) / COUNT(Edad); mediana desde el histograma</td><td>No. Se recalcula desde sus componentes; nunca se promedian promedios.</td></tr>
+          <tr><td><strong>% en accidentes con muertos</strong> (derivada)</td><td>%</td><td>SUM(ConMuertos) / SUM(Cantidad)</td><td>Razón</td><td>No. Se recalcula en cada nivel; denominador: vehículos del grupo.</td></tr>
+          <tr><td><strong>Participación</strong> (derivada)</td><td>%</td><td>vehículos del grupo / vehículos de la selección</td><td>Razón</td><td>Solo suma 100 % dentro de una misma agrupación; el denominador cambia con los filtros.</td></tr>
+          <tr><td><strong>Marcas distintas</strong> (derivada)</td><td>marcas</td><td>COUNT(DISTINCT marca con registros)</td><td>Conteo distinto</td><td>No. Las marcas de dos grupos pueden repetirse.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>

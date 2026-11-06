@@ -1,0 +1,24 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= DIMENSIONES ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Dimensiones y jerarquías</span>
+    <h2>Perspectivas del análisis</h2>
+    <div class="md-table-wrap">
+      <table class="md-table">
+        <thead><tr><th>Dimensión</th><th>Responde</th><th>Clave</th><th>Atributos principales</th><th>Jerarquía</th><th>Filas</th></tr></thead>
+        <tbody>
+          <tr><td><strong>DimTiempo</strong></td><td>¿Cuándo?</td><td>SK_Tiempo (AAAAMM)</td><td>Anio, Semestre, Trimestre, NombreMes, AnioMes, CoberturaAnio</td><td>Año > Semestre > Trimestre > Mes</td><td>{{ fmt(conteos.DimTiempo) }}</td></tr>
+          <tr><td><strong>DimUbicacion</strong></td><td>¿Dónde?</td><td>SK_Ubicacion (BK IdDepartamentoMunicipio)</td><td>RegionNatural, Departamento, Municipio, AmbitoProyecto (Sabana Centro)</td><td>Región > Departamento > Municipio</td><td>{{ fmt(conteos.DimUbicacion) }}</td></tr>
+          <tr><td><strong>DimTipoVehiculo</strong></td><td>¿Qué vehículo?</td><td>SK_TipoVehiculo</td><td>CategoriaVehiculo, TipoVehiculo</td><td>Categoría > Tipo</td><td>{{ fmt(conteos.DimTipoVehiculo) }}</td></tr>
+          <tr><td><strong>DimMarca</strong></td><td>¿Qué marca?</td><td>SK_Marca</td><td>Marca, GrupoMarca, PosicionMarca, CalidadDato</td><td>Grupo de marca > Marca</td><td>{{ fmt(conteos.DimMarca) }}</td></tr>
+          <tr><td><strong>DimGravedad</strong></td><td>¿Qué pasó?</td><td>SK_Gravedad</td><td>Gravedad, NivelSeveridad, DescripcionGravedad</td><td>— (dos miembros)</td><td>{{ fmt(conteos.DimGravedad) }}</td></tr>
+          <tr><td><strong>DimAutoridadTransito</strong></td><td>¿Quién registra?</td><td>SK_Autoridad</td><td>Autoridad, TipoEntidad, NivelTerritorial</td><td>Nivel territorial > Autoridad</td><td>{{ fmt(conteos.DimAutoridadTransito) }}</td></tr>
+          <tr><td><strong>DimAntiguedad</strong></td><td>¿Qué antigüedad?</td><td>SK_Antiguedad (años)</td><td>EdadAnios, RangoEdad, GrupoEdad</td><td>Grupo > Rango > Años</td><td>{{ fmt(conteos.DimAntiguedad) }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="md-hint">Las filas incluyen el miembro «Sin dato». La región natural, la categoría de vehículo, el grupo
+       de marca, el tipo de entidad, el nivel territorial y los rangos de antigüedad son atributos derivados con reglas
+       documentadas en <code>modelo_multidimensional/etl/reglas.py</code>.</p>
+  </section>

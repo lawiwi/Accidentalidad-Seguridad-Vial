@@ -1,0 +1,173 @@
+{# =====================================================================
+   Componentes reutilizables de la sección Análisis multidimensional.
+   Cada vista (pregunta1..4.html) importa estas macros y aporta sus
+   propios textos de interpretación, limitación y decisión.
+   ===================================================================== #}
+
+{% macro estilos() %}
+  {# Los estilos se cargan dentro del contenido para que funcionen también
+     cuando la navegación SPA (app-shell.js) reemplaza solo #view-content. #}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional.css') }}">
+{% endmacro %}
+
+{% macro encabezado(numero, cfg, cobertura) %}
+<header class="stage4-header">
+  <span class="stage4-tag">Análisis multidimensional · Pregunta {{ numero }}</span>
+  <h1>{{ cfg.titulo }}</h1>
+  <div class="stage4-divider"></div>
+  <p>Vista interactiva sobre el modelo estrella de vehículos involucrados en accidentes de tránsito con víctimas.
+     Cada filtro y cada operación vuelve a consultar el modelo y recalcula las medidas.</p>
+  <div class="stage4-meta">
+    <span class="stage4-chip">Fuente: Datos Abiertos Colombia (6jmc-vaxk)</span>
+    {% if cobertura %}
+    <span class="stage4-chip">Periodo: {{ cobertura.desde }} a {{ cobertura.hasta }} (2026 parcial)</span>
+    <span class="stage4-chip">{{ "{:,}".format(cobertura.vehiculos).replace(",", ".") }} vehículos · unidad: vehículo involucrado</span>
+    {% endif %}
+  </div>
+</header>
+{% endmacro %}
+
+{% macro ficha(cfg, dimensiones, medidas) %}
+<section class="md-panel md-panel--accent" style="--md-accent: var(--md-gold);" aria-labelledby="md-pregunta">
+  <span class="md-eyebrow">Pregunta de análisis</span>
+  <p id="md-pregunta" class="md-question">{{ cfg.pregunta }}</p>
+  <dl class="md-ficha">
+    <div><dt>Dimensiones</dt><dd>{% for d in cfg.dimensiones %}<span class="md-tag">{{ dimensiones[d].nombre }}</span>{% endfor %}</dd></div>
+    <div><dt>Medidas</dt><dd>{% for m in cfg.medidas %}<span class="md-tag">{{ medidas[m].nombre }}</span>{% endfor %}</dd></div>
+    <div><dt>Jerarquías</dt><dd>{% for j in cfg.jerarquias %}<span class="md-tag">{{ j }}</span>{% endfor %}</dd></div>
+    <div><dt>Granularidad</dt><dd>Una fila del hecho = un vehículo involucrado en un accidente (mes, municipio, autoridad).</dd></div>
+  </dl>
+  <div class="md-grid-2 md-section-gap">
+    <div><h3>Conocimiento evidente que se retoma</h3><p>{{ cfg.etapa4 }}</p></div>
+    <div><h3>Nueva perspectiva multidimensional</h3><p>{{ cfg.profundiza }}</p></div>
+  </div>
+</section>
+{% endmacro %}
+
+{% macro filtro(f) %}
+<details class="md-multi" data-filtro="{{ f.id }}">
+  <summary data-resumen>Todos</summary>
+  <div class="md-multi-panel">
+    {% if f.valores|length > 8 %}<input type="search" placeholder="Buscar…" data-buscar aria-label="Buscar en {{ f.etiqueta }}">{% endif %}
+    {% for v in f.valores %}
+    <label><input type="checkbox" value="{{ v }}"> {{ v }}</label>
+    {% endfor %}
+    <div class="md-multi-actions">
+      <button type="button" class="md-btn md-btn--link" data-limpiar>Quitar selección</button>
+      <button type="button" class="md-btn md-btn--link" data-cerrar>Aplicar</button>
+    </div>
+  </div>
+</details>
+{% endmacro %}
+
+{% macro tablero(numero, filtros) %}
+<section class="md-panel" data-md-vista="{{ numero }}"
+         data-api="{{ url_for('multidimensional.api_pregunta', numero=numero) }}"
+         data-conocimientos-api="{{ url_for('multidimensional.api_conocimientos', numero=numero) }}"
+         data-chartjs="{{ url_for('static', filename='vendor/chartjs/chart.umd.js') }}">
+  <span class="md-eyebrow">Exploración interactiva</span>
+  <h2>Filtros y operaciones multidimensionales</h2>
+  <div class="md-toolbar">
+    {% for f in filtros %}
+    <div class="md-field"><span>{{ f.etiqueta }}</span>{{ filtro(f) }}</div>
+    {% endfor %}
+    <button type="button" class="md-btn" data-accion="reiniciar" title="Vuelve al estado inicial">Reiniciar vista</button>
+  </div>
+  <p class="md-hint">Un valor en un filtro = <strong>slice</strong>; filtros en dos dimensiones = <strong>dice</strong>.
+     Los botones ▼/▲ y el clic sobre una barra o fila hacen <strong>drill-down</strong> y <strong>roll-up</strong>;
+     el botón Pivot intercambia filas y columnas de la matriz.</p>
+  <div class="md-selection" data-seleccion aria-live="polite"><strong>Selección activa:</strong> cargando…</div>
+  <div class="md-error" data-error hidden></div>
+
+  <div class="md-kpis" data-kpis aria-live="polite">
+    {% for _ in range(3) %}
+    <div class="md-kpi md-kpi-skeleton" aria-hidden="true">
+      <span></span><strong></strong><span></span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="md-charts">
+    {% for g in ['g1', 'g2'] %}
+    <article class="md-panel md-chart-card" data-grafico="{{ g }}">
+      <div class="md-chart-head">
+        <div><span class="md-eyebrow">Visualización {{ loop.index }}</span><h3 data-titulo>…</h3></div>
+        <div class="md-chart-controls">
+          <select class="md-select" data-dim aria-label="Dimensión del gráfico" hidden></select>
+          <select class="md-select" data-medida aria-label="Medida del gráfico"></select>
+          <button type="button" class="md-btn" data-accion="rollup" title="Roll-up: subir un nivel">▲ Roll-up</button>
+          <button type="button" class="md-btn" data-accion="drilldown" title="Drill-down: bajar un nivel">▼ Drill-down</button>
+        </div>
+      </div>
+      <p class="md-breadcrumb" data-ruta></p>
+      <div class="md-canvas"><canvas role="img" aria-label="Gráfico {{ loop.index }}"></canvas></div>
+      <p class="md-hint" data-pie></p>
+      <details class="md-sql"><summary>Consulta SQL ejecutada</summary><pre data-sql></pre></details>
+    </article>
+    {% endfor %}
+  </div>
+
+  <article class="md-panel md-section-gap" data-matriz>
+    <div class="md-chart-head">
+      <div><span class="md-eyebrow">Matriz de resultados</span><h3 data-titulo>…</h3></div>
+      <div class="md-chart-controls">
+        <select class="md-select" data-dim-filas aria-label="Dimensión de filas"></select>
+        <select class="md-select" data-dim-columnas aria-label="Dimensión de columnas"></select>
+        <select class="md-select" data-nivel-columnas aria-label="Nivel de columnas"></select>
+        <select class="md-select" data-metrica aria-label="Métrica de la matriz"></select>
+        <button type="button" class="md-btn" data-accion="rollup">▲ Roll-up</button>
+        <button type="button" class="md-btn" data-accion="drilldown">▼ Drill-down</button>
+        <button type="button" class="md-btn" data-accion="pivot" aria-pressed="false">⇄ Pivot</button>
+      </div>
+    </div>
+    <p class="md-breadcrumb" data-ruta></p>
+    <div class="md-matrix-wrap"><table class="md-matrix" data-tabla></table></div>
+    <p class="md-hint" data-pie></p>
+    <details class="md-sql"><summary>Consulta SQL ejecutada</summary><pre data-sql></pre></details>
+  </article>
+</section>
+{% endmacro %}
+
+{% macro bloque_conocimientos(conocimientos, numero) %}
+<section class="md-section-gap" aria-labelledby="md-conocimientos">
+  <div class="md-panel"><span class="md-eyebrow">Conocimientos multidimensionales</span>
+    <h2 id="md-conocimientos">Lo que revela el cruce de dimensiones</h2>
+    <p>Las cifras de cada hallazgo se calculan con consultas al modelo.
+       Las explicaciones marcadas como <span class="md-hyp">hipótesis</span> no se pueden comprobar con estos datos.</p>
+  </div>
+  <div class="md-grid-2 md-section-gap" data-md-conocimientos-content aria-live="polite">
+    {% include "Multidimensional/_conocimientos.html" %}
+  </div>
+</section>
+{% endmacro %}
+
+{% macro cierre(interpretacion, limitacion, decision) %}
+<section class="md-grid-3 md-section-gap">
+  <article class="md-panel md-panel--accent" style="--md-accent: var(--md-teal);">
+    <span class="md-eyebrow">Interpretación</span><h3>Qué muestran los resultados</h3><p>{{ interpretacion }}</p>
+  </article>
+  <article class="md-panel md-panel--accent" style="--md-accent: var(--md-plum);">
+    <span class="md-eyebrow">Limitación</span><h3>Qué no se puede concluir</h3><p>{{ limitacion }}</p>
+  </article>
+  <article class="md-panel md-panel--accent" style="--md-accent: var(--md-gold);">
+    <span class="md-eyebrow">Decisión sustentada</span><h3>Posible decisión</h3><p>{{ decision }}</p>
+  </article>
+</section>
+{% endmacro %}
+
+{% macro navegacion(numero) %}
+<div class="stage4-actions" style="gap: 12px; flex-wrap: wrap;">
+  <a href="{{ url_for('multidimensional.inicio') }}" class="stage4-button">← Análisis multidimensional</a>
+  {% if numero > 1 %}<a href="{{ url_for('multidimensional.pregunta', numero=numero - 1) }}" class="stage4-button">Pregunta {{ numero - 1 }}</a>{% endif %}
+  {% if numero < 4 %}<a href="{{ url_for('multidimensional.pregunta', numero=numero + 1) }}" class="stage4-button">Pregunta {{ numero + 1 }} →</a>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro sin_modelo(error) %}
+<section class="md-panel"><div class="md-alert">
+  <strong>No se pudo consultar el modelo estrella.</strong>
+  Genere la base con <code>python modelo_multidimensional/etl/construir_dw.py</code> o revise la variable
+  <code>DW_DATABASE_URL</code>. Detalle: {{ error }}
+</div></section>
+{% endmacro %}

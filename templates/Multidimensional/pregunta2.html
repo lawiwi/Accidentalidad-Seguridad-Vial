@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% import 'Multidimensional/_componentes.html' as ui %}
+
+{% block title %}Pregunta 2 · Análisis multidimensional - Seguridad Vial{% endblock %}
+
+{% block content %}
+{{ ui.estilos() }}
+<div class="md-page">
+  {{ ui.encabezado(numero, cfg, cobertura) }}
+  {% if error %}
+    {{ ui.sin_modelo(error) }}
+  {% else %}
+    {{ ui.ficha(cfg, dimensiones, medidas) }}
+    {{ ui.tablero(numero, filtros) }}
+    {{ ui.cierre(
+      "El tipo de vehículo que más aparece no es el que con mayor frecuencia termina en accidentes con muertos: las motos dominan el volumen, mientras que los vehículos de carga tienen la proporción más alta. Al cruzar con la región, la diferencia entre territorios se mantiene incluso dentro de una misma categoría, lo que indica que el territorio aporta información adicional a la composición del parque accidentado.",
+      "El porcentaje se calcula por vehículo, no por víctima ni por accidente: si en un accidente con muertos participan dos vehículos, ambos cuentan. No se sabe qué vehículo causó el accidente ni en qué tipo de vía ocurrió; las regiones y los tipos con pocos registros dan porcentajes inestables.",
+      "Combinar dos líneas de acción: por severidad, controles de velocidad, descanso y estado mecánico en el transporte de carga; por volumen y territorio, priorizar campañas para motociclistas en las regiones donde su proporción de casos con muertos es más alta (Caribe, Orinoquía y Amazonía), además de donde hay más registros."
+    ) }}
+    {{ ui.bloque_conocimientos(conocimientos, numero) }}
+  {% endif %}
+  {{ ui.navegacion(numero) }}
+</div>
+<script src="{{ url_for('static', filename='js/multidimensional.js') }}"></script>
+{% endblock %}

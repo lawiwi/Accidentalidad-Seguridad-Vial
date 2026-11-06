@@ -19,6 +19,7 @@ python-dotenv==1.2.1
 pytz==2025.2
 requests==2.34.2
 six==1.17.0
+SQLAlchemy==2.0.43
 tzdata==2025.2
 urllib3==2.7.0
 Werkzeug==3.1.3

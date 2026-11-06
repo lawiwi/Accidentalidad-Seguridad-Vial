@@ -1,0 +1,13 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= MODELO ESTRELLA ================= -->
+  <section class="md-panel">
+    <span class="md-eyebrow">Diseño</span>
+    <h2>Modelo estrella: FactVehiculoAccidente y siete dimensiones</h2>
+    <p>La tabla de hechos guarda una fila por registro de vehículo con siete claves foráneas, tres medidas y dos
+       atributos de trazabilidad (dimensión degenerada). Cada dimensión responde una pregunta: cuándo, dónde, qué
+       vehículo, qué marca, qué pasó, quién registra y qué antigüedad tenía el vehículo. Todas incluyen un miembro
+       <strong>−1 «Sin dato»</strong> para que ningún hecho se pierda.</p>
+    <img class="md-diagram" src="{{ url_for('static', filename='img/multidimensional/modelo_estrella.png') }}"
+         alt="Diagrama del modelo estrella: FactVehiculoAccidente en el centro unida a DimTiempo, DimUbicacion, DimTipoVehiculo, DimMarca, DimGravedad, DimAutoridadTransito y DimAntiguedad" loading="lazy">
+  </section>

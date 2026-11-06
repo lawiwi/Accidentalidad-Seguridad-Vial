@@ -1,0 +1,35 @@
+{# Sección del recorrido de Análisis multidimensional. Se incluye desde seccion.html. #}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+  <!-- ================= LIMITACIONES Y CONCLUSIONES ================= -->
+  <section class="md-grid-2 md-section-gap">
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-plum);">
+      <span class="md-eyebrow">Limitaciones</span>
+      <h2>Lo que el modelo no permite afirmar</h2>
+      <ul>
+        <li>Los conteos son de vehículos involucrados, no de accidentes ni de personas; no hay tasas por parque automotor o población.</li>
+        <li>La cobertura del registro cambia: un organismo concentra el pico de julio de 2024 y deja de reportar en 2025; 2026 solo tiene enero y febrero.</li>
+        <li>La fecha es mensual y la edad del vehículo es aproximada; los modelos posteriores al año del accidente quedan en 0 años.</li>
+        <li>Región, categoría, tipo de entidad y nivel territorial son agrupaciones por reglas; los grupos pequeños dan porcentajes inestables.</li>
+        <li>Las asociaciones observadas no son causas; las explicaciones posibles se presentan como hipótesis.</li>
+      </ul>
+    </article>
+    <article class="md-panel md-panel--accent" style="--md-accent: var(--md-teal);">
+      <span class="md-eyebrow">Conclusiones</span>
+      <h2>Qué aporta el análisis multidimensional</h2>
+      <ul>
+        <li>Las tendencias anuales de la Etapa 4 mezclan accidentalidad con cobertura del reporte; separar por autoridad cambia su lectura.</li>
+        <li>El volumen (motos) y la severidad (carga, vehículos antiguos, regiones fuera de la Andina) apuntan a públicos distintos.</li>
+        <li>Los promedios generales esconden diferencias: la «población joven» y la concentración de marcas son rasgos de las motos.</li>
+        <li>Las decisiones de seguridad vial deben combinar volumen y proporción de casos graves, y validar primero la cobertura de los datos.</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="md-panel">
+    <span class="md-eyebrow">Fuente y reproducibilidad</span>
+    <h2>Origen de los datos</h2>
+    <p>Conjunto original: <a href="https://www.datos.gov.co/Transporte/VEHICULOS-INVOLUCRADOS-EN-UN-ACCIDENTE-DE-TRANSITO/6jmc-vaxk/about_data" target="_blank" rel="noopener">datos.gov.co · 6jmc-vaxk</a>.
+       Datos tratados: base <code>IntegracionSiniestrosVehiculos</code> (Etapa 3, respaldo FILE = 3), tabla <code>dbo.Vehiculo</code>.
+       Modelo: <code>DW_AccidentalidadVial</code> en SQL Server (scripts 01 a 05) y su réplica
+       {% if meta.fecha_construccion %}SQLite construida el {{ meta.fecha_construccion }}{% else %}consultada por la aplicación{% endif %}.</p>
+  </section>

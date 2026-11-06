@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% import 'Multidimensional/_componentes.html' as ui %}
+{% from 'Multidimensional/secciones/_formato.html' import fmt %}
+
+{% block title %}Análisis multidimensional - Seguridad Vial{% endblock %}
+
+{% block content %}
+{{ ui.estilos() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/multidimensional_menu.css') }}">
+<div class="md-page">
+
+  <!-- ================= ENCABEZADO ================= -->
+  <header class="stage4-header">
+    <span class="stage4-tag">Minería de datos · Etapa 5</span>
+    <h1>Análisis <span>multidimensional</span></h1>
+    <div class="stage4-divider"></div>
+    <p>Construimos un modelo estrella con los datos tratados de vehículos involucrados en accidentes de tránsito
+       y lo exploramos desde varias dimensiones y niveles de detalle para profundizar los conocimientos evidentes
+       de la Etapa 4.</p>
+    <div class="stage4-meta">
+      <span class="stage4-chip">Fuente: Datos Abiertos Colombia · «Vehículos involucrados en un accidente de tránsito» (6jmc-vaxk)</span>
+      {% if cobertura %}
+      <span class="stage4-chip">Cobertura: {{ cobertura.desde }} a {{ cobertura.hasta }} ({{ cobertura.n_meses }} meses; 2026 parcial)</span>
+      <span class="stage4-chip">{{ fmt(cobertura.vehiculos) }} vehículos · {{ cobertura.departamentos }} departamentos · {{ cobertura.municipios }} municipios</span>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if error %}
+    {{ ui.sin_modelo(error) }}
+  {% else %}
+
+  <!-- ================= CÓMO RECORRER LA SECCIÓN ================= -->
+  <section class="md-rutas" aria-label="Cómo recorrer la sección">
+    <a class="md-ruta" style="--md-accent: var(--md-teal);" href="{{ url_for('multidimensional.seccion', slug='contexto') }}">
+      <span class="md-ruta-num">01–04</span>
+      <span class="md-ruta-txt"><strong>Entender el modelo</strong>Contexto, modelo estrella, dimensiones y medidas.</span>
+    </a>
+    <a class="md-ruta" style="--md-accent: var(--md-gold);" href="#md-vistas">
+      <span class="md-ruta-num">P1–P4</span>
+      <span class="md-ruta-txt"><strong>Explorar los datos</strong>Cuatro vistas interactivas con filtros y operaciones.</span>
+    </a>
+    <a class="md-ruta" style="--md-accent: var(--md-plum);" href="{{ url_for('multidimensional.seccion', slug='operaciones') }}">
+      <span class="md-ruta-num">05–08</span>
+      <span class="md-ruta-txt"><strong>Validar y concluir</strong>Operaciones, validación, conocimientos y conclusiones.</span>
+    </a>
+  </section>
+
+  <!-- ================= MAPA DE SECCIONES ================= -->
+  <section class="md-hub" aria-label="Mapa de secciones del análisis multidimensional">
+    <div class="md-hub-circulo" aria-hidden="true"></div>
+    {% for s in secciones %}<div class="md-hub-conector md-hub-c{{ loop.index }}" aria-hidden="true"></div>{% endfor %}
+
+    <div class="md-hub-centro">
+      <div>
+        <h2>Modelo estrella</h2>
+        <div class="md-hub-linea"></div>
+        <p>FactVehiculoAccidente y siete dimensiones: cuándo, dónde, qué vehículo, qué marca, qué pasó,
+           quién registra y qué antigüedad.</p>
+      </div>
+    </div>
+
+    {% for s in secciones %}
+    <a class="md-hub-punto md-hub-p{{ loop.index }}" href="{{ url_for('multidimensional.seccion', slug=s.slug) }}">
+      <span class="md-hub-cab">
+        <span class="md-hub-num">{{ "%02d"|format(s.numero) }}</span>
+        <span class="md-hub-titulo">{{ s.titulo }}</span>
+      </span>
+      <span class="md-hub-desc">{{ s.resumen }}</span>
+    </a>
+    {% endfor %}
+  </section>
+
+  <!-- ================= VISTAS INTERACTIVAS ================= -->
+  <section class="md-panel" id="md-vistas">
+    <span class="md-eyebrow">Vistas interactivas</span>
+    <h2>Cuatro preguntas de análisis</h2>
+    <p>Cada vista tiene indicadores, gráficos, una matriz y filtros que vuelven a consultar el modelo
+       (drill-down, roll-up, slice, dice y pivot).</p>
+    <div class="md-question-cards">
+      {% for numero, cfg in preguntas.items() %}
+      <a class="stage4-card" href="{{ url_for('multidimensional.pregunta', numero=numero) }}">
+        <div class="stage4-card-header"><span class="stage4-card-badge">{{ numero }}</span>
+          <h3 class="stage4-card-title" style="margin:0;">{{ cfg.titulo }}</h3></div>
+        <p>{{ cfg.pregunta }}</p>
+        <p><strong>Dimensiones:</strong> {% for d in cfg.dimensiones %}{{ dimensiones[d].nombre }}{{ ", " if not loop.last }}{% endfor %}</p>
+        <span class="md-cta">Abrir vista →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% endif %}
+
+  <div class="stage4-actions">
+    <a href="/" class="stage4-button">← Volver al inicio</a>
+  </div>
+</div>
+<script>
+  // La navegación SPA (app-shell.js) vuelve al inicio de la página después de cargar la vista;
+  // si la dirección trae #md-vistas, se baja hasta las preguntas cuando termina esa carga.
+  setTimeout(function () {
+    var destino = document.getElementById('md-vistas');
+    if (destino && window.location.hash === '#md-vistas') {
+      destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, 60);
+</script>
+{% endblock %}

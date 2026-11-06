@@ -2,6 +2,8 @@
   const initialView = document.getElementById('view-content');
   const mapElement = document.getElementById('global-map');
   let globalMap;
+  let loadingView = false;
+  let pendingView = null;
 
   function createMap() {
     if (globalMap || !mapElement || typeof L === 'undefined') {
@@ -39,34 +41,60 @@
   }
 
   async function loadView(url, addHistory = true) {
-    const response = await fetch(url, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    });
-
-    if (!response.ok) {
-      window.location.assign(url);
+    pendingView = { url, addHistory };
+    if (loadingView) {
       return;
     }
 
-    const documentText = await response.text();
-    const parsedDocument = new DOMParser().parseFromString(documentText, 'text/html');
-    const nextContent = parsedDocument.querySelector('#view-content');
+    loadingView = true;
+    try {
+      while (pendingView) {
+        const nextView = pendingView;
+        pendingView = null;
+        const response = await fetch(nextView.url, {
+          headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
 
-    if (!nextContent || !initialView) {
-      window.location.assign(url);
-      return;
+        if (pendingView) {
+          continue;
+        }
+        if (!response.ok) {
+          window.location.assign(nextView.url);
+          return;
+        }
+
+        const documentText = await response.text();
+        if (pendingView) {
+          continue;
+        }
+
+        const parsedDocument = new DOMParser().parseFromString(documentText, 'text/html');
+        const nextContent = parsedDocument.querySelector('#view-content');
+
+        if (!nextContent || !initialView) {
+          window.location.assign(nextView.url);
+          return;
+        }
+
+        initialView.querySelectorAll('[data-md-vista]').forEach((root) => {
+          if (root.__mdVista && typeof root.__mdVista.destruir === 'function') {
+            root.__mdVista.destruir();
+          }
+        });
+        initialView.replaceChildren(...nextContent.childNodes);
+        document.title = parsedDocument.title;
+        executeViewScripts(initialView);
+
+        if (nextView.addHistory) {
+          window.history.pushState({}, '', nextView.url);
+        }
+
+        window.scrollTo(0, 0);
+        globalMap.invalidateSize();
+      }
+    } finally {
+      loadingView = false;
     }
-
-    initialView.replaceChildren(...nextContent.childNodes);
-    document.title = parsedDocument.title;
-    executeViewScripts(initialView);
-
-    if (addHistory) {
-      window.history.pushState({}, '', url);
-    }
-
-    window.scrollTo(0, 0);
-    globalMap.invalidateSize();
   }
 
   document.addEventListener('click', (event) => {
