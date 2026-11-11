@@ -1,0 +1,251 @@
+Municipio	Departamento	Region	Ambito	Registros	LogRegistros	PctMotos	PctLivianos	PctPasajeros	PctCarga	EdadMediana	PctMas15Anios	PctPoliciaNacional	PctConMuertos
+s	d	d	d	c	c	c	c	c	c	c	c	c	c
+meta	meta	meta	meta	meta	meta		meta	meta			meta		meta
+Acacías (Meta)	Meta	Orinoquía	Otros departamentos	1089	3.037	64.83	29.66	1.561	3.949	7.0	14.05	9.275	7.53
+Aguachica (Cesar)	Cesar	Caribe	Otros departamentos	302	2.48	62.914	21.192	1.656	14.238	8.0	16.887	29.801	20.199
+Aguadas (Caldas)	Caldas	Andina	Otros departamentos	303	2.481	63.696	27.393	2.97	5.941	8.0	25.743	8.911	4.95
+Aguazul (Casanare)	Casanare	Orinoquía	Otros departamentos	330	2.519	52.424	25.455	4.545	17.576	8.0	12.121	100.0	24.848
+Alvarado (Tolima)	Tolima	Andina	Otros departamentos	252	2.401	32.937	32.143	7.54	27.381	9.0	24.206	100.0	38.095
+Amagá (Antioquia)	Antioquia	Andina	Otros departamentos	251	2.4	46.215	31.873	4.781	17.131	7.0	15.538	100.0	14.343
+Amalfi (Antioquia)	Antioquia	Andina	Otros departamentos	568	2.754	81.69	11.796	2.993	3.521	5.0	13.732	0.0	2.289
+Andalucía (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	202	2.305	45.05	33.168	4.95	16.337	7.0	17.327	100.0	21.287
+Andes (Antioquia)	Antioquia	Andina	Otros departamentos	388	2.589	67.526	22.423	3.866	6.186	9.0	25.0	1.804	5.155
+Anserma (Caldas)	Caldas	Andina	Otros departamentos	299	2.476	63.545	28.428	2.676	5.351	9.0	29.097	41.137	12.375
+Apartadó (Antioquia)	Antioquia	Andina	Otros departamentos	1114	3.047	64.722	24.057	6.732	4.488	4.0	11.849	13.465	6.373
+Arauca (Arauca)	Arauca	Orinoquía	Otros departamentos	180	2.255	68.889	25.0	0.556	5.556	8.0	13.333	10.556	17.778
+Arjona (Bolívar)	Bolívar	Caribe	Otros departamentos	219	2.34	54.338	24.658	6.393	14.612	8.0	18.721	40.183	5.479
+Armenia (Quindío)	Quindío	Andina	Otros departamentos	4074	3.61	57.094	35.199	4.786	2.921	7.0	13.893	10.53	4.639
+Armero (Tolima)	Tolima	Andina	Otros departamentos	115	2.061	49.565	31.304	5.217	13.913	8.0	25.217	100.0	17.391
+Baranoa (Atlántico)	Atlántico	Caribe	Otros departamentos	297	2.473	63.973	25.253	4.377	6.397	7.0	16.835	17.845	24.242
+Barbosa (Antioquia)	Antioquia	Andina	Otros departamentos	1481	3.171	60.905	21.472	5.199	12.424	6.0	14.787	40.176	7.36
+Barbosa (Santander)	Santander	Andina	Otros departamentos	135	2.13	55.556	25.185	2.222	17.037	10.0	21.481	91.852	21.481
+Barrancabermeja (Santander)	Santander	Andina	Otros departamentos	1096	3.04	55.748	26.825	3.65	13.777	6.0	10.584	35.401	10.493
+Barranquilla (Atlántico)	Atlántico	Caribe	Otros departamentos	12595	4.1	40.635	44.422	11.147	3.763	6.0	9.075	3.462	2.644
+Bello (Antioquia)	Antioquia	Andina	Otros departamentos	8857	3.947	63.791	25.697	6.571	3.94	5.0	8.468	0.463	1.874
+Bogotá D.C. (Bogotá D.C.)	Bogotá D.C.	Andina	Otros departamentos	60350	4.781	48.106	35.737	12.28	3.874	5.0	9.39	0.0	3.587
+Bolívar (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	63	1.799	71.429	20.635	0.0	6.349	9.0	26.984	42.857	26.984
+Bosconia (Cesar)	Cesar	Caribe	Otros departamentos	147	2.167	33.333	29.252	3.401	34.014	10.0	18.367	100.0	36.054
+Bucaramanga (Santander)	Santander	Andina	Otros departamentos	9277	3.967	55.471	36.456	3.633	4.441	7.0	13.356	3.6	3.784
+Buenaventura (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	699	2.844	45.78	34.335	4.006	15.88	8.0	22.175	28.326	26.466
+Bugalagrande (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	193	2.286	55.959	22.798	5.181	16.062	8.0	18.135	82.902	25.907
+Caicedonia (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	131	2.117	65.649	29.771	1.527	3.053	9.0	23.664	0.0	9.924
+Cajibío (Cauca)	Cauca	Pacífica	Otros departamentos	51	1.708	37.255	43.137	5.882	13.725	5.0	17.647	100.0	5.882
+Cajicá (Cundinamarca)	Cundinamarca	Andina	Sabana Centro	794	2.9	38.287	43.325	4.534	13.854	7.0	21.285	99.37	19.27
+Calarca (Quindío)	Quindío	Andina	Otros departamentos	1054	3.023	53.416	32.163	3.416	11.006	8.0	20.114	10.626	6.072
+Caldas (Antioquia)	Antioquia	Andina	Otros departamentos	1032	3.014	54.167	28.488	9.884	7.461	7.0	14.632	29.264	5.426
+Caldono (Cauca)	Cauca	Pacífica	Otros departamentos	76	1.881	38.158	35.526	7.895	18.421	11.0	27.632	100.0	18.421
+Cali (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	30301	4.481	53.176	37.999	6.383	2.436	6.0	12.29	0.406	2.373
+Caloto (Cauca)	Cauca	Pacífica	Otros departamentos	85	1.929	57.647	29.412	7.059	5.882	10.0	21.176	2.353	47.059
+Candelaria (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	1128	3.052	56.472	27.926	4.61	10.55	7.0	17.908	0.177	13.741
+Caqueza (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	292	2.465	43.493	32.877	4.795	18.836	5.0	10.616	100.0	21.918
+Carepa (Antioquia)	Antioquia	Andina	Otros departamentos	388	2.589	65.722	20.619	6.443	7.216	4.0	12.113	21.649	16.495
+Cartagena (Bolívar)	Bolívar	Caribe	Otros departamentos	7550	3.878	58.132	32.185	5.073	4.609	4.0	8.146	7.934	6.596
+Cartago (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	1252	3.098	62.061	31.47	1.038	5.431	6.0	14.537	2.955	4.952
+Caucasia (Antioquia)	Antioquia	Andina	Otros departamentos	207	2.316	67.15	22.222	0.966	9.662	6.0	12.077	18.841	53.623
+Cañasgordas (Antioquia)	Antioquia	Andina	Otros departamentos	70	1.845	51.429	17.143	11.429	20.0	5.0	8.571	100.0	24.286
+Cereté (Córdoba)	Córdoba	Caribe	Otros departamentos	610	2.785	66.557	25.082	1.148	7.213	7.0	14.426	37.705	14.426
+Chachagüí (Nariño)	Nariño	Pacífica	Otros departamentos	83	1.919	45.783	37.349	2.41	14.458	6.0	20.482	100.0	14.458
+Chaparral (Tolima)	Tolima	Andina	Otros departamentos	128	2.107	64.844	30.469	2.344	2.344	10.0	25.781	0.0	13.281
+Chigorodó (Antioquia)	Antioquia	Andina	Otros departamentos	669	2.825	61.286	21.226	6.129	11.36	5.0	13.752	56.054	24.215
+Chinchiná (Caldas)	Caldas	Andina	Otros departamentos	251	2.4	63.745	29.88	1.594	4.781	7.0	15.139	46.614	5.179
+Chinú (Córdoba)	Córdoba	Caribe	Otros departamentos	165	2.217	56.97	29.091	2.424	11.515	8.0	17.576	18.182	19.394
+Chipaque (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	57	1.756	35.088	33.333	1.754	29.825	10.0	22.807	100.0	15.789
+Chiquinquirá (Boyacá)	Boyacá	Andina	Otros departamentos	336	2.526	38.393	50.893	3.274	7.44	10.0	29.464	42.857	8.631
+Chocontá (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	575	2.76	41.391	33.565	7.652	17.391	8.0	16.696	96.348	25.739
+Chía (Cundinamarca)	Cundinamarca	Andina	Sabana Centro	715	2.854	46.713	41.678	4.476	7.133	6.0	13.427	53.007	5.874
+Cimitarra (Santander)	Santander	Andina	Otros departamentos	240	2.38	51.667	18.333	1.667	28.333	6.0	12.917	61.667	25.833
+Circasia (Quindío)	Quindío	Andina	Otros departamentos	542	2.734	59.041	32.472	4.613	3.875	7.0	21.218	20.849	9.41
+Cisneros (Antioquia)	Antioquia	Andina	Otros departamentos	63	1.799	53.968	22.222	3.175	20.635	7.0	17.46	100.0	15.873
+Ciudad Bolívar (Antioquia)	Antioquia	Andina	Otros departamentos	426	2.629	72.535	23.944	0.469	3.052	8.0	20.188	6.808	1.878
+Ciénaga (Magdalena)	Magdalena	Caribe	Otros departamentos	273	2.436	42.491	21.612	8.425	27.473	9.0	17.216	97.802	32.234
+Cocorná (Antioquia)	Antioquia	Andina	Otros departamentos	110	2.041	38.182	31.818	3.636	26.364	6.0	11.818	100.0	18.182
+Copacabana (Antioquia)	Antioquia	Andina	Otros departamentos	2019	3.305	58.643	26.746	6.984	7.628	6.0	12.977	31.105	4.309
+Cota (Cundinamarca)	Cundinamarca	Andina	Sabana Centro	601	2.779	45.092	30.948	7.654	16.306	6.0	12.313	100.0	13.478
+Curumaní (Cesar)	Cesar	Caribe	Otros departamentos	57	1.756	38.596	22.807	3.509	35.088	10.0	17.544	70.175	54.386
+Cáceres (Antioquia)	Antioquia	Andina	Otros departamentos	66	1.82	43.939	22.727	4.545	28.788	6.5	16.667	100.0	60.606
+Cómbita (Boyacá)	Boyacá	Andina	Otros departamentos	398	2.6	37.186	44.724	4.774	13.317	8.0	21.357	100.0	16.332
+Cúcuta (Norte de Santander)	Norte de Santander	Andina	Otros departamentos	2784	3.445	63.973	26.904	5.208	3.879	4.0	12.356	5.316	6.861
+Dabeiba (Antioquia)	Antioquia	Andina	Otros departamentos	50	1.699	44.0	24.0	8.0	24.0	6.0	6.0	100.0	34.0
+Dagua (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	533	2.727	56.285	29.268	2.439	12.008	9.0	20.826	60.413	15.572
+Don Matías (Antioquia)	Antioquia	Andina	Otros departamentos	217	2.336	54.839	28.571	3.226	13.364	7.0	17.972	40.553	7.373
+Dosquebradas (Risaralda)	Risaralda	Andina	Otros departamentos	2301	3.362	55.367	34.594	6.302	3.738	7.0	15.037	3.564	4.694
+Duitama (Boyacá)	Boyacá	Andina	Otros departamentos	478	2.679	43.305	43.933	3.975	8.787	8.0	21.757	40.586	10.46
+El Bagre (Antioquia)	Antioquia	Andina	Otros departamentos	148	2.17	90.541	7.432	0.676	1.351	4.0	5.405	2.703	8.108
+El Carmen de Bolívar (Bolívar)	Bolívar	Caribe	Otros departamentos	72	1.857	33.333	25.0	2.778	38.889	10.0	30.556	100.0	45.833
+El Carmen de Viboral (Antioquia)	Antioquia	Andina	Otros departamentos	527	2.722	62.429	33.207	0.949	3.416	7.0	17.647	1.328	3.795
+El Cerrito (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	489	2.689	60.327	27.812	4.499	7.362	8.0	21.063	40.286	15.133
+El Paso (Cesar)	Cesar	Caribe	Otros departamentos	101	2.004	29.703	21.782	5.941	42.574	10.0	24.752	27.723	32.673
+El Paujil (Caquetá)	Caquetá	Amazonía	Otros departamentos	63	1.799	61.905	26.984	0.0	11.111	7.0	20.635	38.095	39.683
+El Rosal (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	56	1.748	50.0	30.357	8.929	10.714	4.0	7.143	100.0	7.143
+El Santuario (Antioquia)	Antioquia	Andina	Otros departamentos	327	2.515	55.963	34.557	2.752	6.728	8.0	24.159	11.315	6.422
+El Zulia (Norte de Santander)	Norte de Santander	Andina	Otros departamentos	120	2.079	44.167	20.833	6.667	28.333	9.0	19.167	98.333	35.0
+Envigado (Antioquia)	Antioquia	Andina	Otros departamentos	6331	3.801	54.209	39.725	3.886	2.164	5.0	7.361	0.0	1.185
+Espinal (Tolima)	Tolima	Andina	Otros departamentos	522	2.718	63.985	24.713	3.257	8.046	7.0	15.517	41.188	10.153
+Facatativá (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	601	2.779	48.752	31.281	9.983	9.983	7.0	15.474	24.958	14.809
+Florencia (Caquetá)	Caquetá	Amazonía	Otros departamentos	989	2.995	68.049	24.267	1.82	5.865	5.0	12.336	27.401	15.369
+Floridablanca (Santander)	Santander	Andina	Otros departamentos	1542	3.188	54.929	38.521	2.983	3.567	7.0	12.062	0.908	6.55
+Fresno (Tolima)	Tolima	Andina	Otros departamentos	165	2.217	49.091	24.848	3.636	22.424	9.0	20.606	98.788	20.606
+Frontino (Antioquia)	Antioquia	Andina	Otros departamentos	264	2.422	88.258	7.576	2.652	1.515	5.0	10.227	1.515	2.273
+Fundación (Magdalena)	Magdalena	Caribe	Otros departamentos	105	2.021	58.095	26.667	3.81	11.429	7.0	20.0	47.619	32.381
+Funza (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	769	2.886	50.975	29.909	8.713	10.403	6.0	13.784	44.343	6.632
+Fusagasugá (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	1282	3.108	53.432	31.669	5.382	9.516	7.0	15.523	31.435	8.58
+Garagoa (Boyacá)	Boyacá	Andina	Otros departamentos	87	1.94	55.172	31.034	3.448	10.345	8.0	24.138	21.839	6.897
+Garzón (Huila)	Huila	Andina	Otros departamentos	620	2.792	60.645	27.419	3.065	8.871	8.0	18.548	52.903	24.194
+Ginebra (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	267	2.427	67.041	24.345	3.745	4.494	9.0	17.228	13.483	8.614
+Girardot (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	499	2.698	60.922	29.259	3.607	6.212	8.0	13.828	31.463	9.419
+Girardota (Antioquia)	Antioquia	Andina	Otros departamentos	2026	3.307	71.767	18.164	4.393	5.676	6.0	10.464	25.173	1.876
+Girón (Santander)	Santander	Andina	Otros departamentos	1256	3.099	57.484	28.742	4.22	9.554	7.0	16.72	3.025	11.385
+Granada (Meta)	Meta	Orinoquía	Otros departamentos	714	2.854	68.207	24.37	1.681	5.742	7.0	14.426	32.353	13.866
+Guacarí (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	352	2.547	72.159	20.739	2.841	3.977	9.0	20.17	24.432	9.091
+Guadalajara de Buga (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	615	2.789	62.114	30.407	2.764	4.715	7.0	17.886	17.398	6.341
+Guaduas (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	224	2.35	41.071	25.893	4.464	28.571	8.0	20.536	70.536	20.089
+Guamal (Meta)	Meta	Orinoquía	Otros departamentos	87	1.94	50.575	26.437	3.448	19.54	8.0	20.69	20.69	33.333
+Guamo (Tolima)	Tolima	Andina	Otros departamentos	428	2.631	48.832	31.075	4.907	14.953	7.0	16.121	100.0	17.523
+Guarne (Antioquia)	Antioquia	Andina	Otros departamentos	758	2.88	52.507	33.113	5.277	8.971	6.0	14.116	89.446	6.596
+Guateque (Boyacá)	Boyacá	Andina	Otros departamentos	150	2.176	36.667	38.667	7.333	17.333	7.0	20.667	100.0	12.0
+Honda (Tolima)	Tolima	Andina	Otros departamentos	122	2.086	62.295	22.131	3.279	12.295	5.0	13.115	32.787	27.869
+Ibagué (Tolima)	Tolima	Andina	Otros departamentos	8074	3.907	54.137	37.776	4.521	3.567	7.0	15.333	3.827	3.877
+Inírida (Guainía)	Guainía	Amazonía	Otros departamentos	67	1.826	95.522	4.478	0.0	0.0	5.0	7.463	2.985	5.97
+Ipiales (Nariño)	Nariño	Pacífica	Otros departamentos	627	2.797	34.131	57.097	3.349	5.423	11.0	33.014	11.164	7.656
+Itagui (Antioquia)	Antioquia	Andina	Otros departamentos	6440	3.809	59.41	30.435	5.776	4.363	6.0	9.581	0.016	1.46
+Jamundí (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	2020	3.305	55.545	37.228	4.406	2.772	7.0	18.812	0.0	4.455
+La Calera (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	170	2.23	54.118	34.118	7.647	4.118	6.0	12.353	82.353	17.059
+La Ceja (Antioquia)	Antioquia	Andina	Otros departamentos	706	2.849	57.365	35.836	1.558	5.099	8.0	18.555	12.606	2.833
+La Dorada (Caldas)	Caldas	Andina	Otros departamentos	876	2.943	72.146	22.945	1.027	3.881	5.0	12.443	10.731	3.539
+La Estrella (Antioquia)	Antioquia	Andina	Otros departamentos	1957	3.292	63.26	25.396	6.694	4.497	6.0	8.482	4.599	2.657
+La Jagua de Ibirico (Cesar)	Cesar	Caribe	Otros departamentos	54	1.732	68.519	18.519	1.852	11.111	8.0	20.37	12.963	12.963
+La Mesa (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	332	2.521	54.819	32.831	4.217	8.133	5.0	11.446	91.265	18.072
+La Paz (Cesar)	Cesar	Caribe	Otros departamentos	110	2.041	40.909	41.818	2.727	14.545	10.0	17.273	61.818	29.091
+La Pintada (Antioquia)	Antioquia	Andina	Otros departamentos	94	1.973	44.681	25.532	4.255	25.532	7.5	23.404	100.0	20.213
+La Plata (Huila)	Huila	Andina	Otros departamentos	116	2.064	69.828	25.0	0.862	3.448	9.0	17.241	38.793	30.172
+La Tebaida (Quindío)	Quindío	Andina	Otros departamentos	229	2.36	53.712	25.764	3.93	16.594	8.0	17.904	50.655	11.79
+La Unión (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	169	2.228	76.331	18.935	0.592	4.142	9.0	19.527	15.976	11.243
+La Virginia (Risaralda)	Risaralda	Andina	Otros departamentos	340	2.531	68.529	24.412	2.941	4.118	7.0	13.824	28.824	7.059
+Lebrija (Santander)	Santander	Andina	Otros departamentos	430	2.633	61.628	24.419	2.791	11.163	8.0	20.93	28.14	9.07
+Lorica (Córdoba)	Córdoba	Caribe	Otros departamentos	271	2.433	69.742	21.033	1.845	7.38	6.0	14.022	56.089	28.782
+Los Patios (Norte de Santander)	Norte de Santander	Andina	Otros departamentos	124	2.093	54.839	24.194	8.065	12.903	5.5	13.71	35.484	10.484
+Líbano (Tolima)	Tolima	Andina	Otros departamentos	258	2.412	67.442	26.744	1.163	4.651	9.0	19.38	14.729	5.426
+Madrid (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	463	2.666	49.892	31.317	7.559	11.231	6.0	16.631	52.052	12.743
+Magangué (Bolívar)	Bolívar	Caribe	Otros departamentos	75	1.875	50.667	29.333	2.667	17.333	8.0	24.0	53.333	30.667
+Maicao (La Guajira)	La Guajira	Caribe	Otros departamentos	168	2.225	50.595	41.071	5.357	2.976	9.5	32.143	50.595	33.929
+Malambo (Atlántico)	Atlántico	Caribe	Otros departamentos	192	2.283	48.958	27.083	9.896	14.062	7.0	11.979	9.375	24.479
+Manizales (Caldas)	Caldas	Andina	Otros departamentos	5746	3.759	52.576	37.33	6.683	3.376	7.0	15.054	8.615	2.698
+Mariquita (Tolima)	Tolima	Andina	Otros departamentos	270	2.431	59.259	25.185	2.593	12.963	7.0	20.0	42.222	13.704
+Medellín (Antioquia)	Antioquia	Andina	Otros departamentos	111106	5.046	63.325	31.805	3.579	1.291	6.0	10.089	0.328	0.569
+Melgar (Tolima)	Tolima	Andina	Otros departamentos	178	2.25	55.056	26.966	3.933	14.045	6.0	14.607	72.472	11.236
+Miranda (Cauca)	Cauca	Pacífica	Otros departamentos	77	1.886	61.039	27.273	7.792	3.896	10.0	27.273	18.182	32.468
+Mocoa (Putumayo)	Putumayo	Amazonía	Otros departamentos	360	2.556	61.667	23.889	3.056	11.389	5.5	8.889	84.167	25.0
+Mompós (Bolívar)	Bolívar	Caribe	Otros departamentos	61	1.785	57.377	21.311	3.279	18.033	10.0	27.869	100.0	49.18
+Moniquirá (Boyacá)	Boyacá	Andina	Otros departamentos	226	2.354	36.283	34.513	5.752	23.451	10.0	22.566	100.0	13.717
+Monterrey (Casanare)	Casanare	Orinoquía	Otros departamentos	93	1.968	53.763	27.957	3.226	15.054	9.0	19.355	100.0	19.355
+Montería (Córdoba)	Córdoba	Caribe	Otros departamentos	2587	3.413	65.211	27.252	2.281	5.257	4.0	9.354	20.062	11.442
+Mosquera (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	874	2.942	49.428	30.206	7.551	12.586	6.0	12.357	45.08	9.382
+Málaga (Santander)	Santander	Andina	Otros departamentos	61	1.785	57.377	36.066	1.639	4.918	10.0	14.754	0.0	16.393
+Necoclí (Antioquia)	Antioquia	Andina	Otros departamentos	90	1.954	63.333	24.444	7.778	4.444	5.0	6.667	81.111	40.0
+Neira (Caldas)	Caldas	Andina	Otros departamentos	149	2.173	53.691	30.872	2.013	13.423	8.0	22.148	55.705	16.107
+Neiva (Huila)	Huila	Andina	Otros departamentos	3025	3.481	63.24	30.843	2.248	3.669	7.0	13.95	10.446	7.471
+Nobsa (Boyacá)	Boyacá	Andina	Otros departamentos	243	2.386	42.387	44.444	2.469	10.7	9.0	29.63	100.0	18.107
+Ocaña (Norte de Santander)	Norte de Santander	Andina	Otros departamentos	343	2.535	61.224	21.283	2.624	14.869	9.0	23.324	16.035	23.032
+Oiba (Santander)	Santander	Andina	Otros departamentos	93	1.968	37.634	31.183	3.226	27.957	9.0	16.129	95.699	15.054
+Pacho (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	95	1.978	63.158	26.316	7.368	3.158	10.0	29.474	0.0	3.158
+Paipa (Boyacá)	Boyacá	Andina	Otros departamentos	228	2.358	36.404	49.561	3.509	10.526	9.0	25.439	41.667	10.526
+Palermo (Huila)	Huila	Andina	Otros departamentos	148	2.17	58.108	30.405	1.351	10.135	7.0	10.135	87.162	20.27
+Palmira (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	5169	3.713	58.948	34.862	2.38	3.753	7.0	15.748	22.886	7.235
+Pamplona (Norte de Santander)	Norte de Santander	Andina	Otros departamentos	143	2.155	42.657	18.182	6.294	32.867	4.0	11.189	99.301	23.776
+Pasto (Nariño)	Nariño	Pacífica	Otros departamentos	3228	3.509	51.58	42.1	2.602	3.686	7.0	17.162	15.242	4.833
+Pereira (Risaralda)	Risaralda	Andina	Otros departamentos	7714	3.887	51.27	39.513	5.535	3.682	7.0	14.208	20.353	3.746
+Piedecuesta (Santander)	Santander	Andina	Otros departamentos	1166	3.067	53.087	35.249	4.288	7.376	7.0	13.208	11.578	6.69
+Piendamó (Cauca)	Cauca	Pacífica	Otros departamentos	150	2.176	42.667	33.333	6.0	18.0	9.0	24.667	57.333	28.667
+Pitalito (Huila)	Huila	Andina	Otros departamentos	1091	3.038	61.412	30.522	2.016	6.049	8.0	17.69	30.156	16.774
+Planeta Rica (Córdoba)	Córdoba	Caribe	Otros departamentos	185	2.267	51.351	25.946	4.324	18.378	6.0	11.351	100.0	32.432
+Popayán (Cauca)	Cauca	Pacífica	Otros departamentos	1950	3.29	50.974	35.744	4.769	8.513	8.0	18.205	27.026	14.462
+Pradera (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	497	2.696	70.423	23.139	3.018	2.817	7.0	16.901	4.427	5.03
+Puente Nacional (Santander)	Santander	Andina	Otros departamentos	91	1.959	41.758	31.868	1.099	25.275	8.0	21.978	76.923	20.879
+Puerto Asís (Putumayo)	Putumayo	Amazonía	Otros departamentos	62	1.792	77.419	14.516	0.0	8.065	2.5	4.839	24.194	38.71
+Puerto Berrío (Antioquia)	Antioquia	Andina	Otros departamentos	183	2.262	60.656	24.044	1.093	14.208	4.0	6.011	42.077	10.929
+Puerto Boyacá (Boyacá)	Boyacá	Andina	Otros departamentos	208	2.318	54.327	28.365	2.404	14.904	6.0	11.538	45.673	19.712
+Puerto Colombia (Atlántico)	Atlántico	Caribe	Otros departamentos	212	2.326	48.585	41.509	5.189	4.717	6.0	9.906	73.113	19.34
+Puerto López (Meta)	Meta	Orinoquía	Otros departamentos	256	2.408	49.609	21.094	6.641	22.656	8.0	11.719	48.828	29.688
+Puerto Salgar (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	129	2.111	42.636	24.031	1.55	29.457	6.0	14.729	100.0	25.581
+Puerto Tejada (Cauca)	Cauca	Pacífica	Otros departamentos	121	2.083	54.545	33.884	2.479	7.438	10.0	29.752	8.264	16.529
+Puerto Triunfo (Antioquia)	Antioquia	Andina	Otros departamentos	116	2.064	54.31	26.724	0.862	18.103	6.0	12.069	68.103	33.621
+Purificación (Tolima)	Tolima	Andina	Otros departamentos	220	2.342	43.636	31.364	2.273	22.727	6.0	16.364	100.0	33.636
+Quibdó (Chocó)	Chocó	Pacífica	Otros departamentos	477	2.679	72.956	17.4	3.774	5.87	7.0	12.369	14.256	9.434
+Quimbaya (Quindío)	Quindío	Andina	Otros departamentos	123	2.09	61.789	27.642	4.065	6.504	8.0	25.203	61.789	21.138
+Restrepo (Meta)	Meta	Orinoquía	Otros departamentos	573	2.758	56.545	27.051	3.316	13.089	7.0	16.405	21.64	31.763
+Retiro (Antioquia)	Antioquia	Andina	Otros departamentos	72	1.857	47.222	40.278	4.167	8.333	5.0	9.722	100.0	5.556
+Ricaurte (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	308	2.489	52.597	32.792	3.571	11.039	6.0	8.766	75.325	20.455
+Riohacha (La Guajira)	La Guajira	Caribe	Otros departamentos	574	2.759	48.258	38.85	5.226	7.666	9.0	25.958	43.38	31.185
+Rionegro (Antioquia)	Antioquia	Andina	Otros departamentos	5131	3.71	53.42	39.33	3.645	3.547	7.0	13.604	7.776	2.709
+Rionegro (Santander)	Santander	Andina	Otros departamentos	108	2.033	38.889	25.0	3.704	32.407	10.0	21.296	100.0	31.481
+Riosucio (Caldas)	Caldas	Andina	Otros departamentos	264	2.422	69.318	17.424	1.894	11.364	7.0	14.773	44.697	12.121
+Rivera (Huila)	Huila	Andina	Otros departamentos	429	2.632	50.35	30.769	4.196	14.685	8.0	17.716	98.135	31.702
+Roldanillo (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	227	2.356	68.722	22.907	1.762	6.167	7.0	17.181	13.216	11.454
+Sabana de Torres (Santander)	Santander	Andina	Otros departamentos	602	2.78	67.11	22.591	2.326	7.973	7.0	10.631	22.259	8.804
+Sabanagrande (Atlántico)	Atlántico	Caribe	Otros departamentos	176	2.246	59.659	17.614	9.091	13.636	8.0	17.045	39.773	24.432
+Sabanalarga (Atlántico)	Atlántico	Caribe	Otros departamentos	105	2.021	43.81	30.476	4.762	20.952	8.0	14.286	100.0	24.762
+Sabaneta (Antioquia)	Antioquia	Andina	Otros departamentos	2446	3.388	55.969	33.442	5.846	4.742	6.0	7.155	2.044	1.308
+Saboyá (Boyacá)	Boyacá	Andina	Otros departamentos	85	1.929	47.059	38.824	4.706	9.412	10.0	31.765	97.647	10.588
+Sahagún (Córdoba)	Córdoba	Caribe	Otros departamentos	245	2.389	55.102	31.429	2.449	11.02	7.0	15.51	56.327	17.959
+Salamina (Caldas)	Caldas	Andina	Otros departamentos	94	1.973	57.447	38.298	1.064	3.191	9.0	27.66	0.0	2.128
+Sampués (Sucre)	Sucre	Caribe	Otros departamentos	166	2.22	53.012	27.711	3.614	15.663	8.0	16.265	98.795	36.747
+San Alberto (Cesar)	Cesar	Caribe	Otros departamentos	61	1.785	31.148	22.951	6.557	39.344	9.0	19.672	100.0	42.623
+San Andrés (Archipiélago de San Andrés, Providencia)	Archipiélago de San Andrés, Providencia	Insular	Otros departamentos	293	2.467	71.672	24.232	1.365	2.73	5.0	4.778	35.836	11.604
+San Diego (Cesar)	Cesar	Caribe	Otros departamentos	396	2.598	33.586	27.273	9.596	29.545	9.0	23.99	100.0	38.131
+San Gil (Santander)	Santander	Andina	Otros departamentos	448	2.651	54.018	28.571	3.348	14.062	9.0	19.196	60.714	16.295
+San Jerónimo (Antioquia)	Antioquia	Andina	Otros departamentos	141	2.149	51.064	34.752	2.837	11.348	8.0	17.021	60.993	17.73
+San José del Guaviare (Guaviare)	Guaviare	Amazonía	Otros departamentos	320	2.505	69.062	24.062	1.875	4.688	5.0	17.188	1.25	17.812
+San Juan Nepomuceno (Bolívar)	Bolívar	Caribe	Otros departamentos	69	1.839	44.928	27.536	2.899	24.638	7.0	20.29	49.275	14.493
+San Luis (Antioquia)	Antioquia	Andina	Otros departamentos	106	2.025	33.019	26.415	5.66	34.906	8.0	14.151	100.0	34.906
+San Onofre (Sucre)	Sucre	Caribe	Otros departamentos	57	1.756	50.877	24.561	12.281	12.281	8.0	12.281	100.0	38.596
+San Vicente de Chucurí (Santander)	Santander	Andina	Otros departamentos	55	1.74	80.0	16.364	1.818	1.818	3.0	20.0	3.636	7.273
+Santa Bárbara (Antioquia)	Antioquia	Andina	Otros departamentos	86	1.934	48.837	20.93	9.302	20.93	7.0	15.116	100.0	10.465
+Santa Marta (Magdalena)	Magdalena	Caribe	Otros departamentos	2551	3.407	52.058	32.732	5.606	9.604	6.0	12.034	19.679	14.739
+Santa Rosa de Cabal (Risaralda)	Risaralda	Andina	Otros departamentos	315	2.498	61.587	30.476	3.81	4.127	7.0	17.46	36.825	5.714
+Santa Rosa de Osos (Antioquia)	Antioquia	Andina	Otros departamentos	528	2.723	56.629	23.674	5.114	14.394	7.0	15.53	36.742	9.28
+Santa Rosa de Viterbo (Boyacá)	Boyacá	Andina	Otros departamentos	155	2.19	34.194	49.032	4.516	12.258	9.0	23.226	100.0	21.935
+Santa Rosa del Sur (Bolívar)	Bolívar	Caribe	Otros departamentos	70	1.845	70.0	22.857	0.0	7.143	8.0	22.857	4.286	17.143
+Santafé de Antioquia (Antioquia)	Antioquia	Andina	Otros departamentos	372	2.571	70.43	19.624	1.613	8.333	5.0	6.989	16.667	6.989
+Santander de Quilichao (Cauca)	Cauca	Pacífica	Otros departamentos	423	2.626	58.865	24.823	5.437	10.875	8.0	21.749	44.917	21.513
+Santuario (Risaralda)	Risaralda	Andina	Otros departamentos	58	1.763	46.552	37.931	5.172	10.345	11.0	32.759	100.0	3.448
+Saravena (Arauca)	Arauca	Orinoquía	Otros departamentos	105	2.021	72.381	18.095	0.0	9.524	3.0	12.381	29.524	48.571
+Sardinata (Norte de Santander)	Norte de Santander	Andina	Otros departamentos	50	1.699	36.0	28.0	8.0	28.0	10.5	36.0	100.0	34.0
+Segovia (Antioquia)	Antioquia	Andina	Otros departamentos	349	2.543	88.252	7.163	1.719	2.865	3.0	5.158	0.86	2.006
+Sibaté (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	181	2.258	40.884	24.309	5.525	29.282	6.0	19.337	90.608	23.204
+Silvania (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	218	2.338	47.248	30.275	2.752	19.725	7.0	17.89	53.211	17.431
+Sincelejo (Sucre)	Sucre	Caribe	Otros departamentos	520	2.716	58.269	28.269	2.692	10.769	7.0	13.846	56.154	16.346
+Soacha (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	1295	3.112	47.954	29.344	13.436	9.266	7.0	18.687	7.027	15.907
+Socorro (Santander)	Santander	Andina	Otros departamentos	84	1.924	50.0	30.952	4.762	14.286	7.0	19.048	100.0	35.714
+Sogamoso (Boyacá)	Boyacá	Andina	Otros departamentos	197	2.294	44.67	31.98	6.091	17.259	10.0	24.873	43.655	9.645
+Soledad (Atlántico)	Atlántico	Caribe	Otros departamentos	116	2.064	54.31	22.414	18.103	5.172	7.0	8.621	5.172	14.655
+Sonson (Antioquia)	Antioquia	Andina	Otros departamentos	1141	3.057	85.188	10.605	2.016	2.103	6.0	13.322	1.84	0.789
+Sopó (Cundinamarca)	Cundinamarca	Andina	Sabana Centro	58	1.763	43.103	32.759	10.345	13.793	6.0	25.862	100.0	20.69
+Supía (Caldas)	Caldas	Andina	Otros departamentos	316	2.5	66.456	18.671	2.532	12.342	6.0	12.975	78.797	8.544
+Tame (Arauca)	Arauca	Orinoquía	Otros departamentos	200	2.301	58.5	26.0	3.5	12.0	8.0	15.5	28.0	26.5
+Tangua (Nariño)	Nariño	Pacífica	Otros departamentos	299	2.476	35.452	42.809	4.013	17.726	9.0	18.395	100.0	20.067
+Timbío (Cauca)	Cauca	Pacífica	Otros departamentos	193	2.286	59.585	26.943	3.627	9.845	7.0	15.544	43.005	14.508
+Tuluá (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	2495	3.397	60.08	34.709	1.523	3.647	7.0	16.754	9.659	3.968
+Tumaco (Nariño)	Nariño	Pacífica	Otros departamentos	266	2.425	57.143	29.699	4.887	8.271	6.0	16.541	0.376	70.677
+Tunja (Boyacá)	Boyacá	Andina	Otros departamentos	1407	3.148	41.507	46.055	6.61	5.828	9.0	23.028	22.886	7.534
+Turbaco (Bolívar)	Bolívar	Caribe	Otros departamentos	489	2.689	56.851	25.971	5.726	11.452	6.0	10.838	61.554	26.789
+Turbo (Antioquia)	Antioquia	Andina	Otros departamentos	541	2.733	63.586	21.996	5.915	8.503	4.0	12.2	44.917	30.499
+Túquerres (Nariño)	Nariño	Pacífica	Otros departamentos	90	1.954	42.222	43.333	2.222	12.222	11.0	26.667	67.778	30.0
+Ubate (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	201	2.303	52.239	33.831	5.473	8.458	8.0	22.388	49.254	14.428
+Urrao (Antioquia)	Antioquia	Andina	Otros departamentos	1408	3.149	87.145	9.588	1.634	1.634	6.0	12.997	0.0	0.923
+Valdivia (Antioquia)	Antioquia	Andina	Otros departamentos	60	1.778	38.333	21.667	3.333	36.667	8.5	11.667	100.0	21.667
+Valledupar (Cesar)	Cesar	Caribe	Otros departamentos	343	2.535	42.566	37.901	6.706	12.828	9.0	20.117	58.309	27.697
+Villa Rica (Cauca)	Cauca	Pacífica	Otros departamentos	225	2.352	42.667	40.444	5.333	11.111	9.0	21.333	67.556	6.667
+Villa de Leyva (Boyacá)	Boyacá	Andina	Otros departamentos	233	2.367	54.936	33.476	4.721	6.867	10.0	24.034	61.373	18.455
+Villamaría (Caldas)	Caldas	Andina	Otros departamentos	343	2.535	60.058	29.738	6.997	3.207	7.0	17.493	2.041	4.665
+Villanueva (Casanare)	Casanare	Orinoquía	Otros departamentos	330	2.519	69.394	23.333	1.212	6.061	6.0	13.03	26.364	13.333
+Villavicencio (Meta)	Meta	Orinoquía	Otros departamentos	5566	3.746	59.738	32.195	3.539	4.527	6.0	12.792	13.996	7.384
+Villeta (Cundinamarca)	Cundinamarca	Andina	Resto de Cundinamarca	525	2.72	47.619	27.048	4.0	21.333	7.0	14.476	63.81	27.619
+Viterbo (Caldas)	Caldas	Andina	Otros departamentos	59	1.771	64.407	27.119	3.39	5.085	7.0	22.034	23.729	3.39
+Yarumal (Antioquia)	Antioquia	Andina	Otros departamentos	158	2.199	43.038	25.316	6.329	25.316	8.0	12.658	96.835	17.089
+Yopal (Casanare)	Casanare	Orinoquía	Otros departamentos	1852	3.268	63.175	29.59	1.782	5.454	7.0	11.717	15.173	12.635
+Yotoco (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	171	2.233	43.275	26.316	1.754	28.655	9.0	22.222	84.795	25.146
+Yumbo (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	2201	3.343	58.473	29.032	4.134	8.36	7.0	14.902	0.0	4.453
+Zaragoza (Antioquia)	Antioquia	Andina	Otros departamentos	55	1.74	56.364	27.273	3.636	12.727	5.0	10.909	100.0	36.364
+Zarzal (Valle del Cauca)	Valle del Cauca	Pacífica	Otros departamentos	225	2.352	46.667	29.333	5.778	18.222	7.0	13.333	97.778	22.667
+Zipaquirá (Cundinamarca)	Cundinamarca	Andina	Sabana Centro	364	2.561	45.33	38.736	9.89	6.044	8.0	18.407	12.912	7.967
+Zona Bananera (Magdalena)	Magdalena	Caribe	Otros departamentos	75	1.875	36.0	22.667	4.0	37.333	9.0	18.667	100.0	53.333
