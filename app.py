@@ -36,6 +36,19 @@ try:
 except ImportError as error_md:
     print(f"Análisis multidimensional no disponible: {error_md}. Ejecute: pip install -r requirements.txt")
 
+# =========================
+# ETAPA 6 - CONOCIMIENTO OCULTO (Orange y comentarios de YouTube)
+# Las rutas viven en el paquete conocimiento_oculto/ (Blueprint):
+#   /conocimiento-oculto/          -> síntesis de resultados
+#   /conocimiento-oculto/informe   -> informe técnico en PDF
+# =========================
+try:
+    from conocimiento_oculto import bp_conocimiento_oculto
+    app.register_blueprint(bp_conocimiento_oculto)
+except ImportError as error_co:
+    print(f"Sección Conocimiento Oculto no disponible: {error_co}")
+
+
 # Variable global para el GeoJSON
 sabana_geojson = None
 

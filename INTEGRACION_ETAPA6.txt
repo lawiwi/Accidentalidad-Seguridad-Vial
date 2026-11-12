@@ -1,0 +1,32 @@
+ETAPA 6 · CONOCIMIENTO OCULTO — dónde va cada cosa (sin carpeta etapa6)
+
+scripts/
+  preparar_datos_orange.py   → genera data/orange/*.tab desde modelo_multidimensional/dw/dw_accidentalidad_vial.sqlite
+                               uso (desde la raíz):  python scripts/preparar_datos_orange.py
+  extraccion_colab.py        → celda de Google Colab (YouTube Data API v3). Clave = PEGA_AQUI_TU_CLAVE al publicar
+  limpiar_comentarios.py     → data/youtube/comentarios_crudos.csv → data/orange/comentarios_limpios.tab
+                               uso (desde la raíz):  python scripts/limpiar_comentarios.py
+data/orange/
+  E6_1_supervisado_gravedad.ows, E6_2_clustering_municipios.ows, E6_3_texto_comentarios_youtube.ows
+  *.tab (datos de los flujos; deben estar en la MISMA carpeta que los .ows), stopwords_es_extra.txt
+data/youtube/
+  videos_candidatos.csv, videos_seleccionados.csv, reporte_calidad.json
+  comentarios_crudos.csv y comentarios_descartados.csv → NO se suben (.gitignore)
+data/conocimiento_oculto/
+  resultados_etapa6.json (lo lee Flask), resultados_supervisado.json, clusters_municipios_k5.csv
+conocimiento_oculto/  templates/ConocimientoOculto/  static/css/conocimiento_oculto.css  static/docs/
+
+1) app.py — debajo del registro de la Etapa 5:
+from conocimiento_oculto import bp_conocimiento_oculto
+app.register_blueprint(bp_conocimiento_oculto)
+
+2) templates/base.html — en el <nav>, después de «Análisis multidimensional»:
+      <a href="/conocimiento-oculto/" data-spa-link>Conocimiento oculto</a>
+
+3) .gitignore — añadir:
+data/youtube/comentarios_crudos.csv
+data/youtube/comentarios_descartados.csv
+data/orange/vehiculos_gravedad_completo.tab
+
+4) Informe en static/docs/Informe_Etapa6.pdf; enlace del video en
+   data/conocimiento_oculto/resultados_etapa6.json → "enlaces": {"video": "https://youtu.be/..."}
