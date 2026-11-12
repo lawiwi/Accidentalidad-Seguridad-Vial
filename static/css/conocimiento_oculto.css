@@ -189,6 +189,20 @@
 .co-voz { position: relative; background: #fff; border: 1px solid var(--co-borde); border-radius: 20px; padding: 1rem 1.1rem 1rem 3.2rem; }
 .co-voz-ico { position: absolute; left: 1rem; top: .2rem; font: 700 2.6rem Georgia, serif; color: var(--co-plum); opacity: .45; }
 .co-voz p { margin: 0; font-size: .92rem; }
+.co-orange-card { margin-top: 18px; }
+.co-orange-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.co-orange-head h3 { margin: 0; }
+.co-orange-topics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 1rem 0 .7rem; }
+.co-orange-topic { background: #fff; border: 1px solid var(--co-borde); border-radius: 14px; padding: .75rem .85rem; }
+.co-orange-topic-head { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .45rem; color: var(--co-indigo); }
+.co-orange-topic-head strong { font: 700 .95rem 'Poppins', sans-serif; color: var(--co-plum); white-space: nowrap; }
+.co-orange-topic-id { display: block; margin-bottom: .15rem; color: var(--co-suave); font-size: .68rem; letter-spacing: .04em; text-transform: uppercase; }
+.co-orange-topic-head b { display: block; font-size: .84rem; }
+.co-orange-topic .co-barra-pista { height: 9px; margin-bottom: .4rem; }
+.co-orange-topic .co-barra-relleno { background: var(--co-plum); }
+.co-orange-topic small { color: var(--co-suave); }
+.co-orange-words { display: flex; flex-wrap: wrap; gap: 5px; margin-top: .55rem; }
+.co-orange-words span { padding: .15rem .5rem; border-radius: 999px; background: color-mix(in srgb, var(--co-plum) 10%, white); color: var(--co-plum); font-size: .72rem; }
 
 /* ---------- Conclusiones ---------- */
 .co-flujo { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 10px; align-items: stretch; }
@@ -226,6 +240,7 @@
 @media (max-width: 900px) {
   .co-resumen { grid-template-columns: repeat(2, 1fr); }
   .co-grid-sup, .co-grid-clu, .co-grid-yt, .co-dos-col { grid-template-columns: 1fr; }
+  .co-orange-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .co-flujo { grid-template-columns: 1fr; }
   .co-flujo i { transform: rotate(90deg); justify-self: center; }
   .co-tabs { border-radius: 18px; }
@@ -235,6 +250,7 @@
   .co-perfil-fila { grid-template-columns: 6.5rem 1fr 4.2rem; }
   .co-tema summary { grid-template-columns: 1fr 3.4rem; }
   .co-tema summary .co-barra-pista { display: none; }
+  .co-orange-topics { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .co-js .co-panel.activo, .co-js .co-detalle.activo { animation: none; }

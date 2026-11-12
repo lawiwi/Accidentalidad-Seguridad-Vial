@@ -295,8 +295,8 @@
 
     <div class="co-grid-yt">
       <article class="co-card">
-        <h3>Temas encontrados (LDA)</h3>
-        <p class="co-pie">Toca un tema para ver sus palabras clave.</p>
+        <h3>Síntesis temática interpretativa</h3>
+        <p class="co-pie">Resumen cualitativo; estas categorías no corresponden uno a uno con los identificadores Topic de Orange.</p>
         {% set tmax = Y.temas | map(attribute='pct') | map('replace', ',', '.') | map('float') | max %}
         {% for t in Y.temas %}
         <details class="co-tema" {{ 'open' if loop.first }}>
@@ -316,6 +316,37 @@
         {% endfor %}
       </div>
     </div>
+    {% if Y.resultado_orange %}
+    {% set O = Y.resultado_orange %}
+    {% set max_orange_pct = O.distribucion_tema_dominante | map(attribute='porcentaje') | max %}
+    <article class="co-card co-orange-card">
+      <div class="co-orange-head">
+        <div>
+        <h3>Temas de Orange, con nombres orientativos</h3>
+          <p class="co-pie">LDA · {{ O.numero_temas }} temas · {{ num(O.comentarios_analizados) }} comentarios</p>
+        </div>
+      </div>
+      <div class="co-orange-topics" role="list" aria-label="Comentarios asignados a cada tema de Orange">
+        {% for t in O.distribucion_tema_dominante %}
+        <div class="co-orange-topic" role="listitem">
+          <div class="co-orange-topic-head">
+          <div>
+            <span class="co-orange-topic-id">{{ t.tema }}</span>
+            <b>{{ t.nombre }}</b>
+          </div>
+            <strong>{{ ('%.2f'|format(t.porcentaje))|replace('.', ',') }} %</strong>
+          </div>
+          <div class="co-barra-pista" aria-hidden="true">
+            <span class="co-barra-relleno" style="width: {{ t.porcentaje / max_orange_pct * 100 }}%"></span>
+          </div>
+          <small>{{ num(t.comentarios) }} comentarios</small>
+        <div class="co-orange-words">{% for palabra in t.palabras.split(', ') %}<span>{{ palabra }}</span>{% endfor %}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <p class="co-pie">{{ O.criterio_distribucion }} {{ O.nota }}</p>
+    </article>
+    {% endif %}
     <p class="co-pie">Las opiniones corresponden a quienes comentaron en los videos seleccionados y no representan a toda la población: se usan para formular hipótesis.</p>
     {% endif %}
     <button type="button" class="co-siguiente" data-co-ir="con">Siguiente: conclusiones →</button>
@@ -328,11 +359,11 @@
       <h2>Conclusiones integradas</h2>
     </div>
     <div class="co-flujo">
-      <div><span>01</span><b>Modelo</b><p>Pesa más quién atiende y el tipo de vía que el vehículo.</p></div>
+      <div><span>01</span><b>Señal predictiva</b><p>AUC 0,816 y recall 66,3 %, pero precisión 16,9 %: sirve para priorizar revisiones con validación humana.</p></div>
       <i aria-hidden="true">→</i>
-      <div><span>02</span><b>Territorio</b><p>Los corredores multiplican la letalidad; Sabana Centro es corredor.</p></div>
+      <div><span>02</span><b>Perfiles territoriales</b><p>C1 y C5 muestran mayores proporciones de siniestros con muertos; Sabana Centro queda en el perfil de corredor C1.</p></div>
       <i aria-hidden="true">→</i>
-      <div><span>03</span><b>Ciudadanía</b><p>Frenos, velocidad y rampas: causas que el dataset no registra.</p></div>
+      <div><span>03</span><b>Voz ciudadana</b><p>Los comentarios señalan mantenimiento, motos, vías y rampas: pistas para investigar, no una medida representativa de la población.</p></div>
     </div>
     {% if R.conclusiones %}
     <div class="co-dos-col">

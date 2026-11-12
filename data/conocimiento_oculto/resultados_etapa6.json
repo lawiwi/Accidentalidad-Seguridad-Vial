@@ -1971,7 +1971,59 @@
     "palabras": "familias, fortaleza, dolor, paz",
     "pct": "10,8"
    }
-  ]
+  ],
+  "resultado_orange": {
+   "archivo": "data/conocimiento_oculto/texto_resultados.json",
+   "modelo": "Topic Modelling · LDA",
+   "numero_temas": 6,
+   "comentarios_analizados": 17467,
+   "criterio_distribucion": "Cada comentario se asigna al tema con mayor peso entre Topic 1 y Topic 6.",
+   "distribucion_tema_dominante": [
+    {
+     "tema": "Topic 1",
+    "nombre": "Compasión y apoyo a víctimas y conductor",
+    "palabras": "Dios, familias, víctimas, conductor, fortaleza",
+     "comentarios": 3065,
+     "porcentaje": 17.55
+    },
+    {
+     "tema": "Topic 2",
+    "nombre": "Revisión técnica, mantenimiento y normas",
+    "palabras": "CDA, SOAT, frenos, mantenimiento, tecnomecánica",
+     "comentarios": 2133,
+     "porcentaje": 12.21
+    },
+    {
+     "tema": "Topic 3",
+    "nombre": "Capacitación y responsabilidad al conducir",
+    "palabras": "conductor, capacitación, velocidad, responsabilidad, frenos",
+     "comentarios": 1838,
+     "porcentaje": 10.52
+    },
+    {
+     "tema": "Topic 4",
+    "nombre": "Motos, SOAT y mantenimiento vehicular",
+    "palabras": "motos, SOAT, carro, frenos, tecnomecánica",
+     "comentarios": 3934,
+     "porcentaje": 22.52
+    },
+    {
+     "tema": "Topic 5",
+    "nombre": "Duelo y reclamos de justicia",
+    "palabras": "justicia, familias, conductor, fortaleza, paz",
+     "comentarios": 2879,
+     "porcentaje": 16.48
+    },
+    {
+     "tema": "Topic 6",
+    "nombre": "Infraestructura vial, licencias y control",
+    "palabras": "Colombia, conductores, licencias, vías, rampas",
+     "comentarios": 3618,
+     "porcentaje": 20.71
+    }
+   ],
+   "nota": "Los nombres y palabras clave son interpretaciones orientativas de los comentarios asignados; deben validarse cualitativamente. Topic 1 a Topic 6 son identificadores de Orange."
+  }
  },
  "enlaces": {
   "repositorio": "https://github.com/lawiwi/Accidentalidad-Seguridad-Vial",
@@ -1980,15 +2032,14 @@
  },
  "conclusiones": {
   "evidencia": [
-   "La letalidad depende más del tipo de vía y de la autoridad que atiende que del vehículo: Policía Nacional y autoridades departamentales elevan la probabilidad de muerte, y los grupos C1 y C5 tienen entre 5 y 8 veces la letalidad de los centros urbanos.",
-   "Los vehículos de carga concentran el riesgo por vehículo; la moto aporta el mayor volumen, no la mayor letalidad.",
-   "Sabana Centro (Cajicá, Cota, Chía, Sopó) se comporta como corredor nacional, no como ciudad.",
-   "La ciudadanía explica los siniestros de carretera por frenos, velocidad y falta de rampas de frenado, y percibe los controles como recaudo."
+  "El modelo seleccionado alcanza un AUC de 0,816 y detecta el 66,3 % de los registros con muertos (recall), pero su precisión es 16,9 %. La autoridad que registra y el tipo de vehículo se asocian con el desenlace; el resultado sirve para priorizar revisiones con validación humana, no para tomar decisiones automáticas.",
+  "El clustering muestra perfiles municipales distintos: C1 y C5 registran proporciones de vehículos en siniestros con muertos entre 5 y 8 veces mayores que los centros urbanos. Sabana Centro queda en C1, el perfil de corredor nacional. Es una comparación descriptiva, no una relación causal.",
+  "El LDA de Orange organizó los 17.467 comentarios en seis temas interpretados como revisión técnica, motocicletas, infraestructura vial, responsabilidad, apoyo y justicia. Son percepciones de quienes comentaron en los videos seleccionados; no estiman la opinión de toda la población ni la incidencia real de esos factores."
   ],
   "hipotesis": [
-   "Parte del efecto territorial puede deberse a diferencias de registro entre autoridades.",
-   "La percepción de los controles como «negocio» podría favorecer la evasión de la revisión técnico-mecánica en los grupos de flota vieja.",
-   "Rampas de frenado y control de velocidad en corredores podrían reducir la letalidad; requiere comparar tramos."
+  "Parte de las diferencias entre territorios podría deberse a cómo y quién registra los siniestros. Para comprobarlo, habría que comparar autoridades y tipos de vía.",
+  "La desconfianza hacia los controles podría relacionarse con el cumplimiento de la revisión técnico-mecánica. Se necesitarían datos de inspecciones y antigüedad de los vehículos para evaluarlo.",
+  "Conviene evaluar si las rampas de frenado, el mantenimiento de vehículos de carga y el control de velocidad reducen el riesgo en corredores críticos, comparando tramos semejantes y antes y después de las intervenciones."
   ]
  }
 }
