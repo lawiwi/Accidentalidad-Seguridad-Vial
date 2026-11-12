@@ -1,0 +1,317 @@
+{
+ "etapa": 6,
+ "titulo": "Conocimiento oculto",
+ "supervisado": {
+  "pregunta": "¿Se puede anticipar si un vehículo involucrado pertenece a un siniestro con muertos a partir de su tipo, edad, marca, departamento, autoridad que registra y mes?",
+  "tipo": "Clasificación binaria (Con Heridos / Con Muertos), clase minoritaria 5,08 %",
+  "validacion": "Validación cruzada estratificada de 10 particiones sobre 100.000 registros + validación temporal (entrena 2022-2024, prueba 2025-feb 2026)",
+  "linea_base": "Predecir siempre «Con Heridos» da 94,9 % de exactitud y 0 % de recall: por eso la exactitud no sirve para comparar.",
+  "modelos": [
+   {
+    "nombre": "Regresión logística",
+    "AUC": 0.816,
+    "CA": 0.818,
+    "F1": 0.27,
+    "Prec": 0.169,
+    "Rec": 0.663,
+    "MCC": 0.269,
+    "CM": [
+     [
+      78403,
+      16515
+     ],
+     [
+      1715,
+      3367
+     ]
+    ]
+   },
+   {
+    "nombre": "Random Forest",
+    "AUC": 0.815,
+    "CA": 0.857,
+    "F1": 0.296,
+    "Prec": 0.198,
+    "Rec": 0.592,
+    "MCC": 0.283,
+    "CM": [
+     [
+      82704,
+      12214
+     ],
+     [
+      2074,
+      3008
+     ]
+    ]
+   },
+   {
+    "nombre": "Naive Bayes",
+    "AUC": 0.809,
+    "CA": 0.905,
+    "F1": 0.3,
+    "Prec": 0.24,
+    "Rec": 0.399,
+    "MCC": 0.262,
+    "CM": [
+     [
+      88496,
+      6422
+     ],
+     [
+      3054,
+      2028
+     ]
+    ]
+   }
+  ],
+  "temporal": [
+   {
+    "nombre": "Regresión logística",
+    "AUC": 0.788,
+    "CA": 0.693,
+    "F1": 0.283,
+    "Prec": 0.174,
+    "Rec": 0.765,
+    "MCC": 0.256,
+    "CM": [
+     [
+      9469,
+      4314
+     ],
+     [
+      278,
+      907
+     ]
+    ]
+   },
+   {
+    "nombre": "Random Forest",
+    "AUC": 0.778,
+    "CA": 0.752,
+    "F1": 0.305,
+    "Prec": 0.196,
+    "Rec": 0.689,
+    "MCC": 0.269,
+    "CM": [
+     [
+      10435,
+      3348
+     ],
+     [
+      368,
+      817
+     ]
+    ]
+   },
+   {
+    "nombre": "Naive Bayes",
+    "AUC": 0.781,
+    "CA": 0.832,
+    "F1": 0.32,
+    "Prec": 0.236,
+    "Rec": 0.5,
+    "MCC": 0.26,
+    "CM": [
+     [
+      11864,
+      1919
+     ],
+     [
+      593,
+      592
+     ]
+    ]
+   }
+  ],
+  "seleccionado": "Regresión logística (balanceada)",
+  "justificacion": "Empata en AUC con Random Forest (0,816 frente a 0,815), detecta más siniestros con muertos (recall 66,3 % frente a 59,2 %) y se puede explicar con un nomograma, algo necesario para orientar decisiones de prevención.",
+  "hallazgos": [
+   "Quién registra el siniestro pesa más que el vehículo: los registros de la Policía Nacional (vías nacionales) y de autoridades departamentales elevan la probabilidad de muerte.",
+   "Tractocamión, volqueta y camión son los tipos de vehículo con mayor efecto positivo; automóvil y camioneta, los de menor.",
+   "Antioquia, Caldas y Risaralda reducen la probabilidad: registran muchos siniestros con heridos en ciudad, lo que sugiere diferencias de reporte más que de riesgo (hipótesis)."
+  ]
+ },
+ "clustering": {
+  "pregunta": "¿Qué perfiles de municipios existen según la composición de su flota siniestrada, su antigüedad y quién atiende los siniestros?",
+  "algoritmo": "k-Means (k-means++, 10 reinicios, 300 iteraciones), variables estandarizadas",
+  "variables": [
+   "PctMotos",
+   "PctCarga",
+   "EdadMediana",
+   "PctPoliciaNacional"
+  ],
+  "municipios": 248,
+  "k": 5,
+  "silueta": {
+   "2": 0.392,
+   "3": 0.306,
+   "4": 0.289,
+   "5": 0.308,
+   "6": 0.297,
+   "7": 0.275,
+   "8": 0.275
+  },
+  "grupos": [
+   {
+    "id": "C1",
+    "nombre": "Periurbanos de corredor nacional",
+    "descripcion": "Municipios vecinos a grandes ciudades atravesados por vías nacionales: flota mixta, 16 % de carga y casi 9 de cada 10 registros hechos por la Policía Nacional. Aquí está Sabana Centro (Cajicá, Cota, Chía, Sopó).",
+    "municipios": 54,
+    "vehiculos": 13772,
+    "pct_motos": 48.6,
+    "pct_carga": 16.5,
+    "edad_mediana": 6.4,
+    "pct_policia_nacional": 88.0,
+    "pct_con_muertos": 19.1,
+    "ejemplos": [
+     "Mosquera (Cundinamarca)",
+     "Cajicá (Cundinamarca)",
+     "Guarne (Antioquia)",
+     "Chía (Cundinamarca)",
+     "Cota (Cundinamarca)"
+    ]
+   },
+   {
+    "id": "C2",
+    "nombre": "Centros urbanos con tránsito municipal",
+    "descripcion": "Capitales y ciudades grandes donde registra la secretaría de movilidad: 60 % motos, poca carga y apenas 19 % de registros de la Policía Nacional.",
+    "municipios": 107,
+    "vehiculos": 342658,
+    "pct_motos": 59.7,
+    "pct_carga": 6.9,
+    "edad_mediana": 7.4,
+    "pct_policia_nacional": 19.3,
+    "pct_con_muertos": 3.6,
+    "ejemplos": [
+     "Medellín (Antioquia)",
+     "Bogotá D.C. (Bogotá D.C.)",
+     "Cali (Valle del Cauca)",
+     "Barranquilla (Atlántico)",
+     "Bucaramanga (Santander)"
+    ]
+   },
+   {
+    "id": "C3",
+    "nombre": "Ciudades motorizadas de flota joven",
+    "descripcion": "Siete de cada diez vehículos son motos y la mediana de edad es de 4,7 años (Bello, Cartagena, Cúcuta, Montería).",
+    "municipios": 30,
+    "vehiculos": 34736,
+    "pct_motos": 72.3,
+    "pct_carga": 5.6,
+    "edad_mediana": 4.6,
+    "pct_policia_nacional": 20.4,
+    "pct_con_muertos": 7.0,
+    "ejemplos": [
+     "Bello (Antioquia)",
+     "Cartagena (Bolívar)",
+     "Cúcuta (Norte de Santander)",
+     "Montería (Córdoba)",
+     "Girardota (Antioquia)"
+    ]
+   },
+   {
+    "id": "C4",
+    "nombre": "Ciudades intermedias de flota envejecida",
+    "descripcion": "Mediana de 9,1 años de antigüedad, mezcla urbano-rural y 59 % de registros de la Policía Nacional (Tunja, Buenaventura, Ipiales, Riohacha).",
+    "municipios": 32,
+    "vehiculos": 9033,
+    "pct_motos": 47.3,
+    "pct_carga": 12.5,
+    "edad_mediana": 9.1,
+    "pct_policia_nacional": 59.0,
+    "pct_con_muertos": 16.8,
+    "ejemplos": [
+     "Tunja (Boyacá)",
+     "Buenaventura (Valle del Cauca)",
+     "Ipiales (Nariño)",
+     "Riohacha (La Guajira)",
+     "Dagua (Valle del Cauca)"
+    ]
+   },
+   {
+    "id": "C5",
+    "nombre": "Corredores de carga",
+    "descripcion": "Municipios de paso con 30 % de vehículos de carga, flota vieja (9,2 años) y 93 % de registros de la Policía Nacional (San Diego, Ciénaga, Guaduas).",
+    "municipios": 25,
+    "vehiculos": 3532,
+    "pct_motos": 37.9,
+    "pct_carga": 29.8,
+    "edad_mediana": 9.2,
+    "pct_policia_nacional": 92.7,
+    "pct_con_muertos": 28.6,
+    "ejemplos": [
+     "San Diego (Cesar)",
+     "Tangua (Nariño)",
+     "Ciénaga (Magdalena)",
+     "Alvarado (Tolima)",
+     "Moniquirá (Boyacá)"
+    ]
+   }
+  ],
+  "hallazgo": "Sin usar la gravedad para agrupar, el porcentaje de vehículos en siniestros con muertos va de 3,6 % en los centros urbanos a 28,6 % en los corredores de carga: el perfil vial del municipio anticipa la letalidad."
+ },
+ "youtube": {
+  "estado": "listo",
+  "videos": 21,
+  "comentarios": "18.685 extraídos · 17.467 analizados",
+  "fecha_extraccion": "10 de noviembre de 2026",
+  "hallazgos": [
+   "En los videos de carga la conversación gira en torno a frenos (14,4 %) y a la falta de rampas de frenado (8,8 %), causas que el dataset no registra.",
+   "En los videos de motos la culpa recae en el motociclista (imprudencia, casco, niños) y casi nunca en la vía (0,3 %), aunque los datos muestran que la moto aporta volumen pero no la mayor letalidad.",
+   "La revisión técnico-mecánica y el SOAT se perciben como costo y «negocio» (10,8 % del eje), no como medida de seguridad.",
+   "En los corredores de Sabana Centro preocupan el exceso de velocidad, las tractomulas y los peajes, coherente con su ubicación en el grupo de corredor nacional.",
+   "Solo el 4,2 % de los comentarios menciona a la policía o al tránsito: la autoridad pesa en el modelo como indicador del tipo de vía, no por su desempeño."
+  ],
+  "temas": [
+   {
+    "nombre": "Responsabilidad, culpa y justicia",
+    "palabras": "vida, justicia, conductor, culpa, cárcel",
+    "pct": "25,7"
+   },
+   {
+    "nombre": "Riesgo del motociclista",
+    "palabras": "moto, casco, niños, placa, accidentes",
+    "pct": "19,6"
+   },
+   {
+    "nombre": "Causas en carretera: frenos y velocidad",
+    "palabras": "frenos, velocidad, vía, frenado",
+    "pct": "16,8"
+   },
+   {
+    "nombre": "Costos y trámites: SOAT, licencia y revisión",
+    "palabras": "soat, licencia, pagar, mecánica, plata",
+    "pct": "15,5"
+   },
+   {
+    "nombre": "Consultas sobre normas y CDA",
+    "palabras": "seguro, ley, cda, información",
+    "pct": "11,5"
+   },
+   {
+    "nombre": "Duelo y solidaridad con las víctimas",
+    "palabras": "familias, fortaleza, dolor, paz",
+    "pct": "10,8"
+   }
+  ]
+ },
+ "enlaces": {
+  "repositorio": "https://github.com/lawiwi/Accidentalidad-Seguridad-Vial",
+  "informe_pdf": "docs/Informe_Etapa6.pdf",
+  "video": ""
+ },
+ "conclusiones": {
+  "evidencia": [
+   "La letalidad depende más del tipo de vía y de la autoridad que atiende que del vehículo: Policía Nacional y autoridades departamentales elevan la probabilidad de muerte, y los grupos C1 y C5 tienen entre 5 y 8 veces la letalidad de los centros urbanos.",
+   "Los vehículos de carga concentran el riesgo por vehículo; la moto aporta el mayor volumen, no la mayor letalidad.",
+   "Sabana Centro (Cajicá, Cota, Chía, Sopó) se comporta como corredor nacional, no como ciudad.",
+   "La ciudadanía explica los siniestros de carretera por frenos, velocidad y falta de rampas de frenado, y percibe los controles como recaudo."
+  ],
+  "hipotesis": [
+   "Parte del efecto territorial puede deberse a diferencias de registro entre autoridades.",
+   "La percepción de los controles como «negocio» podría favorecer la evasión de la revisión técnico-mecánica en los grupos de flota vieja.",
+   "Rampas de frenado y control de velocidad en corredores podrían reducir la letalidad; requiere comparar tramos."
+  ]
+ }
+}
