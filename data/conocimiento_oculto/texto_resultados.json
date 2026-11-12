@@ -1,0 +1,71 @@
+{
+ "calidad": {
+  "tabla": [
+   [
+    "Comentarios extraídos",
+    18685
+   ],
+   [
+    "Vacíos",
+    240
+   ],
+   [
+    "Duplicados en el mismo video",
+    199
+   ],
+   [
+    "Copias del mismo autor",
+    12
+   ],
+   [
+    "Spam",
+    21
+   ],
+   [
+    "Menos de 3 palabras",
+    741
+   ],
+   [
+    "Otro idioma",
+    5
+   ],
+   [
+    "Corpus limpio",
+    17467
+   ]
+  ]
+ },
+ "resumen_guia": "Con el corpus de 17.467 comentarios, LDA con k entre 4 y 10 dio coherencias de 0,650 (4), 0,637 (5), 0,631 (6), 0,599 (7), 0,587 (8) y 0,575 (10); se eligió k = 6 por interpretabilidad. Valores obtenidos replicando el flujo en Python: en Orange los temas pueden ordenarse o nombrarse distinto, pero deben reconocerse las mismas conversaciones.",
+ "tabla_hallazgos": [
+  [
+   "Causas en carretera: frenos y rampas",
+   "50 % del eje carga en el tema T2; 14,4 % menciona frenos, 8,8 % rampas",
+   "Amplía: el dataset no registra causas"
+  ],
+  [
+   "Culpa al motociclista",
+   "40 % del eje motos en T4; imprudencia 9,9 %, vía 0,3 %",
+   "Contradice en parte: la moto no es la más letal por vehículo"
+  ],
+  [
+   "Controles como «negocio»",
+   "64 % del eje parque y control en T3+T6; 10,8 % habla de plata o robo",
+   "Amplía (hipótesis de evasión en C4/C5)"
+  ],
+  [
+   "Alcohol e impunidad",
+   "73 % del eje conducta en T1; alcohol 10,6 %",
+   "Amplía: variables ausentes"
+  ],
+  [
+   "Velocidad en Sabana Centro",
+   "37 % del eje en T2; «exceso de velocidad», «peajes»",
+   "Coincide con C1"
+  ],
+  [
+   "Autoridad casi ausente",
+   "4,2 % menciona policía o tránsito",
+   "Matiza: la autoridad es indicador del tipo de vía"
+  ]
+ ]
+}
