@@ -49,7 +49,7 @@
   {# ============================ PESTAÑAS ============================ #}
   <div class="co-tabs" role="tablist" aria-label="Secciones de la Etapa 6">
     <button type="button" role="tab" data-co-tab="sup" aria-selected="true"><span>01</span>Modelos supervisados</button>
-    <button type="button" role="tab" data-co-tab="clu" aria-selected="false"><span>02</span>Perfiles de municipio</button>
+    <button type="button" role="tab" data-co-tab="clu" aria-selected="false"><span>02</span>Clustering de municipios</button>
     <button type="button" role="tab" data-co-tab="yt"  aria-selected="false"><span>03</span>Voz ciudadana</button>
     <button type="button" role="tab" data-co-tab="con" aria-selected="false"><span>04</span>Conclusiones</button>
     <button type="button" role="tab" data-co-tab="pro" aria-selected="false"><span>05</span>Informe y video</button>
@@ -120,56 +120,161 @@
   {# ============================ 02 CLUSTERING ============================ #}
   <section class="co-panel" data-co-panel="clu" role="tabpanel" style="--co-acento: var(--co-teal);">
     <div class="co-panel-cab">
-      <span class="co-etiqueta">02 · Agrupamiento</span>
+      <span class="co-etiqueta">02 · Modelo no supervisado</span>
       <h2>Cinco perfiles de municipio</h2>
       <p>{{ K.pregunta }}</p>
     </div>
 
-    <div class="co-grid-clu">
-      <article class="co-card">
-        <h3>Letalidad por grupo</h3>
-        <p class="co-pie">Porcentaje de vehículos en siniestros con muertos. La gravedad no se usó para formar los grupos. Selecciona un grupo.</p>
-        <div class="co-grupo-lista" data-co-grupos>
-          {% for g in K.grupos | sort(attribute='pct_con_muertos', reverse=True) %}
-          <button type="button" class="co-grupo-btn {{ 'activo' if loop.first }}" data-v="{{ g.id }}">
-            <span class="co-grupo-id">{{ g.id }}</span>
-            <span class="co-grupo-txt"><b>{{ g.nombre }}</b>
-              <span class="co-barra-pista"><span class="co-barra-relleno" style="width: {{ g.pct_con_muertos / gmax.pct_con_muertos * 100 }}%"></span></span></span>
-            <span class="co-grupo-val">{{ g.pct_con_muertos|string|replace('.', ',') }} %</span>
-          </button>
+    {% set gs = K.grupos | sort(attribute='pct_con_muertos', reverse=True) %}
+    <div class="co-pasos" role="tablist" aria-label="Etapas del agrupamiento" data-co-pasos>
+      <button type="button" class="activo" data-v="p1"><span>1</span>Pregunta y datos</button>
+      <button type="button" data-v="p2"><span>2</span>Algoritmo y k</button>
+      <button type="button" data-v="p3"><span>3</span>Los cinco grupos</button>
+      <button type="button" data-v="p4"><span>4</span>Patrones y decisiones</button>
+    </div>
+
+    {# ---------- Paso 1: variables y tratamiento ---------- #}
+    <div class="co-paso activo" data-co-paso="p1">
+      <div class="co-grid-p1">
+        <div class="co-vars">
+          {% for v in K.variables_detalle %}
+          <article class="co-var">
+            <code>{{ v.var }}</code>
+            <b>{{ v.mide }}</b>
+            <p>{{ v.por_que }}</p>
+          </article>
           {% endfor %}
         </div>
-      </article>
-
-      <div class="co-detalles">
-        {% set maxs = {'pct_motos': K.grupos|map(attribute='pct_motos')|max, 'pct_carga': K.grupos|map(attribute='pct_carga')|max,
-                       'edad_mediana': K.grupos|map(attribute='edad_mediana')|max, 'pct_policia_nacional': K.grupos|map(attribute='pct_policia_nacional')|max} %}
-        {% for g in K.grupos | sort(attribute='pct_con_muertos', reverse=True) %}
-        <article class="co-card co-detalle {{ 'activo' if loop.first }}" data-co-detalle="{{ g.id }}">
-          <div class="co-detalle-cab">
-            <span class="co-grupo-id co-grupo-id-xl">{{ g.id }}</span>
-            <div><h3>{{ g.nombre }}</h3><span class="co-pie">{{ g.municipios }} municipios · {{ num(g.vehiculos) }} vehículos</span></div>
-          </div>
-          <p>{{ g.descripcion }}</p>
-          <div class="co-perfil">
-            {% for campo, nombre, unidad in [('pct_motos', 'Motos', ' %'), ('pct_carga', 'Carga', ' %'), ('edad_mediana', 'Edad mediana', ' años'), ('pct_policia_nacional', 'Policía Nacional', ' %')] %}
-            <div class="co-perfil-fila">
-              <span>{{ nombre }}</span>
-              <span class="co-barra-pista"><span class="co-barra-relleno" style="width: {{ g[campo] / maxs[campo] * 100 }}%"></span></span>
-              <b>{{ g[campo]|string|replace('.', ',') }}{{ unidad }}</b>
-            </div>
-            {% endfor %}
-          </div>
-          <div class="co-ejemplos">{% for e in g.ejemplos %}<span>{{ e }}</span>{% endfor %}</div>
+        <article class="co-card">
+          <h3>Tratamiento de los datos</h3>
+          <ol class="co-lista">{% for t in K.tratamiento %}<li>{{ t }}</li>{% endfor %}</ol>
+          <p class="co-pie">{{ K.descartadas }}</p>
         </article>
-        {% endfor %}
+      </div>
+      <div class="co-escala" aria-label="Por qué estandarizar">
+        <div><span>Sin estandarizar</span><b>% de 0 a 100</b><b>años de 2 a 12</b><em>los porcentajes dominan la distancia</em></div>
+        <i aria-hidden="true">→</i>
+        <div class="co-escala-ok"><span>Estandarizado (z)</span><b>media 0</b><b>desviación 1</b><em>las cuatro variables pesan igual</em></div>
       </div>
     </div>
 
-    <p class="co-destacado">{{ K.hallazgo }}</p>
+    {# ---------- Paso 2: algoritmo y elección de k ---------- #}
+    <div class="co-paso" data-co-paso="p2">
+      <div class="co-grid-p2">
+        <article class="co-card">
+          <h3>Silueta según el número de grupos</h3>
+          {% set smax = K.silueta.values() | max %}
+          <div class="co-sil" role="img" aria-label="Silueta de k = 2 a k = 8; se elige k = 5">
+            {% for k_, s in K.silueta.items() %}
+            <div class="co-sil-col {{ 'co-sil-elegido' if k_|int == K.k }} {{ 'co-sil-max' if s == smax }}" title="k = {{ k_ }}: silueta {{ s|string|replace('.', ',') }}">
+              <span class="co-sil-val">{{ ('%.3f'|format(s))|replace('.', ',') }}</span>
+              <span class="co-sil-barra" style="height: {{ s / smax * 100 }}%"></span>
+              <span class="co-sil-k">k = {{ k_ }}</span>
+            </div>
+            {% endfor %}
+          </div>
+          <p class="co-pie">{{ K.eleccion_k }}</p>
+        </article>
+        <article class="co-card">
+          <h3>Algoritmo y parámetros</h3>
+          <dl class="co-params">{% for a, b in K.parametros %}<dt>{{ a }}</dt><dd>{{ b }}</dd>{% endfor %}</dl>
+        </article>
+      </div>
+    </div>
+
+    {# ---------- Paso 3: caracterización ---------- #}
+    <div class="co-paso" data-co-paso="p3">
+      <div class="co-grid-clu">
+        <article class="co-card">
+          <h3>Letalidad por grupo</h3>
+          <p class="co-pie">% de vehículos en siniestros con muertos, calculado después de agrupar. Selecciona un grupo.</p>
+          <div class="co-grupo-lista" data-co-grupos>
+            {% for g in gs %}
+            <button type="button" class="co-grupo-btn {{ 'activo' if loop.first }}" data-v="{{ g.id }}">
+              <span class="co-grupo-id">{{ g.id }}</span>
+              <span class="co-grupo-txt"><b>{{ g.nombre }}</b>
+                <span class="co-barra-pista"><span class="co-barra-relleno" style="width: {{ g.pct_con_muertos / gmax.pct_con_muertos * 100 }}%"></span></span></span>
+              <span class="co-grupo-val">{{ g.pct_con_muertos|string|replace('.', ',') }} %</span>
+            </button>
+            {% endfor %}
+          </div>
+        </article>
+
+        <div class="co-detalles">
+          {% set maxs = {'pct_motos': K.grupos|map(attribute='pct_motos')|max, 'pct_carga': K.grupos|map(attribute='pct_carga')|max,
+                         'edad_mediana': K.grupos|map(attribute='edad_mediana')|max, 'pct_policia_nacional': K.grupos|map(attribute='pct_policia_nacional')|max} %}
+          {% for g in gs %}
+          <article class="co-card co-detalle {{ 'activo' if loop.first }}" data-co-detalle="{{ g.id }}">
+            <div class="co-detalle-cab">
+              <span class="co-grupo-id co-grupo-id-xl">{{ g.id }}</span>
+              <div><h3>{{ g.nombre }}</h3><span class="co-pie">{{ g.municipios }} municipios · {{ num(g.vehiculos) }} vehículos</span></div>
+            </div>
+            <p>{{ g.descripcion }}</p>
+            <div class="co-perfil">
+              {% for campo, nombre, unidad in [('pct_motos', 'Motos', ' %'), ('pct_carga', 'Carga', ' %'), ('edad_mediana', 'Edad mediana', ' años'), ('pct_policia_nacional', 'Policía Nacional', ' %')] %}
+              <div class="co-perfil-fila">
+                <span>{{ nombre }}</span>
+                <span class="co-barra-pista"><span class="co-barra-relleno" style="width: {{ g[campo] / maxs[campo] * 100 }}%"></span></span>
+                <b>{{ g[campo]|string|replace('.', ',') }}{{ unidad }}</b>
+              </div>
+              {% endfor %}
+            </div>
+            {% if g.distintivas %}
+            <div class="co-rasgos">
+              <div><span>Lo distingue</span>{% for x in g.distintivas %}<b class="{{ 'co-up' if x.z > 0 else 'co-down' }}">{{ '▲' if x.z > 0 else '▼' }} {{ x.txt }}</b>{% endfor %}</div>
+              <div><span>Cohesión interna</span><b>silueta {{ g.silueta|string|replace('.', ',') }}</b></div>
+              <div><span>Grupo más parecido</span><b>{{ g.vecino }}</b></div>
+            </div>
+            {% endif %}
+            <div class="co-ejemplos">{% for e in g.ejemplos %}<span>{{ e }}</span>{% endfor %}</div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if gs[0].z %}
+      <h3 class="co-sub">Huella de cada grupo frente al promedio</h3>
+      <p class="co-pie">Valores estandarizados: color verde = por encima del promedio, morado = por debajo. Así se ven las diferencias entre grupos.</p>
+      <div class="co-huella" role="table">
+        <div class="co-huella-fila co-huella-cab" role="row"><span></span><span>Motos</span><span>Carga</span><span>Antigüedad</span><span>Policía Nal.</span></div>
+        {% for g in gs %}
+        <div class="co-huella-fila" role="row">
+          <span><b>{{ g.id }}</b> {{ g.nombre }}</span>
+          {% for v in ['PctMotos', 'PctCarga', 'EdadMediana', 'PctPoliciaNacional'] %}{% set z = g.z[v] %}
+          <span class="co-z" style="--z: {{ (z|abs / 2.1)|round(2) }}; --c: {{ 'var(--co-teal)' if z >= 0 else 'var(--co-plum)' }};">{{ ('%+.1f'|format(z))|replace('.', ',') }}</span>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    {# ---------- Paso 4: patrones y decisiones ---------- #}
+    <div class="co-paso" data-co-paso="p4">
+      <div class="co-insights">
+        {% for p in K.patrones %}<article class="co-insight" style="--co-acento: var(--co-teal);"><span>{{ '%02d'|format(loop.index) }}</span><p>{{ p }}</p></article>{% endfor %}
+      </div>
+      <h3 class="co-sub">Qué decisión apoya cada grupo</h3>
+      <div class="co-decisiones">
+        {% for g in gs %}
+        <article><span class="co-grupo-id">{{ g.id }}</span><div><b>{{ g.nombre }}</b><p>{{ g.decision }}</p>
+          {% if g.sabana %}<em>Sabana Centro: {{ g.sabana|join(', ') }}</em>{% endif %}</div></article>
+        {% endfor %}
+      </div>
+
+      {% if K.municipios_lista %}
+      <article class="co-card co-buscador" data-co-buscador data-co-munis='{{ K.municipios_lista | tojson }}'>
+        <h3>¿En qué grupo está mi municipio?</h3>
+        <input type="search" placeholder="Escribe un municipio, por ejemplo Chía" aria-label="Buscar municipio" list="co-munis">
+        <datalist id="co-munis">{% for m in K.municipios_lista %}<option value="{{ m[0] }}">{% endfor %}</datalist>
+        <p class="co-buscador-res" aria-live="polite">Los 248 municipios analizados tienen al menos 50 vehículos registrados.</p>
+      </article>
+      {% endif %}
+      <p class="co-pie"><b>Limitaciones:</b> {{ K.limitaciones }}</p>
+    </div>
+
     <div class="co-chips"><span>{{ K.algoritmo }}</span><span>{{ K.municipios }} municipios · k = {{ K.k }}</span>
-      <span>Variables: {{ K.variables|join(', ') }}</span>
-      {% if K.silueta %}<span>Silueta k = {{ K.k }}: {{ K.silueta[K.k|string]|string|replace('.', ',') }}</span>{% endif %}</div>
+      <span>Silueta k = {{ K.k }}: {{ K.silueta[K.k|string]|string|replace('.', ',') }}</span></div>
     <button type="button" class="co-siguiente" data-co-ir="yt">Siguiente: voz ciudadana →</button>
   </section>
 
@@ -318,6 +423,32 @@
         seg('[data-co-esquema]', (v) => { esquema = v; });
         seg('[data-co-metrica]', (v) => { metrica = v.toLowerCase(); });
         pintar();
+      }
+
+
+      // Clustering: pasos internos
+      const pasos = root.querySelectorAll('[data-co-pasos] button');
+      pasos.forEach((b) => b.addEventListener('click', () => {
+        pasos.forEach((x) => x.classList.toggle('activo', x === b));
+        root.querySelectorAll('[data-co-paso]').forEach((p) => p.classList.toggle('activo', p.dataset.coPaso === b.dataset.v));
+      }));
+
+      // Buscador de municipio
+      const bus = root.querySelector('[data-co-buscador]');
+      if (bus) {
+        const lista = JSON.parse(bus.dataset.coMunis);
+        const nombres = {};
+        root.querySelectorAll('[data-co-detalle]').forEach((d) => { nombres[d.dataset.coDetalle] = d.querySelector('h3').textContent; });
+        const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        const res = bus.querySelector('.co-buscador-res');
+        bus.querySelector('input').addEventListener('input', (e) => {
+          const q = norm(e.target.value.trim());
+          if (q.length < 3) return;
+          const m = lista.find((x) => norm(x[0]).startsWith(q)) || lista.find((x) => norm(x[0]).includes(q));
+          res.innerHTML = m
+            ? `<b>${m[0]}</b> pertenece a <b>${m[1]} · ${nombres[m[1]] || ''}</b>. ${m[2].toLocaleString('es-CO')} vehículos registrados; ${String(m[3]).replace('.', ',')} % en siniestros con muertos.`
+            : 'No está entre los 248 municipios analizados (puede tener menos de 50 vehículos registrados).';
+        });
       }
 
       // Grupos: un detalle a la vez

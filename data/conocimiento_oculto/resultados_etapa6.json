@@ -170,7 +170,34 @@
      "Guarne (Antioquia)",
      "Chía (Cundinamarca)",
      "Cota (Cundinamarca)"
-    ]
+    ],
+    "distintivas": [
+     {
+      "var": "Policía Nacional",
+      "z": 1.12,
+      "txt": "más Policía Nacional que el promedio"
+     },
+     {
+      "var": "motos",
+      "z": -0.55,
+      "txt": "menos motos que el promedio"
+     }
+    ],
+    "silueta": 0.254,
+    "vecino": "C4",
+    "decision": "Control de velocidad y presencia en las vías nacionales que cruzan estos municipios, incluida la Autopista Norte en Sabana Centro.",
+    "sabana": [
+     "Cajicá",
+     "Chía",
+     "Cota",
+     "Sopó"
+    ],
+    "z": {
+     "PctMotos": -0.55,
+     "PctCarga": 0.54,
+     "EdadMediana": -0.51,
+     "PctPoliciaNacional": 1.12
+    }
    },
    {
     "id": "C2",
@@ -189,7 +216,31 @@
      "Cali (Valle del Cauca)",
      "Barranquilla (Atlántico)",
      "Bucaramanga (Santander)"
-    ]
+    ],
+    "distintivas": [
+     {
+      "var": "Policía Nacional",
+      "z": -0.75,
+      "txt": "menos Policía Nacional que el promedio"
+     },
+     {
+      "var": "carga",
+      "z": -0.57,
+      "txt": "menos carga que el promedio"
+     }
+    ],
+    "silueta": 0.329,
+    "vecino": "C4",
+    "decision": "Mantener la gestión urbana: alto volumen y baja letalidad; priorizar intersecciones y peatones.",
+    "sabana": [
+     "Zipaquirá"
+    ],
+    "z": {
+     "PctMotos": 0.4,
+     "PctCarga": -0.57,
+     "EdadMediana": 0.09,
+     "PctPoliciaNacional": -0.75
+    }
    },
    {
     "id": "C3",
@@ -208,7 +259,29 @@
      "Cúcuta (Norte de Santander)",
      "Montería (Córdoba)",
      "Girardota (Antioquia)"
-    ]
+    ],
+    "distintivas": [
+     {
+      "var": "antigüedad",
+      "z": -1.54,
+      "txt": "menos antigüedad que el promedio"
+     },
+     {
+      "var": "motos",
+      "z": 1.47,
+      "txt": "más motos que el promedio"
+     }
+    ],
+    "silueta": 0.293,
+    "vecino": "C2",
+    "decision": "Campañas y control dirigidos a motociclistas jóvenes (casco, licencia, velocidad).",
+    "sabana": [],
+    "z": {
+     "PctMotos": 1.47,
+     "PctCarga": -0.73,
+     "EdadMediana": -1.54,
+     "PctPoliciaNacional": -0.72
+    }
    },
    {
     "id": "C4",
@@ -227,7 +300,29 @@
      "Ipiales (Nariño)",
      "Riohacha (La Guajira)",
      "Dagua (Valle del Cauca)"
-    ]
+    ],
+    "distintivas": [
+     {
+      "var": "antigüedad",
+      "z": 1.1,
+      "txt": "más antigüedad que el promedio"
+     },
+     {
+      "var": "motos",
+      "z": -0.66,
+      "txt": "menos motos que el promedio"
+     }
+    ],
+    "silueta": 0.244,
+    "vecino": "C1",
+    "decision": "Revisión técnico-mecánica y renovación de flota: la antigüedad es su rasgo distintivo.",
+    "sabana": [],
+    "z": {
+     "PctMotos": -0.66,
+     "PctCarga": 0.08,
+     "EdadMediana": 1.1,
+     "PctPoliciaNacional": 0.33
+    }
    },
    {
     "id": "C5",
@@ -246,10 +341,1592 @@
      "Ciénaga (Magdalena)",
      "Alvarado (Tolima)",
      "Moniquirá (Boyacá)"
-    ]
+    ],
+    "distintivas": [
+     {
+      "var": "carga",
+      "z": 2.08,
+      "txt": "más carga que el promedio"
+     },
+     {
+      "var": "motos",
+      "z": -1.46,
+      "txt": "menos motos que el promedio"
+     }
+    ],
+    "silueta": 0.436,
+    "vecino": "C4",
+    "decision": "Pesaje, control de velocidad y rampas de frenado en corredores de carga: es el grupo más letal.",
+    "sabana": [],
+    "z": {
+     "PctMotos": -1.46,
+     "PctCarga": 2.08,
+     "EdadMediana": 1.14,
+     "PctPoliciaNacional": 1.25
+    }
    }
   ],
-  "hallazgo": "Sin usar la gravedad para agrupar, el porcentaje de vehículos en siniestros con muertos va de 3,6 % en los centros urbanos a 28,6 % en los corredores de carga: el perfil vial del municipio anticipa la letalidad."
+  "hallazgo": "Sin usar la gravedad para agrupar, el porcentaje de vehículos en siniestros con muertos va de 3,6 % en los centros urbanos a 28,6 % en los corredores de carga: el perfil vial del municipio anticipa la letalidad.",
+  "variables_detalle": [
+   {
+    "var": "PctMotos",
+    "mide": "Porcentaje de vehículos que son motocicletas",
+    "por_que": "Composición modal: la moto es la categoría más numerosa del dataset."
+   },
+   {
+    "var": "PctCarga",
+    "mide": "Porcentaje de vehículos de carga (camión, tractocamión, volqueta)",
+    "por_que": "Señala tránsito de paso y logística; fue un tipo de vehículo de alto riesgo en el modelo supervisado."
+   },
+   {
+    "var": "EdadMediana",
+    "mide": "Mediana de antigüedad de los vehículos, en años",
+    "por_que": "Resume el estado del parque automotor siniestrado."
+   },
+   {
+    "var": "PctPoliciaNacional",
+    "mide": "Porcentaje de registros hechos por la Policía Nacional",
+    "por_que": "Indica siniestros en vías nacionales, fuera de la jurisdicción urbana; fue la variable más informativa del modelo supervisado."
+   }
+  ],
+  "descartadas": "Se descartaron % de livianos (correlación −0,61 con PctMotos), % de vehículos con más de 15 años (0,77 con EdadMediana) y el log del número de registros, que solo separaba ciudades grandes de pequeñas; con todas las variables la silueta bajaba a 0,21–0,25.",
+  "tratamiento": [
+   "Unidad de análisis: municipio. Se incluyen los 248 con al menos 50 vehículos registrados (403.731 registros, 99,3 % del total); por debajo de ese umbral los porcentajes son inestables.",
+   "Estandarización z (media 0, desviación 1) con «Normalize columns» del widget k-Means: se mezclan porcentajes de 0 a 100 con años de 2 a 12 y k-Means usa distancia euclidiana, así que sin estandarizar dominaría la variable de mayor varianza.",
+   "La gravedad (variable objetivo del modelo supervisado) no participa: PctConMuertos queda como meta y solo se usa después de agrupar, para caracterizar."
+  ],
+  "parametros": [
+   [
+    "Algoritmo",
+    "k-Means"
+   ],
+   [
+    "Inicialización",
+    "k-means++"
+   ],
+   [
+    "Reinicios",
+    "10"
+   ],
+   [
+    "Iteraciones máximas",
+    "300"
+   ],
+   [
+    "k evaluados",
+    "2 a 8"
+   ],
+   [
+    "Distancia",
+    "Euclidiana sobre variables estandarizadas"
+   ],
+   [
+    "Medida de calidad",
+    "Coeficiente de silueta"
+   ],
+   [
+    "Contraste",
+    "Clustering jerárquico (Ward) con corte en 5"
+   ]
+  ],
+  "eleccion_k": "k = 2 tiene la silueta más alta (0,392), pero solo separa ciudad de carretera, algo que ya mostraba la Etapa 5. Entre k = 3 y k = 8 el mejor valor es k = 5 (0,308), con grupos interpretables de 25 a 107 municipios. Una silueta cercana a 0,3 indica estructura moderada: los perfiles se distinguen, pero se solapan en los bordes.",
+  "municipios_lista": [
+   [
+    "Acacías (Meta)",
+    "C2",
+    1089,
+    7.5
+   ],
+   [
+    "Aguachica (Cesar)",
+    "C2",
+    302,
+    20.2
+   ],
+   [
+    "Aguadas (Caldas)",
+    "C2",
+    303,
+    5.0
+   ],
+   [
+    "Aguazul (Casanare)",
+    "C1",
+    330,
+    24.8
+   ],
+   [
+    "Alvarado (Tolima)",
+    "C5",
+    252,
+    38.1
+   ],
+   [
+    "Amagá (Antioquia)",
+    "C1",
+    251,
+    14.3
+   ],
+   [
+    "Amalfi (Antioquia)",
+    "C3",
+    568,
+    2.3
+   ],
+   [
+    "Andalucía (Valle del Cauca)",
+    "C1",
+    202,
+    21.3
+   ],
+   [
+    "Andes (Antioquia)",
+    "C2",
+    388,
+    5.2
+   ],
+   [
+    "Anserma (Caldas)",
+    "C2",
+    299,
+    12.4
+   ],
+   [
+    "Apartadó (Antioquia)",
+    "C3",
+    1114,
+    6.4
+   ],
+   [
+    "Arauca (Arauca)",
+    "C2",
+    180,
+    17.8
+   ],
+   [
+    "Arjona (Bolívar)",
+    "C4",
+    219,
+    5.5
+   ],
+   [
+    "Armenia (Quindío)",
+    "C2",
+    4074,
+    4.6
+   ],
+   [
+    "Armero (Tolima)",
+    "C1",
+    115,
+    17.4
+   ],
+   [
+    "Baranoa (Atlántico)",
+    "C2",
+    297,
+    24.2
+   ],
+   [
+    "Barbosa (Antioquia)",
+    "C2",
+    1481,
+    7.4
+   ],
+   [
+    "Barbosa (Santander)",
+    "C4",
+    135,
+    21.5
+   ],
+   [
+    "Barrancabermeja (Santander)",
+    "C2",
+    1096,
+    10.5
+   ],
+   [
+    "Barranquilla (Atlántico)",
+    "C2",
+    12595,
+    2.6
+   ],
+   [
+    "Bello (Antioquia)",
+    "C3",
+    8857,
+    1.9
+   ],
+   [
+    "Bogotá D.C. (Bogotá D.C.)",
+    "C2",
+    60350,
+    3.6
+   ],
+   [
+    "Bolívar (Valle del Cauca)",
+    "C2",
+    63,
+    27.0
+   ],
+   [
+    "Bosconia (Cesar)",
+    "C5",
+    147,
+    36.1
+   ],
+   [
+    "Bucaramanga (Santander)",
+    "C2",
+    9277,
+    3.8
+   ],
+   [
+    "Buenaventura (Valle del Cauca)",
+    "C4",
+    699,
+    26.5
+   ],
+   [
+    "Bugalagrande (Valle del Cauca)",
+    "C1",
+    193,
+    25.9
+   ],
+   [
+    "Caicedonia (Valle del Cauca)",
+    "C2",
+    131,
+    9.9
+   ],
+   [
+    "Cajibío (Cauca)",
+    "C1",
+    51,
+    5.9
+   ],
+   [
+    "Cajicá (Cundinamarca)",
+    "C1",
+    794,
+    19.3
+   ],
+   [
+    "Calarca (Quindío)",
+    "C2",
+    1054,
+    6.1
+   ],
+   [
+    "Caldas (Antioquia)",
+    "C2",
+    1032,
+    5.4
+   ],
+   [
+    "Caldono (Cauca)",
+    "C5",
+    76,
+    18.4
+   ],
+   [
+    "Cali (Valle del Cauca)",
+    "C2",
+    30301,
+    2.4
+   ],
+   [
+    "Caloto (Cauca)",
+    "C2",
+    85,
+    47.1
+   ],
+   [
+    "Candelaria (Valle del Cauca)",
+    "C2",
+    1128,
+    13.7
+   ],
+   [
+    "Caqueza (Cundinamarca)",
+    "C1",
+    292,
+    21.9
+   ],
+   [
+    "Carepa (Antioquia)",
+    "C3",
+    388,
+    16.5
+   ],
+   [
+    "Cartagena (Bolívar)",
+    "C3",
+    7550,
+    6.6
+   ],
+   [
+    "Cartago (Valle del Cauca)",
+    "C2",
+    1252,
+    5.0
+   ],
+   [
+    "Caucasia (Antioquia)",
+    "C3",
+    207,
+    53.6
+   ],
+   [
+    "Cañasgordas (Antioquia)",
+    "C1",
+    70,
+    24.3
+   ],
+   [
+    "Cereté (Córdoba)",
+    "C2",
+    610,
+    14.4
+   ],
+   [
+    "Chachagüí (Nariño)",
+    "C1",
+    83,
+    14.5
+   ],
+   [
+    "Chaparral (Tolima)",
+    "C2",
+    128,
+    13.3
+   ],
+   [
+    "Chigorodó (Antioquia)",
+    "C3",
+    669,
+    24.2
+   ],
+   [
+    "Chinchiná (Caldas)",
+    "C2",
+    251,
+    5.2
+   ],
+   [
+    "Chinú (Córdoba)",
+    "C2",
+    165,
+    19.4
+   ],
+   [
+    "Chipaque (Cundinamarca)",
+    "C5",
+    57,
+    15.8
+   ],
+   [
+    "Chiquinquirá (Boyacá)",
+    "C4",
+    336,
+    8.6
+   ],
+   [
+    "Chocontá (Cundinamarca)",
+    "C1",
+    575,
+    25.7
+   ],
+   [
+    "Chía (Cundinamarca)",
+    "C1",
+    715,
+    5.9
+   ],
+   [
+    "Cimitarra (Santander)",
+    "C1",
+    240,
+    25.8
+   ],
+   [
+    "Circasia (Quindío)",
+    "C2",
+    542,
+    9.4
+   ],
+   [
+    "Cisneros (Antioquia)",
+    "C1",
+    63,
+    15.9
+   ],
+   [
+    "Ciudad Bolívar (Antioquia)",
+    "C2",
+    426,
+    1.9
+   ],
+   [
+    "Ciénaga (Magdalena)",
+    "C5",
+    273,
+    32.2
+   ],
+   [
+    "Cocorná (Antioquia)",
+    "C1",
+    110,
+    18.2
+   ],
+   [
+    "Copacabana (Antioquia)",
+    "C2",
+    2019,
+    4.3
+   ],
+   [
+    "Cota (Cundinamarca)",
+    "C1",
+    601,
+    13.5
+   ],
+   [
+    "Curumaní (Cesar)",
+    "C5",
+    57,
+    54.4
+   ],
+   [
+    "Cáceres (Antioquia)",
+    "C1",
+    66,
+    60.6
+   ],
+   [
+    "Cómbita (Boyacá)",
+    "C1",
+    398,
+    16.3
+   ],
+   [
+    "Cúcuta (Norte de Santander)",
+    "C3",
+    2784,
+    6.9
+   ],
+   [
+    "Dabeiba (Antioquia)",
+    "C1",
+    50,
+    34.0
+   ],
+   [
+    "Dagua (Valle del Cauca)",
+    "C4",
+    533,
+    15.6
+   ],
+   [
+    "Don Matías (Antioquia)",
+    "C2",
+    217,
+    7.4
+   ],
+   [
+    "Dosquebradas (Risaralda)",
+    "C2",
+    2301,
+    4.7
+   ],
+   [
+    "Duitama (Boyacá)",
+    "C4",
+    478,
+    10.5
+   ],
+   [
+    "El Bagre (Antioquia)",
+    "C3",
+    148,
+    8.1
+   ],
+   [
+    "El Carmen de Bolívar (Bolívar)",
+    "C5",
+    72,
+    45.8
+   ],
+   [
+    "El Carmen de Viboral (Antioquia)",
+    "C2",
+    527,
+    3.8
+   ],
+   [
+    "El Cerrito (Valle del Cauca)",
+    "C2",
+    489,
+    15.1
+   ],
+   [
+    "El Paso (Cesar)",
+    "C5",
+    101,
+    32.7
+   ],
+   [
+    "El Paujil (Caquetá)",
+    "C2",
+    63,
+    39.7
+   ],
+   [
+    "El Rosal (Cundinamarca)",
+    "C1",
+    56,
+    7.1
+   ],
+   [
+    "El Santuario (Antioquia)",
+    "C2",
+    327,
+    6.4
+   ],
+   [
+    "El Zulia (Norte de Santander)",
+    "C5",
+    120,
+    35.0
+   ],
+   [
+    "Envigado (Antioquia)",
+    "C2",
+    6331,
+    1.2
+   ],
+   [
+    "Espinal (Tolima)",
+    "C2",
+    522,
+    10.2
+   ],
+   [
+    "Facatativá (Cundinamarca)",
+    "C2",
+    601,
+    14.8
+   ],
+   [
+    "Florencia (Caquetá)",
+    "C3",
+    989,
+    15.4
+   ],
+   [
+    "Floridablanca (Santander)",
+    "C2",
+    1542,
+    6.5
+   ],
+   [
+    "Fresno (Tolima)",
+    "C5",
+    165,
+    20.6
+   ],
+   [
+    "Frontino (Antioquia)",
+    "C3",
+    264,
+    2.3
+   ],
+   [
+    "Fundación (Magdalena)",
+    "C2",
+    105,
+    32.4
+   ],
+   [
+    "Funza (Cundinamarca)",
+    "C2",
+    769,
+    6.6
+   ],
+   [
+    "Fusagasugá (Cundinamarca)",
+    "C2",
+    1282,
+    8.6
+   ],
+   [
+    "Garagoa (Boyacá)",
+    "C2",
+    87,
+    6.9
+   ],
+   [
+    "Garzón (Huila)",
+    "C2",
+    620,
+    24.2
+   ],
+   [
+    "Ginebra (Valle del Cauca)",
+    "C2",
+    267,
+    8.6
+   ],
+   [
+    "Girardot (Cundinamarca)",
+    "C2",
+    499,
+    9.4
+   ],
+   [
+    "Girardota (Antioquia)",
+    "C3",
+    2026,
+    1.9
+   ],
+   [
+    "Girón (Santander)",
+    "C2",
+    1256,
+    11.4
+   ],
+   [
+    "Granada (Meta)",
+    "C2",
+    714,
+    13.9
+   ],
+   [
+    "Guacarí (Valle del Cauca)",
+    "C2",
+    352,
+    9.1
+   ],
+   [
+    "Guadalajara de Buga (Valle del Cauca)",
+    "C2",
+    615,
+    6.3
+   ],
+   [
+    "Guaduas (Cundinamarca)",
+    "C5",
+    224,
+    20.1
+   ],
+   [
+    "Guamal (Meta)",
+    "C4",
+    87,
+    33.3
+   ],
+   [
+    "Guamo (Tolima)",
+    "C1",
+    428,
+    17.5
+   ],
+   [
+    "Guarne (Antioquia)",
+    "C1",
+    758,
+    6.6
+   ],
+   [
+    "Guateque (Boyacá)",
+    "C1",
+    150,
+    12.0
+   ],
+   [
+    "Honda (Tolima)",
+    "C3",
+    122,
+    27.9
+   ],
+   [
+    "Ibagué (Tolima)",
+    "C2",
+    8074,
+    3.9
+   ],
+   [
+    "Inírida (Guainía)",
+    "C3",
+    67,
+    6.0
+   ],
+   [
+    "Ipiales (Nariño)",
+    "C4",
+    627,
+    7.7
+   ],
+   [
+    "Itagui (Antioquia)",
+    "C2",
+    6440,
+    1.5
+   ],
+   [
+    "Jamundí (Valle del Cauca)",
+    "C2",
+    2020,
+    4.5
+   ],
+   [
+    "La Calera (Cundinamarca)",
+    "C1",
+    170,
+    17.1
+   ],
+   [
+    "La Ceja (Antioquia)",
+    "C2",
+    706,
+    2.8
+   ],
+   [
+    "La Dorada (Caldas)",
+    "C3",
+    876,
+    3.5
+   ],
+   [
+    "La Estrella (Antioquia)",
+    "C2",
+    1957,
+    2.7
+   ],
+   [
+    "La Jagua de Ibirico (Cesar)",
+    "C2",
+    54,
+    13.0
+   ],
+   [
+    "La Mesa (Cundinamarca)",
+    "C1",
+    332,
+    18.1
+   ],
+   [
+    "La Paz (Cesar)",
+    "C4",
+    110,
+    29.1
+   ],
+   [
+    "La Pintada (Antioquia)",
+    "C5",
+    94,
+    20.2
+   ],
+   [
+    "La Plata (Huila)",
+    "C2",
+    116,
+    30.2
+   ],
+   [
+    "La Tebaida (Quindío)",
+    "C4",
+    229,
+    11.8
+   ],
+   [
+    "La Unión (Valle del Cauca)",
+    "C2",
+    169,
+    11.2
+   ],
+   [
+    "La Virginia (Risaralda)",
+    "C2",
+    340,
+    7.1
+   ],
+   [
+    "Lebrija (Santander)",
+    "C2",
+    430,
+    9.1
+   ],
+   [
+    "Lorica (Córdoba)",
+    "C3",
+    271,
+    28.8
+   ],
+   [
+    "Los Patios (Norte de Santander)",
+    "C2",
+    124,
+    10.5
+   ],
+   [
+    "Líbano (Tolima)",
+    "C2",
+    258,
+    5.4
+   ],
+   [
+    "Madrid (Cundinamarca)",
+    "C1",
+    463,
+    12.7
+   ],
+   [
+    "Magangué (Bolívar)",
+    "C4",
+    75,
+    30.7
+   ],
+   [
+    "Maicao (La Guajira)",
+    "C4",
+    168,
+    33.9
+   ],
+   [
+    "Malambo (Atlántico)",
+    "C2",
+    192,
+    24.5
+   ],
+   [
+    "Manizales (Caldas)",
+    "C2",
+    5746,
+    2.7
+   ],
+   [
+    "Mariquita (Tolima)",
+    "C2",
+    270,
+    13.7
+   ],
+   [
+    "Medellín (Antioquia)",
+    "C2",
+    111106,
+    0.6
+   ],
+   [
+    "Melgar (Tolima)",
+    "C1",
+    178,
+    11.2
+   ],
+   [
+    "Miranda (Cauca)",
+    "C2",
+    77,
+    32.5
+   ],
+   [
+    "Mocoa (Putumayo)",
+    "C1",
+    360,
+    25.0
+   ],
+   [
+    "Mompós (Bolívar)",
+    "C4",
+    61,
+    49.2
+   ],
+   [
+    "Moniquirá (Boyacá)",
+    "C5",
+    226,
+    13.7
+   ],
+   [
+    "Monterrey (Casanare)",
+    "C4",
+    93,
+    19.4
+   ],
+   [
+    "Montería (Córdoba)",
+    "C3",
+    2587,
+    11.4
+   ],
+   [
+    "Mosquera (Cundinamarca)",
+    "C1",
+    874,
+    9.4
+   ],
+   [
+    "Málaga (Santander)",
+    "C2",
+    61,
+    16.4
+   ],
+   [
+    "Necoclí (Antioquia)",
+    "C3",
+    90,
+    40.0
+   ],
+   [
+    "Neira (Caldas)",
+    "C4",
+    149,
+    16.1
+   ],
+   [
+    "Neiva (Huila)",
+    "C2",
+    3025,
+    7.5
+   ],
+   [
+    "Nobsa (Boyacá)",
+    "C4",
+    243,
+    18.1
+   ],
+   [
+    "Ocaña (Norte de Santander)",
+    "C2",
+    343,
+    23.0
+   ],
+   [
+    "Oiba (Santander)",
+    "C5",
+    93,
+    15.1
+   ],
+   [
+    "Pacho (Cundinamarca)",
+    "C2",
+    95,
+    3.2
+   ],
+   [
+    "Paipa (Boyacá)",
+    "C4",
+    228,
+    10.5
+   ],
+   [
+    "Palermo (Huila)",
+    "C1",
+    148,
+    20.3
+   ],
+   [
+    "Palmira (Valle del Cauca)",
+    "C2",
+    5169,
+    7.2
+   ],
+   [
+    "Pamplona (Norte de Santander)",
+    "C1",
+    143,
+    23.8
+   ],
+   [
+    "Pasto (Nariño)",
+    "C2",
+    3228,
+    4.8
+   ],
+   [
+    "Pereira (Risaralda)",
+    "C2",
+    7714,
+    3.7
+   ],
+   [
+    "Piedecuesta (Santander)",
+    "C2",
+    1166,
+    6.7
+   ],
+   [
+    "Piendamó (Cauca)",
+    "C4",
+    150,
+    28.7
+   ],
+   [
+    "Pitalito (Huila)",
+    "C2",
+    1091,
+    16.8
+   ],
+   [
+    "Planeta Rica (Córdoba)",
+    "C1",
+    185,
+    32.4
+   ],
+   [
+    "Popayán (Cauca)",
+    "C2",
+    1950,
+    14.5
+   ],
+   [
+    "Pradera (Valle del Cauca)",
+    "C2",
+    497,
+    5.0
+   ],
+   [
+    "Puente Nacional (Santander)",
+    "C5",
+    91,
+    20.9
+   ],
+   [
+    "Puerto Asís (Putumayo)",
+    "C3",
+    62,
+    38.7
+   ],
+   [
+    "Puerto Berrío (Antioquia)",
+    "C3",
+    183,
+    10.9
+   ],
+   [
+    "Puerto Boyacá (Boyacá)",
+    "C1",
+    208,
+    19.7
+   ],
+   [
+    "Puerto Colombia (Atlántico)",
+    "C1",
+    212,
+    19.3
+   ],
+   [
+    "Puerto López (Meta)",
+    "C4",
+    256,
+    29.7
+   ],
+   [
+    "Puerto Salgar (Cundinamarca)",
+    "C1",
+    129,
+    25.6
+   ],
+   [
+    "Puerto Tejada (Cauca)",
+    "C2",
+    121,
+    16.5
+   ],
+   [
+    "Puerto Triunfo (Antioquia)",
+    "C1",
+    116,
+    33.6
+   ],
+   [
+    "Purificación (Tolima)",
+    "C1",
+    220,
+    33.6
+   ],
+   [
+    "Quibdó (Chocó)",
+    "C2",
+    477,
+    9.4
+   ],
+   [
+    "Quimbaya (Quindío)",
+    "C2",
+    123,
+    21.1
+   ],
+   [
+    "Restrepo (Meta)",
+    "C2",
+    573,
+    31.8
+   ],
+   [
+    "Retiro (Antioquia)",
+    "C1",
+    72,
+    5.6
+   ],
+   [
+    "Ricaurte (Cundinamarca)",
+    "C1",
+    308,
+    20.5
+   ],
+   [
+    "Riohacha (La Guajira)",
+    "C4",
+    574,
+    31.2
+   ],
+   [
+    "Rionegro (Antioquia)",
+    "C2",
+    5131,
+    2.7
+   ],
+   [
+    "Rionegro (Santander)",
+    "C5",
+    108,
+    31.5
+   ],
+   [
+    "Riosucio (Caldas)",
+    "C2",
+    264,
+    12.1
+   ],
+   [
+    "Rivera (Huila)",
+    "C1",
+    429,
+    31.7
+   ],
+   [
+    "Roldanillo (Valle del Cauca)",
+    "C2",
+    227,
+    11.5
+   ],
+   [
+    "Sabana de Torres (Santander)",
+    "C2",
+    602,
+    8.8
+   ],
+   [
+    "Sabanagrande (Atlántico)",
+    "C2",
+    176,
+    24.4
+   ],
+   [
+    "Sabanalarga (Atlántico)",
+    "C1",
+    105,
+    24.8
+   ],
+   [
+    "Sabaneta (Antioquia)",
+    "C2",
+    2446,
+    1.3
+   ],
+   [
+    "Saboyá (Boyacá)",
+    "C4",
+    85,
+    10.6
+   ],
+   [
+    "Sahagún (Córdoba)",
+    "C2",
+    245,
+    18.0
+   ],
+   [
+    "Salamina (Caldas)",
+    "C2",
+    94,
+    2.1
+   ],
+   [
+    "Sampués (Sucre)",
+    "C1",
+    166,
+    36.7
+   ],
+   [
+    "San Alberto (Cesar)",
+    "C5",
+    61,
+    42.6
+   ],
+   [
+    "San Andrés (Archipiélago de San Andrés, Providencia)",
+    "C3",
+    293,
+    11.6
+   ],
+   [
+    "San Diego (Cesar)",
+    "C5",
+    396,
+    38.1
+   ],
+   [
+    "San Gil (Santander)",
+    "C4",
+    448,
+    16.3
+   ],
+   [
+    "San Jerónimo (Antioquia)",
+    "C4",
+    141,
+    17.7
+   ],
+   [
+    "San José del Guaviare (Guaviare)",
+    "C3",
+    320,
+    17.8
+   ],
+   [
+    "San Juan Nepomuceno (Bolívar)",
+    "C1",
+    69,
+    14.5
+   ],
+   [
+    "San Luis (Antioquia)",
+    "C5",
+    106,
+    34.9
+   ],
+   [
+    "San Onofre (Sucre)",
+    "C1",
+    57,
+    38.6
+   ],
+   [
+    "San Vicente de Chucurí (Santander)",
+    "C3",
+    55,
+    7.3
+   ],
+   [
+    "Santa Bárbara (Antioquia)",
+    "C1",
+    86,
+    10.5
+   ],
+   [
+    "Santa Marta (Magdalena)",
+    "C2",
+    2551,
+    14.7
+   ],
+   [
+    "Santa Rosa de Cabal (Risaralda)",
+    "C2",
+    315,
+    5.7
+   ],
+   [
+    "Santa Rosa de Osos (Antioquia)",
+    "C2",
+    528,
+    9.3
+   ],
+   [
+    "Santa Rosa de Viterbo (Boyacá)",
+    "C4",
+    155,
+    21.9
+   ],
+   [
+    "Santa Rosa del Sur (Bolívar)",
+    "C2",
+    70,
+    17.1
+   ],
+   [
+    "Santafé de Antioquia (Antioquia)",
+    "C3",
+    372,
+    7.0
+   ],
+   [
+    "Santander de Quilichao (Cauca)",
+    "C2",
+    423,
+    21.5
+   ],
+   [
+    "Santuario (Risaralda)",
+    "C4",
+    58,
+    3.4
+   ],
+   [
+    "Saravena (Arauca)",
+    "C3",
+    105,
+    48.6
+   ],
+   [
+    "Sardinata (Norte de Santander)",
+    "C5",
+    50,
+    34.0
+   ],
+   [
+    "Segovia (Antioquia)",
+    "C3",
+    349,
+    2.0
+   ],
+   [
+    "Sibaté (Cundinamarca)",
+    "C1",
+    181,
+    23.2
+   ],
+   [
+    "Silvania (Cundinamarca)",
+    "C1",
+    218,
+    17.4
+   ],
+   [
+    "Sincelejo (Sucre)",
+    "C2",
+    520,
+    16.3
+   ],
+   [
+    "Soacha (Cundinamarca)",
+    "C2",
+    1295,
+    15.9
+   ],
+   [
+    "Socorro (Santander)",
+    "C1",
+    84,
+    35.7
+   ],
+   [
+    "Sogamoso (Boyacá)",
+    "C4",
+    197,
+    9.6
+   ],
+   [
+    "Soledad (Atlántico)",
+    "C2",
+    116,
+    14.7
+   ],
+   [
+    "Sonson (Antioquia)",
+    "C3",
+    1141,
+    0.8
+   ],
+   [
+    "Sopó (Cundinamarca)",
+    "C1",
+    58,
+    20.7
+   ],
+   [
+    "Supía (Caldas)",
+    "C1",
+    316,
+    8.5
+   ],
+   [
+    "Tame (Arauca)",
+    "C2",
+    200,
+    26.5
+   ],
+   [
+    "Tangua (Nariño)",
+    "C5",
+    299,
+    20.1
+   ],
+   [
+    "Timbío (Cauca)",
+    "C2",
+    193,
+    14.5
+   ],
+   [
+    "Tuluá (Valle del Cauca)",
+    "C2",
+    2495,
+    4.0
+   ],
+   [
+    "Tumaco (Nariño)",
+    "C2",
+    266,
+    70.7
+   ],
+   [
+    "Tunja (Boyacá)",
+    "C4",
+    1407,
+    7.5
+   ],
+   [
+    "Turbaco (Bolívar)",
+    "C1",
+    489,
+    26.8
+   ],
+   [
+    "Turbo (Antioquia)",
+    "C3",
+    541,
+    30.5
+   ],
+   [
+    "Túquerres (Nariño)",
+    "C4",
+    90,
+    30.0
+   ],
+   [
+    "Ubate (Cundinamarca)",
+    "C4",
+    201,
+    14.4
+   ],
+   [
+    "Urrao (Antioquia)",
+    "C3",
+    1408,
+    0.9
+   ],
+   [
+    "Valdivia (Antioquia)",
+    "C5",
+    60,
+    21.7
+   ],
+   [
+    "Valledupar (Cesar)",
+    "C4",
+    343,
+    27.7
+   ],
+   [
+    "Villa Rica (Cauca)",
+    "C4",
+    225,
+    6.7
+   ],
+   [
+    "Villa de Leyva (Boyacá)",
+    "C4",
+    233,
+    18.5
+   ],
+   [
+    "Villamaría (Caldas)",
+    "C2",
+    343,
+    4.7
+   ],
+   [
+    "Villanueva (Casanare)",
+    "C3",
+    330,
+    13.3
+   ],
+   [
+    "Villavicencio (Meta)",
+    "C2",
+    5566,
+    7.4
+   ],
+   [
+    "Villeta (Cundinamarca)",
+    "C1",
+    525,
+    27.6
+   ],
+   [
+    "Viterbo (Caldas)",
+    "C2",
+    59,
+    3.4
+   ],
+   [
+    "Yarumal (Antioquia)",
+    "C5",
+    158,
+    17.1
+   ],
+   [
+    "Yopal (Casanare)",
+    "C2",
+    1852,
+    12.6
+   ],
+   [
+    "Yotoco (Valle del Cauca)",
+    "C5",
+    171,
+    25.1
+   ],
+   [
+    "Yumbo (Valle del Cauca)",
+    "C2",
+    2201,
+    4.5
+   ],
+   [
+    "Zaragoza (Antioquia)",
+    "C1",
+    55,
+    36.4
+   ],
+   [
+    "Zarzal (Valle del Cauca)",
+    "C1",
+    225,
+    22.7
+   ],
+   [
+    "Zipaquirá (Cundinamarca)",
+    "C2",
+    364,
+    8.0
+   ],
+   [
+    "Zona Bananera (Magdalena)",
+    "C5",
+    75,
+    53.3
+   ]
+  ],
+  "patrones": [
+   "Sin usar la gravedad para agrupar, la letalidad va de 3,6 % (C2) a 28,6 % (C5): el perfil vial del municipio anticipa el riesgo.",
+   "Donde la Policía Nacional registra casi todo (C1 y C5), la letalidad es entre 5 y 8 veces la de los centros urbanos; el modelo supervisado llegó a la misma conclusión por otro camino.",
+   "Más motos no significa más letalidad: C3 tiene la mayor proporción de motos y solo 7,0 % de siniestros con muertos.",
+   "Sabana Centro no se comporta como Bogotá: Cajicá, Cota, Chía y Sopó quedan en el grupo de corredor nacional; Zipaquirá queda con los centros urbanos."
+  ],
+  "limitaciones": "Silueta moderada; los grupos se definen con registros de siniestros y no con el parque automotor; C5 se apoya en pocos registros por municipio (141 en promedio)."
  },
  "youtube": {
   "estado": "listo",
