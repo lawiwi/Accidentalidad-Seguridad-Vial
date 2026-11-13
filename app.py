@@ -49,6 +49,12 @@ except ImportError as error_co:
     print(f"Sección Conocimiento Oculto no disponible: {error_co}")
 
 
+@app.route("/Etapa6")
+@app.route("/Etapa6/")
+def etapa6():
+    return redirect("/conocimiento-oculto/")
+
+
 # Variable global para el GeoJSON
 sabana_geojson = None
 
