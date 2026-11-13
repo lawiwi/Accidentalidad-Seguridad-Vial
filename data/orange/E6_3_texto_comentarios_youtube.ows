@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<scheme version="2.0" title="E6 · Análisis de comentarios de YouTube" description="Corpus de comentarios limpios (comentarios_limpios.tab). Configure cada widget según la guía: idioma español, preprocesamiento, LDA, sentimiento multilingüe y agrupación de documentos.">
+	<nodes>
+		<node id="0" name="Corpus" qualified_name="orangecontrib.text.widgets.owcorpus.OWCorpus" project_name="Orange3-Text" version="" title="Corpus · comentarios_limpios" position="(60, 300)" />
+		<node id="1" name="Corpus Viewer" qualified_name="orangecontrib.text.widgets.owcorpusviewer.OWCorpusViewer" project_name="Orange3-Text" version="" title="Corpus Viewer · lectura de evidencias" position="(230, 80)" />
+		<node id="2" name="Statistics" qualified_name="orangecontrib.text.widgets.owstatistics.OWStatistics" project_name="Orange3-Text" version="" title="Statistics · descriptivos del texto" position="(230, 160)" />
+		<node id="3" name="Pivot Table" qualified_name="Orange.widgets.data.owpivot.OWPivot" project_name="Orange3" version="" title="Pivot Table · temas × eje" position="(230, 520)" />
+		<node id="4" name="Preprocess Text" qualified_name="orangecontrib.text.widgets.owpreprocess.OWPreprocess" project_name="Orange3-Text" version="" title="Preprocess Text · español" position="(230, 300)" />
+		<node id="5" name="Bag of Words" qualified_name="orangecontrib.text.widgets.owbagofwords.OWTBagOfWords" project_name="Orange3-Text" version="" title="Bag of Words · TF-IDF" position="(400, 220)" />
+		<node id="6" name="Word Cloud" qualified_name="orangecontrib.text.widgets.owwordcloud.OWWordCloud" project_name="Orange3-Text" version="" title="Word Cloud · referencia" position="(580, 120)" />
+		<node id="7" name="Extract Keywords" qualified_name="orangecontrib.text.widgets.owkeywords.OWKeywords" project_name="Orange3-Text" version="" title="Extract Keywords · TF-IDF y YAKE!" position="(580, 200)" />
+		<node id="8" name="Topic Modelling" qualified_name="orangecontrib.text.widgets.owtopicmodeling.OWTopicModeling" project_name="Orange3-Text" version="" title="Topic Modelling · LDA" position="(400, 330)" />
+		<node id="9" name="Data Table" qualified_name="Orange.widgets.data.owtable.OWTable" project_name="Orange3" version="" title="Data Table · tema dominante" position="(580, 290)" />
+		<node id="10" name="Box Plot" qualified_name="Orange.widgets.visualize.owboxplot.OWBoxPlot" project_name="Orange3" version="" title="Box Plot · temas por eje" position="(580, 370)" />
+		<node id="11" name="Sentiment Analysis" qualified_name="orangecontrib.text.widgets.owsentimentanalysis.OWSentimentAnalysis" project_name="Orange3-Text" version="" title="Sentiment Analysis · multilingüe (es)" position="(400, 440)" />
+		<node id="12" name="Box Plot" qualified_name="Orange.widgets.visualize.owboxplot.OWBoxPlot" project_name="Orange3" version="" title="Box Plot · sentimiento por eje" position="(580, 450)" />
+		<node id="13" name="Document Embedding" qualified_name="orangecontrib.text.widgets.owdocumentembedding.OWDocumentEmbedding" project_name="Orange3-Text" version="" title="Document Embedding · multilingüe" position="(400, 560)" />
+		<node id="14" name="Distances" qualified_name="Orange.widgets.unsupervised.owdistances.OWDistances" project_name="Orange3" version="" title="Distances · coseno" position="(580, 640)" />
+		<node id="15" name="Data Sampler" qualified_name="Orange.widgets.data.owdatasampler.OWDataSampler" project_name="Orange3" version="" title="Data Sampler · 3000 si el corpus es grande" position="(400, 640)" />
+		<node id="16" name="Hierarchical Clustering" qualified_name="Orange.widgets.unsupervised.owhierarchicalclustering.OWHierarchicalClustering" project_name="Orange3" version="" title="Hierarchical Clustering · enlace promedio" position="(760, 640)" />
+		<node id="17" name="Word Enrichment" qualified_name="orangecontrib.text.widgets.owwordenrichment.OWWordEnrichment" project_name="Orange3-Text" version="" title="Word Enrichment · palabras del grupo" position="(940, 600)" />
+		<node id="18" name="Corpus Viewer" qualified_name="orangecontrib.text.widgets.owcorpusviewer.OWCorpusViewer" project_name="Orange3-Text" version="" title="Corpus Viewer · comentarios del grupo" position="(940, 690)" />
+		<node id="19" name="Annotated Corpus Map" qualified_name="orangecontrib.text.widgets.owannotator.OWAnnotator" project_name="Orange3-Text" version="" title="Annotated Corpus Map · mapa de grupos" position="(400, 760)" />
+	</nodes>
+	<links>
+		<link id="0" source_node_id="0" sink_node_id="1" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="1" source_node_id="0" sink_node_id="2" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="2" source_node_id="0" sink_node_id="4" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="3" source_node_id="0" sink_node_id="3" source_channel="Corpus" sink_channel="Data" enabled="true" source_channel_id="corpus" sink_channel_id="data" />
+		<link id="4" source_node_id="5" sink_node_id="13" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="5" source_node_id="4" sink_node_id="5" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="6" source_node_id="4" sink_node_id="8" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="7" source_node_id="4" sink_node_id="11" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="8" source_node_id="5" sink_node_id="6" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="9" source_node_id="5" sink_node_id="7" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+		<link id="10" source_node_id="8" sink_node_id="9" source_channel="Corpus" sink_channel="Data" enabled="true" source_channel_id="corpus" sink_channel_id="data" />
+		<link id="11" source_node_id="8" sink_node_id="10" source_channel="Corpus" sink_channel="Data" enabled="true" source_channel_id="corpus" sink_channel_id="data" />
+		<link id="12" source_node_id="11" sink_node_id="12" source_channel="Corpus" sink_channel="Data" enabled="true" source_channel_id="corpus" sink_channel_id="data" />
+		<link id="13" source_node_id="13" sink_node_id="15" source_channel="Corpus" sink_channel="Data" enabled="true" source_channel_id="corpus" sink_channel_id="data" />
+		<link id="14" source_node_id="15" sink_node_id="14" source_channel="Data Sample" sink_channel="Data" enabled="true" source_channel_id="data_sample" sink_channel_id="data" />
+		<link id="15" source_node_id="14" sink_node_id="16" source_channel="Distances" sink_channel="Distances" enabled="true" source_channel_id="distances" sink_channel_id="distances" />
+		<link id="16" source_node_id="5" sink_node_id="17" source_channel="Corpus" sink_channel="Data" enabled="true" source_channel_id="corpus" sink_channel_id="data" />
+		<link id="17" source_node_id="16" sink_node_id="17" source_channel="Selected Data" sink_channel="Selected Data" enabled="true" source_channel_id="selected_data" sink_channel_id="selected_data" />
+		<link id="18" source_node_id="16" sink_node_id="18" source_channel="Selected Data" sink_channel="Corpus" enabled="true" source_channel_id="selected_data" sink_channel_id="corpus" />
+		<link id="19" source_node_id="13" sink_node_id="19" source_channel="Corpus" sink_channel="Corpus" enabled="true" source_channel_id="corpus" sink_channel_id="corpus" />
+	</links>
+	<annotations />
+	<thumbnail />
+	<node_properties />
+	<session_state>
+		<window_groups />
+	</session_state>
+</scheme>

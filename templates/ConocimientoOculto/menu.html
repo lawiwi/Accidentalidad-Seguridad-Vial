@@ -1,0 +1,497 @@
+{% extends 'base.html' %}
+
+{% block title %}Conocimiento oculto - Seguridad Vial{% endblock %}
+
+{% macro pct(v) -%}{{ ('%.1f'|format(v * 100))|replace('.', ',') if v is not none else 's. d.' }} %{%- endmacro %}
+{% macro dec(v) -%}{{ ('%.3f'|format(v))|replace('.', ',') }}{%- endmacro %}
+{% macro num(v) -%}{{ '{:,}'.format(v)|replace(',', '.') }}{%- endmacro %}
+
+{% block content %}
+{# Estilos dentro del contenido: la navegación SPA (app-shell.js) solo reemplaza #view-content #}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/etapa4.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/conocimiento_oculto.css') }}">
+
+<div class="co-page" data-co-root>
+
+  {% if error %}
+  <header class="stage4-header co-hero">
+    <span class="stage4-tag">Minería de datos · Etapa 6</span>
+    <h1>Conocimiento <span>oculto</span></h1>
+  </header>
+  <div class="co-alerta">No se pudieron cargar los resultados de la Etapa 6: {{ error }}</div>
+  {% else %}
+  {% set S = R.supervisado %}{% set K = R.clustering %}{% set Y = R.youtube %}
+  {% set elegido = S.modelos | selectattr('nombre', 'in', S.seleccionado) | first %}
+  {% set gmin = K.grupos | min(attribute='pct_con_muertos') %}{% set gmax = K.grupos | max(attribute='pct_con_muertos') %}
+
+  {# ============================ HERO ============================ #}
+  <header class="stage4-header co-hero">
+    <span class="stage4-tag">Minería de datos · Etapa 6</span>
+    <h1>Conocimiento <span>oculto</span></h1>
+    <div class="stage4-divider"></div>
+    <p>Aprendizaje supervisado, agrupamiento y comentarios de YouTube analizados en Orange Data Mining para encontrar
+       patrones que no se ven en los conteos y cruces de las etapas 4 y 5.</p>
+
+    <div class="stage4-meta">
+      <span class="stage4-chip">Fuente: modelo estrella de vehículos involucrados (ene. 2022 – feb. 2026)</span>
+      <span class="stage4-chip">Herramienta: Orange Data Mining + YouTube Data API v3</span>
+    </div>
+  </header>
+
+  {# ============================ RESUMEN ============================ #}
+  <div class="co-resumen" aria-label="Resumen de hallazgos">
+    <div class="co-res"><strong>{{ dec(elegido.AUC) }}</strong><span>AUC del modelo elegido</span></div>
+    <div class="co-res"><strong>{{ pct(elegido.Rec) }}</strong><span>de siniestros con muertos detectados</span></div>
+    <div class="co-res"><strong>×{{ ((gmax.pct_con_muertos / gmin.pct_con_muertos) | round(0) | int) }}</strong><span>letalidad de {{ gmax.id }} frente a {{ gmin.id }}</span></div>
+    <div class="co-res"><strong>{{ Y.comentarios.split(' · ')[-1].split(' ')[0] if Y.estado != 'pendiente' else '—' }}</strong><span>comentarios analizados</span></div>
+  </div>
+
+  {# ============================ PESTAÑAS ============================ #}
+  <div class="co-tabs" role="tablist" aria-label="Secciones de la Etapa 6">
+    <button type="button" role="tab" data-co-tab="sup" aria-selected="true"><span>01</span>Modelos supervisados</button>
+    <button type="button" role="tab" data-co-tab="clu" aria-selected="false"><span>02</span>Clustering de municipios</button>
+    <button type="button" role="tab" data-co-tab="yt"  aria-selected="false"><span>03</span>Voz ciudadana</button>
+    <button type="button" role="tab" data-co-tab="con" aria-selected="false"><span>04</span>Conclusiones</button>
+    <button type="button" role="tab" data-co-tab="pro" aria-selected="false"><span>05</span>Informe y video</button>
+  </div>
+
+  {# ============================ 01 SUPERVISADO ============================ #}
+  <section class="co-panel" data-co-panel="sup" role="tabpanel" style="--co-acento: var(--co-indigo);">
+    <div class="co-panel-cab">
+      <span class="co-etiqueta">01 · Clasificación</span>
+      <h2>¿Se puede anticipar un siniestro con muertos?</h2>
+      <p>{{ S.pregunta }}</p>
+    </div>
+
+    <div class="co-grid-sup">
+      <article class="co-card" data-co-modelos>
+        <div class="co-card-top">
+          <h3>Comparación de los tres modelos</h3>
+          <div class="co-seg" data-co-esquema>
+            <button type="button" class="activo" data-v="cv">Validación cruzada</button>
+            {% if S.temporal %}<button type="button" data-v="tp">Datos 2025–2026</button>{% endif %}
+          </div>
+        </div>
+        <div class="co-seg co-seg-sm" data-co-metrica>
+          {% for m in ['AUC', 'Rec', 'MCC', 'F1', 'Prec'] %}
+          <button type="button" class="{{ 'activo' if loop.first }}" data-v="{{ m }}">{{ {'AUC': 'AUC', 'Rec': 'Recall', 'MCC': 'MCC', 'F1': 'F1', 'Prec': 'Precisión'}[m] }}</button>
+          {% endfor %}
+        </div>
+
+        <div class="co-barras">
+          {% for m in S.modelos %}
+          {% set t = (S.temporal | selectattr('nombre', 'equalto', m.nombre) | first) if S.temporal else m %}
+          <div class="co-barra {{ 'co-barra-elegida' if m.nombre in S.seleccionado }}"
+               {% for k in ['AUC', 'Rec', 'MCC', 'F1', 'Prec'] %}data-cv-{{ k|lower }}="{{ m[k] }}" data-tp-{{ k|lower }}="{{ t[k] }}" {% endfor %}
+               data-cv-fn="{{ m.CM[1][0] }}" data-tp-fn="{{ t.CM[1][0] }}">
+            <div class="co-barra-nombre">{{ m.nombre }}{% if m.nombre in S.seleccionado %}<em>elegido</em>{% endif %}</div>
+            <div class="co-barra-pista"><div class="co-barra-relleno" style="width: {{ m.AUC * 100 }}%"></div></div>
+            <div class="co-barra-valor">{{ dec(m.AUC) }}</div>
+            <div class="co-barra-extra">Muertos no detectados: <b>{{ num(m.CM[1][0]) }}</b></div>
+          </div>
+          {% endfor %}
+        </div>
+        <p class="co-pie" data-co-ayuda>AUC: capacidad de ordenar por riesgo (1 = perfecto, 0,5 = azar).</p>
+      </article>
+
+      <aside class="co-card co-card-elegido">
+        <span class="co-etiqueta co-etiqueta-oro">Modelo seleccionado</span>
+        <h3>{{ S.seleccionado }}</h3>
+        <p>{{ S.justificacion }}</p>
+        <div class="co-mini-kpis">
+          <div><strong>{{ dec(elegido.AUC) }}</strong><span>AUC</span></div>
+          <div><strong>{{ pct(elegido.Rec) }}</strong><span>Recall</span></div>
+          <div><strong>{{ dec(elegido.MCC) }}</strong><span>MCC</span></div>
+        </div>
+        <p class="co-nota">{{ S.linea_base }}</p>
+      </aside>
+    </div>
+
+    <h3 class="co-sub">Lo que revela el modelo</h3>
+    <div class="co-insights">
+      {% for h in S.hallazgos %}
+      <article class="co-insight"><span>{{ '%02d'|format(loop.index) }}</span><p>{{ h }}</p></article>
+      {% endfor %}
+    </div>
+    <div class="co-chips"><span>{{ S.tipo }}</span><span>{{ S.validacion }}</span></div>
+    <button type="button" class="co-siguiente" data-co-ir="clu">Siguiente: perfiles de municipio →</button>
+  </section>
+
+  {# ============================ 02 CLUSTERING ============================ #}
+  <section class="co-panel" data-co-panel="clu" role="tabpanel" style="--co-acento: var(--co-teal);">
+    <div class="co-panel-cab">
+      <span class="co-etiqueta">02 · Modelo no supervisado</span>
+      <h2>Cinco perfiles de municipio</h2>
+      <p>{{ K.pregunta }}</p>
+    </div>
+
+    {% set gs = K.grupos | sort(attribute='pct_con_muertos', reverse=True) %}
+    <div class="co-pasos" role="tablist" aria-label="Etapas del agrupamiento" data-co-pasos>
+      <button type="button" class="activo" data-v="p1"><span>1</span>Pregunta y datos</button>
+      <button type="button" data-v="p2"><span>2</span>Algoritmo y k</button>
+      <button type="button" data-v="p3"><span>3</span>Los cinco grupos</button>
+      <button type="button" data-v="p4"><span>4</span>Patrones y decisiones</button>
+    </div>
+
+    {# ---------- Paso 1: variables y tratamiento ---------- #}
+    <div class="co-paso activo" data-co-paso="p1">
+      <div class="co-grid-p1">
+        <div class="co-vars">
+          {% for v in K.variables_detalle %}
+          <article class="co-var">
+            <code>{{ v.var }}</code>
+            <b>{{ v.mide }}</b>
+            <p>{{ v.por_que }}</p>
+          </article>
+          {% endfor %}
+        </div>
+        <article class="co-card">
+          <h3>Tratamiento de los datos</h3>
+          <ol class="co-lista">{% for t in K.tratamiento %}<li>{{ t }}</li>{% endfor %}</ol>
+          <p class="co-pie">{{ K.descartadas }}</p>
+        </article>
+      </div>
+      <div class="co-escala" aria-label="Por qué estandarizar">
+        <div><span>Sin estandarizar</span><b>% de 0 a 100</b><b>años de 2 a 12</b><em>los porcentajes dominan la distancia</em></div>
+        <i aria-hidden="true">→</i>
+        <div class="co-escala-ok"><span>Estandarizado (z)</span><b>media 0</b><b>desviación 1</b><em>las cuatro variables pesan igual</em></div>
+      </div>
+    </div>
+
+    {# ---------- Paso 2: algoritmo y elección de k ---------- #}
+    <div class="co-paso" data-co-paso="p2">
+      <div class="co-grid-p2">
+        <article class="co-card">
+          <h3>Silueta según el número de grupos</h3>
+          {% set smax = K.silueta.values() | max %}
+          <div class="co-sil" role="img" aria-label="Silueta de k = 2 a k = 8; se elige k = 5">
+            {% for k_, s in K.silueta.items() %}
+            <div class="co-sil-col {{ 'co-sil-elegido' if k_|int == K.k }} {{ 'co-sil-max' if s == smax }}" title="k = {{ k_ }}: silueta {{ s|string|replace('.', ',') }}">
+              <span class="co-sil-val">{{ ('%.3f'|format(s))|replace('.', ',') }}</span>
+              <span class="co-sil-barra" style="height: {{ s / smax * 100 }}%"></span>
+              <span class="co-sil-k">k = {{ k_ }}</span>
+            </div>
+            {% endfor %}
+          </div>
+          <p class="co-pie">{{ K.eleccion_k }}</p>
+        </article>
+        <article class="co-card">
+          <h3>Algoritmo y parámetros</h3>
+          <dl class="co-params">{% for a, b in K.parametros %}<dt>{{ a }}</dt><dd>{{ b }}</dd>{% endfor %}</dl>
+        </article>
+      </div>
+    </div>
+
+    {# ---------- Paso 3: caracterización ---------- #}
+    <div class="co-paso" data-co-paso="p3">
+      <div class="co-grid-clu">
+        <article class="co-card">
+          <h3>Letalidad por grupo</h3>
+          <p class="co-pie">% de vehículos en siniestros con muertos, calculado después de agrupar. Selecciona un grupo.</p>
+          <div class="co-grupo-lista" data-co-grupos>
+            {% for g in gs %}
+            <button type="button" class="co-grupo-btn {{ 'activo' if loop.first }}" data-v="{{ g.id }}">
+              <span class="co-grupo-id">{{ g.id }}</span>
+              <span class="co-grupo-txt"><b>{{ g.nombre }}</b>
+                <span class="co-barra-pista"><span class="co-barra-relleno" style="width: {{ g.pct_con_muertos / gmax.pct_con_muertos * 100 }}%"></span></span></span>
+              <span class="co-grupo-val">{{ g.pct_con_muertos|string|replace('.', ',') }} %</span>
+            </button>
+            {% endfor %}
+          </div>
+        </article>
+
+        <div class="co-detalles">
+          {% set maxs = {'pct_motos': K.grupos|map(attribute='pct_motos')|max, 'pct_carga': K.grupos|map(attribute='pct_carga')|max,
+                         'edad_mediana': K.grupos|map(attribute='edad_mediana')|max, 'pct_policia_nacional': K.grupos|map(attribute='pct_policia_nacional')|max} %}
+          {% for g in gs %}
+          <article class="co-card co-detalle {{ 'activo' if loop.first }}" data-co-detalle="{{ g.id }}">
+            <div class="co-detalle-cab">
+              <span class="co-grupo-id co-grupo-id-xl">{{ g.id }}</span>
+              <div><h3>{{ g.nombre }}</h3><span class="co-pie">{{ g.municipios }} municipios · {{ num(g.vehiculos) }} vehículos</span></div>
+            </div>
+            <p>{{ g.descripcion }}</p>
+            <div class="co-perfil">
+              {% for campo, nombre, unidad in [('pct_motos', 'Motos', ' %'), ('pct_carga', 'Carga', ' %'), ('edad_mediana', 'Edad mediana', ' años'), ('pct_policia_nacional', 'Policía Nacional', ' %')] %}
+              <div class="co-perfil-fila">
+                <span>{{ nombre }}</span>
+                <span class="co-barra-pista"><span class="co-barra-relleno" style="width: {{ g[campo] / maxs[campo] * 100 }}%"></span></span>
+                <b>{{ g[campo]|string|replace('.', ',') }}{{ unidad }}</b>
+              </div>
+              {% endfor %}
+            </div>
+            {% if g.distintivas %}
+            <div class="co-rasgos">
+              <div><span>Lo distingue</span>{% for x in g.distintivas %}<b class="{{ 'co-up' if x.z > 0 else 'co-down' }}">{{ '▲' if x.z > 0 else '▼' }} {{ x.txt }}</b>{% endfor %}</div>
+              <div><span>Cohesión interna</span><b>silueta {{ g.silueta|string|replace('.', ',') }}</b></div>
+              <div><span>Grupo más parecido</span><b>{{ g.vecino }}</b></div>
+            </div>
+            {% endif %}
+            <div class="co-ejemplos">{% for e in g.ejemplos %}<span>{{ e }}</span>{% endfor %}</div>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if gs[0].z %}
+      <h3 class="co-sub">Huella de cada grupo frente al promedio</h3>
+      <p class="co-pie">Valores estandarizados: color verde = por encima del promedio, morado = por debajo. Así se ven las diferencias entre grupos.</p>
+      <div class="co-huella" role="table">
+        <div class="co-huella-fila co-huella-cab" role="row"><span></span><span>Motos</span><span>Carga</span><span>Antigüedad</span><span>Policía Nal.</span></div>
+        {% for g in gs %}
+        <div class="co-huella-fila" role="row">
+          <span><b>{{ g.id }}</b> {{ g.nombre }}</span>
+          {% for v in ['PctMotos', 'PctCarga', 'EdadMediana', 'PctPoliciaNacional'] %}{% set z = g.z[v] %}
+          <span class="co-z" style="--z: {{ (z|abs / 2.1)|round(2) }}; --c: {{ 'var(--co-teal)' if z >= 0 else 'var(--co-plum)' }};">{{ ('%+.1f'|format(z))|replace('.', ',') }}</span>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    {# ---------- Paso 4: patrones y decisiones ---------- #}
+    <div class="co-paso" data-co-paso="p4">
+      <div class="co-insights">
+        {% for p in K.patrones %}<article class="co-insight" style="--co-acento: var(--co-teal);"><span>{{ '%02d'|format(loop.index) }}</span><p>{{ p }}</p></article>{% endfor %}
+      </div>
+      <h3 class="co-sub">Qué decisión apoya cada grupo</h3>
+      <div class="co-decisiones">
+        {% for g in gs %}
+        <article><span class="co-grupo-id">{{ g.id }}</span><div><b>{{ g.nombre }}</b><p>{{ g.decision }}</p>
+          {% if g.sabana %}<em>Sabana Centro: {{ g.sabana|join(', ') }}</em>{% endif %}</div></article>
+        {% endfor %}
+      </div>
+
+      {% if K.municipios_lista %}
+      <article class="co-card co-buscador" data-co-buscador data-co-munis='{{ K.municipios_lista | tojson }}'>
+        <h3>¿En qué grupo está mi municipio?</h3>
+        <input type="search" placeholder="Escribe un municipio, por ejemplo Chía" aria-label="Buscar municipio" list="co-munis">
+        <datalist id="co-munis">{% for m in K.municipios_lista %}<option value="{{ m[0] }}">{% endfor %}</datalist>
+        <p class="co-buscador-res" aria-live="polite">Los 248 municipios analizados tienen al menos 50 vehículos registrados.</p>
+      </article>
+      {% endif %}
+      <p class="co-pie"><b>Limitaciones:</b> {{ K.limitaciones }}</p>
+    </div>
+
+    <div class="co-chips"><span>{{ K.algoritmo }}</span><span>{{ K.municipios }} municipios · k = {{ K.k }}</span>
+      <span>Silueta k = {{ K.k }}: {{ K.silueta[K.k|string]|string|replace('.', ',') }}</span></div>
+    <button type="button" class="co-siguiente" data-co-ir="yt">Siguiente: voz ciudadana →</button>
+  </section>
+
+  {# ============================ 03 YOUTUBE ============================ #}
+  <section class="co-panel" data-co-panel="yt" role="tabpanel" style="--co-acento: var(--co-plum);">
+    <div class="co-panel-cab">
+      <span class="co-etiqueta">03 · Comentarios de YouTube</span>
+      <h2>Lo que la ciudadanía dice y los datos no registran</h2>
+    </div>
+    {% if Y.estado == 'pendiente' %}
+      <p class="co-nota">Análisis en curso: esta sección se completa al terminar la extracción y el análisis en Orange.</p>
+    {% else %}
+    <div class="co-cifras">
+      <div><strong>{{ Y.videos }}</strong><span>videos en 6 ejes</span></div>
+      <div><strong>{{ Y.comentarios }}</strong><span>comentarios</span></div>
+      {% if Y.fecha_extraccion %}<div><strong>{{ Y.fecha_extraccion }}</strong><span>extracción</span></div>{% endif %}
+    </div>
+
+    <div class="co-grid-yt">
+      <article class="co-card">
+        <h3>Síntesis temática interpretativa</h3>
+        <p class="co-pie">Resumen cualitativo; estas categorías no corresponden uno a uno con los identificadores Topic de Orange.</p>
+        {% set tmax = Y.temas | map(attribute='pct') | map('replace', ',', '.') | map('float') | max %}
+        {% for t in Y.temas %}
+        <details class="co-tema" {{ 'open' if loop.first }}>
+          <summary>
+            <span class="co-tema-nombre">{{ t.nombre }}</span>
+            <span class="co-barra-pista"><span class="co-barra-relleno" style="width: {{ (t.pct|replace(',', '.')|float) / tmax * 100 }}%"></span></span>
+            <b>{{ t.pct }} %</b>
+          </summary>
+          <div class="co-palabras">{% for w in t.palabras.split(', ') %}<span>{{ w }}</span>{% endfor %}</div>
+        </details>
+        {% endfor %}
+      </article>
+
+      <div class="co-voces">
+        {% for h in Y.hallazgos %}
+        <article class="co-voz"><span class="co-voz-ico">“</span><p>{{ h }}</p></article>
+        {% endfor %}
+      </div>
+    </div>
+    {% if Y.resultado_orange %}
+    {% set O = Y.resultado_orange %}
+    {% set max_orange_pct = O.distribucion_tema_dominante | map(attribute='porcentaje') | max %}
+    <article class="co-card co-orange-card">
+      <div class="co-orange-head">
+        <div>
+        <h3>Temas de Orange, con nombres orientativos</h3>
+          <p class="co-pie">LDA · {{ O.numero_temas }} temas · {{ num(O.comentarios_analizados) }} comentarios</p>
+        </div>
+      </div>
+      <div class="co-orange-topics" role="list" aria-label="Comentarios asignados a cada tema de Orange">
+        {% for t in O.distribucion_tema_dominante %}
+        <div class="co-orange-topic" role="listitem">
+          <div class="co-orange-topic-head">
+          <div>
+            <span class="co-orange-topic-id">{{ t.tema }}</span>
+            <b>{{ t.nombre }}</b>
+          </div>
+            <strong>{{ ('%.2f'|format(t.porcentaje))|replace('.', ',') }} %</strong>
+          </div>
+          <div class="co-barra-pista" aria-hidden="true">
+            <span class="co-barra-relleno" style="width: {{ t.porcentaje / max_orange_pct * 100 }}%"></span>
+          </div>
+          <small>{{ num(t.comentarios) }} comentarios</small>
+        <div class="co-orange-words">{% for palabra in t.palabras.split(', ') %}<span>{{ palabra }}</span>{% endfor %}</div>
+        </div>
+        {% endfor %}
+      </div>
+      <p class="co-pie">{{ O.criterio_distribucion }} {{ O.nota }}</p>
+    </article>
+    {% endif %}
+    <p class="co-pie">Las opiniones corresponden a quienes comentaron en los videos seleccionados y no representan a toda la población: se usan para formular hipótesis.</p>
+    {% endif %}
+    <button type="button" class="co-siguiente" data-co-ir="con">Siguiente: conclusiones →</button>
+  </section>
+
+  {# ============================ 04 CONCLUSIONES ============================ #}
+  <section class="co-panel" data-co-panel="con" role="tabpanel" style="--co-acento: var(--co-gold);">
+    <div class="co-panel-cab">
+      <span class="co-etiqueta">04 · Integración</span>
+      <h2>Conclusiones integradas</h2>
+    </div>
+    <div class="co-flujo">
+      <div><span>01</span><b>Señal predictiva</b><p>AUC 0,816 y recall 66,3 %, pero precisión 16,9 %: sirve para priorizar revisiones con validación humana.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>02</span><b>Perfiles territoriales</b><p>C1 y C5 muestran mayores proporciones de siniestros con muertos; Sabana Centro queda en el perfil de corredor C1.</p></div>
+      <i aria-hidden="true">→</i>
+      <div><span>03</span><b>Voz ciudadana</b><p>Los comentarios señalan mantenimiento, motos, vías y rampas: pistas para investigar, no una medida representativa de la población.</p></div>
+    </div>
+    {% if R.conclusiones %}
+    <div class="co-dos-col">
+      <div>
+        <h3 class="co-sub">Respaldado por evidencia</h3>
+        {% for c in R.conclusiones.evidencia %}<article class="co-concl co-concl-ok"><span>✓</span><p>{{ c }}</p></article>{% endfor %}
+      </div>
+      <div>
+        <h3 class="co-sub">Hipótesis por validar</h3>
+        {% for c in R.conclusiones.hipotesis %}<article class="co-concl co-concl-hip"><span>?</span><p>{{ c }}</p></article>{% endfor %}
+      </div>
+    </div>
+    {% else %}<p class="co-nota">Se publican al cerrar las tres secciones.</p>{% endif %}
+    <button type="button" class="co-siguiente" data-co-ir="pro">Siguiente: informe y video →</button>
+  </section>
+
+  {# ============================ 05 PRODUCTOS ============================ #}
+  <section class="co-panel" data-co-panel="pro" role="tabpanel" style="--co-acento: var(--co-indigo);">
+    <div class="co-panel-cab">
+      <span class="co-etiqueta">05 · Entregables</span>
+      <h2>Informe técnico y video de sustentación</h2>
+    </div>
+    <div class="co-productos">
+      <article class="co-card">
+        <h3>Informe técnico (PDF)</h3>
+        {% if hay_informe %}
+          <a class="co-boton" href="{{ url_for('conocimiento_oculto.informe') }}" target="_blank" rel="noopener" data-co-externo>Ver informe</a>
+          <a class="co-boton co-boton-sec" href="{{ url_for('conocimiento_oculto.informe') }}" download>Descargar</a>
+          <object class="co-pdf" data="{{ url_for('conocimiento_oculto.informe') }}" type="application/pdf"></object>
+        {% else %}<p class="co-nota">El informe se publicará aquí (static/docs/Informe_Etapa6.pdf).</p>{% endif %}
+      </article>
+      <article class="co-card">
+        <h3>Video de sustentación</h3>
+        {% if video_embed %}
+          <div class="co-video"><iframe src="{{ video_embed }}" title="Video de sustentación Etapa 6" allowfullscreen loading="lazy"></iframe></div>
+          <a class="co-boton co-boton-sec" href="{{ video_url }}" target="_blank" rel="noopener">Abrir en YouTube</a>
+        {% elif video_url %}
+          <a class="co-boton" href="{{ video_url }}" target="_blank" rel="noopener">Ver video</a>
+        {% else %}<p class="co-nota">El enlace del video se agregará al terminar la grabación.</p>{% endif %}
+      </article>
+    </div>
+    <p class="co-pie">Repositorio: <a href="{{ R.enlaces.repositorio }}" target="_blank" rel="noopener">{{ R.enlaces.repositorio }}</a> · carpetas <code>data/orange</code>, <code>data/youtube</code> y <code>scripts</code></p>
+  </section>
+
+  <script>
+    const root = document.querySelector('[data-co-root]');
+    if (root) {
+      root.classList.add('co-js');
+      const tabs = root.querySelectorAll('[data-co-tab]');
+      const mostrar = (id, desplazar) => {
+        tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.coTab === id)));
+        root.querySelectorAll('[data-co-panel]').forEach((p) => p.classList.toggle('activo', p.dataset.coPanel === id));
+        if (desplazar) root.querySelector('.co-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+      tabs.forEach((t) => t.addEventListener('click', () => mostrar(t.dataset.coTab, false)));
+      root.querySelectorAll('[data-co-ir]').forEach((b) => b.addEventListener('click', () => mostrar(b.dataset.coIr, true)));
+      mostrar('sup', false);
+
+      // Comparación de modelos: esquema de validación x métrica
+      const tarjeta = root.querySelector('[data-co-modelos]');
+      if (tarjeta) {
+        const ayudas = {
+          auc: 'AUC: capacidad de ordenar por riesgo (1 = perfecto, 0,5 = azar).',
+          rec: 'Recall: porcentaje de siniestros con muertos que el modelo detecta.',
+          mcc: 'MCC: equilibrio entre aciertos y errores en las dos clases (0 = azar, 1 = perfecto).',
+          f1: 'F1: promedio armónico de precisión y recall para la clase «Con Muertos».',
+          prec: 'Precisión: de las alertas de muerte, cuántas son correctas.'
+        };
+        let esquema = 'cv', metrica = 'auc';
+        const fmt = (v) => (metrica === 'rec' || metrica === 'prec')
+          ? (v * 100).toFixed(1).replace('.', ',') + ' %' : v.toFixed(3).replace('.', ',');
+        const pintar = () => {
+          const barras = tarjeta.querySelectorAll('.co-barra');
+          const vals = [...barras].map((b) => parseFloat(b.dataset[esquema + metrica.charAt(0).toUpperCase() + metrica.slice(1)]));
+          const max = Math.max(...vals);
+          barras.forEach((b, i) => {
+            b.querySelector('.co-barra-relleno').style.width = (vals[i] / (metrica === 'auc' ? 1 : max) * 100) + '%';
+            b.querySelector('.co-barra-valor').textContent = fmt(vals[i]);
+            b.querySelector('.co-barra-extra b').textContent = Number(b.dataset[esquema + 'Fn']).toLocaleString('es-CO');
+            b.classList.toggle('co-barra-max', vals[i] === max);
+          });
+          tarjeta.querySelector('[data-co-ayuda]').textContent = ayudas[metrica];
+        };
+        const seg = (sel, fn) => tarjeta.querySelectorAll(sel + ' button').forEach((b) => b.addEventListener('click', () => {
+          tarjeta.querySelectorAll(sel + ' button').forEach((x) => x.classList.toggle('activo', x === b));
+          fn(b.dataset.v); pintar();
+        }));
+        seg('[data-co-esquema]', (v) => { esquema = v; });
+        seg('[data-co-metrica]', (v) => { metrica = v.toLowerCase(); });
+        pintar();
+      }
+
+
+      // Clustering: pasos internos
+      const pasos = root.querySelectorAll('[data-co-pasos] button');
+      pasos.forEach((b) => b.addEventListener('click', () => {
+        pasos.forEach((x) => x.classList.toggle('activo', x === b));
+        root.querySelectorAll('[data-co-paso]').forEach((p) => p.classList.toggle('activo', p.dataset.coPaso === b.dataset.v));
+      }));
+
+      // Buscador de municipio
+      const bus = root.querySelector('[data-co-buscador]');
+      if (bus) {
+        const lista = JSON.parse(bus.dataset.coMunis);
+        const nombres = {};
+        root.querySelectorAll('[data-co-detalle]').forEach((d) => { nombres[d.dataset.coDetalle] = d.querySelector('h3').textContent; });
+        const norm = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        const res = bus.querySelector('.co-buscador-res');
+        bus.querySelector('input').addEventListener('input', (e) => {
+          const q = norm(e.target.value.trim());
+          if (q.length < 3) return;
+          const m = lista.find((x) => norm(x[0]).startsWith(q)) || lista.find((x) => norm(x[0]).includes(q));
+          res.innerHTML = m
+            ? `<b>${m[0]}</b> pertenece a <b>${m[1]} · ${nombres[m[1]] || ''}</b>. ${m[2].toLocaleString('es-CO')} vehículos registrados; ${String(m[3]).replace('.', ',')} % en siniestros con muertos.`
+            : 'No está entre los 248 municipios analizados (puede tener menos de 50 vehículos registrados).';
+        });
+      }
+
+      // Grupos: un detalle a la vez
+      root.querySelectorAll('[data-co-grupos] button').forEach((b) => b.addEventListener('click', () => {
+        root.querySelectorAll('[data-co-grupos] button').forEach((x) => x.classList.toggle('activo', x === b));
+        root.querySelectorAll('[data-co-detalle]').forEach((d) => d.classList.toggle('activo', d.dataset.coDetalle === b.dataset.v));
+      }));
+
+      // El PDF se abre en otra pestaña sin pasar por la navegación SPA
+      root.querySelectorAll('[data-co-externo]').forEach((a) => a.addEventListener('click', (e) => e.stopPropagation()));
+    }
+  </script>
+  {% endif %}
+</div>
+{% endblock %}
